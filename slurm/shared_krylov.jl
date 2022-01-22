@@ -35,7 +35,7 @@ println("#BLAS config:               $(BLAS.get_config())")
 @show ARGS
 
 N = parse(Int, ARGS[1])
-#SHOTS = parse(Int, ARGS[2])
+#SHOTS = parse(Int, ARGS[2]) #$(date '+%Y-%m-%d')
 
 ## constants and ARGS
 

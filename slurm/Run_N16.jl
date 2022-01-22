@@ -6,7 +6,7 @@
 #SBATCH --mem=350gb
 #SBATCH --cpus-per-task=48
 #SBATCH --job-name=krylovkit-N16-a6
-#SBATCH --output="$LOGS/LightCones/$(date '+%Y-%m-%d')/krylovkit-N_16-alpha_6-%j.out"
+#SBATCH --output="$LOGS/LightCones/test/krylovkit-N_16-alpha_6-%j.out"
 ########### End Slurm header ##########
 #=
 # load modules
