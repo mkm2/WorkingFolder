@@ -1,7 +1,5 @@
 module LightCones
 
-module SimLib
-
 using Dates
 import JLD2
 using LinearAlgebra
