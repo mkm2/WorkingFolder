@@ -1,4 +1,4 @@
-module  OTOC
+module OTOC
 
 using SparseArrays, LinearAlgebra, Plots
 using SpinSymmetry

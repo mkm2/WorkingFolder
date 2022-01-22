@@ -1,4 +1,4 @@
-module  Basics
+module Basics
 
 using SparseArrays, LinearAlgebra, Plots
 using SpinSymmetry
