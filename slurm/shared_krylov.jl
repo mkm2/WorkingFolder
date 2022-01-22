@@ -42,7 +42,7 @@ N = parse(Int, ARGS[1])
 #BLOCK = div(N-1,2)
 #BASIS = SymmetrizedBasis(zbasis(N, BLOCK), [], [])
 
-LOCATION = joinpath(LOGS,"LightCones",Dates.today)
+LOCATION = joinpath(LOGS,"LightCones",Dates.format(Dates.today(), "yyyy-mm-dd"))
 
 @show LOCATION
 @show N

@@ -5,6 +5,8 @@ using SpinSymmetry
 using KrylovKit
 using ..LightCones
 
+export  otoc, otoc_spat
+
 function otoc(H,A,B,t,ψ)
 	state = B*ψ
 	state = exponentiate(H,-im*t,state)[1]

@@ -5,6 +5,9 @@ using SpinSymmetry
 using KrylovKit
 using ..LightCones
 
+export σplus, σminus, σz, σx, ⊗, Δ, 𝟙
+export chainJ, correlator, single_spin_op,xxz
+
 const σplus = sparse([2],[1],[1],2,2)
 const σminus = sparse([1],[2],[1],2,2)
 const σz = spdiagm([1,-1])
