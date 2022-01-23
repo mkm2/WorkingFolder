@@ -3,12 +3,13 @@ module Utils
 using SparseArrays, LinearAlgebra, Plots
 using SpinSymmetry, JLD2
 using KrylovKit
+import Dates
 using ..LightCones
 
 export logmsg, path_prefix, save
 
 function logmsg(msg...; doflush=false)
-    println("[",now(), "]", msg...)
+    println("[",Dates.now(), "]", msg...)
     doflush && flush(stdout)
 end
 
@@ -26,7 +27,7 @@ function save(data, datapath)
         logmsg("Save directory: $dname does not exist. Creating!")
         mkpath(dname)
     end
-    logmsg("Saving file: $path")
+    logmsg("Saving file: $datapath")
     JLD2.jldsave(datapath; data) 
 end
 

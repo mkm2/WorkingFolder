@@ -13,8 +13,6 @@ Pkg.status(; io=stdout)
 import Dates
 using SpinSymmetry, Random, LinearAlgebra
 using LightCones
-using Plots
-
 
 #Location of LOGS
 LOGS = get(ENV, "LOGS", "")
@@ -64,4 +62,4 @@ end
 print(corr)
 
 logmsg("*"^10 * "Saving" * "*"^10)
-save(corr, joinpath(LOCATION,'test.jld2'))
+save(corr, joinpath(LOCATION,"test.jld2"))
