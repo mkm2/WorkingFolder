@@ -13,6 +13,8 @@ Pkg.status(; io=stdout)
 import Dates
 using SpinSymmetry, Random, LinearAlgebra
 using LightCones
+using SimLib, XXZNumerics
+
 
 #Location of LOGS
 LOGS = get(ENV, "LOGS", "")
@@ -45,21 +47,11 @@ LOCATION = joinpath(LOGS,"LightCones",Dates.format(Dates.today(), "yyyy-mm-dd"))
 @show LOCATION
 @show N
 
-logmsg("*"^10 * "Running simulation" * "*"^10)
+H = xxz()
 
-H = xxz(N,6)
-ψ0 = normalize!(ones(2^N))
+model = RandomPositionsXXZWithXField(pdd, PowerLaw(ALPHA), [0.0], nothing, BASIS)
 
-op1 = single_spin_op(σz,5,N)
-op2 = single_spin_op(σz,1,N)
-
-trange = 0:0.1:5
-
-corr = zeros(Float64,length(trange))
-@time for (ti,t) in enumerate(trange)
-    corr[ti] = 2-2*otoc(H, op1, op2, t, ψ0)
-end
-print(corr)
+edd = EDDataDescriptor(model, DIAGTYPE, LOCATION)
 
 logmsg("*"^10 * "Saving" * "*"^10)
-save(corr, joinpath(LOCATION,"test.jld2"))
+save.(edata)

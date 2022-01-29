@@ -4,27 +4,29 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 2603767a-672e-11ec-0701-23ca6ce80744
-using SparseArrays, LinearAlgebra, Plots
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
 
-# ╔═╡ 093a5d84-442f-433b-9882-376178ebd39a
-using SpinSymmetry
+# ╔═╡ fc729bbf-53ca-45ea-bd3f-daf4fbb38de1
+using SparseArrays,Random, LinearAlgebra, Plots, SpinSymmetry, KrylovKit,Statistics,PlutoUI,JLD2
 
-# ╔═╡ 8b8d34d5-6a8b-4941-ac1d-8ee184ff8189
-using KrylovKit
-
-# ╔═╡ b01260be-e1dd-4f5b-a9a2-7057c0e7b318
-md"## Create Hamiltonian"
-
-# ╔═╡ 90b25f78-4fb7-4d7d-ba7d-8f9ec2c2ad3e
+# ╔═╡ 2da71c83-a355-4e30-a689-a69cff16c961
 begin
 	const σplus = sparse([2],[1],[1],2,2)
 	const σminus = sparse([1],[2],[1],2,2)
 	const σz = spdiagm([1,-1])
 	const σx = sparse([1,2],[2,1],[1,1])
+	const σy = sparse([1,2],[2,1],[-im,+im])
 	const ⊗ = kron
 
-	const Δ = -2
+	const Δ = 2
 
 	speye(k) = spdiagm(ones(k))
 	𝟙(N) = speye(2^N)
@@ -52,9 +54,44 @@ begin
 		end
 		return res
 	end
+
+	function field_term(h::Float64, N::Int)
+		res = spzeros(Float64, 2^N, 2^N)
+		hs = -h*ones(N) + 2*h*rand(Float64,N)
+		for i in 1:N
+			res += hs[i]*single_spin_op(σz,i,N)
+		end
+		return res
+	end
 end
 
-# ╔═╡ 27ba3757-7fe7-4e5c-adb8-faa80c6e53a7
+# ╔═╡ 39ac20a2-7ee0-11ec-3db3-e5ca7a3b06fa
+md"# σz-σz-OTOC in XXZ nearest-neighbour Heisenberg model with averaged over initial states and random field disorder with Δ = $Δ"
+
+# ╔═╡ efca3be9-2e8b-4297-a2c1-91c94d77afe9
+function xxz_nn(N::Int,J=1.0)
+	res = spzeros(Float64, 2^N, 2^N)
+	for i in 1:N-1
+		res += real(J*(correlator(σx,σx,i,i+1,N)+correlator(σy,σy,i,i+1,N)+Δ*correlator(σz,σz,i,i+1,N)))
+	end
+	return res
+end
+
+# ╔═╡ d71a2a21-a579-470c-a055-08dcca9150c8
+function xxx(N::Int,J=1.0)
+	res = spzeros(Float64, 2^N, 2^N)
+	for i in 1:N-1
+		res += real(J*(correlator(σx,σx,i,i+1,N)+correlator(σy,σy,i,i+1,N)+correlator(σz,σz,i,i+1,N)))
+	end
+	return res
+end
+
+# ╔═╡ 29264873-ea0a-464c-823c-fb62195e6888
+function random_state(N::Int)
+	return normalize!(randn(ComplexF64,2^N))
+end
+
+# ╔═╡ 4d44507e-9cc6-4e15-8eb6-341d34f866cb
 md"""
 ## Calculate OTOC
 ```math
@@ -66,7 +103,7 @@ U(t) = \exp(-iHt)
 ```
 """
 
-# ╔═╡ 5c5ffce4-dee6-420f-bca3-2948118ab769
+# ╔═╡ b549b7ca-2070-4d31-a1bc-e713035ba77c
 function otoc(H,A,B,t,ψ)
 	state = B*ψ
 	state = exponentiate(H,-im*t,state)[1]
@@ -79,64 +116,7 @@ function otoc(H,A,B,t,ψ)
 	return real(dot(ψ,state))
 end
 
-# ╔═╡ 2a0f44fa-def8-4371-af55-c6a677f7af3d
-begin
-	N = 8
-	H = xxz(N,6)
-	ψ0 = normalize!(ones(2^N))
-end
-
-# ╔═╡ b85d9115-c469-4a80-800c-eae938fbb7a3
-begin
-	function computeJ(posdata, shot, rhoIndex)
-		rho = posdata.ρs[rhoIndex]
-		J = interaction_matrix(
-				PowerLaw(6), 
-				geometry_from_density(posdata.geometry, rho, posdata.system_size,1),
-				posdata.data[:,:,shot,rhoIndex])
-	end
-	
-	function hamiltonian(J)
-		H = xxz(J, -0.7)
-		return symmetrize_operator(H, N, div(N-1,2))
-	end
-end
-
-# ╔═╡ 00fa04a3-4ea4-495e-8e7d-d772de088f1e
-begin
-	op1 = single_spin_op(σz,5,N)
-	op2 = single_spin_op(σz,1,N)
-end
-
-# ╔═╡ d06f2f8e-61a8-41ba-b837-ffe0fcdc0492
-op1 == σz⊗𝟙(N-1)
-
-# ╔═╡ 9264c292-a446-45f7-8d85-a62b2260c4d4
-let trange = 0:0.1:5,
-	p = plot(; xlabel="time t", ylabel="<|[σ_i(t),σ_j]|^2>", legend=nothing)
-	plot!(trange, 2*ones(length(trange))-2*otoc.(Ref(H), Ref(op1), Ref(op2), trange, Ref(ψ0)))
-end
-
-# ╔═╡ 81cc7b61-b31e-4156-8cb5-1dafb3cb0071
-println("N=$N\n")
-
-# ╔═╡ 8f8bcdc3-723b-4232-b467-9ff22f098679
-begin
-	trange_test = 0:0.05:2
-	corr = zeros(length(trange_test))
-	for (ti,t) in enumerate(trange_test)
-		@time corr[ti] = 2-2*otoc(H,op1,op2,t,ψ0)
-		@info t
-	end
-end
-
-# ╔═╡ 0f3581f7-2a84-44a4-b6d4-6fab0c4d87b7
-plot(trange_test, corr; xlabel = "time t", ylabel ="<|[σ_i(t),σ_j]|^2>", legend=nothing)
-
-# ╔═╡ 90d958b5-65db-48f6-9c59-27c4e2f436da
-md"## Light Cones"
-
-# ╔═╡ 8895f082-8f05-4925-a3dc-4fb22f5a4f95
+# ╔═╡ 5fcf9aca-0a55-4152-bb79-8f91884908dc
 function otoc_spat(H,opi,opj,i,t,ψ,N) #opj in single-particle Hilbert space
 	σiUψ = opi * exponentiate(H,-im*t,ψ)[1]
 	UσiUψ = exponentiate(H,im*t,σiUψ)[1]
@@ -151,70 +131,86 @@ function otoc_spat(H,opi,opj,i,t,ψ,N) #opj in single-particle Hilbert space
 	return C
 end
 
-# ╔═╡ bed4a646-8ba4-46c7-8fa9-3ca4a77981d5
+# ╔═╡ 999fe623-7ae0-4d0e-813b-2a968ee33931
+md"## Parameters"
+
+# ╔═╡ 2d888cfe-3f18-47d1-bd2a-ccbfa83ae6dd
+
+
+# ╔═╡ 77fe9034-6d1c-4a27-9c86-71b934105b62
+begin
+	N = 11 #System size
+	S = 20 #Shots
+	N_qt = 10 #Number of initial states
+	H0 = xxz_nn(N)
+	ψ0 = normalize!(ones(2^N))
+	ψ = zeros(2^N)
+	hs = 0:0.5:4.5
+	i = 3
+	trange = 0:0.1:5
+end
+
+# ╔═╡ 96d98d3d-750c-4db3-9845-e7501a11ac48
 begin
 	# Save on propagations by calculating this in a smart way
-	i = 3
+	corr_qt_h_S = zeros(Float64,N_qt,length(hs),S,length(trange),N)
 	σzi = single_spin_op(σz,i,N)
-	trange = 0:0.1:1
-	otocs = zeros(length(trange),N)
-	for (ti,t) in enumerate(trange)
-		otocs[ti,:] = otoc_spat(H,σzi,σz,i,t,ψ0,N)
-	end
-	corrs = 2*ones(length(trange),N)-2*otocs
-	heatmap(1:N, trange, corrs, c = :viridis)
-end
-
-# ╔═╡ 1fa2ab77-3622-498e-9a8b-0abe2e1de288
-md"## EXTRA: Sample initial states"
-
-# ╔═╡ 97a322c6-7ee9-4cd8-aa77-8ad610714cb0
-function magnetisation(σ,ψ,N)
-	S = 0
-	for i in 1:N
-		σ_i = single_spin_op(σ,i,N)
-		S += dot(ψ,σ_i,ψ)
-	end
-	return S
-end
-
-# ╔═╡ 34aa8526-99aa-4a40-b544-f4edc8f53ee8
-begin
-	ψ = normalize!(rand(Float64,2^N)-0.5*ones(2^N))
-	magnetisation(σz,ψ,N)
-end
-
-# ╔═╡ d2515acd-7a01-4b7c-b1cf-2f033b856b66
-begin
-	N_ins = 10
-	otocs_rand = zeros(N_ins,length(trange),N)
-	for ins in 1:N_ins
-		ψ = normalize!(rand(Float64,2^N)-0.5*ones(2^N))
-		for (ti,t) in enumerate(trange)
-			otocs_rand[ins,ti,:] = otoc_spat(H,σzi,σz,i,t,ψ,N)
+	for ni in 1:N_qt
+		@debug ni
+		ψ = random_state(N)
+		for (hi,h) in enumerate(hs)
+			@info h
+			for s in 1:S
+				H = H0 + field_term(h,N)
+				for (ti,t) in enumerate(trange)
+					#@debug t
+					corr_qt_h_S[ni,hi,s,ti,:] = 2*ones(N)-2*otoc_spat(H,σzi,σz,i,t,ψ,N)
+				end
+			end
 		end
 	end
-	corr_rand = 2*ones(N_ins,length(trange),N)-2*otocs_rand
 end
 
-# ╔═╡ 7abb51a2-c897-4450-af3d-17eba14d0e89
-heatmap(1:N, trange, corr_rand[7,:,:],c=:viridis)
+# ╔═╡ ee4906dd-0e74-4a2b-9cbf-facad976ca78
+begin
+	#Disorder average
+	corr_h = zeros(Float64,length(hs),length(trange),N)
+	corr_h_S = zeros(Float64,length(hs),S,length(trange),N)
+	for ni in 1:N_qt
+		corr_h_S += corr_qt_h_S[ni,:,:,:,:]/N_qt
+	end
+	for s in 1:S
+		corr_h += corr_h_S[:,s,:,:]/S
+	end
+end
 
-# ╔═╡ 5e429a13-036e-488c-94cc-b06fb13b9ed0
-heatmap(1:N,trange,sum(corr_rand,dims=1)[1,:,:]/N_ins,c=:viridis)
+# ╔═╡ b1341c60-09bc-4a63-8ef8-64e0ac2093ad
+JLD2.jldsave(joinpath(pwd(),"xxznn_qt_pos.jld2"); corr_h) 
+
+# ╔═╡ f4751c8b-27e1-40d2-9681-c7e74e56c28c
+@bind hi Slider(1:length(hs))
+
+# ╔═╡ d9390576-035e-435b-b2ca-6df47ac78c29
+heatmap(1:N, trange, corr_h[hi,:,:], c = :viridis, title="h=$(hs[hi])")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+JLD2 = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
 KrylovKit = "0b1a1467-8014-51b9-945f-bf0ae24f4b77"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 SpinSymmetry = "ebcc8a00-959b-4e58-a088-282ffd8a4f25"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
+JLD2 = "~0.4.18"
 KrylovKit = "~0.5.3"
-Plots = "~1.25.3"
+Plots = "~1.25.7"
+PlutoUI = "~0.7.32"
 SpinSymmetry = "~0.3.3"
 """
 
@@ -222,11 +218,17 @@ SpinSymmetry = "~0.3.3"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
+[[AbstractPlutoDingetjes]]
+deps = ["Pkg"]
+git-tree-sha1 = "8eaf9f1b4921132a4cff3f36a1d9ba923b14a481"
+uuid = "6e696c72-6542-2067-7265-42206c756150"
+version = "1.1.4"
+
 [[Adapt]]
 deps = ["LinearAlgebra"]
-git-tree-sha1 = "84918055d15b3114ede17ac6a7182f68870c16f7"
+git-tree-sha1 = "af92965fb30777147966f58acb05da51c5616b5f"
 uuid = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
-version = "3.3.1"
+version = "3.3.3"
 
 [[ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -251,9 +253,9 @@ version = "1.16.1+1"
 
 [[ChainRulesCore]]
 deps = ["Compat", "LinearAlgebra", "SparseArrays"]
-git-tree-sha1 = "4c26b4e9e91ca528ea212927326ece5918a04b47"
+git-tree-sha1 = "54fc4400de6e5c3e27be6047da2ef6ba355511f8"
 uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-version = "1.11.2"
+version = "1.11.6"
 
 [[ChangesOfVariables]]
 deps = ["ChainRulesCore", "LinearAlgebra", "Test"]
@@ -263,9 +265,9 @@ version = "0.1.2"
 
 [[ColorSchemes]]
 deps = ["ColorTypes", "Colors", "FixedPointNumbers", "Random"]
-git-tree-sha1 = "a851fec56cb73cfdf43762999ec72eff5b86882a"
+git-tree-sha1 = "6b6f04f93710c71550ec7e16b650c1b9a612d0b6"
 uuid = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
-version = "3.15.0"
+version = "3.16.0"
 
 [[ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
@@ -357,6 +359,12 @@ git-tree-sha1 = "d8a578692e3077ac998b50c0217dfd67f21d1e5f"
 uuid = "b22a6f82-2f65-5046-a5b2-351ab43fb4e5"
 version = "4.4.0+0"
 
+[[FileIO]]
+deps = ["Pkg", "Requires", "UUIDs"]
+git-tree-sha1 = "67551df041955cc6ee2ed098718c8fcd7fc7aebe"
+uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+version = "1.12.0"
+
 [[FixedPointNumbers]]
 deps = ["Statistics"]
 git-tree-sha1 = "335bfdceacc84c5cdf16aadc768aa5ddfc5383cc"
@@ -394,16 +402,16 @@ uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
 version = "3.3.5+1"
 
 [[GR]]
-deps = ["Base64", "DelimitedFiles", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Printf", "Random", "Serialization", "Sockets", "Test", "UUIDs"]
-git-tree-sha1 = "30f2b340c2fff8410d89bfcdc9c0a6dd661ac5f7"
+deps = ["Base64", "DelimitedFiles", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Printf", "Random", "RelocatableFolders", "Serialization", "Sockets", "Test", "UUIDs"]
+git-tree-sha1 = "4a740db447aae0fbeb3ee730de1afbb14ac798a1"
 uuid = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
-version = "0.62.1"
+version = "0.63.1"
 
 [[GR_jll]]
 deps = ["Artifacts", "Bzip2_jll", "Cairo_jll", "FFMPEG_jll", "Fontconfig_jll", "GLFW_jll", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Libtiff_jll", "Pixman_jll", "Pkg", "Qt5Base_jll", "Zlib_jll", "libpng_jll"]
-git-tree-sha1 = "f97acd98255568c3c9b416c5a3cf246c1315771b"
+git-tree-sha1 = "aa22e1ee9e722f1da183eb33370df4c1aeb6c2cd"
 uuid = "d2c73de3-f751-5644-a686-071e5b155ba9"
-version = "0.63.0+0"
+version = "0.63.1+0"
 
 [[GeometryBasics]]
 deps = ["EarCut_jll", "IterTools", "LinearAlgebra", "StaticArrays", "StructArrays", "Tables"]
@@ -446,6 +454,23 @@ git-tree-sha1 = "129acf094d168394e80ee1dc4bc06ec835e510a3"
 uuid = "2e76f6c2-a576-52d4-95c1-20adfe4de566"
 version = "2.8.1+1"
 
+[[Hyperscript]]
+deps = ["Test"]
+git-tree-sha1 = "8d511d5b81240fc8e6802386302675bdf47737b9"
+uuid = "47d2ed2b-36de-50cf-bf87-49c2cf4b8b91"
+version = "0.0.4"
+
+[[HypertextLiteral]]
+git-tree-sha1 = "2b078b5a615c6c0396c77810d92ee8c6f470d238"
+uuid = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
+version = "0.9.3"
+
+[[IOCapture]]
+deps = ["Logging", "Random"]
+git-tree-sha1 = "f7be53659ab06ddc986428d3a9dcc95f6fa6705a"
+uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
+version = "0.2.2"
+
 [[IniFile]]
 deps = ["Test"]
 git-tree-sha1 = "098e4d2c533924c921f9f9847274f2ad89e018b8"
@@ -477,11 +502,17 @@ git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
 uuid = "82899510-4779-5014-852e-03e436cf321d"
 version = "1.0.0"
 
+[[JLD2]]
+deps = ["DataStructures", "FileIO", "MacroTools", "Mmap", "Pkg", "Printf", "Reexport", "TranscodingStreams", "UUIDs"]
+git-tree-sha1 = "39f22411266cdd1621092c762a3f0648dbdc8433"
+uuid = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
+version = "0.4.18"
+
 [[JLLWrappers]]
 deps = ["Preferences"]
-git-tree-sha1 = "642a199af8b68253517b80bd3bfd17eb4e84df6e"
+git-tree-sha1 = "22df5b96feef82434b07327e2d3c770a9b21e023"
 uuid = "692b3bcd-3c85-4b1f-b108-f13ce0eb3210"
-version = "1.3.0"
+version = "1.4.0"
 
 [[JSON]]
 deps = ["Dates", "Mmap", "Parsers", "Unicode"]
@@ -657,9 +688,9 @@ version = "1.3.5+1"
 
 [[OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "15003dcb7d8db3c6c857fda14891a539a8f2705a"
+git-tree-sha1 = "648107615c15d4e09f7eca16307bc821c1f718d8"
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "1.1.10+0"
+version = "1.1.13+0"
 
 [[Opus_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -680,9 +711,9 @@ version = "8.44.0+0"
 
 [[Parsers]]
 deps = ["Dates"]
-git-tree-sha1 = "d7fa6237da8004be601e19bd6666083056649918"
+git-tree-sha1 = "92f91ba9e5941fc781fecf5494ac1da87bdac775"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.1.3"
+version = "2.2.0"
 
 [[Pixman_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -702,15 +733,21 @@ version = "2.0.1"
 
 [[PlotUtils]]
 deps = ["ColorSchemes", "Colors", "Dates", "Printf", "Random", "Reexport", "Statistics"]
-git-tree-sha1 = "68604313ed59f0408313228ba09e79252e4b2da8"
+git-tree-sha1 = "6f1b25e8ea06279b5689263cc538f51331d7ca17"
 uuid = "995b91a9-d308-5afd-9ec6-746e21dbc043"
-version = "1.1.2"
+version = "1.1.3"
 
 [[Plots]]
 deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "GeometryBasics", "JSON", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "PlotThemes", "PlotUtils", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "Requires", "Scratch", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "Unzip"]
-git-tree-sha1 = "7eda8e2a61e35b7f553172ef3d9eaa5e4e76d92e"
+git-tree-sha1 = "7e4920a7d4323b8ffc3db184580598450bde8a8e"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-version = "1.25.3"
+version = "1.25.7"
+
+[[PlutoUI]]
+deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "UUIDs"]
+git-tree-sha1 = "ae6145ca68947569058866e443df69587acc1806"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.32"
 
 [[Preferences]]
 deps = ["TOML"]
@@ -743,20 +780,26 @@ version = "1.2.1"
 
 [[RecipesPipeline]]
 deps = ["Dates", "NaNMath", "PlotUtils", "RecipesBase"]
-git-tree-sha1 = "7ad0dfa8d03b7bcf8c597f59f5292801730c55b8"
+git-tree-sha1 = "37c1631cb3cc36a535105e6d5557864c82cd8c2b"
 uuid = "01d81517-befc-4cb6-b9ec-a95719d0359c"
-version = "0.4.1"
+version = "0.5.0"
 
 [[Reexport]]
 git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "1.2.2"
 
+[[RelocatableFolders]]
+deps = ["SHA", "Scratch"]
+git-tree-sha1 = "cdbd3b1338c72ce29d9584fdbe9e9b70eeb5adca"
+uuid = "05181044-ff0b-4ac5-8273-598c1e38db00"
+version = "0.1.3"
+
 [[Requires]]
 deps = ["UUIDs"]
-git-tree-sha1 = "8f82019e525f4d5c669692772a6f4b0a58b06a6a"
+git-tree-sha1 = "838a3a4188e2ded87a4f9f184b4b0d78a1e91cb7"
 uuid = "ae029012-a4dd-5104-9daa-d747884805df"
-version = "1.2.0"
+version = "1.3.0"
 
 [[SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
@@ -801,9 +844,9 @@ version = "0.3.3"
 
 [[StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]
-git-tree-sha1 = "3c76dde64d03699e074ac02eb2e8ba8254d428da"
+git-tree-sha1 = "2884859916598f974858ff01df7dfc6c708dd895"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "1.2.13"
+version = "1.3.3"
 
 [[Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -816,15 +859,15 @@ version = "1.2.0"
 
 [[StatsBase]]
 deps = ["DataAPI", "DataStructures", "LinearAlgebra", "LogExpFunctions", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics", "StatsAPI"]
-git-tree-sha1 = "2bb0cb32026a66037360606510fca5984ccc6b75"
+git-tree-sha1 = "51383f2d367eb3b444c961d485c565e4c0cf4ba0"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-version = "0.33.13"
+version = "0.33.14"
 
 [[StructArrays]]
 deps = ["Adapt", "DataAPI", "StaticArrays", "Tables"]
-git-tree-sha1 = "2ce41e0d042c60ecd131e9fb7154a3bfadbf50d3"
+git-tree-sha1 = "d21f2c564b21a202f4677c0fba5b5ee431058544"
 uuid = "09ab397b-f2b6-538f-b94a-2f83cf4a842a"
-version = "0.6.3"
+version = "0.6.4"
 
 [[TOML]]
 deps = ["Dates"]
@@ -849,6 +892,12 @@ uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
 [[Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[[TranscodingStreams]]
+deps = ["Random", "Test"]
+git-tree-sha1 = "216b95ea110b5972db65aa90f88d8d89dcb8851c"
+uuid = "3bb67fe8-82b1-5028-8e26-92a6c54297fa"
+version = "0.9.6"
 
 [[URIs]]
 git-tree-sha1 = "97bbe755a53fe859669cd907f2d96aee8d2c1355"
@@ -1085,29 +1134,22 @@ version = "0.9.1+5"
 """
 
 # ╔═╡ Cell order:
-# ╠═2603767a-672e-11ec-0701-23ca6ce80744
-# ╠═093a5d84-442f-433b-9882-376178ebd39a
-# ╠═8b8d34d5-6a8b-4941-ac1d-8ee184ff8189
-# ╠═b01260be-e1dd-4f5b-a9a2-7057c0e7b318
-# ╠═90b25f78-4fb7-4d7d-ba7d-8f9ec2c2ad3e
-# ╠═b85d9115-c469-4a80-800c-eae938fbb7a3
-# ╠═27ba3757-7fe7-4e5c-adb8-faa80c6e53a7
-# ╠═5c5ffce4-dee6-420f-bca3-2948118ab769
-# ╠═2a0f44fa-def8-4371-af55-c6a677f7af3d
-# ╠═00fa04a3-4ea4-495e-8e7d-d772de088f1e
-# ╠═d06f2f8e-61a8-41ba-b837-ffe0fcdc0492
-# ╠═9264c292-a446-45f7-8d85-a62b2260c4d4
-# ╠═81cc7b61-b31e-4156-8cb5-1dafb3cb0071
-# ╠═8f8bcdc3-723b-4232-b467-9ff22f098679
-# ╠═0f3581f7-2a84-44a4-b6d4-6fab0c4d87b7
-# ╠═90d958b5-65db-48f6-9c59-27c4e2f436da
-# ╠═8895f082-8f05-4925-a3dc-4fb22f5a4f95
-# ╠═bed4a646-8ba4-46c7-8fa9-3ca4a77981d5
-# ╠═1fa2ab77-3622-498e-9a8b-0abe2e1de288
-# ╠═97a322c6-7ee9-4cd8-aa77-8ad610714cb0
-# ╠═34aa8526-99aa-4a40-b544-f4edc8f53ee8
-# ╠═d2515acd-7a01-4b7c-b1cf-2f033b856b66
-# ╠═7abb51a2-c897-4450-af3d-17eba14d0e89
-# ╠═5e429a13-036e-488c-94cc-b06fb13b9ed0
+# ╠═39ac20a2-7ee0-11ec-3db3-e5ca7a3b06fa
+# ╠═fc729bbf-53ca-45ea-bd3f-daf4fbb38de1
+# ╠═2da71c83-a355-4e30-a689-a69cff16c961
+# ╠═efca3be9-2e8b-4297-a2c1-91c94d77afe9
+# ╠═d71a2a21-a579-470c-a055-08dcca9150c8
+# ╠═29264873-ea0a-464c-823c-fb62195e6888
+# ╠═4d44507e-9cc6-4e15-8eb6-341d34f866cb
+# ╠═b549b7ca-2070-4d31-a1bc-e713035ba77c
+# ╠═5fcf9aca-0a55-4152-bb79-8f91884908dc
+# ╠═999fe623-7ae0-4d0e-813b-2a968ee33931
+# ╠═2d888cfe-3f18-47d1-bd2a-ccbfa83ae6dd
+# ╠═77fe9034-6d1c-4a27-9c86-71b934105b62
+# ╠═96d98d3d-750c-4db3-9845-e7501a11ac48
+# ╠═ee4906dd-0e74-4a2b-9cbf-facad976ca78
+# ╠═b1341c60-09bc-4a63-8ef8-64e0ac2093ad
+# ╠═f4751c8b-27e1-40d2-9681-c7e74e56c28c
+# ╠═d9390576-035e-435b-b2ca-6df47ac78c29
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

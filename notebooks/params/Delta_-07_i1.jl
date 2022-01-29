@@ -1,22 +1,25 @@
 ### A Pluto.jl notebook ###
-# v0.17.7
+# v0.17.2
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 2603767a-672e-11ec-0701-23ca6ce80744
+# ╔═╡ c37255f8-73dd-11ec-2fcd-fd49336c0164
 using SparseArrays, LinearAlgebra, Plots
 
-# ╔═╡ 093a5d84-442f-433b-9882-376178ebd39a
+# ╔═╡ a28c60f4-5734-4507-b2f1-0616ed9de74b
 using SpinSymmetry
 
-# ╔═╡ 8b8d34d5-6a8b-4941-ac1d-8ee184ff8189
+# ╔═╡ ce498c7a-fc20-40e6-9669-446368fbee5f
 using KrylovKit
 
-# ╔═╡ b01260be-e1dd-4f5b-a9a2-7057c0e7b318
+# ╔═╡ 196c8e2a-0557-4323-b54d-1622367e0ff9
+md"# Definitions with $\Delta = -0.7$"
+
+# ╔═╡ b290dc1a-a971-4807-a1e3-9a0d49738761
 md"## Create Hamiltonian"
 
-# ╔═╡ 90b25f78-4fb7-4d7d-ba7d-8f9ec2c2ad3e
+# ╔═╡ a6b9eb67-5e4c-49de-bdc6-e9728c5a77be
 begin
 	const σplus = sparse([2],[1],[1],2,2)
 	const σminus = sparse([1],[2],[1],2,2)
@@ -24,7 +27,7 @@ begin
 	const σx = sparse([1,2],[2,1],[1,1])
 	const ⊗ = kron
 
-	const Δ = -2
+	const Δ = -0.7
 
 	speye(k) = spdiagm(ones(k))
 	𝟙(N) = speye(2^N)
@@ -54,7 +57,7 @@ begin
 	end
 end
 
-# ╔═╡ 27ba3757-7fe7-4e5c-adb8-faa80c6e53a7
+# ╔═╡ ce43c289-3526-4d16-9b01-cc2e4810e132
 md"""
 ## Calculate OTOC
 ```math
@@ -66,7 +69,7 @@ U(t) = \exp(-iHt)
 ```
 """
 
-# ╔═╡ 5c5ffce4-dee6-420f-bca3-2948118ab769
+# ╔═╡ e4616a5f-5632-4982-8849-3283684cdc22
 function otoc(H,A,B,t,ψ)
 	state = B*ψ
 	state = exponentiate(H,-im*t,state)[1]
@@ -79,64 +82,7 @@ function otoc(H,A,B,t,ψ)
 	return real(dot(ψ,state))
 end
 
-# ╔═╡ 2a0f44fa-def8-4371-af55-c6a677f7af3d
-begin
-	N = 8
-	H = xxz(N,6)
-	ψ0 = normalize!(ones(2^N))
-end
-
-# ╔═╡ b85d9115-c469-4a80-800c-eae938fbb7a3
-begin
-	function computeJ(posdata, shot, rhoIndex)
-		rho = posdata.ρs[rhoIndex]
-		J = interaction_matrix(
-				PowerLaw(6), 
-				geometry_from_density(posdata.geometry, rho, posdata.system_size,1),
-				posdata.data[:,:,shot,rhoIndex])
-	end
-	
-	function hamiltonian(J)
-		H = xxz(J, -0.7)
-		return symmetrize_operator(H, N, div(N-1,2))
-	end
-end
-
-# ╔═╡ 00fa04a3-4ea4-495e-8e7d-d772de088f1e
-begin
-	op1 = single_spin_op(σz,5,N)
-	op2 = single_spin_op(σz,1,N)
-end
-
-# ╔═╡ d06f2f8e-61a8-41ba-b837-ffe0fcdc0492
-op1 == σz⊗𝟙(N-1)
-
-# ╔═╡ 9264c292-a446-45f7-8d85-a62b2260c4d4
-let trange = 0:0.1:5,
-	p = plot(; xlabel="time t", ylabel="<|[σ_i(t),σ_j]|^2>", legend=nothing)
-	plot!(trange, 2*ones(length(trange))-2*otoc.(Ref(H), Ref(op1), Ref(op2), trange, Ref(ψ0)))
-end
-
-# ╔═╡ 81cc7b61-b31e-4156-8cb5-1dafb3cb0071
-println("N=$N\n")
-
-# ╔═╡ 8f8bcdc3-723b-4232-b467-9ff22f098679
-begin
-	trange_test = 0:0.05:2
-	corr = zeros(length(trange_test))
-	for (ti,t) in enumerate(trange_test)
-		@time corr[ti] = 2-2*otoc(H,op1,op2,t,ψ0)
-		@info t
-	end
-end
-
-# ╔═╡ 0f3581f7-2a84-44a4-b6d4-6fab0c4d87b7
-plot(trange_test, corr; xlabel = "time t", ylabel ="<|[σ_i(t),σ_j]|^2>", legend=nothing)
-
-# ╔═╡ 90d958b5-65db-48f6-9c59-27c4e2f436da
-md"## Light Cones"
-
-# ╔═╡ 8895f082-8f05-4925-a3dc-4fb22f5a4f95
+# ╔═╡ 79f97c6a-bd48-4532-9a17-634abc3a5d9f
 function otoc_spat(H,opi,opj,i,t,ψ,N) #opj in single-particle Hilbert space
 	σiUψ = opi * exponentiate(H,-im*t,ψ)[1]
 	UσiUψ = exponentiate(H,im*t,σiUψ)[1]
@@ -151,57 +97,58 @@ function otoc_spat(H,opi,opj,i,t,ψ,N) #opj in single-particle Hilbert space
 	return C
 end
 
-# ╔═╡ bed4a646-8ba4-46c7-8fa9-3ca4a77981d5
+# ╔═╡ 6efe2f4e-fa40-4495-afc6-7f3ded2acee5
+md"# Run simulation for different $\alpha$'s"
+
+# ╔═╡ b1075b2b-8631-4910-b590-16c7f0a54e1e
 begin
-	# Save on propagations by calculating this in a smart way
-	i = 3
-	σzi = single_spin_op(σz,i,N)
-	trange = 0:0.1:1
+	N = 12
+	i = 1
+	trange = 0:0.1:5
+	interaction_params = [1.2,2.4,3,6,12]
+	
+	ψ0 = normalize!(ones(2^N))
 	otocs = zeros(length(trange),N)
-	for (ti,t) in enumerate(trange)
-		otocs[ti,:] = otoc_spat(H,σzi,σz,i,t,ψ0,N)
-	end
-	corrs = 2*ones(length(trange),N)-2*otocs
-	heatmap(1:N, trange, corrs, c = :viridis)
-end
+	σzi = single_spin_op(σz,i,N)
+	corr_array = zeros(length(interaction_params),length(trange),N)
 
-# ╔═╡ 1fa2ab77-3622-498e-9a8b-0abe2e1de288
-md"## EXTRA: Sample initial states"
-
-# ╔═╡ 97a322c6-7ee9-4cd8-aa77-8ad610714cb0
-function magnetisation(σ,ψ,N)
-	S = 0
-	for i in 1:N
-		σ_i = single_spin_op(σ,i,N)
-		S += dot(ψ,σ_i,ψ)
-	end
-	return S
-end
-
-# ╔═╡ 34aa8526-99aa-4a40-b544-f4edc8f53ee8
-begin
-	ψ = normalize!(rand(Float64,2^N)-0.5*ones(2^N))
-	magnetisation(σz,ψ,N)
-end
-
-# ╔═╡ d2515acd-7a01-4b7c-b1cf-2f033b856b66
-begin
-	N_ins = 10
-	otocs_rand = zeros(N_ins,length(trange),N)
-	for ins in 1:N_ins
-		ψ = normalize!(rand(Float64,2^N)-0.5*ones(2^N))
+	for (h,α) in enumerate(interaction_params)
+		H = xxz(N,α)
 		for (ti,t) in enumerate(trange)
-			otocs_rand[ins,ti,:] = otoc_spat(H,σzi,σz,i,t,ψ,N)
+			corr_array[h,ti,:] = 2*ones(N)-2*otoc_spat(H,σzi,σz,i,t,ψ0,N)
 		end
 	end
-	corr_rand = 2*ones(N_ins,length(trange),N)-2*otocs_rand
 end
 
-# ╔═╡ 7abb51a2-c897-4450-af3d-17eba14d0e89
-heatmap(1:N, trange, corr_rand[7,:,:],c=:viridis)
+# ╔═╡ 9ccb4ce0-7b2e-4e89-ab57-bcb852172661
+md"# $\alpha = 1.2$"
 
-# ╔═╡ 5e429a13-036e-488c-94cc-b06fb13b9ed0
-heatmap(1:N,trange,sum(corr_rand,dims=1)[1,:,:]/N_ins,c=:viridis)
+# ╔═╡ 946229e7-fe86-41a7-a5d4-eb4052f783ab
+heatmap(1:N, trange, corr_array[1,:,:], c = :viridis)
+
+# ╔═╡ f1e6a006-d2c0-4c3a-aa73-8b20f2ca9fa5
+md"# $\alpha = 2.4$"
+
+# ╔═╡ 3ded8993-d818-4797-8adb-563f9fd84257
+heatmap(1:N, trange, corr_array[2,:,:], c = :viridis)
+
+# ╔═╡ 8302a064-35ee-4655-b14e-36435683bd5b
+md"# $\alpha = 3$"
+
+# ╔═╡ 3f9ee1ee-8af7-4527-bd29-f0c1ccf4f2ad
+heatmap(1:N, trange, corr_array[3,:,:], c = :viridis)
+
+# ╔═╡ 55c29d01-4f45-49f7-b402-27167d816051
+md"# $\alpha = 6$"
+
+# ╔═╡ 9f97c215-4e9b-4558-acc2-a4b98b7b93ad
+heatmap(1:N, trange, corr_array[4,:,:], c = :viridis)
+
+# ╔═╡ a6f9f997-66c8-4b17-9624-f9a3ab64b844
+md"# $\alpha = 12$"
+
+# ╔═╡ f0f9f277-fc15-4e84-bf33-b4d3e8ad8526
+heatmap(1:N, trange, corr_array[5,:,:], c = :viridis)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -214,7 +161,7 @@ SpinSymmetry = "ebcc8a00-959b-4e58-a088-282ffd8a4f25"
 
 [compat]
 KrylovKit = "~0.5.3"
-Plots = "~1.25.3"
+Plots = "~1.25.5"
 SpinSymmetry = "~0.3.3"
 """
 
@@ -224,9 +171,9 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 [[Adapt]]
 deps = ["LinearAlgebra"]
-git-tree-sha1 = "84918055d15b3114ede17ac6a7182f68870c16f7"
+git-tree-sha1 = "af92965fb30777147966f58acb05da51c5616b5f"
 uuid = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
-version = "3.3.1"
+version = "3.3.3"
 
 [[ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -251,9 +198,9 @@ version = "1.16.1+1"
 
 [[ChainRulesCore]]
 deps = ["Compat", "LinearAlgebra", "SparseArrays"]
-git-tree-sha1 = "4c26b4e9e91ca528ea212927326ece5918a04b47"
+git-tree-sha1 = "926870acb6cbcf029396f2f2de030282b6bc1941"
 uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-version = "1.11.2"
+version = "1.11.4"
 
 [[ChangesOfVariables]]
 deps = ["ChainRulesCore", "LinearAlgebra", "Test"]
@@ -263,9 +210,9 @@ version = "0.1.2"
 
 [[ColorSchemes]]
 deps = ["ColorTypes", "Colors", "FixedPointNumbers", "Random"]
-git-tree-sha1 = "a851fec56cb73cfdf43762999ec72eff5b86882a"
+git-tree-sha1 = "6b6f04f93710c71550ec7e16b650c1b9a612d0b6"
 uuid = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
-version = "3.15.0"
+version = "3.16.0"
 
 [[ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
@@ -395,9 +342,9 @@ version = "3.3.5+1"
 
 [[GR]]
 deps = ["Base64", "DelimitedFiles", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Printf", "Random", "Serialization", "Sockets", "Test", "UUIDs"]
-git-tree-sha1 = "30f2b340c2fff8410d89bfcdc9c0a6dd661ac5f7"
+git-tree-sha1 = "b9a93bcdf34618031891ee56aad94cfff0843753"
 uuid = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
-version = "0.62.1"
+version = "0.63.0"
 
 [[GR_jll]]
 deps = ["Artifacts", "Bzip2_jll", "Cairo_jll", "FFMPEG_jll", "Fontconfig_jll", "GLFW_jll", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Libtiff_jll", "Pixman_jll", "Pkg", "Qt5Base_jll", "Zlib_jll", "libpng_jll"]
@@ -657,9 +604,9 @@ version = "1.3.5+1"
 
 [[OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "15003dcb7d8db3c6c857fda14891a539a8f2705a"
+git-tree-sha1 = "648107615c15d4e09f7eca16307bc821c1f718d8"
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "1.1.10+0"
+version = "1.1.13+0"
 
 [[Opus_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -708,9 +655,9 @@ version = "1.1.2"
 
 [[Plots]]
 deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "GeometryBasics", "JSON", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "PlotThemes", "PlotUtils", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "Requires", "Scratch", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "Unzip"]
-git-tree-sha1 = "7eda8e2a61e35b7f553172ef3d9eaa5e4e76d92e"
+git-tree-sha1 = "68e602f447344154f3b80f7d14bfb459a0f4dadf"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-version = "1.25.3"
+version = "1.25.5"
 
 [[Preferences]]
 deps = ["TOML"]
@@ -801,9 +748,9 @@ version = "0.3.3"
 
 [[StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]
-git-tree-sha1 = "3c76dde64d03699e074ac02eb2e8ba8254d428da"
+git-tree-sha1 = "88a559da57529581472320892576a486fa2377b9"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "1.2.13"
+version = "1.3.1"
 
 [[Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -816,9 +763,9 @@ version = "1.2.0"
 
 [[StatsBase]]
 deps = ["DataAPI", "DataStructures", "LinearAlgebra", "LogExpFunctions", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics", "StatsAPI"]
-git-tree-sha1 = "2bb0cb32026a66037360606510fca5984ccc6b75"
+git-tree-sha1 = "51383f2d367eb3b444c961d485c565e4c0cf4ba0"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-version = "0.33.13"
+version = "0.33.14"
 
 [[StructArrays]]
 deps = ["Adapt", "DataAPI", "StaticArrays", "Tables"]
@@ -1053,9 +1000,9 @@ version = "1.6.38+0"
 
 [[libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll", "Pkg"]
-git-tree-sha1 = "b910cb81ef3fe6e78bf6acee440bda86fd6ae00c"
+git-tree-sha1 = "c45f4e40e7aafe9d086379e5578947ec8b95a8fb"
 uuid = "f27f6e37-5d2b-51aa-960f-b287f2bc3b7a"
-version = "1.3.7+1"
+version = "1.3.7+0"
 
 [[nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -1085,29 +1032,26 @@ version = "0.9.1+5"
 """
 
 # ╔═╡ Cell order:
-# ╠═2603767a-672e-11ec-0701-23ca6ce80744
-# ╠═093a5d84-442f-433b-9882-376178ebd39a
-# ╠═8b8d34d5-6a8b-4941-ac1d-8ee184ff8189
-# ╠═b01260be-e1dd-4f5b-a9a2-7057c0e7b318
-# ╠═90b25f78-4fb7-4d7d-ba7d-8f9ec2c2ad3e
-# ╠═b85d9115-c469-4a80-800c-eae938fbb7a3
-# ╠═27ba3757-7fe7-4e5c-adb8-faa80c6e53a7
-# ╠═5c5ffce4-dee6-420f-bca3-2948118ab769
-# ╠═2a0f44fa-def8-4371-af55-c6a677f7af3d
-# ╠═00fa04a3-4ea4-495e-8e7d-d772de088f1e
-# ╠═d06f2f8e-61a8-41ba-b837-ffe0fcdc0492
-# ╠═9264c292-a446-45f7-8d85-a62b2260c4d4
-# ╠═81cc7b61-b31e-4156-8cb5-1dafb3cb0071
-# ╠═8f8bcdc3-723b-4232-b467-9ff22f098679
-# ╠═0f3581f7-2a84-44a4-b6d4-6fab0c4d87b7
-# ╠═90d958b5-65db-48f6-9c59-27c4e2f436da
-# ╠═8895f082-8f05-4925-a3dc-4fb22f5a4f95
-# ╠═bed4a646-8ba4-46c7-8fa9-3ca4a77981d5
-# ╠═1fa2ab77-3622-498e-9a8b-0abe2e1de288
-# ╠═97a322c6-7ee9-4cd8-aa77-8ad610714cb0
-# ╠═34aa8526-99aa-4a40-b544-f4edc8f53ee8
-# ╠═d2515acd-7a01-4b7c-b1cf-2f033b856b66
-# ╠═7abb51a2-c897-4450-af3d-17eba14d0e89
-# ╠═5e429a13-036e-488c-94cc-b06fb13b9ed0
+# ╠═c37255f8-73dd-11ec-2fcd-fd49336c0164
+# ╠═a28c60f4-5734-4507-b2f1-0616ed9de74b
+# ╠═ce498c7a-fc20-40e6-9669-446368fbee5f
+# ╠═196c8e2a-0557-4323-b54d-1622367e0ff9
+# ╠═b290dc1a-a971-4807-a1e3-9a0d49738761
+# ╠═a6b9eb67-5e4c-49de-bdc6-e9728c5a77be
+# ╠═ce43c289-3526-4d16-9b01-cc2e4810e132
+# ╠═e4616a5f-5632-4982-8849-3283684cdc22
+# ╠═79f97c6a-bd48-4532-9a17-634abc3a5d9f
+# ╠═6efe2f4e-fa40-4495-afc6-7f3ded2acee5
+# ╠═b1075b2b-8631-4910-b590-16c7f0a54e1e
+# ╠═9ccb4ce0-7b2e-4e89-ab57-bcb852172661
+# ╠═946229e7-fe86-41a7-a5d4-eb4052f783ab
+# ╠═f1e6a006-d2c0-4c3a-aa73-8b20f2ca9fa5
+# ╠═3ded8993-d818-4797-8adb-563f9fd84257
+# ╠═8302a064-35ee-4655-b14e-36435683bd5b
+# ╠═3f9ee1ee-8af7-4527-bd29-f0c1ccf4f2ad
+# ╠═55c29d01-4f45-49f7-b402-27167d816051
+# ╠═9f97c215-4e9b-4558-acc2-a4b98b7b93ad
+# ╠═a6f9f997-66c8-4b17-9624-f9a3ab64b844
+# ╠═f0f9f277-fc15-4e84-bf33-b4d3e8ad8526
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
