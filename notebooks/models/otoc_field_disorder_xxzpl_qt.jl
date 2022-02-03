@@ -132,14 +132,17 @@ md"## Parameters"
 begin
 	N = 11 #System size
 	S = 20 #Shots
-	N_qt = 10 #Number of initial states
+	N_qt = 5 #Number of initial states
 	H0 = xxz(N,6)
 	ψ0 = normalize!(ones(2^N))
 	ψ = zeros(2^N)
-	hs = 0:0.5:4.5
+	hs = 0:0.5:4
 	i = 3
-	trange = 0:0.1:5
+	trange = 0:0.1:4
 end
+
+# ╔═╡ 23c82b87-3e92-4802-afd6-22e8503c22ea
+	σzii = single_spin_op(σz,i,N)
 
 # ╔═╡ 96d98d3d-750c-4db3-9845-e7501a11ac48
 begin
@@ -152,6 +155,7 @@ begin
 		for (hi,h) in enumerate(hs)
 			@info h
 			for s in 1:S
+				@warn s
 				H = H0 + field_term(h,N)
 				for (ti,t) in enumerate(trange)
 					#@debug t
@@ -182,7 +186,7 @@ JLD2.jldsave(joinpath(pwd(),"xxzpl_qt.jld2"); corr_h)
 @bind hi Slider(1:length(hs))
 
 # ╔═╡ d9390576-035e-435b-b2ca-6df47ac78c29
-heatmap(1:N, trange, corr_h[hi,:,:], c = :viridis, title="h=$(hs[hi])")
+heatmap(1:N, trange, corr_h[hi,:,:], c = :viridis, title="<|[σ_i(t),σ_j]|²> at h=$(hs[hi])",xlabel = "j", ylabel = "t")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1136,6 +1140,7 @@ version = "0.9.1+5"
 # ╠═999fe623-7ae0-4d0e-813b-2a968ee33931
 # ╠═2d888cfe-3f18-47d1-bd2a-ccbfa83ae6dd
 # ╠═77fe9034-6d1c-4a27-9c86-71b934105b62
+# ╠═23c82b87-3e92-4802-afd6-22e8503c22ea
 # ╠═96d98d3d-750c-4db3-9845-e7501a11ac48
 # ╠═ee4906dd-0e74-4a2b-9cbf-facad976ca78
 # ╠═b1341c60-09bc-4a63-8ef8-64e0ac2093ad

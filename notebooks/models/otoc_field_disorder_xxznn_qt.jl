@@ -139,15 +139,15 @@ md"## Parameters"
 
 # ╔═╡ 77fe9034-6d1c-4a27-9c86-71b934105b62
 begin
-	N = 11 #System size
-	S = 20 #Shots
-	N_qt = 10 #Number of initial states
+	N = 12 #System size
+	S = 5 #Shots
+	N_qt = 5 #Number of initial states
 	H0 = xxz_nn(N)
 	ψ0 = normalize!(ones(2^N))
 	ψ = zeros(2^N)
-	hs = 0:0.5:4.5
+	hs = 0:0.5:4
 	i = 3
-	trange = 0:0.1:5
+	trange = 0:0.1:4
 end
 
 # ╔═╡ 96d98d3d-750c-4db3-9845-e7501a11ac48

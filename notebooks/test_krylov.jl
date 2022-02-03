@@ -22,9 +22,10 @@ begin
 	const σminus = sparse([1],[2],[1],2,2)
 	const σz = spdiagm([1,-1])
 	const σx = sparse([1,2],[2,1],[1,1])
+	const σy = sparse([1,2],[2,1],[-im,+im])
 	const ⊗ = kron
 
-	const Δ = -2
+	const Δ = -0.7
 
 	speye(k) = spdiagm(ones(k))
 	𝟙(N) = speye(2^N)
@@ -81,7 +82,7 @@ end
 
 # ╔═╡ 2a0f44fa-def8-4371-af55-c6a677f7af3d
 begin
-	N = 8
+	N = 16
 	H = xxz(N,6)
 	ψ0 = normalize!(ones(2^N))
 end
@@ -112,9 +113,9 @@ end
 op1 == σz⊗𝟙(N-1)
 
 # ╔═╡ 9264c292-a446-45f7-8d85-a62b2260c4d4
-let trange = 0:0.1:5,
+let trange = 0:0.05:5,
 	p = plot(; xlabel="time t", ylabel="<|[σ_i(t),σ_j]|^2>", legend=nothing)
-	plot!(trange, 2*ones(length(trange))-2*otoc.(Ref(H), Ref(op1), Ref(op2), trange, Ref(ψ0)))
+	plot!(trange, otoc.(Ref(H), Ref(op1), Ref(op2), trange, Ref(ψ0)))
 end
 
 # ╔═╡ 81cc7b61-b31e-4156-8cb5-1dafb3cb0071
@@ -122,16 +123,18 @@ println("N=$N\n")
 
 # ╔═╡ 8f8bcdc3-723b-4232-b467-9ff22f098679
 begin
-	trange_test = 0:0.05:2
+	trange_test = 0:0.05:4
 	corr = zeros(length(trange_test))
 	for (ti,t) in enumerate(trange_test)
 		@time corr[ti] = 2-2*otoc(H,op1,op2,t,ψ0)
-		@info t
 	end
 end
 
-# ╔═╡ 0f3581f7-2a84-44a4-b6d4-6fab0c4d87b7
-plot(trange_test, corr; xlabel = "time t", ylabel ="<|[σ_i(t),σ_j]|^2>", legend=nothing)
+# ╔═╡ c883b0da-df24-4839-92fb-fcbcbd436e94
+plot(trange_test[2:end],corr[2:end],xlabel="time t", ylabel="<|[σ_i(t),σ_j]|²>", legend=nothing)
+
+# ╔═╡ aec23d07-c1dd-48c5-a15f-096fa6914dac
+plot(trange_test[2:end],corr[2:end],yaxis=:log,xlabel="time t", ylabel="<|[σ_i(t),σ_j]|²>", legend=nothing)
 
 # ╔═╡ 90d958b5-65db-48f6-9c59-27c4e2f436da
 md"## Light Cones"
@@ -156,7 +159,7 @@ begin
 	# Save on propagations by calculating this in a smart way
 	i = 3
 	σzi = single_spin_op(σz,i,N)
-	trange = 0:0.1:1
+	trange = 0:0.1:4
 	otocs = zeros(length(trange),N)
 	for (ti,t) in enumerate(trange)
 		otocs[ti,:] = otoc_spat(H,σzi,σz,i,t,ψ0,N)
@@ -166,7 +169,7 @@ begin
 end
 
 # ╔═╡ 1fa2ab77-3622-498e-9a8b-0abe2e1de288
-md"## EXTRA: Sample initial states"
+md"## EXTRAS"
 
 # ╔═╡ 97a322c6-7ee9-4cd8-aa77-8ad610714cb0
 function magnetisation(σ,ψ,N)
@@ -178,30 +181,75 @@ function magnetisation(σ,ψ,N)
 	return S
 end
 
-# ╔═╡ 34aa8526-99aa-4a40-b544-f4edc8f53ee8
-begin
-	ψ = normalize!(rand(Float64,2^N)-0.5*ones(2^N))
-	magnetisation(σz,ψ,N)
-end
+# ╔═╡ 41d27964-6f0f-4172-b60a-4981f3b2bb3e
+magnetisation(σy,ψ0,N)
 
-# ╔═╡ d2515acd-7a01-4b7c-b1cf-2f033b856b66
+# ╔═╡ 67085455-3643-4898-871d-4ba4891356c8
+md"# Test incremental timesteps"
+
+# ╔═╡ f5f8877f-8d9f-49ff-a4d8-095184059ad1
 begin
-	N_ins = 10
-	otocs_rand = zeros(N_ins,length(trange),N)
-	for ins in 1:N_ins
-		ψ = normalize!(rand(Float64,2^N)-0.5*ones(2^N))
-		for (ti,t) in enumerate(trange)
-			otocs_rand[ins,ti,:] = otoc_spat(H,σzi,σz,i,t,ψ,N)
-		end
+	function krylov_step(H,δt,ψ)
+		return exponentiate(H,im*δt,ψ;ishermitian=true)[1]
 	end
-	corr_rand = 2*ones(N_ins,length(trange),N)-2*otocs_rand
+	
+	function krylov_incrementally(H,t,ψ,δt=0.05) 
+		#Assume t multiple of timestep
+		#T = Int64(abs(round(t/δt,digits=0)))
+		#δt = t >= 0 ? δt : -δt 
+		#ψ_tmp = ψ
+		for i in 1:t/δt
+			ψ = krylov_step(H,δt,ψ)
+		end
+		return ψ
+	end
 end
 
-# ╔═╡ 7abb51a2-c897-4450-af3d-17eba14d0e89
-heatmap(1:N, trange, corr_rand[7,:,:],c=:viridis)
+# ╔═╡ 75d1e0db-5650-4d98-82fc-51f95e5379f8
+function otoc_inc(H,A,B,t,ψ,timestep=0.05)
+	state = B*ψ
+	state = krylov_incrementally(H,-t,state)
+	state = A*state
+	state = krylov_incrementally(H,t,state)
+	state = B*state
+	state = krylov_incrementally(H,-t,state)
+	state = A*state
+	state = krylov_incrementally(H,t,state)
+	return real(dot(ψ,state))
+end
 
-# ╔═╡ 5e429a13-036e-488c-94cc-b06fb13b9ed0
-heatmap(1:N,trange,sum(corr_rand,dims=1)[1,:,:]/N_ins,c=:viridis)
+# ╔═╡ 33c2f1be-a58d-4c73-a4c2-eeaa7e2dad65
+norm(krylov_incrementally(H,-1,ψ0)-exponentiate(H,-im*1,ψ0)[1])
+
+# ╔═╡ 92f05d7e-86d1-4f10-b740-feac811d0407
+function incremental_krylovkit(H, ψ0, ts)
+	times = zeros(length(ts))
+	ret = Vector{Vector{ComplexF64}}(undef, length(ts))
+	times[1] = @elapsed ret[1] = KrylovKit.exponentiate(H, -im*ts[1], ψ0)[1]
+	δts = ts[2:end] .- ts[1:end-1]
+	for (i,δt) in enumerate(δts)
+		times[i+1] = @elapsed ret[i+1] = KrylovKit.exponentiate(H, -im*δt, ret[i])[1]
+	end
+	ret, times
+end
+
+# ╔═╡ e17fe9b8-e9b9-4c7e-a792-cb7f2baf6c86
+function otoc_t(H,A,B,t,ψ)
+	times = zeros(4)
+	state = B*ψ
+	times[1] = @elapsed state = exponentiate(H,-im*t,state)[1]
+	@info times[1]
+	state = A*state
+	times[2] = @elapsed state = exponentiate(H,im*t,state)[1]
+	@info times[2]
+	state = B*state
+	times[3] = @elapsed state = exponentiate(H,-im*t,state)[1]
+	@info times[3]
+	state = A*state
+	times[4] = @elapsed state = exponentiate(H,im*t,state)[1]
+	@info times[4]
+	return times
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1099,15 +1147,19 @@ version = "0.9.1+5"
 # ╠═9264c292-a446-45f7-8d85-a62b2260c4d4
 # ╠═81cc7b61-b31e-4156-8cb5-1dafb3cb0071
 # ╠═8f8bcdc3-723b-4232-b467-9ff22f098679
-# ╠═0f3581f7-2a84-44a4-b6d4-6fab0c4d87b7
+# ╠═c883b0da-df24-4839-92fb-fcbcbd436e94
+# ╠═aec23d07-c1dd-48c5-a15f-096fa6914dac
 # ╠═90d958b5-65db-48f6-9c59-27c4e2f436da
 # ╠═8895f082-8f05-4925-a3dc-4fb22f5a4f95
 # ╠═bed4a646-8ba4-46c7-8fa9-3ca4a77981d5
 # ╠═1fa2ab77-3622-498e-9a8b-0abe2e1de288
 # ╠═97a322c6-7ee9-4cd8-aa77-8ad610714cb0
-# ╠═34aa8526-99aa-4a40-b544-f4edc8f53ee8
-# ╠═d2515acd-7a01-4b7c-b1cf-2f033b856b66
-# ╠═7abb51a2-c897-4450-af3d-17eba14d0e89
-# ╠═5e429a13-036e-488c-94cc-b06fb13b9ed0
+# ╠═41d27964-6f0f-4172-b60a-4981f3b2bb3e
+# ╠═67085455-3643-4898-871d-4ba4891356c8
+# ╠═75d1e0db-5650-4d98-82fc-51f95e5379f8
+# ╠═33c2f1be-a58d-4c73-a4c2-eeaa7e2dad65
+# ╠═f5f8877f-8d9f-49ff-a4d8-095184059ad1
+# ╠═92f05d7e-86d1-4f10-b740-feac811d0407
+# ╠═e17fe9b8-e9b9-4c7e-a792-cb7f2baf6c86
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
