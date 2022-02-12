@@ -187,11 +187,19 @@ end
 # ╔═╡ b1341c60-09bc-4a63-8ef8-64e0ac2093ad
 JLD2.jldsave(joinpath(pwd(),"xxznn_qt.jld2"); corr_h) 
 
+# ╔═╡ e9566d0d-7a89-4d61-a5fd-dd4b164b9c89
+begin
+	data = zeros(Float64,length(hs),length(trange),N)
+	JLD2.jldopen(joinpath(pwd(),"xxznn_qt.jld2"), "r") do file
+	    data = file["corr_h"]
+	end
+end
+
 # ╔═╡ f4751c8b-27e1-40d2-9681-c7e74e56c28c
 @bind hi Slider(1:length(hs))
 
 # ╔═╡ d9390576-035e-435b-b2ca-6df47ac78c29
-heatmap(1:N, trange, corr_h[hi,:,:], c = :viridis, title="h=$(hs[hi])")
+heatmap(1:N, trange, data[hi,:,:], c = :viridis, title="h=$(hs[hi])")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1149,6 +1157,7 @@ version = "0.9.1+5"
 # ╠═96d98d3d-750c-4db3-9845-e7501a11ac48
 # ╠═ee4906dd-0e74-4a2b-9cbf-facad976ca78
 # ╠═b1341c60-09bc-4a63-8ef8-64e0ac2093ad
+# ╠═e9566d0d-7a89-4d61-a5fd-dd4b164b9c89
 # ╠═f4751c8b-27e1-40d2-9681-c7e74e56c28c
 # ╠═d9390576-035e-435b-b2ca-6df47ac78c29
 # ╟─00000000-0000-0000-0000-000000000001

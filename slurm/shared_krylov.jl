@@ -47,19 +47,30 @@ LOCATION = joinpath(LOGS,"LightCones",Dates.format(Dates.today(), "yyyy-mm-dd"))
 
 logmsg("*"^10 * "Running simulation" * "*"^10)
 
+δt = 0.1
 H = xxz(N,6)
 ψ0 = normalize!(ones(2^N))
 
 op1 = single_spin_op(σz,5,N)
 op2 = single_spin_op(σz,1,N)
 
-trange = 0:0.1:5
+trange = 0:δt:5
 
 corr = zeros(Float64,length(trange))
-@time for (ti,t) in enumerate(trange)
+@time Threads.@threads for (ti,t) in collect(enumerate(trange))
     corr[ti] = 2-2*otoc(H, op1, op2, t, ψ0)
 end
-print(corr)
+
+logmsg("*"^10*"Corr done"*"*"^10)
+
+i = 3
+σzi = single_spin_op(σz,i,N)
+
+otocs2 = zeros(length(trange),N)
+otocs2 = otoc_spat(H,σzi,σz,trange,ψ0,N,δt)
+
+logmsg("*"^10*"Spatial done"*"*"^10)
 
 logmsg("*"^10 * "Saving" * "*"^10)
 save(corr, joinpath(LOCATION,"test.jld2"))
+save(otocs2, joinpath(LOCATION,"test_spat.jld2"))

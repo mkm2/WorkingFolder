@@ -25,7 +25,7 @@ begin
 	const σy = sparse([1,2],[2,1],[-im,+im])
 	const ⊗ = kron
 
-	const Δ = -0.7
+	const Δ = -2
 
 	speye(k) = spdiagm(ones(k))
 	𝟙(N) = speye(2^N)
@@ -82,7 +82,7 @@ end
 
 # ╔═╡ 2a0f44fa-def8-4371-af55-c6a677f7af3d
 begin
-	N = 16
+	N = 14
 	H = xxz(N,6)
 	ψ0 = normalize!(ones(2^N))
 end
@@ -183,6 +183,9 @@ end
 
 # ╔═╡ 41d27964-6f0f-4172-b60a-4981f3b2bb3e
 magnetisation(σy,ψ0,N)
+
+# ╔═╡ 60468046-ab1c-4e4d-b7d2-4308eaf64416
+floor(-2.3)
 
 # ╔═╡ 67085455-3643-4898-871d-4ba4891356c8
 md"# Test incremental timesteps"
@@ -1155,6 +1158,7 @@ version = "0.9.1+5"
 # ╠═1fa2ab77-3622-498e-9a8b-0abe2e1de288
 # ╠═97a322c6-7ee9-4cd8-aa77-8ad610714cb0
 # ╠═41d27964-6f0f-4172-b60a-4981f3b2bb3e
+# ╠═60468046-ab1c-4e4d-b7d2-4308eaf64416
 # ╠═67085455-3643-4898-871d-4ba4891356c8
 # ╠═75d1e0db-5650-4d98-82fc-51f95e5379f8
 # ╠═33c2f1be-a58d-4c73-a4c2-eeaa7e2dad65

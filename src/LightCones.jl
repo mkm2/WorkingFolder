@@ -12,8 +12,10 @@ using KrylovKit
 
 include("basics.jl")
 include("otoc.jl")
+include("utilities.jl")
 
 @reexport using .Basics
 @reexport using .OTOC
+@reexport using .Utils
 
 end # module
