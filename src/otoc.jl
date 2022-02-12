@@ -83,7 +83,7 @@ function otoc_spat(H,opi,opj,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	res = zeros(length(trange),N)
 	Threads.@threads for j in 1:N
 		single_spin_opj = single_spin_op(opj,j,N)
-		res[:,j]=otoc(H,opi,single_spin_opj,trange,ψ0,δt)
+		res[:,j]=otoc(H,opi,single_spin_opj,trange,ψ,δt)
 	end
 	return res
 end

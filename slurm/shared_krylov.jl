@@ -7,7 +7,7 @@ if haskey(ENV, "ON_CLUSTER")
     println("Added MKL.jl")
 end
 
-Pkg.instantiate(; io=stdout)
+#Pkg.instantiate(; io=stdout)
 Pkg.status(; io=stdout)
 
 import Dates
@@ -28,7 +28,7 @@ println("Number of nodes allocated:  $(get(ENV, "SLURM_JOB_NUM_MODES", ""))" )
 println("Number of cores allocated:  $(get(ENV, "SLURM_NTASKS", ""))" )
 println("#threads of Julia:          $(Threads.nthreads())")
 println("#threads of BLAS:           $(BLAS.get_num_threads())")
-println("#BLAS config:               $(BLAS.get_config())")
+#println("#BLAS config:               $(BLAS.get_config())")
 
 @show ARGS
 
