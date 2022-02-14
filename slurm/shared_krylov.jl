@@ -5,9 +5,11 @@ Pkg.activate(".")
 if haskey(ENV, "ON_CLUSTER")
     @eval using MKL
     println("Added MKL.jl")
+else
+    BLAS.set_num_threads(1)
 end
 
-#Pkg.instantiate(; io=stdout)
+Pkg.instantiate(; io=stdout)
 Pkg.status(; io=stdout)
 
 import Dates
@@ -61,13 +63,17 @@ corr = zeros(Float64,length(trange))
     corr[ti] = 2-2*otoc(H, op1, op2, t, ψ0)
 end
 
+@time Threads.@threads for (ti,t) in collect(enumerate(trange))
+	corr[ti] = 2-2*otoc(H,op1,op2,t,ψ0)
+end
+
 logmsg("*"^10*"Corr done"*"*"^10)
 
 i = 3
 σzi = single_spin_op(σz,i,N)
 
 otocs2 = zeros(length(trange),N)
-otocs2 = otoc_spat(H,σzi,σz,trange,ψ0,N,δt)
+@time otocs2 = otoc_spat(H,σzi,σz,trange,ψ0,N,δt)
 
 logmsg("*"^10*"Spatial done"*"*"^10)
 

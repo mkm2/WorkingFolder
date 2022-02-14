@@ -18,11 +18,11 @@ using SparseArrays, LinearAlgebra, Plots, KrylovKit, SpinSymmetry
 
 # ╔═╡ 406b55d9-1dc8-45f2-b31e-b3c1b455d346
 begin
-	N = 12
+	N = 8
 	H = xxz(N,6)
 	ψ0 = normalize!(ones(2^N))
 	δt = 0.1
-	trange = 0:δt:6
+	trange = 0:δt:5
 end
 
 # ╔═╡ d1a45b7d-02f1-4b71-98e0-1817766bfb7d
