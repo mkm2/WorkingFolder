@@ -65,7 +65,7 @@ LOCATION = joinpath(LOGS,"LightCones",Dates.format(Dates.today(), "yyyy-mm-dd"))
 if RANDOM_STATES == false
     params = SimulationParams(N,SHOTS,RANDOM_STATES,OBSERVABLE,DISORDER_PARAM)
 else
-    params = SimulationParams(N,SHOTS,RANDOM_STATES,N_RANDOM_STATES,OBSERVABLE,DISORDER_PARAM) 
+    params = SimulationParams(N,SHOTS,RANDOM_STATES,OBSERVABLE,DISORDER_PARAM,N_RANDOM_STATES) 
 end
 
 logmsg("*"^10 * "Running simulation" * "*"^10)
