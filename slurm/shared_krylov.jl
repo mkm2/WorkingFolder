@@ -104,7 +104,7 @@ if RANDOM_STATES == false
     H_tot = spzeros(2^N,2^N,SHOTS)
     Threads.@threads for shot in 1:SHOTS
         H_tot[:,:,shot] = H + field_term(DISORDER_PARAM,N)
-        otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,δt)
+        @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,δt)
     end
 else
     otocs = zeros(SHOTS,N_RANDOM_STATES,length(trange),N)
@@ -112,7 +112,7 @@ else
     Threads.@threads for shot in 1:SHOTS
         Threads.@threads for s in 1:N_RANDOM_STATES
             H_tot[:,:,shot] = H + field_term(DISORDER_PARAM,N)
-            otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[s],N,δt)
+            @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[s],N,δt)
         end
     end
 end
