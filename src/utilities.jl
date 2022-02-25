@@ -7,7 +7,9 @@ import Dates
 using ..LightCones
 
 export logmsg, path_prefix, save
-export SimulationParams
+export Maybe, SimulationParams
+
+const Maybe{T} = Union{Missing, T} where T
 
 struct SimulationParams
     N::Int
