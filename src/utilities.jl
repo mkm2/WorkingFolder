@@ -7,6 +7,16 @@ import Dates
 using ..LightCones
 
 export logmsg, path_prefix, save
+export SimulationParams
+
+struct SimulationParams
+    N::Int
+    SHOTS::Int
+    RANDOM_STATES::Bool
+    N_RANDOM_STATES::Maybe{Int}
+    OBSERVABLE::String
+    DISORDER_PARAM::Float64
+end
 
 function logmsg(msg...; doflush=false)
     println("[",Dates.now(), "]", msg...)
@@ -21,14 +31,18 @@ function path_prefix(workspace)
     end
 end
 
-function save(data, datapath)
+function save(data, params, jobid, datapath)
     dname = dirname(datapath)
     if !isdir(dname)
         logmsg("Save directory: $dname does not exist. Creating!")
         mkpath(dname)
     end
     logmsg("Saving file: $datapath")
-    JLD2.jldsave(datapath; data) 
+    jldopen(datapath, "w") do file
+        file["data"] = data
+        file["params"] = params
+        file["jobid"] = jobid
+    end
 end
 
 end #module

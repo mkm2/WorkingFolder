@@ -7,11 +7,13 @@ using ..LightCones
 
 export σplus, σminus, σz, σx, ⊗, Δ, 𝟙
 export chainJ, correlator, single_spin_op,xxz
+export field_term, random_state
 
 const σplus = sparse([2],[1],[1],2,2)
 const σminus = sparse([1],[2],[1],2,2)
 const σz = spdiagm([1,-1])
 const σx = sparse([1,2],[2,1],[1,1])
+const σy = sparse([1,2],[2,1],[-im,+im])
 const ⊗ = kron
 
 const Δ = -2
@@ -41,6 +43,19 @@ function xxz(J::AbstractMatrix, N)
         end
     end
     return res
+end
+
+function field_term(h::Float64, N::Int)
+    res = spzeros(Float64, 2^N, 2^N)
+    hs = -h*ones(N) + 2*h*rand(Float64,N) #uniform distribution in [-h,+h]
+    for i in 1:N
+        res += hs[i]*single_spin_op(σz,i,N)
+    end
+    return res
+end
+
+function random_state(N::Int)
+	return normalize!(randn(ComplexF64,2^N))
 end
 
 end #module

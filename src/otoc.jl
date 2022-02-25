@@ -65,6 +65,8 @@ end
 
 ###Spatial OTOCs
 
+
+
 function otoc_spat(H,opi,opj,t::Float64,ψ,N,δt=0.1) #opj in single-particle Hilbert space
 	σiUψ = opi * krylov_from0(H,-t,ψ,δt)
 	UdσiUψ = krylov_from0(H,t,σiUψ,δt)
@@ -78,6 +80,15 @@ function otoc_spat(H,opi,opj,t::Float64,ψ,N,δt=0.1) #opj in single-particle Hi
 	end
 	return res
 end
+
+function otoc_spat!(res,H,opi,opj,trange::AbstractRange{Float64},ψ,N,δt=0.1)
+	Threads.@threads for j in 1:N
+		single_spin_opj = single_spin_op(opj,j,N)
+		res[:,j]=otoc(H,opi,single_spin_opj,trange,ψ0,δt)
+	end
+	return res
+end
+
 
 function otoc_spat(H,opi,opj,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	res = zeros(length(trange),N)
