@@ -46,7 +46,7 @@ else
     RANDOM_STATES = true
 end
 OBSERVABLE = ARGS[4]
-DISORDER_PARAM = parse(Int, ARGS[5])
+DISORDER_PARAM = parse(Float64, ARGS[5])
 
 #SHOTS = parse(Int, ARGS[2]) #$(date '+%Y-%m-%d')
 
