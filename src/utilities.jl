@@ -7,9 +7,7 @@ import Dates
 using ..LightCones
 
 export logmsg, path_prefix, save
-export Maybe, SimulationParams
-
-const Maybe{T} = Union{Missing, T} where T
+export SimulationParams
 
 struct SimulationParams
     N::Int
@@ -17,7 +15,7 @@ struct SimulationParams
     RANDOM_STATES::Bool
     OBSERVABLE::String
     DISORDER_PARAM::Float64
-    N_RANDOM_STATES::Maybe{Int}
+    N_RANDOM_STATES::Union{Int,Nothing}
 end
 
 function logmsg(msg...; doflush=false)
