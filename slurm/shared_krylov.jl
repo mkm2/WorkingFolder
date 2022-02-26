@@ -77,9 +77,9 @@ A = single_spin_op(σz,i,N)
 
 if OBSERVABLE == 'x'
     B = σx
-else if OBSERVABLE == 'y'
+elseif OBSERVABLE == 'y'
     B = σy
-else if OBSERVABLE == 'z'
+elseif OBSERVABLE == 'z'
     B = σz
 end
 
