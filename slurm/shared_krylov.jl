@@ -2,6 +2,8 @@
 import Pkg
 Pkg.activate(".")
 
+using LinearAlgebra
+
 if haskey(ENV, "ON_CLUSTER")
     @eval using MKL
     println("Added MKL.jl")
@@ -13,7 +15,8 @@ Pkg.instantiate(; io=stdout)
 Pkg.status(; io=stdout)
 
 import Dates
-using SpinSymmetry, Random, LinearAlgebra
+using SparseArrays, Random
+using SpinSymmetry
 using LightCones
 
 ## Environment
@@ -94,6 +97,16 @@ else
 end
 
 #Start simulation
+
+function diddlydo(x,y)
+    sleep(10*rand(1)[1])
+    print("$(x):$(y)\n")
+end
+
+Threads.@threads for l in 1:50
+    m = l
+    diddlydo(l,m)
+end
 
 if RANDOM_STATES == false
     otocs = zeros(length(trange),N,SHOTS)
