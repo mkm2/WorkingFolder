@@ -78,11 +78,11 @@ trange = 0:δt:T
 i = 3
 A = single_spin_op(σz,i,N)
 
-if OBSERVABLE == 'x'
+if OBSERVABLE == "x"
     B = σx
-elseif OBSERVABLE == 'y'
+elseif OBSERVABLE == "y"
     B = σy
-elseif OBSERVABLE == 'z'
+elseif OBSERVABLE == "z"
     B = σz
 end
 
@@ -98,29 +98,19 @@ end
 
 #Start simulation
 
-function diddlydo(x,y)
-    sleep(10*rand(1)[1])
-    print("$(x):$(y)\n")
-end
-
-Threads.@threads for l in 1:50
-    m = l
-    diddlydo(l,m)
-end
-
 if RANDOM_STATES == false
     otocs = zeros(length(trange),N,SHOTS)
-    H_tot = spzeros(2^N,2^N,SHOTS)
+    H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
     Threads.@threads for shot in 1:SHOTS
-        H_tot[:,:,shot] = H + field_term(DISORDER_PARAM,N)
+        H_tot[shot] = H + field_term(DISORDER_PARAM,N)
         @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,δt)
     end
 else
     otocs = zeros(SHOTS,N_RANDOM_STATES,length(trange),N)
-    H_tot = spzeros(2^N,2^N,SHOTS)
+    H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
     Threads.@threads for shot in 1:SHOTS
         Threads.@threads for s in 1:N_RANDOM_STATES
-            H_tot[:,:,shot] = H + field_term(DISORDER_PARAM,N)
+            H_tot[shot] = H + field_term(DISORDER_PARAM,N)
             @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[s],N,δt)
         end
     end
