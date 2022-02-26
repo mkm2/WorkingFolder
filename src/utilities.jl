@@ -13,9 +13,9 @@ struct SimulationParams
     N::Int
     SHOTS::Int
     RANDOM_STATES::Bool
+    N_RANDOM_STATES::Int
     OBSERVABLE::String
     DISORDER_PARAM::Float64
-    N_RANDOM_STATES::Union{Int,Nothing}
 end
 
 function logmsg(msg...; doflush=false)
