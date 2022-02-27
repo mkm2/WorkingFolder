@@ -1,5 +1,4 @@
 module OTOC
-
 using SparseArrays, LinearAlgebra, Plots
 using SpinSymmetry
 using KrylovKit
@@ -8,7 +7,7 @@ using ..LightCones
 export  otoc, otoc_spat, krylov_from0, krylov_step
 
 
-#Krylov
+#Krylov Propagation
 
 function krylov_step(H,δt,ψ)
 	return exponentiate(H,im*δt,ψ;ishermitian=true)[1]
@@ -30,8 +29,6 @@ function krylov_from0(H,t,ψ,δt)
 	end
 	return ψ
 end
-
-
 
 #OTOCs
 
@@ -63,7 +60,10 @@ function otoc(H,A,B,trange::AbstractRange{Float64},ψ,δt=0.1)
 	return res
 end
 
-###Spatial OTOCs
+###OTOCs computed over spatial indices
+
+
+#Single time
 
 function otoc_spat(H,A,b,t::Float64,ψ,N,δt=0.1) #b in single-particle Hilbert space
 	σiUψ = A * krylov_from0(H,-t,ψ,δt)
@@ -79,22 +79,23 @@ function otoc_spat(H,A,b,t::Float64,ψ,N,δt=0.1) #b in single-particle Hilbert 
 	return res
 end
 
-function otoc_spat!(res,H,A,b,trange::AbstractRange{Float64},ψ,N,δt=0.1)
-	Threads.@threads for j in 1:N
-		B = single_spin_op(b,j,N)
-		res[:,j]=otoc(H,A,B,trange,ψ0,δt)
-	end
-	return res
-end
+#Time Range
 
-
-function calc_otoc(H,A,b,j,trange::AbstractRange{Float64},ψ,N,δt=0.1)
+function otoc_task(H,A,b,j,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	B = single_spin_op(b,j,N)
 	return otoc(H,A,B,trange,ψ,δt)
 end
 
 function otoc_spat(H,A,b,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	res = zeros(length(trange),N)
+	@sync Threads.@spawn for j in 1:N
+		B = single_spin_op(b,j,N)
+		res[:,j] = otoc(H,A,B,trange,ψ,δt)
+	end
+	return res
+end
+
+function otoc_spat!(res,H,A,b,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	tasks = Vector{Task}(undef,N)
 	for j in 1:N
 		tasks[j] = Threads.@spawn calc_otoc(H,A,b,j,trange,ψ,N,δt)
@@ -105,6 +106,7 @@ function otoc_spat(H,A,b,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	return res
 end
 
+#####################################
 ###Old implementations for comparison
 
 
