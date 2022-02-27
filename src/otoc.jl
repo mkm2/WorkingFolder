@@ -65,8 +65,6 @@ end
 
 ###Spatial OTOCs
 
-
-
 function otoc_spat(H,opi,opj,t::Float64,ψ,N,δt=0.1) #opj in single-particle Hilbert space
 	σiUψ = opi * krylov_from0(H,-t,ψ,δt)
 	UdσiUψ = krylov_from0(H,t,σiUψ,δt)

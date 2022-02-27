@@ -103,7 +103,10 @@ if RANDOM_STATES == false
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
     Threads.@threads for shot in 1:SHOTS
         H_tot[shot] = H + field_term(DISORDER_PARAM,N)
-        @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,δt)
+        Threads.@threads for j in 1:N
+            single_spin_opj = single_spin_op(B,j,N)
+            otocs[:,j,shot]=otoc(H_tot[shot],A,single_spin_opj,trange,ψ0,δt)
+        end
     end
 else
     otocs = zeros(SHOTS,N_RANDOM_STATES,length(trange),N)
