@@ -65,34 +65,42 @@ end
 
 ###Spatial OTOCs
 
-function otoc_spat(H,opi,opj,t::Float64,ψ,N,δt=0.1) #opj in single-particle Hilbert space
-	σiUψ = opi * krylov_from0(H,-t,ψ,δt)
+function otoc_spat(H,A,b,t::Float64,ψ,N,δt=0.1) #b in single-particle Hilbert space
+	σiUψ = A * krylov_from0(H,-t,ψ,δt)
 	UdσiUψ = krylov_from0(H,t,σiUψ,δt)
 	res = zeros(N)
 	Threads.@threads for j in 1:N
-		single_spin_opj = single_spin_op(opj,j,N)
-		state_r = opi*krylov_from0(H,-t,single_spin_opj*ψ,δt)
+		B = single_spin_op(b,j,N)
+		state_r = A*krylov_from0(H,-t,B*ψ,δt)
 		state_r = krylov_from0(H,t,state_r,δt)
-		state_l = single_spin_opj*UdσiUψ
-		res[j] = real(dot(state_l,state_r))  #Note opi, opj self-adjoint!
+		state_l = B*UdσiUψ
+		res[j] = real(dot(state_l,state_r))  #Note A, b self-adjoint!
 	end
 	return res
 end
 
-function otoc_spat!(res,H,opi,opj,trange::AbstractRange{Float64},ψ,N,δt=0.1)
+function otoc_spat!(res,H,A,b,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	Threads.@threads for j in 1:N
-		single_spin_opj = single_spin_op(opj,j,N)
-		res[:,j]=otoc(H,opi,single_spin_opj,trange,ψ0,δt)
+		B = single_spin_op(b,j,N)
+		res[:,j]=otoc(H,A,B,trange,ψ0,δt)
 	end
 	return res
 end
 
 
-function otoc_spat(H,opi,opj,trange::AbstractRange{Float64},ψ,N,δt=0.1)
+function calc_otoc(H,A,b,j,trange::AbstractRange{Float64},ψ,N,δt=0.1)
+	B = single_spin_op(b,j,N)
+	return otoc(H,A,B,trange,ψ,δt)
+end
+
+function otoc_spat(H,A,b,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	res = zeros(length(trange),N)
-	Threads.@threads for j in 1:N
-		single_spin_opj = single_spin_op(opj,j,N)
-		res[:,j]=otoc(H,opi,single_spin_opj,trange,ψ,δt)
+	tasks = Vector{Task}(undef,N)
+	for j in 1:N
+		tasks[i] = Threads.@spawn calc_otoc(H,A,b,j,trange,ψ,N,δt)
+	end
+	for j in 1:N
+		res[:,j] = fetch(tasks[j])
 	end
 	return res
 end
