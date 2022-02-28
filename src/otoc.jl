@@ -81,7 +81,7 @@ end
 
 #Time Range
 
-function otoc_task(H,A,b,j,trange::AbstractRange{Float64},ψ,N,δt=0.1)
+function calc_otoc(H,A,b,j,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	B = single_spin_op(b,j,N)
 	return otoc(H,A,B,trange,ψ,δt)
 end
@@ -91,9 +91,6 @@ function otoc_spat(H,A,b,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	tasks = Vector{Task}(undef,N)
 	@sync for j in 1:N
 		tasks[j] = Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,δt)
-	end
-	for j in 1:N
-		print(tasks[j])
 	end
 	return res
 end

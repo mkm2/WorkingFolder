@@ -130,16 +130,36 @@ md"## Parameters"
 
 # ╔═╡ 77fe9034-6d1c-4a27-9c86-71b934105b62
 begin
-	N = 11 #System size
-	S = 20 #Shots
-	N_qt = 5 #Number of initial states
+	N = 14 #System size
+	S = 10 #Shots
+	N_qt = 1 #Number of initial states
 	H0 = xxz(N,6)
 	ψ0 = normalize!(ones(2^N))
 	ψ = zeros(2^N)
-	hs = 0:0.5:4
+	hs = 0:1:1
 	i = 3
 	trange = 0:0.1:4
 end
+
+# ╔═╡ 43bb132e-9fb8-4c8f-bc59-832571ea1624
+begin
+	corr = zeros(Float64,length(trange),N,S)
+	A = single_spin_op(σz,i,N)
+	for s in 1:S
+		@info s
+		H = H0 + field_term(1.0,N)
+		for (ti,t) in enumerate(trange)
+			corr[ti,:,s] = 2*ones(N)-2*otoc_spat(H,A,σz,i,t,ψ0,N)
+			@warn ti
+		end
+	end	
+end
+
+# ╔═╡ 396dbc60-ce1e-4547-8e1d-538a7b75860a
+JLD2.jldsave(joinpath(pwd(),"xxzpl_qt.jld2"); corr) 
+
+# ╔═╡ aadaffd1-ae17-44c9-a7d6-29020a804fb9
+heatmap(1:N,trange,corr[:,:,1],c=:viridis)
 
 # ╔═╡ 23c82b87-3e92-4802-afd6-22e8503c22ea
 	σzii = single_spin_op(σz,i,N)
@@ -151,7 +171,7 @@ begin
 	σzi = single_spin_op(σz,i,N)
 	for ni in 1:N_qt
 		@debug ni
-		ψ = random_state(N)
+		#ψ = random_state(N)
 		for (hi,h) in enumerate(hs)
 			@info h
 			for s in 1:S
@@ -184,6 +204,9 @@ JLD2.jldsave(joinpath(pwd(),"xxzpl_qt.jld2"); corr_h)
 
 # ╔═╡ f4751c8b-27e1-40d2-9681-c7e74e56c28c
 @bind hi Slider(1:length(hs))
+
+# ╔═╡ d19b9951-5221-40c6-98b6-9d2022891124
+heatmap(1:N, trange, corr[:,:], c = :viridis, title="<|[σ_i(t),σ_j]|²> at h=$(hs[hi])",xlabel = "j", ylabel = "t")
 
 # ╔═╡ d9390576-035e-435b-b2ca-6df47ac78c29
 heatmap(1:N, trange, corr_h[hi,:,:], c = :viridis, title="<|[σ_i(t),σ_j]|²> at h=$(hs[hi])",xlabel = "j", ylabel = "t")
@@ -618,7 +641,7 @@ uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
 version = "2.36.0+0"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[LogExpFunctions]]
@@ -680,6 +703,10 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "887579a3eb005446d514ab7aeac5d1d027658b8f"
 uuid = "e7412a2a-1a6e-54c0-be00-318e2571c051"
 version = "1.3.5+1"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
 
 [[OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -765,7 +792,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[RecipesBase]]
@@ -1083,6 +1110,10 @@ git-tree-sha1 = "5982a94fcba20f02f42ace44b9894ee2b140fe47"
 uuid = "0ac62f75-1d6f-5e53-bd7c-93b484bb37c0"
 version = "0.15.1+0"
 
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+
 [[libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "daacc84a041563f965be61859a36e17c4e4fcd55"
@@ -1140,6 +1171,10 @@ version = "0.9.1+5"
 # ╠═999fe623-7ae0-4d0e-813b-2a968ee33931
 # ╠═2d888cfe-3f18-47d1-bd2a-ccbfa83ae6dd
 # ╠═77fe9034-6d1c-4a27-9c86-71b934105b62
+# ╠═43bb132e-9fb8-4c8f-bc59-832571ea1624
+# ╠═396dbc60-ce1e-4547-8e1d-538a7b75860a
+# ╠═aadaffd1-ae17-44c9-a7d6-29020a804fb9
+# ╠═d19b9951-5221-40c6-98b6-9d2022891124
 # ╠═23c82b87-3e92-4802-afd6-22e8503c22ea
 # ╠═96d98d3d-750c-4db3-9845-e7501a11ac48
 # ╠═ee4906dd-0e74-4a2b-9cbf-facad976ca78
