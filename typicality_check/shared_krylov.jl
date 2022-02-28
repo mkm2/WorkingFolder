@@ -66,6 +66,7 @@ LOCATION = joinpath(LOGS,"LightCones",Dates.format(Dates.today(), "yyyy-mm-dd"))
 @show OBSERVABLE
 @show DISORDER_PARAM
 
+
 params = SimulationParams(N,SHOTS,RANDOM_STATES,N_RANDOM_STATES,OBSERVABLE,DISORDER_PARAM)
 
 logmsg("*"^10 * "Running simulation" * "*"^10)
