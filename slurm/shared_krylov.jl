@@ -90,9 +90,9 @@ H = xxz(N,6)
 if RANDOM_STATES == false
     ψ0 = normalize!(ones(2^N))
 else
-    ψs = zeros(ComplexF64,N_RANDOM_STATES,2^N)
+    ψs = zeros(ComplexF64,2^N,N_RANDOM_STATES)
     for s in 1:N_RANDOM_STATES
-        ψs[s] = random_state(N)
+        ψs[:,s] = random_state(N)
     end
 end
 
@@ -107,12 +107,13 @@ if RANDOM_STATES == false
         logmsg("Completed Shot $(shot)")
     end
 else
-    otocs = zeros(SHOTS,N_RANDOM_STATES,length(trange),N)
+    otocs = zeros(length(trange),N,SHOTS,N_RANDOM_STATES)
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
+    print("test")
     Threads.@threads for shot in 1:SHOTS
         for s in 1:N_RANDOM_STATES
             H_tot[shot] = H + field_term(DISORDER_PARAM,N)
-            @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[s],N,δt)
+            @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[:,s],N,δt)
             logmsg("Completed Shot $(shot), state $(s)")
         end
     end
