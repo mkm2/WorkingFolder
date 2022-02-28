@@ -90,7 +90,7 @@ H = xxz(N,6)
 if RANDOM_STATES == false
     ψ0 = normalize!(ones(2^N))
 else
-    ψs = zeros(N_RANDOM_STATES,2^N)
+    ψs = zeros(ComplexF64,N_RANDOM_STATES,2^N)
     for s in 1:N_RANDOM_STATES
         ψs[s] = random_state(N)
     end
@@ -104,6 +104,7 @@ if RANDOM_STATES == false
     Threads.@threads for shot in 1:SHOTS
         H_tot[shot] = H + field_term(DISORDER_PARAM,N)
         @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,δt)
+        logmsg("Completed Shot $(shot)")
     end
 else
     otocs = zeros(SHOTS,N_RANDOM_STATES,length(trange),N)
@@ -112,6 +113,7 @@ else
         for s in 1:N_RANDOM_STATES
             H_tot[shot] = H + field_term(DISORDER_PARAM,N)
             @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[s],N,δt)
+            logmsg("Completed Shot $(shot), state $(s)")
         end
     end
 end
