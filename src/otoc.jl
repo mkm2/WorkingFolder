@@ -88,11 +88,9 @@ end
 
 function otoc_spat(H,A,b,trange::AbstractRange{Float64},ψ,N,δt=0.1)
 	res = zeros(length(trange),N)
-	tasks = Vector{Task}(undef,N)
 	@sync for j in 1:N
-		tasks[j] = Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,δt)
+		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,δt)
 	end
-	print(tasks)
 	return res
 end
 
