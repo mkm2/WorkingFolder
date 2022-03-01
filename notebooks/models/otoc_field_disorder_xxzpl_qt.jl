@@ -130,8 +130,8 @@ md"## Parameters"
 
 # ╔═╡ 77fe9034-6d1c-4a27-9c86-71b934105b62
 begin
-	N = 14 #System size
-	S = 10 #Shots
+	N = 8 #System size
+	S = 100 #Shots
 	N_qt = 1 #Number of initial states
 	H0 = xxz(N,6)
 	ψ0 = normalize!(ones(2^N))
@@ -156,10 +156,10 @@ begin
 end
 
 # ╔═╡ 396dbc60-ce1e-4547-8e1d-538a7b75860a
-JLD2.jldsave(joinpath(pwd(),"xxzpl_qt_test.jld2"); corr) 
+JLD2.jldsave(joinpath(pwd(),"xxzpl_qt_test5.jld2"); corr) 
 
 # ╔═╡ aadaffd1-ae17-44c9-a7d6-29020a804fb9
-heatmap(1:N,trange,corr[:,:,1],c=:viridis)
+heatmap(1:N,trange,corr[:,:,100],c=:viridis)
 
 # ╔═╡ 23c82b87-3e92-4802-afd6-22e8503c22ea
 	σzii = single_spin_op(σz,i,N)
