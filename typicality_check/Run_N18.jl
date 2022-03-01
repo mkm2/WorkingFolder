@@ -4,7 +4,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=30:00:00
 #SBATCH --mem=180gb
-#SBATCH --cpus-per-task=10
+#SBATCH --cpus-per-task=48
 #SBATCH --job-name=otoc_simulation_N18
 #SBATCH --output="otoc_simulation_N18-%j.out"
 ########### End Slurm header ##########
@@ -14,5 +14,5 @@
 
 # export JULIA_DEPOT_PATH=$SCRATCH
 export ON_CLUSTER=1
-exec julia --color=no --threads=20 --startup-file=no "$LCDIR/LightCones/typicality_check/shared_krylov.jl" 18 1 10 z $1
+exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/typicality_check/shared_krylov.jl" 18 1 10 z $1
 =#
