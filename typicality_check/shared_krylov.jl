@@ -94,9 +94,10 @@ if RANDOM_STATES == false
 else
     ψs = zeros(ComplexF64,2^N,N_RANDOM_STATES)
     for s in 1:N_RANDOM_STATES
-        ψs[:,s] = random_state(N)
+        #ψs[:,s] = random_state(N)
         #ψs[:,s] = random_product_state(N)
-        logmsg("Used Random Product States.")
+        ψs[:,s] = normalize!(ones(2^N))
+        logmsg("Used ψ0.")
     end
 end
 
