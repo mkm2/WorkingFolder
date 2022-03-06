@@ -5,8 +5,8 @@
 #SBATCH --time=200:00:00
 #SBATCH --mem=180gb
 #SBATCH --cpus-per-task=48
-#SBATCH --job-name=otoc_simulation_N20
-#SBATCH --output="otoc_simulation_N20-%j.out"
+#SBATCH --job-name=otoc_simulation_N20RPS
+#SBATCH --output="otoc_simulation_N20RPS-%j.out"
 ########### End Slurm header ##########
 #=
 # load modules

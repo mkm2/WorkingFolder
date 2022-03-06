@@ -94,7 +94,9 @@ if RANDOM_STATES == false
 else
     ψs = zeros(ComplexF64,2^N,N_RANDOM_STATES)
     for s in 1:N_RANDOM_STATES
-        ψs[:,s] = random_state(N)
+        #ψs[:,s] = random_state(N)
+        ψs[:,s] = random_product_state(N)
+        logmsg("Used Random Product States.")
     end
 end
 
@@ -112,8 +114,8 @@ else
     otocs = zeros(length(trange),N,SHOTS,N_RANDOM_STATES)
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
     print("test")
-    Threads.@threads for shot in 1:SHOTS
-        for s in 1:N_RANDOM_STATES
+    for shot in 1:SHOTS
+        Threads.@threads for s in 1:N_RANDOM_STATES
             H_tot[shot] = H + field_term(DISORDER_PARAM,N)
             @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[:,s],N,δt)
             logmsg("Completed Shot $(shot), state $(s)")

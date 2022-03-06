@@ -7,7 +7,8 @@ using ..LightCones
 
 export σplus, σminus, σz, σx, ⊗, Δ, 𝟙
 export chainJ, correlator, single_spin_op,xxz
-export field_term, random_state
+export field_term, random_state, random_product_state
+export magnetisation
 
 const σplus = sparse([2],[1],[1],2,2)
 const σminus = sparse([1],[2],[1],2,2)
@@ -56,6 +57,20 @@ end
 
 function random_state(N::Int)
 	return normalize!(randn(ComplexF64,2^N))
+end
+
+function random_product_state(N::Int)
+	gen = (random_state(1) for i in 1:N)
+	return kron(gen...)
+end
+
+function magnetisation(σ,ψ,N)
+	S = 0
+	for i in 1:N
+		σ_i = single_spin_op(σ,i,N)
+		S += dot(ψ,σ_i,ψ)
+	end
+	return S
 end
 
 end #module
