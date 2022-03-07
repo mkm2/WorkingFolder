@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.7
+# v0.18.1
 
 using Markdown
 using InteractiveUtils
@@ -82,7 +82,7 @@ end
 
 # ╔═╡ 2a0f44fa-def8-4371-af55-c6a677f7af3d
 begin
-	N = 14
+	N = 12
 	H = xxz(N,6)
 	ψ0 = normalize!(ones(2^N))
 end
@@ -103,6 +103,17 @@ begin
 	end
 end
 
+# ╔═╡ 3336e93e-f0d4-4b74-a1e3-5b0a42cd339d
+function random_state(N::Int)
+	return normalize!(randn(ComplexF64,2^N))
+end
+
+# ╔═╡ 5c8f3e82-6a21-4fe8-af7f-b865b4278e91
+function random_product_state(N::Int)
+	gen = (random_state(1) for i in 1:N)
+	return kron(gen...)
+end
+
 # ╔═╡ 00fa04a3-4ea4-495e-8e7d-d772de088f1e
 begin
 	op1 = single_spin_op(σz,5,N)
@@ -111,6 +122,20 @@ end
 
 # ╔═╡ d06f2f8e-61a8-41ba-b837-ffe0fcdc0492
 op1 == σz⊗𝟙(N-1)
+
+# ╔═╡ 339c6a45-6369-420e-a1b1-a80006c07e90
+let trange = 0:0.05:5,
+	p = plot(; xlabel="time t", ylabel="<|[σ_i(t),σ_j]|^2>", legend=nothing)
+	ψ = random_state(N)
+	plot!(trange, otoc.(Ref(H), Ref(op1), Ref(op2), trange, Ref(ψ)))
+end
+
+# ╔═╡ 06f74ba1-bc2a-4b95-9925-6aa91e93a699
+let trange = 0:0.05:5,
+	p = plot(; xlabel="time t", ylabel="<|[σ_i(t),σ_j]|^2>", legend=nothing)
+	ψp = random_product_state(N)
+	plot!(trange, otoc.(Ref(H), Ref(op1), Ref(op2), trange, Ref(ψp)))
+end
 
 # ╔═╡ 9264c292-a446-45f7-8d85-a62b2260c4d4
 let trange = 0:0.05:5,
@@ -558,6 +583,12 @@ git-tree-sha1 = "f6250b16881adf048549549fba48b1161acdac8c"
 uuid = "c1c5ebd0-6772-5130-a774-d5fcae4a789d"
 version = "3.100.1+0"
 
+[[LERC_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "bf36f528eec6634efc60d7ec062008f171071434"
+uuid = "88015f11-f218-50d7-93a8-a6af411a945d"
+version = "3.0.0+1"
+
 [[LZO_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "e5b909bcf985c5e2605737d2ce278ed791b89be6"
@@ -631,10 +662,10 @@ uuid = "4b2f31a3-9ecc-558c-b454-b3730dcb73e9"
 version = "2.35.0+0"
 
 [[Libtiff_jll]]
-deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
-git-tree-sha1 = "340e257aada13f95f98ee352d316c3bed37c8ab9"
+deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "LERC_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
+git-tree-sha1 = "c9551dd26e31ab17b86cbd00c2ede019c08758eb"
 uuid = "89763e89-9b03-5906-acba-b20f662cd828"
-version = "4.3.0+0"
+version = "4.3.0+1"
 
 [[Libuuid_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -643,7 +674,7 @@ uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
 version = "2.36.0+0"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[LogExpFunctions]]
@@ -705,6 +736,10 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "887579a3eb005446d514ab7aeac5d1d027658b8f"
 uuid = "e7412a2a-1a6e-54c0-be00-318e2571c051"
 version = "1.3.5+1"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
 
 [[OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -784,7 +819,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[RecipesBase]]
@@ -1090,6 +1125,10 @@ git-tree-sha1 = "5982a94fcba20f02f42ace44b9894ee2b140fe47"
 uuid = "0ac62f75-1d6f-5e53-bd7c-93b484bb37c0"
 version = "0.15.1+0"
 
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+
 [[libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "daacc84a041563f965be61859a36e17c4e4fcd55"
@@ -1145,8 +1184,12 @@ version = "0.9.1+5"
 # ╠═27ba3757-7fe7-4e5c-adb8-faa80c6e53a7
 # ╠═5c5ffce4-dee6-420f-bca3-2948118ab769
 # ╠═2a0f44fa-def8-4371-af55-c6a677f7af3d
+# ╠═3336e93e-f0d4-4b74-a1e3-5b0a42cd339d
+# ╠═5c8f3e82-6a21-4fe8-af7f-b865b4278e91
 # ╠═00fa04a3-4ea4-495e-8e7d-d772de088f1e
 # ╠═d06f2f8e-61a8-41ba-b837-ffe0fcdc0492
+# ╠═339c6a45-6369-420e-a1b1-a80006c07e90
+# ╠═06f74ba1-bc2a-4b95-9925-6aa91e93a699
 # ╠═9264c292-a446-45f7-8d85-a62b2260c4d4
 # ╠═81cc7b61-b31e-4156-8cb5-1dafb3cb0071
 # ╠═8f8bcdc3-723b-4232-b467-9ff22f098679
