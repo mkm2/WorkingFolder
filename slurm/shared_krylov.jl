@@ -104,7 +104,7 @@ if RANDOM_STATES == false
     #H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
     H_tot = Vector{Adjoint{Float64, ThreadedSparseMatrixCSC{Float64, Int64, SparseMatrixCSC{Float64, Int64}}}}([ThreadedSparseMatrixCSC(spzeros(2^N,2^N))' for l in 1:4])
     Threads.@threads for shot in 1:SHOTS
-        H_tot[shot] = ThreadedSparseCSC(H + field_term(DISORDER_PARAM,N))'
+        H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
         @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,δt)
         logmsg("Completed Shot $(shot)")
     end
@@ -114,7 +114,7 @@ else
     print("test")
     Threads.@threads for shot in 1:SHOTS
         for s in 1:N_RANDOM_STATES
-            H_tot[shot] = ThreadedSparseCSC(H + field_term(DISORDER_PARAM,N))'
+            H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
             @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[:,s],N,δt)
             logmsg("Completed Shot $(shot), state $(s)")
         end
