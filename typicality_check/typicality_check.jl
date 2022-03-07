@@ -35,7 +35,7 @@ begin
 	for (i,f) in enumerate(files_RS)
 		jobids_RS[i] = load(path_RS*f,"jobid")
 		params_RS[i] = load(path_RS*f,"params")
-		data_RS[i] = 2*ones(51,N[i],1,10)-2*load(path_RS*f,"data")
+		data_RS[i] = 2*ones(51,N_RS[i],1,10)-2*load(path_RS*f,"data")
 	end
 end
 
@@ -44,16 +44,17 @@ md"## Larger Sample Random State"
 
 # ╔═╡ a52bd686-43c8-49af-993d-174a5d10119b
 begin
-	F_L = 10
-	jobids_L = Vector{String}(undef,F)
-	params_L = Vector{Any}(undef,F)
-	data_L = Vector{Array{Float64,4}}(undef,F)
+	path_L = pwd()*"/100S/"
+	F_L = 7
+	jobids_L = Vector{String}(undef,F_L)
+	params_L = Vector{Any}(undef,F_L)
+	data_L = Vector{Array{Float64,4}}(undef,F_L)
 	N_L = [8,9,10,11,12,13,14]
 	files_L = ["5203834_N8.jld2","5203835_N9.jld2","5203836_N10.jld2","5203837_N11.jld2","5203838_N12.jld2","5203839_N13.jld2","5203840_N14.jld2"]
-	for (i,f) in enumerate(files)
-		jobids_L[i] = load(path*f,"jobid")
-		params_L[i] = load(path*f,"params")
-		data_L[i] = 2*ones(51,N[i],1,10)-2*load(path*f,"data")
+	for (i,f) in enumerate(files_L)
+		jobids_L[i] = load(path_L*f,"jobid")
+		params_L[i] = load(path_L*f,"params")
+		data_L[i] = 2*ones(51,N_L[i],1,100)-2*load(path_L*f,"data")
 	end
 end
 
@@ -61,16 +62,43 @@ end
 md"## Random Product State"
 
 # ╔═╡ 397f89e9-2051-4109-90ac-47e31a993637
-
+begin
+	path_RPS = pwd()*"/RPS/"
+	F_RPS = 11
+	jobids_RPS = Vector{String}(undef,F_RPS)
+	params_RPS = Vector{Any}(undef,F_RPS)
+	data_RPS = Vector{Array{Float64,4}}(undef,F_RPS)
+	N_RPS = [8,9,10,11,12,13,14,15,16,17,18]
+	files_RPS = ["5203820_N8.jld2","5203822_N9.jld2","5203823_N10.jld2","5203824_N11.jld2","5203825_N12.jld2","5203826_N13.jld2","5203827_N14.jld2","5203828_N15.jld2","5203829_N16.jld2","5203830_N17.jld2","5203831_N18.jld2"]
+	for (i,f) in enumerate(files_RPS)
+		jobids_RPS[i] = load(path_RPS*f,"jobid")
+		params_RPS[i] = load(path_RPS*f,"params")
+		if N_RPS[i] <= 14
+			data_RPS[i] = 2*ones(51,N_RPS[i],1,100)-2*load(path_RPS*f,"data")
+		else
+			data_RPS[i] = 2*ones(51,N_RPS[i],1,10)-2*load(path_RPS*f,"data")
+		end
+	end
+end
 
 # ╔═╡ 81686c37-e502-4172-a163-8fbf43791382
-
+md"## |11....11> normalized"
 
 # ╔═╡ 854c763a-4645-4b02-985f-10e23f461350
-
-
-# ╔═╡ 8e407aa0-b692-4ff3-8cff-e8d719825daa
-
+begin
+	path_PSI0 = pwd()*"/PSI0/"
+	F_PSI0 = 13
+	jobids_PSI0 = Vector{String}(undef,F_PSI0)
+	params_PSI0 = Vector{Any}(undef,F_PSI0)
+	data_PSI0 = Vector{Array{Float64,4}}(undef,F_PSI0)
+	N_PSI0 = [8,9,10,11,12,13,14,15,16,17,18,19,20]
+	files_PSI0 = ["5203852_N8.jld2","5203853_N9.jld2","5203854_N10.jld2","5203855_N11.jld2","5203857_N12.jld2","5203858_N13.jld2","5203859_N14.jld2","5203860_N15.jld2","5203861_N16.jld2","5203862_N17.jld2","5203863_N18.jld2","5203864_N19.jld2","5203856_N20.jld2"]
+	for (i,f) in enumerate(files_PSI0)
+		jobids_PSI0[i] = load(path_PSI0*f,"jobid")
+		params_PSI0[i] = load(path_PSI0*f,"params")
+		data_PSI0[i] = 2*ones(51,N_PSI0[i],1,1)-2*load(path_PSI0*f,"data")
+	end
+end
 
 # ╔═╡ 28491406-99a1-11ec-3ca4-ef0928b5ed59
 begin
@@ -91,40 +119,260 @@ begin
 	end
 end
 
+# ╔═╡ 65b15201-1b16-49ba-a3ed-7416bf43e206
+md"# Qualitative Light Cones"
+
 # ╔═╡ 4b448258-8848-43d0-a1ca-d94be49f69e4
-@bind idx Slider(1:F)
+@bind idx_RS Slider(1:F_RS)
+
+# ╔═╡ d5a0df00-c519-4f43-ad79-5b24405726a0
+@bind idx_PSI0 Slider(1:F_PSI0)
+
+# ╔═╡ 98f4b267-2171-4596-bc14-9c150d0bae74
+@bind idx_RPS Slider(1:F_RPS)
 
 # ╔═╡ 8c447adc-8212-4cba-9394-3a2eb03a8d79
 @bind si Slider(1:10)
 
 # ╔═╡ 4ad29cc2-4558-4618-9e7f-585737522cd9
-heatmap(1:N[idx],0:0.1:5,data[idx][:,:,1,si];title="<|[σ_i(t),σ_j]|²> for N=$(N[idx])",c=:viridis)
+begin
+	plot_RS = heatmap(1:N_RS[idx_RS],0:0.1:5,data_RS[idx_RS][:,:,1,si];title="RS for N=$(N_RS[idx_RS])",c=:viridis)
+	
+	plot_RPS = heatmap(1:N_RPS[idx_RPS],0:0.1:5,data_RPS[idx_RPS][:,:,1,si];title="RPS for N=$(N_RPS[idx_RPS])",c=:viridis)
 
-#latexstring(raw"<|[σ_i,σ_j]|^2>\mathrm{\;for\;}"*"N={$(N[idx])}") #Note: Raise issue as this does not work in title!
+	plot_PSI0 = heatmap(1:N_PSI0[idx_PSI0],0:0.1:5,data_PSI0[idx_PSI0][:,:,1,1];title="PSI0 for N=$(N_PSI0[idx_PSI0])",c=:viridis)
+	
+	
+	plot(plot_RS, plot_RPS, plot_PSI0, layout = (1, 3), legend = false)
+	#latexstring(raw"<|[σ_i,σ_j]|^2>\mathrm{\;for\;}"*"N={$(N[idx])}") #Note: Raise issue as this does not work in title!
+end
 
-# ╔═╡ 8e8637da-1aeb-46bd-becf-9c2dc448c9ee
+# ╔═╡ 6bd295fd-269c-45f2-b0d5-50640fd03bbb
+@bind idx_L Slider(1:F_L)
+
+# ╔═╡ 8d2670ab-8e09-451c-9dc3-f07b39ded685
+@bind si_L Slider(1:100)
+
+# ╔═╡ cd527e24-c144-4ffc-9584-d5d9a4f0c0a0
+begin
+	plot_RS_L = heatmap(1:N_L[idx_L],0:0.1:5,data_L[idx_L][:,:,1,si_L];title="RS_L for N=$(N_L[idx_L])",c=:viridis)
+	
+	plot_RPS_L = heatmap(1:N_RPS[idx_RPS],0:0.1:5,data_RPS[idx_RPS][:,:,1,si_L];title="RPS for N=$(N_RPS[idx_RPS])",c=:viridis)
+
+	plot(plot_RS_L, plot_RPS_L, layout = (1, 2), legend = false)
+	#latexstring(raw"<|[σ_i,σ_j]|^2>\mathrm{\;for\;}"*"N={$(N[idx])}") #Note: Raise issue as this does not work in title!
+end
+
+# ╔═╡ 84cbed96-bf93-4650-a053-8fa950635c8e
 @bind n_states Slider(2:10)
 
-# ╔═╡ 67ab23a7-3b96-4db5-bfaa-385f70ae6172
+# ╔═╡ 6c52bd5c-a2c2-4013-b0e0-cfcffdc8cd22
+@bind n_states_l Slider(2:100)
+
+# ╔═╡ 0e75b8de-0df7-4a7b-b0dc-214486c3f08e
 begin
-	data_mean = Vector{Array{Float64,2}}(undef,F)
-	data_std = Vector{Array{Float64,2}}(undef,F)
-	for i in 1:F
-		data_mean[i] = reduce_by_last(state_mean(data[i],n_states))
-		data_std[i] = reduce_by_last(state_std(data[i],n_states))
+	data_mean_RS = Vector{Array{Float64,2}}(undef,F_RS)
+	data_std_RS = Vector{Array{Float64,2}}(undef,F_RS)
+	for i in 1:F_RS
+		data_mean_RS[i] = reduce_by_last(state_mean(data_RS[i],n_states))
+		data_std_RS[i] = reduce_by_last(state_std(data_RS[i],n_states))
+	end
+
+	data_mean_RPS = Vector{Array{Float64,2}}(undef,F_RPS)
+	data_std_RPS = Vector{Array{Float64,2}}(undef,F_RPS)
+	for i in 1:F_RPS
+		if N_RPS[i] <= 14
+			data_mean_RPS[i] = reduce_by_last(state_mean(data_RPS[i],n_states_l))
+			data_std_RPS[i] = reduce_by_last(state_std(data_RPS[i],n_states_l))
+		else
+			data_mean_RPS[i] = reduce_by_last(state_mean(data_RPS[i],n_states))
+			data_std_RPS[i] = reduce_by_last(state_std(data_RPS[i],n_states))
+		end
+	end
+
+	data_mean_L = Vector{Array{Float64,2}}(undef,F_L)
+	data_std_L = Vector{Array{Float64,2}}(undef,F_L)
+	for i in 1:F_L
+		data_mean_L[i] = reduce_by_last(state_mean(data_L[i],n_states_l))
+		data_std_L[i] = reduce_by_last(state_std(data_L[i],n_states_l))
+	end
+
+	data_mean_PSI0 = Vector{Array{Float64,2}}(undef,F_PSI0)
+	data_std_PSI0 = Vector{Array{Float64,2}}(undef,F_PSI0)
+	for i in 1:F_PSI0
+		data_mean_PSI0[i] = reduce_by_last(state_mean(data_PSI0[i],1))
+		data_std_PSI0[i] = reduce_by_last(state_std(data_PSI0[i],1))
 	end
 end
 
+# ╔═╡ 0ba548f8-941f-4173-a58b-6e3348e44208
+begin
+	plot_RS_mean = heatmap(1:N_RS[idx_RS],0:0.1:5,data_mean_RS[idx_RS][:,:];title="RS for N=$(N_RS[idx_RS])",c=:viridis)
+	
+	plot_RPS_mean = heatmap(1:N_RPS[idx_RPS],0:0.1:5,data_mean_RPS[idx_RPS][:,:];title="RPS for N=$(N_RPS[idx_RPS])",c=:viridis)
+
+	plot_PSI0_mean = heatmap(1:N_PSI0[idx_PSI0],0:0.1:5,data_mean_PSI0[idx_PSI0][:,:];title="PSI0 for N=$(N_PSI0[idx_PSI0])",c=:viridis)
+	
+	
+	plot(plot_RS_mean, plot_RPS_mean, plot_PSI0_mean, layout = (1, 3), legend = false)
+	#latexstring(raw"<|[σ_i,σ_j]|^2>\mathrm{\;for\;}"*"N={$(N[idx])}") #Note: Raise issue as this does not work in title!
+end
+
+# ╔═╡ 9ad60e8b-e180-4126-ad79-2a908ee61cc9
+begin
+	plot_RS_L_mean = heatmap(1:N_L[idx_L],0:0.1:5,data_mean_L[idx_L][:,:];title="RS_L for N=$(N_L[idx_L])",c=:viridis)
+	
+	plot_RPS_L_mean = heatmap(1:N_RPS[idx_RPS],0:0.1:5,data_mean_RPS[idx_RPS][:,:];title="RPS for N=$(N_RPS[idx_RPS])",c=:viridis)
+
+	plot(plot_RS_L_mean, plot_RPS_L_mean, layout = (1, 2), legend = false)
+	#latexstring(raw"<|[σ_i,σ_j]|^2>\mathrm{\;for\;}"*"N={$(N[idx])}") #Note: Raise issue as this does not work in title!
+end
+
+# ╔═╡ da45af9d-c845-42ae-b9d2-a5a02efd5a54
+md"# OTOCs at specific positions"
+
 # ╔═╡ 2c045bae-a1dc-4644-842a-70f7c762655a
-@bind idx2 Slider(1:F)
+@bind idx_PSI02 Slider(1:F_PSI0)
+
+# ╔═╡ 18942f53-a04b-4a6c-9db8-5869a0e129f4
+@bind idx_RPS2 Slider(1:F_RPS)
+
+# ╔═╡ ec7467d9-7823-46c4-84aa-c02934c03f38
+@bind idx_L2 Slider(1:F_L)
 
 # ╔═╡ 0e2a62cc-91e3-4730-b6fc-6baf7efd4aaa
-@bind pos Slider(1:N[idx])
+@bind pos Slider(1:18)
 
 # ╔═╡ dc9b1db8-bf3d-4e62-b9cc-eb0b37f84eb7
-plot(0:0.1:5,data_mean[idx2][1:51,pos],yerrors=data_std[idx2][1:51,pos],title="Typicality mean and std of <|[σ_i(t),σ_j]|²> for N=$(N[idx2])",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="i=3,j=$(pos)") #ribbon for shaded area
+begin
+	plot(0:0.1:5,data_mean_L[idx_L2][1:51,pos],yerrors=data_std_L[idx_L2][1:51,pos],title="Comparison for N<=14 (100 states)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS L: N=$(N_L[idx_L2]),i=3,j=$(pos)")
+	
+	plot!(0:0.1:5,data_mean_RPS[idx_RPS2][1:51,pos],ribbon=data_std_RPS[idx_RPS2][1:51,pos],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS: N=$(N_RPS[idx_RPS2]),i=3,j=$(pos)")
+
+	plot!(0:0.1:5,data_mean_PSI0[idx_PSI02][1:51,pos],yerrors=data_std_PSI0[idx_PSI02][1:51,pos],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="Ψ0:N=$(N_PSI0[idx_PSI02]),i=3,j=$(pos)")
+	
+	#ribbon for shaded area
+end
+
+# ╔═╡ 2082a75b-217d-44d0-a5da-40327434df67
+begin
+	plot(0.1:0.1:5,data_mean_L[idx_L2][2:51,pos],yerrors=data_std_L[idx_L2][2:51,pos],title="Comparison for N<=14 (100 states)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS L: N=$(N_L[idx_L2]),i=3,j=$(pos)",yaxis=:log,xaxis=:log)
+	
+	plot!(0.1:0.1:5,data_mean_RPS[idx_RPS2][2:51,pos],ribbon=data_std_RPS[idx_RPS2][2:51,pos],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS: N=$(N_RPS[idx_RPS2]),i=3,j=$(pos)",yaxis=:log,xaxis=:log)
+
+	plot!(0.1:0.1:5,data_mean_PSI0[idx_PSI02][2:51,pos],yerrors=data_std_PSI0[idx_PSI02][2:51,pos],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="Ψ0:N=$(N_PSI0[idx_PSI02]),i=3,j=$(pos)",yaxis=:log,xaxis=:log)
+	
+	#ribbon for shaded area
+end
+
+# ╔═╡ d2318b27-4f19-4e24-9e68-9576bc9c48ff
+@bind idx_PSI03 Slider(1:F_PSI0)
+
+# ╔═╡ 7fca9a1d-f6f6-4944-9665-1b36d73447e8
+@bind idx_RS3 Slider(1:F_RS)
+
+# ╔═╡ bfc1a43b-7360-4fd3-9511-6fac7080580a
+@bind idx_RPS3 Slider(1:F_RPS)
+
+# ╔═╡ 1de74dd7-c69b-43ae-a53a-427971e92c9b
+@bind pos3 Slider(1:18)
+
+# ╔═╡ 982dc94f-c0dd-43f4-b964-0b1156e93b4e
+begin
+	plot(0:0.1:5,data_mean_RS[idx_RS3][1:51,pos3],yerrors=data_std_RS[idx_RS3][1:51,pos3],title="Comparison for N>14 (10 states)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS3]),i=3,j=$(pos3)")
+	
+	plot!(0:0.1:5,data_mean_RPS[idx_RPS3][1:51,pos3],ribbon=data_std_RPS[idx_RPS3][1:51,pos3],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS: N=$(N_RPS[idx_RPS3]),i=3,j=$(pos3)")
+
+	plot!(0:0.1:5,data_mean_PSI0[idx_PSI03][1:51,pos3],yerrors=data_std_PSI0[idx_PSI03][1:51,pos3],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="Ψ0:N=$(N_PSI0[idx_PSI03]),i=3,j=$(pos3)")
+	
+	#ribbon for shaded area
+end
+
+# ╔═╡ 21ea6399-3fa1-46c4-a274-c5fe2e0ee8fb
+begin
+	plot(0.1:0.1:5,data_mean_RS[idx_RS3][2:51,pos3],yerrors=data_std_RS[idx_RS3][2:51,pos3],title="Comparison for N>14 (10 states)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS3]),i=3,j=$(pos3)",yaxis=:log,xaxis=:log)
+	
+	plot!(0.1:0.1:5,data_mean_RPS[idx_RPS3][2:51,pos3],ribbon=data_std_RPS[idx_RPS3][2:51,pos3],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS: N=$(N_RPS[idx_RPS3]),i=3,j=$(pos3)",yaxis=:log,xaxis=:log)
+
+	plot!(0.1:0.1:5,data_mean_PSI0[idx_PSI03][2:51,pos3],yerrors=data_std_PSI0[idx_PSI03][2:51,pos3],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="Ψ0:N=$(N_PSI0[idx_PSI03]),i=3,j=$(pos3)",yaxis=:log,xaxis=:log)
+	
+	#ribbon for shaded area
+end
+
+# ╔═╡ 74dabc7f-d6a1-43d0-8062-6d7fbb6c1e45
+@bind idx_RS4 Slider(1:F_RS)
+
+# ╔═╡ 19a3c921-576d-4e1c-9147-d14057de522f
+@bind idx_L4 Slider(1:F_L)
+
+# ╔═╡ 2e24dd9f-632f-4307-914d-c42082f72e68
+@bind pos4 Slider(1:18)
+
+# ╔═╡ 561dd738-381c-439f-a191-4d371f566597
+begin
+	plot(0:0.1:5,data_mean_RS[idx_RS4][1:51,pos4],yerrors=data_std_RS[idx_RS4][1:51,pos4],title="Random States, varying sample sizes (10 vs 100)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS4]),i=3,j=$(pos4)")
+	
+	plot!(0:0.1:5,data_mean_L[idx_L4][1:51,pos4],ribbon=data_std_L[idx_L4][1:51,pos4],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS L: N=$(N_L[idx_L4]),i=3,j=$(pos4)")
+end
+
+# ╔═╡ 71ee2089-eb23-4deb-8682-e7c11a94a083
+begin
+	plot(0.1:0.1:5,data_mean_RS[idx_RS4][2:51,pos4],yerrors=data_std_RS[idx_RS4][2:51,pos4],title="Random States, varying sample sizes (10 vs 100)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS4]),i=3,j=$(pos4)",yaxis=:log,xaxis=:log)
+	
+	plot!(0.1:0.1:5,data_mean_L[idx_L4][2:51,pos4],ribbon=data_std_L[idx_L4][2:51,pos4],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS L: N=$(N_L[idx_L4]),i=3,j=$(pos4)",yaxis=:log,xaxis=:log)
+end
+
+# ╔═╡ c77606b9-3bef-4cc7-8e13-f6d3951e0746
+@bind n_states_RPS_s Slider(1:10)
+
+# ╔═╡ 0ac8c8a3-488a-4e15-ae77-1e1c1dd75ad0
+@bind n_states_RPS_l Slider(1:100)
+
+# ╔═╡ aa13c33c-e214-4e8f-a7c4-90a6ab5129d7
+@bind idx_RPS5 Slider(1:7)
+
+# ╔═╡ f0ae6427-b84b-4337-815f-58562dff26b6
+@bind idx_RS5 Slider(1:5)
+
+# ╔═╡ 36353cad-4ee8-4576-ab02-bf0c650bb0f9
+@bind pos5 Slider(1:18)
+
+# ╔═╡ 04bc256f-3e8b-4878-b937-1ad4d058e189
+begin
+	data_mean_RPS5 = Vector{Array{Float64,2}}(undef,7)
+	data_std_RPS5 = Vector{Array{Float64,2}}(undef,7)
+	data_mean_RPS6 = Vector{Array{Float64,2}}(undef,7)
+	data_std_RPS6 = Vector{Array{Float64,2}}(undef,7)
+	for i in 1:7
+		data_mean_RPS5[i] = reduce_by_last(state_mean(data_RPS[i],n_states_RPS_s))
+		data_std_RPS5[i] = reduce_by_last(state_std(data_RPS[i],n_states_RPS_s))
+		data_mean_RPS6[i] = reduce_by_last(state_mean(data_RPS[i],n_states_RPS_l))
+		data_std_RPS6[i] = reduce_by_last(state_std(data_RPS[i],n_states_RPS_l))
+	end
+end
 
 # ╔═╡ d0a9fb36-ca76-4c1f-8201-11a88cee074d
+begin
+	plot(0:0.1:5,data_mean_RPS5[idx_RPS5][1:51,pos5],yerrors=data_std_RPS5[idx_RPS5][1:51,pos5],title="Random Product States, var. sample sizes ($(n_states_RPS_s) vs. $(n_states_RPS_l))",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)")
+	
+	plot!(0:0.1:5,data_mean_RPS6[idx_RPS5][1:51,pos5],ribbon=data_std_RPS6[idx_RPS5][1:51,pos5],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS L: N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)")
+
+	plot!(0:0.1:5,data_mean_RS[idx_RS5][1:51,pos5],ribbon=data_std_RS[idx_RS5][1:51,pos5],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS5]),i=3,j=$(pos5)")
+end
+
+# ╔═╡ 90a64aa8-3901-4f20-aae7-eb984a01a13a
+begin
+	plot(0.1:0.1:5,data_mean_RPS5[idx_RPS5][2:51,pos5],yerrors=data_std_RPS5[idx_RPS5][2:51,pos5],title="Random Product States, var. sample sizes ($(n_states_RPS_s) vs. $(n_states_RPS_l))",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log)
+	
+	plot!(0.1:0.1:5,data_mean_RPS6[idx_RPS5][2:51,pos5],ribbon=data_std_RPS6[idx_RPS5][2:51,pos5],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS L: N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log)
+
+	plot!(0.1:0.1:5,data_mean_RS[idx_RS5][2:51,pos5],ribbon=data_std_RS[idx_RS5][2:51,pos5],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log)
+end
+
+# ╔═╡ 26218b0a-035d-477f-8e27-7f5a11d80771
+
+
+# ╔═╡ 1fcb7174-f429-455a-855c-a82d0344fe46
 
 
 # ╔═╡ a904d996-beb6-43e4-900a-a62f46566d2a
@@ -1089,17 +1337,49 @@ version = "0.9.1+5"
 # ╠═397f89e9-2051-4109-90ac-47e31a993637
 # ╠═81686c37-e502-4172-a163-8fbf43791382
 # ╠═854c763a-4645-4b02-985f-10e23f461350
-# ╠═8e407aa0-b692-4ff3-8cff-e8d719825daa
 # ╠═28491406-99a1-11ec-3ca4-ef0928b5ed59
-# ╠═67ab23a7-3b96-4db5-bfaa-385f70ae6172
+# ╠═65b15201-1b16-49ba-a3ed-7416bf43e206
 # ╠═4b448258-8848-43d0-a1ca-d94be49f69e4
+# ╠═d5a0df00-c519-4f43-ad79-5b24405726a0
+# ╠═98f4b267-2171-4596-bc14-9c150d0bae74
 # ╠═8c447adc-8212-4cba-9394-3a2eb03a8d79
 # ╠═4ad29cc2-4558-4618-9e7f-585737522cd9
-# ╠═8e8637da-1aeb-46bd-becf-9c2dc448c9ee
+# ╠═6bd295fd-269c-45f2-b0d5-50640fd03bbb
+# ╠═8d2670ab-8e09-451c-9dc3-f07b39ded685
+# ╠═cd527e24-c144-4ffc-9584-d5d9a4f0c0a0
+# ╠═84cbed96-bf93-4650-a053-8fa950635c8e
+# ╠═6c52bd5c-a2c2-4013-b0e0-cfcffdc8cd22
+# ╠═0e75b8de-0df7-4a7b-b0dc-214486c3f08e
+# ╠═0ba548f8-941f-4173-a58b-6e3348e44208
+# ╠═9ad60e8b-e180-4126-ad79-2a908ee61cc9
+# ╠═da45af9d-c845-42ae-b9d2-a5a02efd5a54
 # ╠═2c045bae-a1dc-4644-842a-70f7c762655a
+# ╠═18942f53-a04b-4a6c-9db8-5869a0e129f4
+# ╠═ec7467d9-7823-46c4-84aa-c02934c03f38
 # ╠═0e2a62cc-91e3-4730-b6fc-6baf7efd4aaa
 # ╠═dc9b1db8-bf3d-4e62-b9cc-eb0b37f84eb7
+# ╠═2082a75b-217d-44d0-a5da-40327434df67
+# ╠═d2318b27-4f19-4e24-9e68-9576bc9c48ff
+# ╠═7fca9a1d-f6f6-4944-9665-1b36d73447e8
+# ╠═bfc1a43b-7360-4fd3-9511-6fac7080580a
+# ╠═1de74dd7-c69b-43ae-a53a-427971e92c9b
+# ╠═982dc94f-c0dd-43f4-b964-0b1156e93b4e
+# ╠═21ea6399-3fa1-46c4-a274-c5fe2e0ee8fb
+# ╠═74dabc7f-d6a1-43d0-8062-6d7fbb6c1e45
+# ╠═19a3c921-576d-4e1c-9147-d14057de522f
+# ╠═2e24dd9f-632f-4307-914d-c42082f72e68
+# ╠═561dd738-381c-439f-a191-4d371f566597
+# ╠═71ee2089-eb23-4deb-8682-e7c11a94a083
+# ╠═c77606b9-3bef-4cc7-8e13-f6d3951e0746
+# ╠═0ac8c8a3-488a-4e15-ae77-1e1c1dd75ad0
+# ╠═aa13c33c-e214-4e8f-a7c4-90a6ab5129d7
+# ╠═f0ae6427-b84b-4337-815f-58562dff26b6
+# ╠═36353cad-4ee8-4576-ab02-bf0c650bb0f9
+# ╠═04bc256f-3e8b-4878-b937-1ad4d058e189
 # ╠═d0a9fb36-ca76-4c1f-8201-11a88cee074d
+# ╠═90a64aa8-3901-4f20-aae7-eb984a01a13a
+# ╠═26218b0a-035d-477f-8e27-7f5a11d80771
+# ╠═1fcb7174-f429-455a-855c-a82d0344fe46
 # ╠═a904d996-beb6-43e4-900a-a62f46566d2a
 # ╠═75532f27-8989-4ed7-b206-a45135b5eecb
 # ╠═1eaef926-fecd-4a37-b5db-9c706e2e16d7
