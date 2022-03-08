@@ -88,8 +88,10 @@ elseif OBSERVABLE == "z"
 end
 
 H = xxz(N,6)
+
 if RANDOM_STATES == false
-    ψ0 = normalize!(ones(2^N))
+    ψ0 = random_state(N)#normalize!(ones(2^N))
+    logmsg("Sampled random initial state")
 else
     ψs = zeros(ComplexF64,2^N,N_RANDOM_STATES)
     for s in 1:N_RANDOM_STATES
@@ -105,6 +107,7 @@ if RANDOM_STATES == false
     #H_tot = Vector{Adjoint{Float64, ThreadedSparseMatrixCSC{Float64, Int64, SparseMatrixCSC{Float64, Int64}}}}([ThreadedSparseMatrixCSC(spzeros(2^N,2^N))' for l in 1:4])
     Threads.@threads for shot in 1:SHOTS
         H_tot[shot] = H + field_term(DISORDER_PARAM,N)
+        logmsg("Created Hamiltonian for Shot $(shot)")
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
         @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,δt)
         logmsg("Completed Shot $(shot)")
