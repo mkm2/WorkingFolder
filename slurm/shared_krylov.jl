@@ -129,5 +129,5 @@ end
 logmsg("*"^10*"Simulation completed!"*"*"^10)
 
 logmsg("*"^10 * "Saving" * "*"^10)
-save(otocs, params, JOBID, joinpath(LOCATION,"$(JOBID)_N$(N).jld2"))
+save(otocs, params, JOBID, joinpath(LOCATION,"$(JOBID)_N$(N)_FD.jld2"))
 logmsg("*"^10 * "Run completed!" * "*"^10)
