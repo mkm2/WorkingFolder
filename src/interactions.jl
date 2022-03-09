@@ -1,5 +1,9 @@
 module  Interactions
 
+using ..LightCones
+
+@reexport using ..Geom
+
 export interaction_matrix, PowerLaw
 
 abstract type Interaction end
