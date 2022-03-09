@@ -61,7 +61,7 @@ function field_term(h::Float64, N::Int)
     return res
 end
 
-hamiltonian_from_positions(pd::PositionData,shot::Int) = hamiltonian_from_positions(pd.data[:,shot],geometry_from_density(pd.descriptor.geometry,pd.descriptor.density,pd.descriptor.system_size,1))
+hamiltonian_from_positions(pd::PositionData,shot::Int) = hamiltonian_from_positions(pd.data[:,shot],geometry_from_density(pd.descriptor.geometry,pd.descriptor.ρ,pd.descriptor.system_size,1))
 
 function hamiltonian_from_positions(positions::Vector{Float64},geometry::Union{Box, BoxPBC, NoisyChain, NoisyChainPBC};α=6)
     interaction = PowerLaw(α)
