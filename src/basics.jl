@@ -60,7 +60,7 @@ end
 
 hamiltonian_from_positions(pd::PositionData,shot::Int) = hamiltonian_from_positions(pd.data[:,shot],geometry_from_density(pd.descriptor.geometry,pd.descriptor.density,pd.descriptor.system_size,1))
 
-function hamiltonian_from_positions(positions::Vector{Float64},geometry::Geometry;α=6)
+function hamiltonian_from_positions(positions::Vector{Float64},geometry::Union{Box, BoxPBC, NoisyChain, NoisyChainPBC};α=6)
     interaction = PowerLaw(α)
     return xxz(interaction_matrix(interaction,distance_matrix(geometry,positions)))
 end
