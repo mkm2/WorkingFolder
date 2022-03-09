@@ -353,9 +353,9 @@ end
 
 # ╔═╡ d0a9fb36-ca76-4c1f-8201-11a88cee074d
 begin
-	plot(0:0.1:5,data_mean_RPS5[idx_RPS5][1:51,pos5],yerrors=data_std_RPS5[idx_RPS5][1:51,pos5],title="Random Product States, var. sample sizes ($(n_states_RPS_s) vs. $(n_states_RPS_l))",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)")
+	plot(0:0.1:5,data_mean_RPS5[idx_RPS5][1:51,pos5],yerrors=data_std_RPS5[idx_RPS5][1:51,pos5]./sqrt(n_states_RPS_s),title="Random Product States, var. sample sizes ($(n_states_RPS_s) vs. $(n_states_RPS_l))",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)")
 	
-	plot!(0:0.1:5,data_mean_RPS6[idx_RPS5][1:51,pos5],ribbon=data_std_RPS6[idx_RPS5][1:51,pos5],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS L: N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)")
+	plot!(0:0.1:5,data_mean_RPS6[idx_RPS5][1:51,pos5],ribbon=data_std_RPS6[idx_RPS5][1:51,pos5]./sqrt(n_states_RPS_l),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS L: N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)")
 
 	plot!(0:0.1:5,data_mean_RS[idx_RS5][1:51,pos5],ribbon=data_std_RS[idx_RS5][1:51,pos5],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS5]),i=3,j=$(pos5)")
 end
@@ -366,13 +366,88 @@ begin
 	
 	plot!(0.1:0.1:5,data_mean_RPS6[idx_RPS5][2:51,pos5],ribbon=data_std_RPS6[idx_RPS5][2:51,pos5],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS L: N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log)
 
-	plot!(0.1:0.1:5,data_mean_RS[idx_RS5][2:51,pos5],ribbon=data_std_RS[idx_RS5][2:51,pos5],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log)
+	plot!(0.1:0.1:5,data_mean_RS[idx_RS5][2:51,pos5],ribbon=data_std_RS[idx_RS5][2:51,pos5],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log,legend=true)
 end
 
 # ╔═╡ 26218b0a-035d-477f-8e27-7f5a11d80771
+md"# Scaling of convergence to mean"
 
+# ╔═╡ 55526188-6e02-4055-9575-fd640d0e17ac
+@bind n_states_RPS_c Slider(1:100)
+
+# ╔═╡ a4e13f59-3446-405d-86c1-995c82fa3593
+@bind idx_RPS7 Slider(1:7)
+
+# ╔═╡ 1e3e9f8a-d603-484b-a8cf-78a33fc2773a
+N_RPS[idx_RPS7]
+
+# ╔═╡ a95bfa09-05fc-4da6-98bf-5c7d4f6f1cd1
+@bind idx_RS7 Slider(1:5)
+
+# ╔═╡ b2e5934a-090c-4110-95cb-b571d237a363
+N_RS[idx_RS7]
+
+# ╔═╡ c1398f9f-3990-492a-b21e-c9d8e18fdd3c
+@bind pos7 Slider(1:18)
 
 # ╔═╡ 1fcb7174-f429-455a-855c-a82d0344fe46
+begin
+	data_mean_RPS7 = Vector{Array{Float64,2}}(undef,7)
+	data_std_RPS7 = Vector{Array{Float64,2}}(undef,7)
+	data_mean_RPS8 = Vector{Array{Float64,2}}(undef,7)
+	data_std_RPS8 = Vector{Array{Float64,2}}(undef,7)
+	for i in 1:7
+		data_mean_RPS7[i] = reduce_by_last(state_mean(data_RPS[i],n_states_RPS_c))
+		data_std_RPS7[i] = reduce_by_last(state_std(data_RPS[i],n_states_RPS_c))
+		data_mean_RPS8[i] = reduce_by_last(state_mean(data_RPS[i],100))
+		data_std_RPS8[i] = reduce_by_last(state_std(data_RPS[i],100))
+	end
+end
+
+# ╔═╡ 0189c9ad-6891-4152-84b5-2bfabfab69c7
+begin
+	σμ = zeros(5,14)
+	N = [10,11,12,13,14]
+	for i in 1:5
+		for p in 1:N[i]
+			σμ[i,p] = sum(data_std_RPS7[i+2][:,p]./sqrt(n_states_RPS_c))/51
+		end
+	end
+end
+
+# ╔═╡ 19cbb3ab-a19f-41e3-9903-1ef30bec4e5e
+
+
+# ╔═╡ 60804ae2-2fb3-4a85-9a24-91cf1d7777f3
+begin
+	plot(0:0.1:5,data_std_RPS7[3][:,pos7]./sqrt(n_states_RPS_c),label="N=$(N[1])",title="Standardfehler Mittewert i=3,j=$(pos7)",xlabel="t")
+	for i in 2:4
+		plot!(0:0.1:5,data_std_RPS7[i+2][:,pos7]./sqrt(n_states_RPS_c),label="N=$(N[i])")
+	end
+	plot!(0:0.1:5,data_std_RPS7[7][:,pos7]./sqrt(n_states_RPS_c),label="N=$(N[5])")
+
+end
+
+# ╔═╡ 175816a8-b892-4f41-b411-63612c80c8fe
+plot(N,σμ,ylims=(-0.1,0.4),legend=false)
+
+# ╔═╡ 3adb899a-5168-4209-a8c4-43687e61d47c
+md"# Deviation from RS mean"
+
+# ╔═╡ f971aa47-83d7-4d5c-8edc-5e2a9c95594c
+begin
+	plot(0:0.1:5,data_mean_RPS7[idx_RPS7][1:51,pos7]-data_mean_RS[idx_RS7][1:51,pos7],yerrors=data_std_RPS7[idx_RPS7][1:51,pos7]./sqrt(n_states_RPS_c),title="Deviation from RS mean (#Shots = $(n_states_RPS_c))",xlabel="t",ylabel="m-μ",label="RPS-RS N=$(N_RPS[idx_RPS7]),i=3,j=$(pos7)",ylims=(-0.1,0.1))
+end
+
+# ╔═╡ 9aa1b1d6-06e3-400e-bc59-aa6a113196ac
+begin
+	plot(0.1:0.1:5,(data_mean_RPS7[idx_RPS7][2:51,pos7]-data_mean_RS[idx_RS7][2:51,pos7])./data_mean_RS[idx_RS7][2:51,pos7]*100,yerrors=data_std_RPS7[idx_RPS7][2:51,pos7]./sqrt(n_states_RPS_c)./data_mean_RS[idx_RS7][2:51,pos7]*100,title="Deviation from RS mean (#Shots = $(n_states_RPS_c))",xlabel="t",ylabel="(m-μ)/μ [%]",label="RPS-RS N=$(N_RPS[idx_RPS7]),i=3,j=$(pos7)",ylims=(-10,10))
+end
+
+# ╔═╡ b4a557ce-62dc-41d0-a0f6-b76ff35212aa
+#Student t-test
+
+# ╔═╡ 7c8d2139-5ed3-4f88-b439-f019ae94b423
 
 
 # ╔═╡ a904d996-beb6-43e4-900a-a62f46566d2a
@@ -1379,7 +1454,22 @@ version = "0.9.1+5"
 # ╠═d0a9fb36-ca76-4c1f-8201-11a88cee074d
 # ╠═90a64aa8-3901-4f20-aae7-eb984a01a13a
 # ╠═26218b0a-035d-477f-8e27-7f5a11d80771
+# ╠═55526188-6e02-4055-9575-fd640d0e17ac
+# ╠═a4e13f59-3446-405d-86c1-995c82fa3593
+# ╠═1e3e9f8a-d603-484b-a8cf-78a33fc2773a
+# ╠═a95bfa09-05fc-4da6-98bf-5c7d4f6f1cd1
+# ╠═b2e5934a-090c-4110-95cb-b571d237a363
+# ╠═c1398f9f-3990-492a-b21e-c9d8e18fdd3c
 # ╠═1fcb7174-f429-455a-855c-a82d0344fe46
+# ╠═0189c9ad-6891-4152-84b5-2bfabfab69c7
+# ╠═19cbb3ab-a19f-41e3-9903-1ef30bec4e5e
+# ╠═60804ae2-2fb3-4a85-9a24-91cf1d7777f3
+# ╠═175816a8-b892-4f41-b411-63612c80c8fe
+# ╠═3adb899a-5168-4209-a8c4-43687e61d47c
+# ╠═f971aa47-83d7-4d5c-8edc-5e2a9c95594c
+# ╠═9aa1b1d6-06e3-400e-bc59-aa6a113196ac
+# ╠═b4a557ce-62dc-41d0-a0f6-b76ff35212aa
+# ╠═7c8d2139-5ed3-4f88-b439-f019ae94b423
 # ╠═a904d996-beb6-43e4-900a-a62f46566d2a
 # ╠═75532f27-8989-4ed7-b206-a45135b5eecb
 # ╠═1eaef926-fecd-4a37-b5db-9c706e2e16d7
