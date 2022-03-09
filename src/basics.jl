@@ -11,8 +11,9 @@ using ..LightCones
 @reexport using ..GeomPos
 
 export σplus, σminus, σz, σx, σy, ⊗, Δ, 𝟙
-export chainJ, correlator, single_spin_op,xxz
-export field_term, random_state, random_product_state
+export chainJ, correlator, single_spin_op
+export xxz, field_term, hamiltonian_from_positions
+export random_state, random_product_state
 export magnetisation
 
 const σplus = sparse([1],[2],[1],2,2)
