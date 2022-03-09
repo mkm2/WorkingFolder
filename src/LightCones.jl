@@ -10,14 +10,14 @@ using Plots
 using SpinSymmetry
 using KrylovKit
 
+include("geom_pos.jl")
 include("basics.jl")
 include("otoc.jl")
 include("utilities.jl")
-include("geom_pos.jl")
 
+@reexport using .GeomPos
 @reexport using .Basics
 @reexport using .OTOC
 @reexport using .Utils
-@reexport using .GeomPos
 
 end # module
