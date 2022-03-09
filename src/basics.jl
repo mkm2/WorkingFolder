@@ -4,7 +4,6 @@ using SparseArrays, LinearAlgebra, Plots
 using SpinSymmetry, XXZNumerics
 using KrylovKit
 using ..LightCones
-using .GeomPos
 
 export σplus, σminus, σz, σx, ⊗, Δ, 𝟙
 export chainJ, correlator, single_spin_op,xxz

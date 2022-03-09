@@ -9,6 +9,7 @@ using SparseArrays
 using Plots
 using SpinSymmetry
 using KrylovKit
+using XXZNumerics
 
 include("geom_pos.jl")
 include("basics.jl")
