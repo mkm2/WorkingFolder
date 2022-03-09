@@ -1,7 +1,7 @@
 module Basics
 
 using SparseArrays, LinearAlgebra, Plots
-using SpinSymmetry, XXZNumerics
+using SpinSymmetry
 using KrylovKit
 using Reexport
 using ..LightCones
