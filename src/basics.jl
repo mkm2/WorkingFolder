@@ -6,9 +6,11 @@ using KrylovKit
 using Reexport
 using ..LightCones
 
+@reexport using ..Geom
+@reexport using ..Interactions
 @reexport using ..GeomPos
 
-export σplus, σminus, σz, σx, ⊗, Δ, 𝟙
+export σplus, σminus, σz, σx, σy, ⊗, Δ, 𝟙
 export chainJ, correlator, single_spin_op,xxz
 export field_term, random_state, random_product_state
 export magnetisation
