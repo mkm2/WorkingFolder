@@ -71,7 +71,7 @@ struct PositionData
     distances::Array{Float64,3} #distance matrix for each shot
 end
 
-PositionData(desc::PositionDataDescriptor) = PositionData(desc, zeros(Float64, desc.system_size, desc.shots))
+PositionData(desc::PositionDataDescriptor) = PositionData(desc, zeros(Float64, desc.system_size, desc.shots), zeros(Float64,desc.system_size,desc.system_size,desc.shots))
 
 PositionData(args...; kwargs...) = PositionData(PositionDataDescriptor(args..., kwargs...))
 
