@@ -1,5 +1,6 @@
 module Geom
 
+using LinearAlgebra
 export sample_blockaded, distance, distance_matrix, Geometry, Box, BoxPBC, NoisyChain, NoisyChainPBC
 
 ## TODO: abstract Lattice geometries and put chains as subtypes
