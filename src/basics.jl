@@ -3,6 +3,7 @@ module Basics
 using SparseArrays, LinearAlgebra, Plots
 using SpinSymmetry, XXZNumerics
 using KrylovKit
+using Reexport
 using ..LightCones
 
 @reexport using ..GeomPos
