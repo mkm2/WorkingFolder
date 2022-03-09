@@ -5,6 +5,8 @@ using SpinSymmetry, XXZNumerics
 using KrylovKit
 using ..LightCones
 
+@reexport using ..GeomPos
+
 export σplus, σminus, σz, σx, ⊗, Δ, 𝟙
 export chainJ, correlator, single_spin_op,xxz
 export field_term, random_state, random_product_state
