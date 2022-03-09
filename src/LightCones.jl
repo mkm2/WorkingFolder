@@ -13,9 +13,11 @@ using KrylovKit
 include("basics.jl")
 include("otoc.jl")
 include("utilities.jl")
+include("geom_pos.jl")
 
 @reexport using .Basics
 @reexport using .OTOC
 @reexport using .Utils
+@reexport using .GeomPos
 
 end # module

@@ -45,4 +45,19 @@ function save(data, params, jobid, datapath)
     end
 end
 
+function save_with_pos(data,params,positiondata,jobid,datapath)
+    dname = dirname(datapath)
+    if !isdir(dname)
+        logmsg("Save directory: $dname does not exist. Creating!")
+        mkpath(dname)
+    end
+    logmsg("Saving file: $datapath")
+    jldopen(datapath, "w") do file
+        file["data"] = data
+        file["params"] = params
+        file["jobid"] = jobid
+        file["posistiondata"] = positiondata
+    end
+end
+
 end #module

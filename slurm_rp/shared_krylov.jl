@@ -23,7 +23,7 @@ using LightCones
 LOGS = get(ENV, "LOGS", "")
 JOBID = get(ENV, "SLURM_JOB_ID", "")
 
-logmsg("*"^10*"RANDOM FIELDS"*"*"^10)
+logmsg("*"^10*"RANDOM POSITIONS"*"*"^10)
 println("shared_krylov.jl")
 
 println("Working Directory:          $(pwd())" )
@@ -51,6 +51,7 @@ else
 end
 OBSERVABLE = ARGS[4]
 DISORDER_PARAM = parse(Float64, ARGS[5])
+GEOMETRY = ARGS[6]
 
 #SHOTS = parse(Int, ARGS[2]) #$(date '+%Y-%m-%d')
 
@@ -66,6 +67,7 @@ LOCATION = joinpath(LOGS,"LightCones",Dates.format(Dates.today(), "yyyy-mm-dd"))
 @show N_RANDOM_STATES
 @show OBSERVABLE
 @show DISORDER_PARAM
+@show GEOMETRY
 
 params = SimulationParams(N,SHOTS,RANDOM_STATES,N_RANDOM_STATES,OBSERVABLE,DISORDER_PARAM)
 
@@ -77,7 +79,7 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 T = 5
 trange = 0:δt:T
 
-i = div(N,2)
+i = 1 #no reflections since pbc
 A = single_spin_op(σz,i,N)
 
 if OBSERVABLE == "x"
@@ -88,9 +90,17 @@ elseif OBSERVABLE == "z"
     B = σz
 end
 
-H = xxz(N,6)
+if GEOMETRY == "box"
+    geom = :box
+elseif GEOMETRY == "box_pbc"
+    geom = :box_pbc
+elseif GEOMETRY == "noisy_chain"
+    geom = :noisy_chain
+elseif GEOMETRY == "noisy_chain_pbc"
+    geom = :noisy_chain_pbc
+end
 
-if RANDOM_STATES == false
+if RANDOM_STATES == false #TODO: Make sensible standard case
     ψ0 = random_state(N)#normalize!(ones(2^N))
     logmsg("Sampled random initial state")
 else
@@ -100,6 +110,10 @@ else
     end
 end
 
+#Draw positions
+desc = PositionDataDescriptor(geom,N,SHOTS,DISORDER_PARAM)
+pd = create(desc)
+
 #Start simulation
 
 if RANDOM_STATES == false
@@ -107,7 +121,7 @@ if RANDOM_STATES == false
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
     #H_tot = Vector{Adjoint{Float64, ThreadedSparseMatrixCSC{Float64, Int64, SparseMatrixCSC{Float64, Int64}}}}([ThreadedSparseMatrixCSC(spzeros(2^N,2^N))' for l in 1:4])
     Threads.@threads for shot in 1:SHOTS
-        H_tot[shot] = H + field_term(DISORDER_PARAM,N)
+        H_tot[shot] = hamiltonian_from_positions(pd,shot)
         logmsg("Created Hamiltonian for Shot $(shot)")
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
         @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,δt)
@@ -129,5 +143,5 @@ end
 logmsg("*"^10*"Simulation completed!"*"*"^10)
 
 logmsg("*"^10 * "Saving" * "*"^10)
-save(otocs, params, JOBID, joinpath(LOCATION,"$(JOBID)_N$(N).jld2"))
+save_with_pos(otocs, params, pd, JOBID, joinpath(LOCATION,"$(JOBID)_N$(N)_rp.jld2"))
 logmsg("*"^10 * "Run completed!" * "*"^10)

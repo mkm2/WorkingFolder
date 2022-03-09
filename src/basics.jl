@@ -1,7 +1,7 @@
 module Basics
 
 using SparseArrays, LinearAlgebra, Plots
-using SpinSymmetry
+using SpinSymmetry, XXZNumerics
 using KrylovKit
 using ..LightCones
 
@@ -10,8 +10,8 @@ export chainJ, correlator, single_spin_op,xxz
 export field_term, random_state, random_product_state
 export magnetisation
 
-const σplus = sparse([2],[1],[1],2,2)
-const σminus = sparse([1],[2],[1],2,2)
+const σplus = sparse([1],[2],[1],2,2)
+const σminus = sparse([2],[1],[1],2,2)
 const σz = spdiagm([1,-1])
 const σx = sparse([1,2],[2,1],[1,1])
 const σy = sparse([1,2],[2,1],[-im,+im])
@@ -53,6 +53,13 @@ function field_term(h::Float64, N::Int)
         res += hs[i]*single_spin_op(σz,i,N)
     end
     return res
+end
+
+hamiltonian_from_positions(pd::PositionData,shot::Int) = hamiltonian_from_positions(pd.data[:,shot],geometry_from_density(pd.descriptor.geometry,pd.descriptor.density,pd.descriptor.system_size,1))
+
+function hamiltonian_from_positions(positions::Vector{Float64},geometry::Geometry;α=6)
+    interaction = PowerLaw(α)
+    return xxz(interaction_matrix(interaction,distance_matrix(geometry,positions)))
 end
 
 function random_state(N::Int)
