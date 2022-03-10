@@ -263,16 +263,19 @@ md"# OTOCs at specific positions"
 # ╔═╡ ec7467d9-7823-46c4-84aa-c02934c03f38
 @bind idx_RS2 Slider(1:F_RS)
 
+# ╔═╡ 171e7121-cc30-477d-922b-b6227edbb09b
+N_RS[idx_RS2]
+
 # ╔═╡ 0e2a62cc-91e3-4730-b6fc-6baf7efd4aaa
 @bind pos Slider(1:18)
 
 # ╔═╡ dc9b1db8-bf3d-4e62-b9cc-eb0b37f84eb7
 begin
-	plot(0:0.1:5,data_mean_RS[idx_RS2][1:51,pos],yerrors=data_std_RS[idx_RS2][1:51,pos]./sqrt(10),title="Comparison for N=17, i=1, j=$(pos)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="10 Haar Random States",legend=:bottomright)#: N=$(N_RS[idx_RS2]),i=3,j=$(pos)")
+	plot(0:0.1:5,data_mean_RS[idx_RS2][1:51,pos],yerrors=data_std_RS[idx_RS2][1:51,pos]./sqrt(10),title="Comparison for N=17, i=1, j=$(pos)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="10 Haar Random States: N=$(N_RS[idx_RS2]),i=3,j=$(pos)")
 	
-	plot!(0:0.1:5,data_mean_RPS[idx_RPS2][1:51,pos],ribbon=data_std_RPS[idx_RPS2][1:51,pos]./sqrt(100),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="100 Random Product States")#: N=$(N_RPS[idx_RPS2]),i=3,j=$(pos)")
+	plot!(0:0.1:5,data_mean_RPS[idx_RPS2][1:51,pos],ribbon=data_std_RPS[idx_RPS2][1:51,pos]./sqrt(100),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="100 Random Product States: N=$(N_RPS[idx_RPS2]),i=3,j=$(pos)")
 
-	plot!(0:0.1:5,data_mean_PSI0[idx_PSI02][1:51,pos],yerrors=data_std_PSI0[idx_PSI02][1:51,pos],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="|Ψ0> = |11..11>")#N=$(N_PSI0[idx_PSI02]),i=3,j=$(pos)")
+	plot!(0:0.1:5,data_mean_PSI0[idx_PSI02][1:51,pos],yerrors=data_std_PSI0[idx_PSI02][1:51,pos],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="|Ψ0> = |11..11> N=$(N_PSI0[idx_PSI02]),i=3,j=$(pos)")
 	
 	#ribbon for shaded area
 end
@@ -1428,6 +1431,7 @@ version = "0.9.1+5"
 # ╠═2c045bae-a1dc-4644-842a-70f7c762655a
 # ╠═18942f53-a04b-4a6c-9db8-5869a0e129f4
 # ╠═ec7467d9-7823-46c4-84aa-c02934c03f38
+# ╠═171e7121-cc30-477d-922b-b6227edbb09b
 # ╠═0e2a62cc-91e3-4730-b6fc-6baf7efd4aaa
 # ╠═dc9b1db8-bf3d-4e62-b9cc-eb0b37f84eb7
 # ╠═2082a75b-217d-44d0-a5da-40327434df67
