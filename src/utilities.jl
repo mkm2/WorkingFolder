@@ -56,7 +56,7 @@ function save_with_pos(data,params,positiondata,jobid,datapath)
         file["data"] = data
         file["params"] = params
         file["jobid"] = jobid
-        file["posistiondata"] = positiondata
+        file["positiondata"] = positiondata
     end
 end
 
