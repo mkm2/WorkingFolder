@@ -73,8 +73,8 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 #Set up simulation parameters
 
-δt = 0.1
-T = 5
+δt = 0.01
+T = 2
 trange = 0:δt:T
 
 i = div(N,2)
