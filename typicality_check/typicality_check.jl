@@ -90,13 +90,16 @@ begin
 	data_RPS = Vector{Array{Float64,4}}(undef,F_RPS)
 	N_RPS = [8,9,10,11,12,13,14,15,16,17,18,19,20]
 	combine_files(["5213440_N17.jld2","5213441_N17.jld2","5213442_N17.jld2"],path_RPS,"5213440-5213442.jld2")
-	files_RPS = ["5203820_N8.jld2","5203822_N9.jld2","5203823_N10.jld2","5203824_N11.jld2","5203825_N12.jld2","5203826_N13.jld2","5203827_N14.jld2","5213368_N15.jld2","5213371_N16.jld2","5213440-5213442.jld2","5203831_N18.jld2","5203832_N19.jld2","5203833_N20.jld2"]
+	combine_files(["5213444_N18.jld2","5213445_N18.jld2","5213446_N18.jld2","5213447_N18.jld2","5213448_N18.jld2"],path_RPS,"5213444-5213448.jld2")
+	combine_files(["5213531_N19.jld2","5213535_N19.jld2","5213544_N19.jld2","5213552_N19.jld2","5213553_N19.jld2"],path_RPS,"5213531-5213553.jld2")
+	combine_files(["5213555_N20.jld2","5213556_N20.jld2","5213557_N20.jld2","5213558_N20.jld2","5213559_N20.jld2","5213560_N20.jld2","5213561_N20.jld2","5213562_N20.jld2","5213563_N20.jld2","5213564_N20.jld2"],path_RPS,"5213555-5213564.jld2")
+	files_RPS = ["5203820_N8.jld2","5203822_N9.jld2","5203823_N10.jld2","5203824_N11.jld2","5203825_N12.jld2","5203826_N13.jld2","5203827_N14.jld2","5213368_N15.jld2","5213371_N16.jld2","5213440-5213442.jld2","5213444-5213448.jld2","5213531-5213553.jld2","5213555-5213564.jld2"]
 	for (i,f) in enumerate(files_RPS)
 		jobids_RPS[i] = load(path_RPS*f,"jobid")
 		params_RPS[i] = load(path_RPS*f,"params")
 		if N_RPS[i] <= 16
 			data_RPS[i] = 2*ones(51,N_RPS[i],1,100)-2*load(path_RPS*f,"data")
-		elseif N_RPS[i] == 17
+		elseif N_RPS[i] >= 17
 			data_RPS[i] = 2*ones(51,N_RPS[i],1,100)-2*cat(load(path_RPS*f,"data")...,dims=4)[:,:,:,1:100]
 		else
 			data_RPS[i] = 2*ones(51,N_RPS[i],1,10)-2*load(path_RPS*f,"data")
@@ -204,13 +207,8 @@ begin
 	data_mean_RPS = Vector{Array{Float64,2}}(undef,F_RPS)
 	data_std_RPS = Vector{Array{Float64,2}}(undef,F_RPS)
 	for i in 1:F_RPS
-		if N_RPS[i] <= 17
-			data_mean_RPS[i] = reduce_by_last(state_mean(data_RPS[i],n_states_l))
-			data_std_RPS[i] = reduce_by_last(state_std(data_RPS[i],n_states_l))
-		else
-			data_mean_RPS[i] = reduce_by_last(state_mean(data_RPS[i],n_states))
-			data_std_RPS[i] = reduce_by_last(state_std(data_RPS[i],n_states))
-		end
+		data_mean_RPS[i] = reduce_by_last(state_mean(data_RPS[i],n_states_l))
+		data_std_RPS[i] = reduce_by_last(state_std(data_RPS[i],n_states_l))
 	end
 
 	data_mean_L = Vector{Array{Float64,2}}(undef,F_L)
@@ -271,18 +269,18 @@ N_RS[idx_RS2]
 
 # ╔═╡ dc9b1db8-bf3d-4e62-b9cc-eb0b37f84eb7
 begin
-	plot(0:0.1:5,data_mean_RS[idx_RS2][1:51,pos],yerrors=data_std_RS[idx_RS2][1:51,pos]./sqrt(10),title="Comparison for N=17, i=1, j=$(pos)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="10 Haar Random States: N=$(N_RS[idx_RS2]),i=3,j=$(pos)")
+	plot(0:0.1:5,data_mean_RS[idx_RS2][1:51,pos],yerrors=data_std_RS[idx_RS2][1:51,pos]./sqrt(10),title="Comparison for N=20, i=3, j=$(pos)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="10 Haar Random States: N=$(N_RS[idx_RS2]),i=3,j=$(pos)")
 	
-	plot!(0:0.1:5,data_mean_RPS[idx_RPS2][1:51,pos],ribbon=data_std_RPS[idx_RPS2][1:51,pos]./sqrt(100),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="100 Random Product States: N=$(N_RPS[idx_RPS2]),i=3,j=$(pos)")
+	plot!(0:0.1:5,data_mean_RPS[idx_RPS2][1:51,pos],ribbon=data_std_RPS[idx_RPS2][1:51,pos]./sqrt(n_states_l),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="100 Random Product States: N=$(N_RPS[idx_RPS2]),i=3,j=$(pos)")
 
-	plot!(0:0.1:5,data_mean_PSI0[idx_PSI02][1:51,pos],yerrors=data_std_PSI0[idx_PSI02][1:51,pos],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="|Ψ0> = |11..11> N=$(N_PSI0[idx_PSI02]),i=3,j=$(pos)")
+	plot!(0:0.1:5,data_mean_PSI0[idx_PSI02][1:51,pos],yerrors=data_std_PSI0[idx_PSI02][1:51,pos],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="|Ψ0> = |11..11> N=$(N_PSI0[idx_PSI02]),i=3,j=$(pos)",legend=:bottomright)
 	
 	#ribbon for shaded area
 end
 
 # ╔═╡ 2082a75b-217d-44d0-a5da-40327434df67
 begin
-	plot(0.1:0.1:5,data_mean_RS[idx_RS2][2:51,pos],yerrors=data_std_RS[idx_RS2][2:51,pos]./sqrt(10),title="Comparison for N<=17 (100 states),, N>17 (10)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS: N=$(N_RS[idx_RS2]),i=3,j=$(pos)",yaxis=:log,xaxis=:log,legend=:bottomright)
+	plot(0.1:0.1:5,data_mean_RS[idx_RS2][2:51,pos],yerrors=data_std_RS[idx_RS2][2:51,pos]./sqrt(10),title="Comparison for N<=20 (100 states)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS: N=$(N_RS[idx_RS2]),i=3,j=$(pos)",yaxis=:log,xaxis=:log,legend=:bottomright)
 	
 	plot!(0.1:0.1:5,data_mean_RPS[idx_RPS2][2:51,pos],ribbon=data_std_RPS[idx_RPS2][2:51,pos]./sqrt(100),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS: N=$(N_RPS[idx_RPS2]),i=3,j=$(pos)",yaxis=:log,xaxis=:log)
 
@@ -327,21 +325,21 @@ end
 @bind n_states_RPS_l Slider(1:100)
 
 # ╔═╡ aa13c33c-e214-4e8f-a7c4-90a6ab5129d7
-@bind idx_RPS5 Slider(1:10)
+@bind idx_RPS5 Slider(1:13)
 
 # ╔═╡ f0ae6427-b84b-4337-815f-58562dff26b6
-@bind idx_RS5 Slider(1:10)
+@bind idx_RS5 Slider(1:13)
 
 # ╔═╡ 36353cad-4ee8-4576-ab02-bf0c650bb0f9
 @bind pos5 Slider(1:18)
 
 # ╔═╡ 04bc256f-3e8b-4878-b937-1ad4d058e189
 begin
-	data_mean_RPS5 = Vector{Array{Float64,2}}(undef,10)
-	data_std_RPS5 = Vector{Array{Float64,2}}(undef,10)
-	data_mean_RPS6 = Vector{Array{Float64,2}}(undef,10)
-	data_std_RPS6 = Vector{Array{Float64,2}}(undef,10)
-	for i in 1:10
+	data_mean_RPS5 = Vector{Array{Float64,2}}(undef,13)
+	data_std_RPS5 = Vector{Array{Float64,2}}(undef,13)
+	data_mean_RPS6 = Vector{Array{Float64,2}}(undef,13)
+	data_std_RPS6 = Vector{Array{Float64,2}}(undef,13)
+	for i in 1:13
 		data_mean_RPS5[i] = reduce_by_last(state_mean(data_RPS[i],n_states_RPS_s))
 		data_std_RPS5[i] = reduce_by_last(state_std(data_RPS[i],n_states_RPS_s))
 		data_mean_RPS6[i] = reduce_by_last(state_mean(data_RPS[i],n_states_RPS_l))
@@ -374,13 +372,13 @@ md"# Scaling of convergence to mean"
 @bind n_states_RPS_c Slider(1:100)
 
 # ╔═╡ a4e13f59-3446-405d-86c1-995c82fa3593
-@bind idx_RPS7 Slider(1:10)
+@bind idx_RPS7 Slider(1:13)
 
 # ╔═╡ 1e3e9f8a-d603-484b-a8cf-78a33fc2773a
 N_RPS[idx_RPS7]
 
 # ╔═╡ a95bfa09-05fc-4da6-98bf-5c7d4f6f1cd1
-@bind idx_RS7 Slider(1:10)
+@bind idx_RS7 Slider(1:13)
 
 # ╔═╡ b2e5934a-090c-4110-95cb-b571d237a363
 N_RS[idx_RS7]
@@ -393,11 +391,11 @@ N_RS[idx_RS7]
 
 # ╔═╡ 1fcb7174-f429-455a-855c-a82d0344fe46
 begin
-	data_mean_RPS7 = Vector{Array{Float64,2}}(undef,10)
-	data_std_RPS7 = Vector{Array{Float64,2}}(undef,10)
-	data_mean_RPS8 = Vector{Array{Float64,2}}(undef,10)
-	data_std_RPS8 = Vector{Array{Float64,2}}(undef,10)
-	for i in 1:10
+	data_mean_RPS7 = Vector{Array{Float64,2}}(undef,13)
+	data_std_RPS7 = Vector{Array{Float64,2}}(undef,13)
+	data_mean_RPS8 = Vector{Array{Float64,2}}(undef,13)
+	data_std_RPS8 = Vector{Array{Float64,2}}(undef,13)
+	for i in 1:13
 		data_mean_RPS7[i] = reduce_by_last(state_mean(data_RPS[i],n_states_RPS_c))
 		data_std_RPS7[i] = reduce_by_last(state_std(data_RPS[i],n_states_RPS_c))
 		data_mean_RPS8[i] = reduce_by_last(state_mean(data_RPS[i],100))
@@ -407,9 +405,9 @@ end
 
 # ╔═╡ 0189c9ad-6891-4152-84b5-2bfabfab69c7
 begin
-	σμ = zeros(10,17)
-	N = [8,9,10,11,12,13,14,15,16,17]
-	for i in 1:10
+	σμ = zeros(13,20)
+	N = [8,9,10,11,12,13,14,15,16,17,18,19,20]
+	for i in 1:13
 		for p in 1:N[i]
 			σμ[i,p] = sum(data_std_RPS7[i][:,p])./sqrt(n_states_RPS_c)/51
 		end
@@ -459,6 +457,9 @@ plot(0:0.1:5,pos_mean(data_std[idx2]),title="Absolute typicality std for N=$(N[i
 
 # ╔═╡ 6e87bf6f-c7b0-4f67-ae84-820f3e40228b
 plot(0.1:0.1:5,pos_mean(data_std[idx2][2:51,:])./pos_mean(data_mean[idx2][2:51,:])*100,title="Relative typicality std for N=$(N[idx2]), n_states=$(n_states)",label="i=3",xlabel="t",ylabel="std / %")
+
+# ╔═╡ abf982fb-2a9b-41f9-b31a-be3921429efc
+0
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1471,5 +1472,6 @@ version = "0.9.1+5"
 # ╠═75532f27-8989-4ed7-b206-a45135b5eecb
 # ╠═1eaef926-fecd-4a37-b5db-9c706e2e16d7
 # ╠═6e87bf6f-c7b0-4f67-ae84-820f3e40228b
+# ╠═abf982fb-2a9b-41f9-b31a-be3921429efc
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
