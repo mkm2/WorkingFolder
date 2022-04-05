@@ -30,17 +30,29 @@ function krylov_from0(H,t,ψ,δt)
 	return ψ
 end
 
+function krylov_from0_alternative(H,t,ψ,tmax=4)
+	N_max_steps = floor(abs(t)/tmax)
+	sgn = t >= 0 ? 1.0 : -1.0
+	δt = sgn * tmax
+	for i in 1:N_max_steps
+		ψ = krylov_step(H,δt,ψ)
+	end
+	t_res = t - N_max_steps * δt #signed
+	ψ = krylov_step(H,t_res,ψ)
+	return ψ
+end
+
 #OTOCs
 
 function otoc(H,A,B,t::Float64,ψ,δt=0.1)
 	state = B*ψ
-	state = krylov_from0(H,-t,state,δt)
+	state = krylov_from0_alternative(H,-t,state,δt)
 	state = A*state
-	state = krylov_from0(H,t,state,δt)
+	state = krylov_from0_alternative(H,t,state,δt)
 	state = B*state
-	state = krylov_from0(H,-t,state,δt)
+	state = krylov_from0_alternative(H,-t,state,δt)
 	state = A*state
-	state = krylov_from0(H,t,state,δt)
+	state = krylov_from0_alternative(H,t,state,δt)
 	return real(dot(ψ,state))
 end
 
@@ -49,8 +61,8 @@ function otoc(H,A,B,trange::AbstractRange{Float64},ψ,δt=0.1)
 	ψl_tmp = krylov_step(H,-trange[1],ψ)
 	ψr_tmp = krylov_step(H,-trange[1],B*ψ)
 	for (ti, t) in enumerate(trange)
-		state_l = B*krylov_from0(H,t,A*ψl_tmp,δt)
-		state_r = krylov_from0(H,t,A*ψr_tmp,δt)
+		state_l = B*krylov_from0_alternative(H,t,A*ψl_tmp,δt)
+		state_r = krylov_from0_alternative(H,t,A*ψr_tmp,δt)
 		res[ti] = real(dot(state_l,state_r))
 		if ti != length(trange)
 			ψl_tmp = krylov_step(H,-δt,ψl_tmp)
@@ -66,13 +78,13 @@ end
 #Single time
 
 function otoc_spat(H,A,b,t::Float64,ψ,N,δt=0.1) #b in single-particle Hilbert space
-	σiUψ = A * krylov_from0(H,-t,ψ,δt)
-	UdσiUψ = krylov_from0(H,t,σiUψ,δt)
+	σiUψ = A * krylov_from0_alternative(H,-t,ψ,δt)
+	UdσiUψ = krylov_from0_alternative(H,t,σiUψ,δt)
 	res = zeros(N)
 	Threads.@threads for j in 1:N
 		B = single_spin_op(b,j,N)
-		state_r = A*krylov_from0(H,-t,B*ψ,δt)
-		state_r = krylov_from0(H,t,state_r,δt)
+		state_r = A*krylov_from0_alternative(H,-t,B*ψ,δt)
+		state_r = krylov_from0_alternative(H,t,state_r,δt)
 		state_l = B*UdσiUψ
 		res[j] = real(dot(state_l,state_r))  #Note A, b self-adjoint!
 	end
