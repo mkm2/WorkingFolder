@@ -32,6 +32,14 @@ function chainJ(N,α=6)
     Symmetric(diagm([k=>k^-float(α) * ones(N-k) for k in 1:N-1]...))
 end
 
+function nearest_neighbourJ(N)
+    Symmetric(diagm(1=>ones(N-1)))
+end
+
+function nearest_neighbourJ_pbc(N)
+    Symmetric(diagm(1=>ones(N-1), N-1=>ones(1)))
+end
+
 correlator(op1, i,j,N) = correlator(op1,op1,i,j,N)
 function correlator(op1, op2,i,j,N)
     i > j && return correlator(op2,op1,j,i,N)
