@@ -110,7 +110,7 @@ if RANDOM_STATES == false
         H_tot[shot] = H + field_term(DISORDER_PARAM,N)
         logmsg("Created Hamiltonian for Shot $(shot)")
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
-        @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,δt)
+        @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,tmax)
         logmsg("Completed Shot $(shot)")
     end
 else
@@ -120,7 +120,7 @@ else
     Threads.@threads for shot in 1:SHOTS
         for s in 1:N_RANDOM_STATES
             H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
-            @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[:,s],N,δt)
+            @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[:,s],N,tmax)
             logmsg("Completed Shot $(shot), state $(s)")
         end
     end

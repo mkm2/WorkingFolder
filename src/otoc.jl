@@ -44,25 +44,26 @@ end
 
 #OTOCs
 
-function otoc(H,A,B,t::Float64,ψ,δt=0.1)
+function otoc(H,A,B,t::Float64,ψ,tmax=4)
 	state = B*ψ
-	state = krylov_from0_alternative(H,-t,state,δt)
+	state = krylov_from0_alternative(H,-t,state,tmax)
 	state = A*state
-	state = krylov_from0_alternative(H,t,state,δt)
+	state = krylov_from0_alternative(H,t,state,tmax)
 	state = B*state
-	state = krylov_from0_alternative(H,-t,state,δt)
+	state = krylov_from0_alternative(H,-t,state,tmax)
 	state = A*state
-	state = krylov_from0_alternative(H,t,state,δt)
+	state = krylov_from0_alternative(H,t,state,tmax)
 	return real(dot(ψ,state))
 end
 
-function otoc(H,A,B,trange::AbstractRange{Float64},ψ,δt=0.1)
+function otoc(H,A,B,trange::AbstractRange{Float64},ψ,tmax=4)
 	res = zeros(length(trange))
+	δt = trange[2]-trange[1]
 	ψl_tmp = krylov_step(H,-trange[1],ψ)
 	ψr_tmp = krylov_step(H,-trange[1],B*ψ)
 	for (ti, t) in enumerate(trange)
-		state_l = B*krylov_from0_alternative(H,t,A*ψl_tmp,δt)
-		state_r = krylov_from0_alternative(H,t,A*ψr_tmp,δt)
+		state_l = B*krylov_from0_alternative(H,t,A*ψl_tmp,tmax)
+		state_r = krylov_from0_alternative(H,t,A*ψr_tmp,tmax)
 		res[ti] = real(dot(state_l,state_r))
 		if ti != length(trange)
 			ψl_tmp = krylov_step(H,-δt,ψl_tmp)
@@ -77,14 +78,14 @@ end
 
 #Single time
 
-function otoc_spat(H,A,b,t::Float64,ψ,N,δt=0.1) #b in single-particle Hilbert space
-	σiUψ = A * krylov_from0_alternative(H,-t,ψ,δt)
-	UdσiUψ = krylov_from0_alternative(H,t,σiUψ,δt)
+function otoc_spat(H,A,b,t::Float64,ψ,N,tmax=4) #b in single-particle Hilbert space
+	σiUψ = A * krylov_from0_alternative(H,-t,ψ,tmax)
+	UdσiUψ = krylov_from0_alternative(H,t,σiUψ,tmax)
 	res = zeros(N)
 	Threads.@threads for j in 1:N
 		B = single_spin_op(b,j,N)
-		state_r = A*krylov_from0_alternative(H,-t,B*ψ,δt)
-		state_r = krylov_from0_alternative(H,t,state_r,δt)
+		state_r = A*krylov_from0_alternative(H,-t,B*ψ,tmax)
+		state_r = krylov_from0_alternative(H,t,state_r,tmax)
 		state_l = B*UdσiUψ
 		res[j] = real(dot(state_l,state_r))  #Note A, b self-adjoint!
 	end
@@ -93,22 +94,22 @@ end
 
 #Time Range
 
-function calc_otoc(H,A,b,j,trange::AbstractRange{Float64},ψ,N,δt=0.1)
+function calc_otoc(H,A,b,j,trange::AbstractRange{Float64},ψ,N,tmax=4)
 	B = single_spin_op(b,j,N)
-	return otoc(H,A,B,trange,ψ,δt)
+	return otoc(H,A,B,trange,ψ,tmax)
 end
 
-function otoc_spat(H,A,b,trange::AbstractRange{Float64},ψ,N,δt=0.1)
+function otoc_spat(H,A,b,trange::AbstractRange{Float64},ψ,N,tmax=4)
 	res = zeros(length(trange),N)
 	@sync for j in 1:N
-		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,δt)
+		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax)
 	end
 	return res
 end
 
-function otoc_spat!(res,H,A,b,trange::AbstractRange{Float64},ψ,N,δt=0.1)
+function otoc_spat!(res,H,A,b,trange::AbstractRange{Float64},ψ,N,tmax=4)
 	@sync for j in 1:N
-		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,δt)
+		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax)
 	end
 	return res
 end
