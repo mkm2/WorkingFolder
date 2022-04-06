@@ -30,7 +30,7 @@ function krylov_from0(H,t,ψ,δt)
 	return ψ
 end
 
-function krylov_from0_alternative(H,t,ψ,tmax=4)
+function krylov_from0_alternative(H,t,ψ,tmax=1.0)
 	N_max_steps = floor(abs(t)/tmax)
 	sgn = t >= 0 ? 1.0 : -1.0
 	δt = sgn * tmax
@@ -44,7 +44,7 @@ end
 
 #OTOCs
 
-function otoc(H,A,B,t::Float64,ψ,tmax=4)
+function otoc(H,A,B,t::Float64,ψ,tmax=1.0)
 	state = B*ψ
 	state = krylov_from0_alternative(H,-t,state,tmax)
 	state = A*state
@@ -56,7 +56,7 @@ function otoc(H,A,B,t::Float64,ψ,tmax=4)
 	return real(dot(ψ,state))
 end
 
-function otoc(H,A,B,trange::AbstractRange{Float64},ψ,tmax=4)
+function otoc(H,A,B,trange::AbstractRange{Float64},ψ,tmax=1.0)
 	res = zeros(length(trange))
 	δt = trange[2]-trange[1]
 	ψl_tmp = krylov_step(H,-trange[1],ψ)
@@ -78,7 +78,7 @@ end
 
 #Single time
 
-function otoc_spat(H,A,b,t::Float64,ψ,N,tmax=4) #b in single-particle Hilbert space
+function otoc_spat(H,A,b,t::Float64,ψ,N,tmax=1.0) #b in single-particle Hilbert space
 	σiUψ = A * krylov_from0_alternative(H,-t,ψ,tmax)
 	UdσiUψ = krylov_from0_alternative(H,t,σiUψ,tmax)
 	res = zeros(N)
@@ -94,12 +94,12 @@ end
 
 #Time Range
 
-function calc_otoc(H,A,b,j,trange::AbstractRange{Float64},ψ,N,tmax=4)
+function calc_otoc(H,A,b,j,trange::AbstractRange{Float64},ψ,N,tmax=1.0)
 	B = single_spin_op(b,j,N)
 	return otoc(H,A,B,trange,ψ,tmax)
 end
 
-function otoc_spat(H,A,b,trange::AbstractRange{Float64},ψ,N,tmax=4)
+function otoc_spat(H,A,b,trange::AbstractRange{Float64},ψ,N,tmax=1.0)
 	res = zeros(length(trange),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax)
@@ -107,7 +107,7 @@ function otoc_spat(H,A,b,trange::AbstractRange{Float64},ψ,N,tmax=4)
 	return res
 end
 
-function otoc_spat!(res,H,A,b,trange::AbstractRange{Float64},ψ,N,tmax=4)
+function otoc_spat!(res,H,A,b,trange::AbstractRange{Float64},ψ,N,tmax=1.0)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax)
 	end
