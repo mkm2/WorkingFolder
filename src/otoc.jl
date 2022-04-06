@@ -10,7 +10,7 @@ export  otoc, otoc_spat, krylov_from0, krylov_step
 #Krylov Propagation
 
 function krylov_step(H,δt,ψ)
-	return exponentiate(H,im*δt,ψ;ishermitian=true)[1]
+	return exponentiate(H,im*δt,ψ;ishermitian=true,verbosity=1)[1]
 end
 
 function krylov_from0(H,t,ψ,δt) 
