@@ -39,6 +39,7 @@ function krylov_from0_alternative(H,t,ψ,tmax=4)
 	end
 	t_res = t - N_max_steps * δt #signed
 	ψ = krylov_step(H,t_res,ψ)
+	print(t,N_max_steps,t_res)
 	return ψ
 end
 
