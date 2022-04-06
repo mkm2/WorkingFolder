@@ -82,7 +82,7 @@ end
 
 # ╔═╡ 2a0f44fa-def8-4371-af55-c6a677f7af3d
 begin
-	N = 12
+	N = 14
 	H = xxz(N,6)
 	ψ0 = normalize!(ones(2^N))
 end
@@ -232,6 +232,47 @@ begin
 		return ψ
 	end
 end
+
+# ╔═╡ 8683f8a9-7bd3-40a5-8b2d-35d3a206a491
+begin
+	function krylov_from0(H,t,ψ,δt) 
+		#Assume t multiple of timestep
+		T = abs(round(t/δt,digits=0))
+		sgn = t >= 0 ? 1.0 : -1.0
+		N_unit_steps = floor(abs(t))
+		δt_unit = sgn * 1.0
+		for i in 1:N_unit_steps
+			ψ = krylov_step(H,δt_unit,ψ)
+		end
+		N_short_steps = round((abs(t)-N_unit_steps)/δt,digits=0)
+		δt_short = sgn*δt
+		for i in 1:N_short_steps
+			ψ = krylov_step(H,δt_short,ψ)
+		end
+		return ψ
+	end
+	
+	function krylov_from0_alternative(H,t,ψ,tmax=2)
+		N_max_steps = floor(abs(t)/tmax)
+		sgn = t >= 0 ? 1.0 : -1.0
+		δt = sgn * tmax
+		for i in 1:N_max_steps
+			ψ = krylov_step(H,δt,ψ)
+		end
+		t_res = t - N_max_steps * δt #signed
+		ψ = krylov_step(H,t_res,ψ)
+		return ψ
+	end
+end
+
+# ╔═╡ d0cc45b5-7233-48d0-8d97-0b2e2be0387c
+@elapsed krylov_from0(H,-6,ψ0,0.1)
+
+# ╔═╡ 2c0eeee7-7bec-4653-bfe2-5d382be770e3
+@elapsed krylov_from0_alternative(H,-6,ψ0,4)
+
+# ╔═╡ bbaaf7c6-42c1-4f44-8e4d-4575064f9c04
+norm(krylov_from0_alternative(H,-20.5,ψ0,4) - krylov_from0(H,-20.5,ψ0,0.1))
 
 # ╔═╡ 75d1e0db-5650-4d98-82fc-51f95e5379f8
 function otoc_inc(H,A,B,t,ψ,timestep=0.05)
@@ -1184,6 +1225,10 @@ version = "0.9.1+5"
 # ╠═27ba3757-7fe7-4e5c-adb8-faa80c6e53a7
 # ╠═5c5ffce4-dee6-420f-bca3-2948118ab769
 # ╠═2a0f44fa-def8-4371-af55-c6a677f7af3d
+# ╠═8683f8a9-7bd3-40a5-8b2d-35d3a206a491
+# ╠═d0cc45b5-7233-48d0-8d97-0b2e2be0387c
+# ╠═2c0eeee7-7bec-4653-bfe2-5d382be770e3
+# ╠═bbaaf7c6-42c1-4f44-8e4d-4575064f9c04
 # ╠═3336e93e-f0d4-4b74-a1e3-5b0a42cd339d
 # ╠═5c8f3e82-6a21-4fe8-af7f-b865b4278e91
 # ╠═00fa04a3-4ea4-495e-8e7d-d772de088f1e

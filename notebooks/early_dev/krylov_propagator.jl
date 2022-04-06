@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.7
+# v0.18.1
 
 using Markdown
 using InteractiveUtils
@@ -103,7 +103,7 @@ end;
 krylovkit(10)
 
 # ╔═╡ e6c5a6cb-037e-4385-861e-00970be52f17
-trange = 0.0:0.25:2.5
+trange = 0.0:0.01:6
 
 # ╔═╡ 63e5bb93-bc9a-4dee-a64f-858b985e50bd
 @elapsed exputildata_alt = ExponentialUtilities.expv_timestep(collect(trange), -im*H,complex(ψ0); ishermitian=false, tol=1e-16)
@@ -142,13 +142,22 @@ end
 	
 
 # ╔═╡ d0f30a10-2229-4f61-b84f-f76b113c1bc3
-let p = plot(;title="Comparison of Krylov implementations (time)", xlabel="t", ylabel="runtime [s]")
+let p = plot(;title="Comparison of Krylov implementations (time)", xlabel="t", ylabel="runtime [s]",legend=:bottomright)
 	plot!(p, trange, exactdata[2]; label="exact (no ED)")
 	plot!(p, trange, krylovkitdata[2]; label="KrylovKit")
 	plot!(p, trange, exputildata[2]; label="ExpUtil (precomputed KS)")
 	#plot!(p, trange, deviation.(exactdata, eachcol(sol.u)); label="ODiffEq")
 end
 	
+
+# ╔═╡ 879ca792-ff06-4092-959d-ee5e72e76a9f
+begin
+	plot(trange,krylovkitdata[2]./krylovkitdata[2][101])
+	plot!(trange,trange)
+end
+
+# ╔═╡ c315e306-790f-49bd-80b9-68d3b5081b83
+trange[101]
 
 # ╔═╡ db3dd19c-20f8-464a-9241-ca99de3db195
 trange2 = 10 .^ trange
@@ -524,6 +533,12 @@ git-tree-sha1 = "f6250b16881adf048549549fba48b1161acdac8c"
 uuid = "c1c5ebd0-6772-5130-a774-d5fcae4a789d"
 version = "3.100.1+0"
 
+[[LERC_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "bf36f528eec6634efc60d7ec062008f171071434"
+uuid = "88015f11-f218-50d7-93a8-a6af411a945d"
+version = "3.0.0+1"
+
 [[LZO_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "e5b909bcf985c5e2605737d2ce278ed791b89be6"
@@ -597,10 +612,10 @@ uuid = "4b2f31a3-9ecc-558c-b454-b3730dcb73e9"
 version = "2.35.0+0"
 
 [[Libtiff_jll]]
-deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
-git-tree-sha1 = "340e257aada13f95f98ee352d316c3bed37c8ab9"
+deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "LERC_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
+git-tree-sha1 = "c9551dd26e31ab17b86cbd00c2ede019c08758eb"
 uuid = "89763e89-9b03-5906-acba-b20f662cd828"
-version = "4.3.0+0"
+version = "4.3.0+1"
 
 [[Libuuid_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -609,7 +624,7 @@ uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
 version = "2.36.0+0"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[LogExpFunctions]]
@@ -671,6 +686,10 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "887579a3eb005446d514ab7aeac5d1d027658b8f"
 uuid = "e7412a2a-1a6e-54c0-be00-318e2571c051"
 version = "1.3.5+1"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
 
 [[OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -750,7 +769,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[RecipesBase]]
@@ -1051,6 +1070,10 @@ git-tree-sha1 = "5982a94fcba20f02f42ace44b9894ee2b140fe47"
 uuid = "0ac62f75-1d6f-5e53-bd7c-93b484bb37c0"
 version = "0.15.1+0"
 
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+
 [[libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "daacc84a041563f965be61859a36e17c4e4fcd55"
@@ -1118,6 +1141,8 @@ version = "0.9.1+5"
 # ╠═de93fe17-4e33-4343-bbe9-3221c287cc56
 # ╠═a6ace6ac-2508-4f15-a435-db319138c956
 # ╠═d0f30a10-2229-4f61-b84f-f76b113c1bc3
+# ╠═879ca792-ff06-4092-959d-ee5e72e76a9f
+# ╠═c315e306-790f-49bd-80b9-68d3b5081b83
 # ╠═db3dd19c-20f8-464a-9241-ca99de3db195
 # ╠═2f6429b2-737a-46e9-9246-0d4ccbddf9a0
 # ╠═0d0b86ae-aa91-444a-a3ae-15f38a8f1a68
