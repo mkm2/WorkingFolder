@@ -20,7 +20,7 @@ using SpinSymmetry, Random
 using LightCones
 
 ## Environment
-LOGS = get(ENV, "LOGS", "")
+#LOGS = get(ENV, "LOGS", "")
 JOBID = get(ENV, "SLURM_JOB_ID", "")
 
 logmsg("*"^10*"RANDOM POSITIONS"*"*"^10)
@@ -58,7 +58,8 @@ GEOMETRY = ARGS[6]
 #BLOCK = div(N-1,2)
 #BASIS = SymmetrizedBasis(zbasis(N, BLOCK), [], [])
 
-LOCATION = joinpath(LOGS,"LightCones",Dates.format(Dates.today(), "yyyy-mm-dd"))
+#LOCATION = joinpath(LOGS,"LightCones",Dates.format(Dates.today(), "yyyy-mm-dd"))
+LOCATION = pwd()
 
 @show LOCATION
 @show N
@@ -75,8 +76,9 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 #Set up simulation parameters
 
-δt = 0.1
-T = 5
+δt = 0.01
+tmax = 1.0
+T = 2.0
 trange = 0:δt:T
 
 i = 1 #no reflections since pbc
@@ -124,7 +126,7 @@ if RANDOM_STATES == false
         H_tot[shot] = hamiltonian_from_positions(pd,shot)
         logmsg("Created Hamiltonian for Shot $(shot)")
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
-        @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,δt)
+        @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,tmax)
         logmsg("Completed Shot $(shot)")
     end
 else
@@ -134,7 +136,7 @@ else
     Threads.@threads for shot in 1:SHOTS
         for s in 1:N_RANDOM_STATES
             H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
-            @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[:,s],N,δt)
+            @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[:,s],N,tmax)
             logmsg("Completed Shot $(shot), state $(s)")
         end
     end
@@ -143,5 +145,5 @@ end
 logmsg("*"^10*"Simulation completed!"*"*"^10)
 
 logmsg("*"^10 * "Saving" * "*"^10)
-save_with_pos(otocs, params, pd, JOBID, joinpath(LOCATION,"$(JOBID)_N$(N)_rp.jld2"))
+save_with_pos(otocs, params, pd, JOBID, joinpath(LOCATION,"$(JOBID)_N$(N)_rp_z.jld2"))
 logmsg("*"^10 * "Run completed!" * "*"^10)
