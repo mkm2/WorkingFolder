@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.18.1
+# v0.19.0
 
 using Markdown
 using InteractiveUtils
@@ -41,6 +41,15 @@ end
 
 # ╔═╡ 2e9d9a87-b8ee-48f4-bfcd-33514a9c0250
 md"## Larger Sample Random State"
+
+# ╔═╡ e662f523-7129-4ea7-8564-ab2473449b7c
+begin
+	Test = ["1","2","3"]
+	Test[1:length(Test)-1]
+end
+
+# ╔═╡ 6f6f4f0f-d83d-48c8-afed-9b2ba5c02523
+[x for x in Test]
 
 # ╔═╡ a52bd686-43c8-49af-993d-174a5d10119b
 begin
@@ -1029,9 +1038,9 @@ uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[deps.Qt5Base_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Fontconfig_jll", "Glib_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "OpenSSL_jll", "Pkg", "Xorg_libXext_jll", "Xorg_libxcb_jll", "Xorg_xcb_util_image_jll", "Xorg_xcb_util_keysyms_jll", "Xorg_xcb_util_renderutil_jll", "Xorg_xcb_util_wm_jll", "Zlib_jll", "xkbcommon_jll"]
-git-tree-sha1 = "ad368663a5e20dbb8d6dc2fddeefe4dae0781ae8"
+git-tree-sha1 = "c6c0f690d0cc7caddb74cef7aa847b824a16b256"
 uuid = "ea2cea3b-5b76-57ae-a6ef-0a8af62496e1"
-version = "5.15.3+0"
+version = "5.15.3+1"
 
 [[deps.REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
@@ -1406,6 +1415,8 @@ version = "0.9.1+5"
 # ╠═6aec44d6-1e21-4f5d-85f8-a25cd942e0c4
 # ╠═6612a15a-c3ca-49da-823f-808e8fc6f8ac
 # ╠═2e9d9a87-b8ee-48f4-bfcd-33514a9c0250
+# ╠═6f6f4f0f-d83d-48c8-afed-9b2ba5c02523
+# ╠═e662f523-7129-4ea7-8564-ab2473449b7c
 # ╠═a52bd686-43c8-49af-993d-174a5d10119b
 # ╠═79d282be-08d3-4bf3-b700-eee967e1815a
 # ╠═f636cf34-b778-4259-abd1-bede4cf91a0f
