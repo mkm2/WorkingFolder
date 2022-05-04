@@ -19,7 +19,6 @@ function combine_files(files,path,new_file)
 end
 
 
-print(ARGS)
 path = pwd()*"/"
 files = Vector{String}([x for x in ARGS[1:length(ARGS)-1]])
 new_file = ARGS[length(ARGS)]
