@@ -8,6 +8,7 @@ using ..LightCones
 
 export logmsg, path_prefix, save, save_with_pos
 export SimulationParams
+export logrange
 
 struct SimulationParams
     N::Int
@@ -58,6 +59,12 @@ function save_with_pos(data,params,positiondata,jobid,datapath)
         file["jobid"] = jobid
         file["positiondata"] = positiondata
     end
+end
+
+function logrange(min_exp,max_exp,max)
+    res = vcat([0],[i*10.0^j for j in min_exp:max_exp for i in 1:9])
+    filter!(e->e<=max,res)
+    return res
 end
 
 end #module

@@ -58,7 +58,6 @@ end
 
 function otoc(H,A,B,trange::AbstractRange{Float64},ψ,tmax=1.0)
 	res = zeros(length(trange))
-	δt = trange[2]-trange[1]
 	ψl_tmp = krylov_step(H,-trange[1],ψ)
 	ψr_tmp = krylov_step(H,-trange[1],B*ψ)
 	for (ti, t) in enumerate(trange)
@@ -66,6 +65,7 @@ function otoc(H,A,B,trange::AbstractRange{Float64},ψ,tmax=1.0)
 		state_r = krylov_from0_alternative(H,t,A*ψr_tmp,tmax)
 		res[ti] = real(dot(state_l,state_r))
 		if ti != length(trange)
+			δt = trange[ti+1] - trange[ti]
 			ψl_tmp = krylov_step(H,-δt,ψl_tmp)
 			ψr_tmp = krylov_step(H,-δt,ψr_tmp)
 		end

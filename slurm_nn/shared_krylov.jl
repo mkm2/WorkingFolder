@@ -76,9 +76,10 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 #Set up simulation parameters
 
 tmax = 1.0
-δt = 0.01
+#δt = 0.01
 T = 2
-trange = 0:δt:T
+trange = logrange(-5,0,2)
+logmsg("trange = ",trange)
 
 i = div(N,2)
 A = single_spin_op(σz,i,N)
