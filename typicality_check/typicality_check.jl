@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.0
+# v0.19.4
 
 using Markdown
 using InteractiveUtils
@@ -358,18 +358,18 @@ end
 
 # ╔═╡ d0a9fb36-ca76-4c1f-8201-11a88cee074d
 begin
-	plot(0:0.1:5,data_mean_RPS5[idx_RPS5][1:51,pos5],yerrors=data_std_RPS5[idx_RPS5][1:51,pos5]./sqrt(n_states_RPS_s),title="Random Product States, var. sample sizes ($(n_states_RPS_s) vs. $(n_states_RPS_l))",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)")
+	plot(0:0.1:5,data_mean_RPS5[idx_RPS5][1:51,pos5],yerrors=data_std_RPS5[idx_RPS5][1:51,pos5]./sqrt(n_states_RPS_s),title="Random Product States, var. sample sizes ($(n_states_RPS_s) vs. $(n_states_RPS_l))",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS 10: N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)")
 	
-	plot!(0:0.1:5,data_mean_RPS6[idx_RPS5][1:51,pos5],ribbon=data_std_RPS6[idx_RPS5][1:51,pos5]./sqrt(n_states_RPS_l),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS L: N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)")
+	plot!(0:0.1:5,data_mean_RPS6[idx_RPS5][1:51,pos5],ribbon=data_std_RPS6[idx_RPS5][1:51,pos5]./sqrt(n_states_RPS_l),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS 100: N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)")
 
 	plot!(0:0.1:5,data_mean_RS[idx_RS5][1:51,pos5],ribbon=data_std_RS[idx_RS5][1:51,pos5]./sqrt(10),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS5]),i=3,j=$(pos5)")
 end
 
 # ╔═╡ 90a64aa8-3901-4f20-aae7-eb984a01a13a
 begin
-	plot(0.1:0.1:5,data_mean_RPS5[idx_RPS5][2:51,pos5],yerrors=data_std_RPS5[idx_RPS5][2:51,pos5],title="Random Product States, var. sample sizes ($(n_states_RPS_s) vs. $(n_states_RPS_l))",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log)
+	plot(0.1:0.1:5,data_mean_RPS5[idx_RPS5][2:51,pos5],yerrors=data_std_RPS5[idx_RPS5][2:51,pos5]./sqrt(n_states_RPS_s),title="Random Product States, var. sample sizes ($(n_states_RPS_s) vs. $(n_states_RPS_l))",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log)
 	
-	plot!(0.1:0.1:5,data_mean_RPS6[idx_RPS5][2:51,pos5],ribbon=data_std_RPS6[idx_RPS5][2:51,pos5],xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS L: N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log)
+	plot!(0.1:0.1:5,data_mean_RPS6[idx_RPS5][2:51,pos5],ribbon=data_std_RPS6[idx_RPS5][2:51,pos5]./sqrt(n_states_RPS_l),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RPS L: N=$(N_RPS[idx_RPS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log)
 
 	plot!(0.1:0.1:5,data_mean_RS[idx_RS5][2:51,pos5],ribbon=data_std_RS[idx_RS5][2:51,pos5]./sqrt(10),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="RS N=$(N_RS[idx_RS5]),i=3,j=$(pos5)",yaxis=:log,xaxis=:log,legend=true)
 end
