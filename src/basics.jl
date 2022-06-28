@@ -86,8 +86,17 @@ function random_product_state(N::Int)
 	return kron(gen...)
 end
 
-function random_bits_state(N::Int)
-    return normalize!(rand(Bool, 2^N) |> Vector{Float64})
+function random_bit_state()
+    x = Vector{ComplexF64}(undef,2)
+    tmp = convert(ComplexF64,rand(Bool,1)[1])
+    x[1] = tmp
+    x[2] = 1-tmp
+    return x
+end
+
+function random_bitstring_state(N::Int)
+    gen = (random_bit_state() for i in 1:N)
+    return kron(gen...)
 end
 
 function magnetisation(σ,ψ,N)
