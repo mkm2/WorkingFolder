@@ -14,7 +14,7 @@ export σplus, σminus, σz, σx, σy, ⊗, Δ, 𝟙
 export chainJ, correlator, single_spin_op
 export xxz, field_term, hamiltonian_from_positions
 export nearest_neighbourJ, nearest_neighbourJ_pbc
-export random_state, random_product_state
+export random_state, random_product_state, random_bits_state
 export magnetisation
 
 const σplus = sparse([1],[2],[1],2,2)
