@@ -86,6 +86,10 @@ function random_product_state(N::Int)
 	return kron(gen...)
 end
 
+function random_bits_state(N::Int)
+    return rand(Bool, 2^N) |> Vector{Float64}
+end
+
 function magnetisation(σ,ψ,N)
 	S = 0
 	for i in 1:N

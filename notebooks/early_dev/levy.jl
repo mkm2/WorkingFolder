@@ -19,6 +19,11 @@ function prob(ϵ,N)
 	return a*exp(-b*(N+1)*ϵ^2)
 end
 
+# ╔═╡ 6be8e9e8-e146-48b7-bfc5-2a2d23c182e5
+function prob_var(ϵ,N,L)
+	return a*exp(-b*(N+1)*ϵ^2/(L^2*ℯ^4))
+end
+
 # ╔═╡ 10530779-72f3-4b40-b132-1499f83128d0
 begin
 	ϵ1 = 0.1
@@ -62,7 +67,17 @@ begin
 end
 
 # ╔═╡ 1b3ef4dd-6e4c-46d4-96cd-c1a3b3a6c7b7
-probs
+begin
+	ϵ4 = 0.1
+	probs4 = zeros(L_max-L_min+1+5)
+	for (i,L) in enumerate(L_min:L_max+5)
+		N4 = 2*2^L-1
+		probs4[i] = prob_var(ϵ4,N4,L)
+	end
+end
+
+# ╔═╡ b08b5a34-d8fd-41a7-9869-bd33cdd74307
+plot(L_min:L_max+5,probs4,yaxis=:log,label=L"\epsilon=0.1",xlabel="L",ylabel="Pr",ylims=[1e-10,5])
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -953,11 +968,13 @@ version = "0.9.1+5"
 # ╠═76938a97-9543-4e16-97c0-1867af4ddea0
 # ╠═2391216f-04c9-4c97-9cc6-8b0762ace70a
 # ╠═fc7198be-1a68-4abe-873c-8bd08551ebb6
+# ╠═6be8e9e8-e146-48b7-bfc5-2a2d23c182e5
 # ╠═473f0d19-74a4-4a47-a7a5-b9ac058e1601
 # ╠═10530779-72f3-4b40-b132-1499f83128d0
 # ╠═fcc30d77-530a-4aff-9b76-2a904a4edaf5
 # ╠═375c7168-f541-43aa-9659-cbcc5462cdbc
 # ╠═14485b9a-6d8b-4a4b-9668-f6bc51952123
 # ╠═1b3ef4dd-6e4c-46d4-96cd-c1a3b3a6c7b7
+# ╠═b08b5a34-d8fd-41a7-9869-bd33cdd74307
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
