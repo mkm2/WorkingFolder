@@ -76,7 +76,7 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 #Set up simulation parameters
 
 δt = 0.1
-tmax = 5.0
+tmax = 1.0
 T = 5
 #trange = logrange(-5,0,2)
 trange = 0:δt:T
@@ -134,11 +134,11 @@ if MULT_RANDOM_STATES == false
 else
     otocs = zeros(length(trange),N,SHOTS,N_RANDOM_STATES)
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
-    print("test")
+    print("test\n")
     for shot in 1:SHOTS
+        #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
+        H_tot[shot] = H + field_term(DISORDER_PARAM,N)
         Threads.@threads for s in 1:N_RANDOM_STATES
-            #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
-            H_tot[shot] = H + field_term(DISORDER_PARAM,N)
             @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[:,s],N,tmax)
             logmsg("Completed Shot $(shot), state $(s)")
         end
