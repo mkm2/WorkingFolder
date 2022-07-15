@@ -70,6 +70,15 @@ function field_term(h::Float64, N::Int)
     return res
 end
 
+function field_term(h::Float64, N::Int, k::Int)
+    res = spzeros(Float64, 2^N, 2^N)
+    hs = -h*ones(N) + 2*h*rand(Float64,N) #uniform distribution in [-h,+h]
+    for i in 1:N
+        res += hs[i]*single_spin_op(σz,i,N)
+    end
+    return symmetrize_operator(res,N,k)
+end
+
 hamiltonian_from_positions(pd::PositionData,shot::Int) = hamiltonian_from_positions(pd.data[:,shot],geometry_from_density(pd.descriptor.geometry,pd.descriptor.ρ,pd.descriptor.system_size,1))
 
 function hamiltonian_from_positions(positions::Vector{Float64},geometry::Union{Box, BoxPBC, NoisyChain, NoisyChainPBC};α=6)
@@ -77,27 +86,40 @@ function hamiltonian_from_positions(positions::Vector{Float64},geometry::Union{B
     return xxz(interaction_matrix(interaction,distance_matrix(geometry,positions)))
 end
 
-function random_state(N::Int)
-	return normalize!(randn(ComplexF64,2^N))
+function random_state(N::Int, d::Int) #N particles, restricted to d dimensions
+    return normalize!(randn(ComplexF64,d))
 end
+random_state(N::Int) = random_state(N, 2^N)
 
 function random_product_state(N::Int)
 	gen = (random_state(1) for i in 1:N)
 	return kron(gen...)
 end
+function random_product_state(N::Int, k::Int) #sector of k spins |↑⟩
+    x = random_product_state(N)
+    return normalize!(symmetrize_state(x,N,k))
+end
 
-function random_bit_state()
-    x = Vector{ComplexF64}(undef,2)
-    tmp = convert(ComplexF64,rand(Bool,1)[1])
-    x[1] = tmp
-    x[2] = 1-tmp
+function random_bitstring_state(N::Int, d::Int) #simply choose random basis state
+    x = zeros(ComplexF64,d)
+    ind = rand(1:d)
+    x[ind] = 1
     return x
 end
+random_bitstring_state(N::Int) = random_bitstring_state(N, 2^N)
 
-function random_bitstring_state(N::Int)
-    gen = (random_bit_state() for i in 1:N)
-    return kron(gen...)
-end
+
+#function random_bit_state()
+#    x = Vector{ComplexF64}(undef,2)
+#    tmp = convert(ComplexF64,rand(Bool,1)[1])
+#    x[1] = tmp
+#    x[2] = 1-tmp
+#    return x
+#end
+#function random_bitstring_state(N::Int) old version
+#    gen = (random_bit_state() for i in 1:N)
+#    return kron(gen...)
+#end
 
 function magnetisation(σ,ψ,N)
 	S = 0

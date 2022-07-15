@@ -228,18 +228,18 @@ end
 begin
 	plot(2:100,mean_mean_RS,label="Haar Random States",title="Mean",xlabel="n_states")
 	
-	plot!(2:100,mean_mean_RPS,label="Random Product Product")
+	plot!(2:100,mean_mean_RPS,ribbon=mean_std_RPS,label="Random Product Product")
 	
-	plot!(2:100,mean_mean_BS,label="Random Bitstring States")
+	plot!(2:100,mean_mean_BS,ribbon=mean_std_BS,label="Random Bitstring States")
 end
 
 # ╔═╡ 4a53fe76-fa0d-4763-b534-aea8efe53e36
 begin
 	plot(2:100,mean_std_RS,label="Haar Random States",title="Standard Error of the Mean",xlabel="n_states")
 	
-	plot!(2:100,mean_std_RPS,label="Random Product Product")
+	plot!(2:100,mean_std_RPS,label="Random Product States")
 	
-	plot!(2:100,mean_std_BS,label="Random Bitstring States",yaxis=:log)
+	plot!(2:100,mean_std_BS,label="Random Bitstring States",yaxis=:log,xaxis=:log)
 end
 
 # ╔═╡ 582cfc2f-23c0-4fe4-8673-49d3681087c2

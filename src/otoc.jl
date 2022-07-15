@@ -92,10 +92,29 @@ function otoc_spat(H,A,b,t::Float64,ψ,N,tmax=1.0) #b in single-particle Hilbert
 	return res
 end
 
+function otoc_spat(H,A,b,t::Float64,ψ,N,tmax=1.0,k) #b in single-particle Hilbert space
+	σiUψ = A * krylov_from0_alternative(H,-t,ψ,tmax)
+	UdσiUψ = krylov_from0_alternative(H,t,σiUψ,tmax)
+	res = zeros(N)
+	Threads.@threads for j in 1:N
+		B = symmetrize_operator(single_spin_op(b,j,N),N,k)
+		state_r = A*krylov_from0_alternative(H,-t,B*ψ,tmax)
+		state_r = krylov_from0_alternative(H,t,state_r,tmax)
+		state_l = B*UdσiUψ
+		res[j] = real(dot(state_l,state_r))  #Note A, b self-adjoint!
+	end
+	return res
+end
+
 #Time Range
 
 function calc_otoc(H,A,b,j,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0)
 	B = single_spin_op(b,j,N)
+	return otoc(H,A,B,trange,ψ,tmax)
+end
+
+function calc_otoc(H,A,b,j,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0,k)
+	B = symmetrize_operator(single_spin_op(b,j,N),N,k)
 	return otoc(H,A,B,trange,ψ,tmax)
 end
 
@@ -107,9 +126,24 @@ function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},�
 	return res
 end
 
+function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0,k)
+	res = zeros(length(trange),N)
+	@sync for j in 1:N
+		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax,k)
+	end
+	return res
+end
+
 function otoc_spat!(res,H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax)
+	end
+	return res
+end
+
+function otoc_spat!(res,H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0,k)
+	@sync for j in 1:N
+		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax,k)
 	end
 	return res
 end
