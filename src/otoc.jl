@@ -92,7 +92,7 @@ function otoc_spat(H,A,b,t::Float64,ψ,N,tmax=1.0) #b in single-particle Hilbert
 	return res
 end
 
-function otoc_spat(H,A,b,t::Float64,ψ,N,tmax=1.0,k) #b in single-particle Hilbert space
+function otoc_spat(H,A,b,t::Float64,ψ,N,k,tmax=1.0) #b in single-particle Hilbert space
 	σiUψ = A * krylov_from0_alternative(H,-t,ψ,tmax)
 	UdσiUψ = krylov_from0_alternative(H,t,σiUψ,tmax)
 	res = zeros(N)
@@ -113,7 +113,7 @@ function calc_otoc(H,A,b,j,trange::Union{AbstractRange{Float64},Vector{Float64}}
 	return otoc(H,A,B,trange,ψ,tmax)
 end
 
-function calc_otoc(H,A,b,j,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0,k)
+function calc_otoc(H,A,b,j,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,k,tmax=1.0)
 	B = symmetrize_operator(single_spin_op(b,j,N),N,k)
 	return otoc(H,A,B,trange,ψ,tmax)
 end
@@ -126,10 +126,10 @@ function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},�
 	return res
 end
 
-function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0,k)
+function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0)
 	res = zeros(length(trange),N)
 	@sync for j in 1:N
-		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax,k)
+		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,k,tmax)
 	end
 	return res
 end
@@ -141,9 +141,9 @@ function otoc_spat!(res,H,A,b,trange::Union{AbstractRange{Float64},Vector{Float6
 	return res
 end
 
-function otoc_spat!(res,H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0,k)
+function otoc_spat!(res,H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,k,tmax=1.0)
 	@sync for j in 1:N
-		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax,k)
+		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,k,tmax)
 	end
 	return res
 end
