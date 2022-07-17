@@ -102,7 +102,7 @@ if MULT_RANDOM_STATES == false
     ψ0 = random_state(N,d)#normalize!(ones(2^N))
     logmsg("Sampled 1 random initial state")
 else
-    ψs = zeros(ComplexF64,2^N,N_RANDOM_STATES)
+    ψs = zeros(ComplexF64,d,N_RANDOM_STATES)
     if TYPE_OF_RS == "RS"
         for s in 1:N_RANDOM_STATES
             ψs[:,s] = random_state(N,d)
