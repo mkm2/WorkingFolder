@@ -126,7 +126,7 @@ function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},�
 	return res
 end
 
-function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0)
+function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,k,tmax=1.0)
 	res = zeros(length(trange),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,k,tmax)
