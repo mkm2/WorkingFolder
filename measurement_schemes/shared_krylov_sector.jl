@@ -83,6 +83,9 @@ trange = 0:δt:T
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
+k = div(N-1,2)+1 #largest sector
+d = basissize(symmetrized_basis(N,k))
+
 A = symmetrize_operator(single_spin_op(σz,i,N),N,k)
 
 if OBSERVABLE == "x"
@@ -92,9 +95,6 @@ elseif OBSERVABLE == "y"
 elseif OBSERVABLE == "z"
     B = σz
 end
-
-k = div(N-1,2)+1 #largest sector
-d = basissize(symmetrized_basis(N,k))
 
 H = symmetrize_operator(xxz(N,6),N,k)
 
