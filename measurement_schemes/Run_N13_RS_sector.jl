@@ -2,11 +2,11 @@
 # ########## Begin Slurm header ##########
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --time=5:00:00
+#SBATCH --time=1:00:00
 #SBATCH --mem=150gb
 #SBATCH --cpus-per-task=48
-#SBATCH --job-name=otoc_simulation_N19_RS_sector
-#SBATCH --output="otoc_simulation_N19_RS_sector-%j.out"
+#SBATCH --job-name=otoc_simulation_N13_RS_sector
+#SBATCH --output="otoc_simulation_N13_RS_sector-%j.out"
 ########### End Slurm header ##########
 #=
 # load modules
