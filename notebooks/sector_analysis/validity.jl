@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.9
+# v0.18.1
 
 using Markdown
 using InteractiveUtils
@@ -64,7 +64,7 @@ md"# Random States"
 
 # ╔═╡ 80d9cb31-cc81-4b49-8885-39046ec84532
 begin
-	f_RS = "/home/qd/Documents/max/OTOCs/notebooks/LightCones/measurement_schemes/RS/6192397-3192400_N19_RS.jld2"
+	f_RS = "/home/alaska/Dokumente/Julia/Masterarbeit/LightCones/measurement_schemes/RS/6192397-3192400_N19_RS.jld2"
 	jobids_RS = load(f_RS,"jobid")
 	params_RS = load(f_RS,"params")
 	data_RS = 2*ones(51,N,1,100)-2*cat(load(f_RS,"data")...,dims=4)
@@ -108,7 +108,7 @@ md"# Random Product States"
 
 # ╔═╡ 34e0ca84-5b26-4d06-a602-fbf20fb64c68
 begin
-	f_RPS = "/home/qd/Documents/max/OTOCs/notebooks/LightCones/measurement_schemes/RPS/6223937-6223946_N19_RPS.jld2"
+	f_RPS = "/home/alaska/Dokumente/Julia/Masterarbeit/LightCones/measurement_schemes/RPS/6223937-6223946_N19_RPS.jld2"
 	jobids_RPS = load(f_RPS,"jobid")
 	params_RPS = load(f_RPS,"params")
 	data_RPS = 2*ones(51,N,1,100)-2*cat(load(f_RPS,"data")...,dims=4)
@@ -149,7 +149,7 @@ md"# Random Bit String State"
 
 # ╔═╡ a97585aa-1c15-44c9-9ce2-0627959e568b
 begin
-	f_BS = "/home/qd/Documents/max/OTOCs/notebooks/LightCones/measurement_schemes/BS/6223947-6223956_N19_BS.jld2"
+	f_BS = "/home/alaska/Dokumente/Julia/Masterarbeit/LightCones/measurement_schemes/BS/6223947-6223956_N19_BS.jld2"
 	jobids_BS = load(f_BS,"jobid")
 	params_BS = load(f_BS,"params")
 	data_BS = 2*ones(51,N,1,100)-2*cat(load(f_BS,"data")...,dims=4)
@@ -198,9 +198,9 @@ begin
 	
 	plot!(0:0.1:5,data_mean_RPS_sector[1:51,pos],ribbon=data_std_RPS[1:51,pos]./sqrt(100),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="100 RPS, largest sector",legend=:bottomright)
 
-	plot!(0:0.1:5,data_mean_BS[1:51,pos],ribbon=data_std_BS[1:51,pos]./sqrt(100),title="Comparison for N=19, i=10, j=$(pos)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="100 BS, globally sampled")
+	#plot!(0:0.1:5,data_mean_BS[1:51,pos],ribbon=data_std_BS[1:51,pos]./sqrt(100),title="Comparison for N=19, i=10, j=$(pos)",xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="100 BS, globally sampled")
 	
-	plot!(0:0.1:5,data_mean_BS_sector[1:51,pos],ribbon=data_std_BS[1:51,pos]./sqrt(100),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="100 BS, largest sector",legend=:bottomright)
+	#plot!(0:0.1:5,data_mean_BS_sector[1:51,pos],ribbon=data_std_BS[1:51,pos]./sqrt(100),xlabel="t",ylabel="<|[σ_i(t),σ_j]|²>",label="100 BS, largest sector",legend=:bottomright)
 	
 	#ribbon for shaded area
 end
@@ -227,7 +227,7 @@ PlutoUI = "~0.7.39"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.7.2"
+julia_version = "1.7.1"
 manifest_format = "2.0"
 
 [[deps.AbstractPlutoDingetjes]]
