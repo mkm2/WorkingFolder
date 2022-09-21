@@ -44,7 +44,7 @@ println("#threads of BLAS:           $(BLAS.get_num_threads())")
 N = parse(Int, ARGS[1])
 SHOTS = parse(Int, ARGS[2])
 N_RANDOM_STATES = parse(Int, ARGS[3])
-if N_RANDOM_STATES == 0
+if N_RANDOM_STATES == 1
     MULT_RANDOM_STATES = false
 else
     MULT_RANDOM_STATES = true
@@ -78,8 +78,8 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 δt = 0.1
 tmax = 0.5
 T = 5
-#trange = logrange(-5,0,2)
-trange = 0:δt:T
+trange = logrange(-2,2,100)
+#trange = 0:δt:T
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
@@ -96,11 +96,7 @@ elseif OBSERVABLE == "z"
     B = σz
 end
 
-print("before H\n")
 H = symmetrize_operator(xxz(N,6),N,k)
-print("after H\n")
-print(string("memory allocated: ",Base.summarysize(H)))
-print(string("memory of full H: ",Base.summarysize(xxz(N,6))))
 
 if MULT_RANDOM_STATES == false
     ψ0 = random_state(N,d)#normalize!(ones(2^N))
@@ -131,7 +127,6 @@ if MULT_RANDOM_STATES == false
     otocs = zeros(length(trange),N,SHOTS)
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(d,d) for l in 1:SHOTS])
     #H_tot = Vector{Adjoint{Float64, ThreadedSparseMatrixCSC{Float64, Int64, SparseMatrixCSC{Float64, Int64}}}}([ThreadedSparseMatrixCSC(spzeros(2^N,2^N))' for l in 1:4])
-    print(string("memory allocated: ",Base.summarysize(H_tot)))    
     Threads.@threads for shot in 1:SHOTS
         H_tot[shot] = H + field_term(DISORDER_PARAM,N,k)
         logmsg("Created Hamiltonian for Shot $(shot)")
@@ -139,8 +134,6 @@ if MULT_RANDOM_STATES == false
         @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,k,tmax)
         logmsg("Completed Shot $(shot)")
     end
-    print(string("memory allocated: ",Base.summarysize(H_tot)))
-
 else
     otocs = zeros(length(trange),N,SHOTS,N_RANDOM_STATES)
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(d,d) for l in 1:SHOTS])
