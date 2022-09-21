@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.9
+# v0.19.11
 
 using Markdown
 using InteractiveUtils
@@ -105,6 +105,15 @@ krylovkit(10)
 # ╔═╡ e6c5a6cb-037e-4385-861e-00970be52f17
 trange = 0.0:0.01:6
 
+# ╔═╡ d7913bd0-f894-4e43-900e-b79d8517a685
+@elapsed krylovkitdata = test(krylovkit, trange)
+
+# ╔═╡ 69af02dd-aaba-4e96-874c-e81b0fb66647
+@elapsed exactdata = test(exact, trange)
+
+# ╔═╡ beffe4e8-2f04-45fb-a93a-25ea8e2c853c
+@elapsed exputildata = test(exputil, trange)
+
 # ╔═╡ 63e5bb93-bc9a-4dee-a64f-858b985e50bd
 @elapsed exputildata_alt = ExponentialUtilities.expv_timestep(collect(trange), -im*H,complex(ψ0); ishermitian=false, tol=1e-16)
 
@@ -122,15 +131,6 @@ function test(f, ts)
 	end
 	vals, times
 end
-
-# ╔═╡ d7913bd0-f894-4e43-900e-b79d8517a685
-@elapsed krylovkitdata = test(krylovkit, trange)
-
-# ╔═╡ 69af02dd-aaba-4e96-874c-e81b0fb66647
-@elapsed exactdata = test(exact, trange)
-
-# ╔═╡ beffe4e8-2f04-45fb-a93a-25ea8e2c853c
-@elapsed exputildata = test(exputil, trange)
 
 # ╔═╡ a6ace6ac-2508-4f15-a435-db319138c956
 let p = plot(;title="Comparison of Krylov implementations (precision)", xlabel="t", ylabel="abs. Deviation")

@@ -103,6 +103,12 @@ begin
 	end
 end
 
+# ╔═╡ d0cc45b5-7233-48d0-8d97-0b2e2be0387c
+@elapsed krylov_from0(H,-6,ψ0,0.1)
+
+# ╔═╡ 2c0eeee7-7bec-4653-bfe2-5d382be770e3
+@elapsed krylov_from0_alternative(H,-6,ψ0,4)
+
 # ╔═╡ 3336e93e-f0d4-4b74-a1e3-5b0a42cd339d
 function random_state(N::Int)
 	return normalize!(randn(ComplexF64,2^N))
@@ -264,12 +270,6 @@ begin
 		return ψ
 	end
 end
-
-# ╔═╡ d0cc45b5-7233-48d0-8d97-0b2e2be0387c
-@elapsed krylov_from0(H,-6,ψ0,0.1)
-
-# ╔═╡ 2c0eeee7-7bec-4653-bfe2-5d382be770e3
-@elapsed krylov_from0_alternative(H,-6,ψ0,4)
 
 # ╔═╡ bbaaf7c6-42c1-4f44-8e4d-4575064f9c04
 norm(krylov_from0_alternative(H,-20.5,ψ0,4) - krylov_from0(H,-20.5,ψ0,0.1))

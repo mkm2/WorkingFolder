@@ -1,11 +1,14 @@
 ### A Pluto.jl notebook ###
-# v0.19.9
+# v0.19.11
 
 using Markdown
 using InteractiveUtils
 
 # ╔═╡ 79fc26b0-18ba-11ed-208d-75b4a297af49
 using LinearAlgebra,Plots,JLD2,Statistics,PlutoUI,LsqFit
+
+# ╔═╡ b7e74acb-12b0-4a52-b8a9-315ebf9d2ee0
+TableOfContents()
 
 # ╔═╡ b267a4e7-840a-47cf-82c1-2a265ad05252
 begin
@@ -169,8 +172,6 @@ begin
 end
 
 # ╔═╡ d8c42b82-5828-4b14-9288-44a11938afcb
-# ╠═╡ disabled = true
-#=╠═╡
 begin
 	plot(2:10,mean_mean_RS_13,label="13",title="Mean",xlabel="n_states")
 	plot!(2:10,mean_mean_RS_15,label="15",title="Mean",xlabel="n_states")
@@ -179,11 +180,10 @@ begin
 	plot!(2:10,mean_mean_RS_21,label="21",title="Mean",xlabel="n_states")
 	
 end
-  ╠═╡ =#
 
 # ╔═╡ d44c702d-934e-459f-aea1-cadbe97d1420
 begin
-	plot(2:10,mean_std_RS_13,label="Haar Random States 13",title="Standard Error of the Mean ALL",xlabel="n_states",xaxis=:log,yaxis=:log,legend=false)
+	plot(2:10,mean_std_RS_13,label="Haar Random States 13",title="Standard Error of the Mean (ALL)",xlabel="n_states",ylabel="err",xaxis=:log,yaxis=:log,legend=nothing)
 	plot!(2:100,mean_std_RPS_13,label="Random Product States 13")
 	plot!(2:1000,mean_std_BS_13,label="Random Bitstring States 13")
 
@@ -202,13 +202,16 @@ begin
 	plot!(2:10,mean_std_RS_21,label="RS 21")
 	plot!(2:100,mean_std_RPS_21,label="RPS 21")
 	plot!(2:1000,mean_std_BS_21,label="BS 21")
-
-	plot!(2:1000,0.05*ones(999))
+	
+	annotate!(45,0.5,text("L = 13, 15, 17, 19, 21",10))
+	annotate!(400,0.07,text("Random Bitstring States",10))
+	annotate!(200,0.012,text("Random Product States",10))
+	annotate!(30,0.003,text("Haar Random States",10))
 end
 
 # ╔═╡ b7ded707-d001-40d1-b590-0d60f125dc50
 begin
-	plot(2:100,mean_std_RPS_13,label="Random Product States 13",title="Standard Error of the Mean ALL",xlabel="n_states",xaxis=:log,yaxis=:log,legend=false)
+	plot(2:100,mean_std_RPS_13,label="Random Product States 13",title="Standard Error of the Mean ALL",xlabel="n_states",xaxis=:log,yaxis=:log)
 	plot!(2:1000,mean_std_BS_13,label="Random Bitstring States 13")
 
 	plot!(2:100,mean_std_RPS_15,label="RPS 15")
@@ -223,6 +226,9 @@ begin
 	plot!(2:100,mean_std_RPS_21,label="RPS 21")
 	plot!(2:1000,mean_std_BS_21,label="BS 21")
 end
+
+# ╔═╡ 1b8df7a7-c771-492c-a10c-ccaafbe2b17b
+html"""<style>main {max-width: 60%;}</style>"""
 
 # ╔═╡ 19391d9c-a88b-48f9-a98e-25f3a5944b2e
 #Fit RPS and BS curves
@@ -264,15 +270,21 @@ end
 
 # ╔═╡ 27b0e6c5-3d68-403b-ae7d-4a6eeaba7957
 begin
-	plot(1:100,func_13.(1:100),label = "N=13",xlabel="n RPS",ylabel="n RS",legend=:bottomright)
+	plot(1:100,func_13.(1:100),label = "N=13",xlabel="n RPS",ylabel="n BS",legend=:bottomright)
 	plot!(1:100,func_15.(1:100),label = "N=15")
 	plot!(1:100,func_17.(1:100),label = "N=17")
 	plot!(1:100,func_19.(1:100),label = "N=19")
 	plot!(1:100,func_21.(1:100),label = "N=21")
 end
 
+# ╔═╡ 031d4884-883e-4b4b-bba8-f45a1e11c4bb
+plot([13,15,17,19,21],[curve_fit(m,1:100,func_13.(1:100),p0).param[1],curve_fit(m,1:100,func_15.(1:100),p0).param[1],curve_fit(m,1:100,func_17.(1:100),p0).param[1],curve_fit(m,1:100,func_19.(1:100),p0).param[1],curve_fit(m,1:100,func_21.(1:100),p0).param[1]])
+
+# ╔═╡ 2017b5ac-8a94-4bb0-97bb-6c49c8e35c09
+plot([13,15,17,19,21],[exp((params_RPS_13[2]-params_BS_13[2])/params_BS_13[1]),exp((params_RPS_15[2]-params_BS_15[2])/params_BS_15[1]),exp((params_RPS_17[2]-params_BS_17[2])/params_BS_17[1]),exp((params_RPS_19[2]-params_BS_19[2])/params_BS_19[1]),exp((params_RPS_21[2]-params_BS_21[2])/params_BS_21[1])])
+
 # ╔═╡ 24b3a146-28cc-4069-bc5c-e51e304123b2
-test = curve_fit(m,1:100,func_13.(1:100),p0).param
+test = curve_fit(m,1:100,func_19.(1:100),p0).param
 
 # ╔═╡ c2af3e0b-d916-4ce1-ad3e-89f7d148cc9c
 exp((params_RPS_19[2]-params_BS_19[2])/params_BS_19[1])
@@ -1486,6 +1498,7 @@ version = "1.4.1+0"
 
 # ╔═╡ Cell order:
 # ╠═79fc26b0-18ba-11ed-208d-75b4a297af49
+# ╠═b7e74acb-12b0-4a52-b8a9-315ebf9d2ee0
 # ╠═b267a4e7-840a-47cf-82c1-2a265ad05252
 # ╠═6e40e406-ce73-4e5e-8ac8-799f09369707
 # ╠═ea553d3f-7600-4b8c-b63d-9c97ea42f827
@@ -1493,10 +1506,13 @@ version = "1.4.1+0"
 # ╠═d8c42b82-5828-4b14-9288-44a11938afcb
 # ╠═d44c702d-934e-459f-aea1-cadbe97d1420
 # ╠═b7ded707-d001-40d1-b590-0d60f125dc50
+# ╠═1b8df7a7-c771-492c-a10c-ccaafbe2b17b
 # ╠═19391d9c-a88b-48f9-a98e-25f3a5944b2e
 # ╠═b57f6b13-3792-4c4d-bc20-1a3a1e60f18f
 # ╠═420f33f0-9121-4e11-b31c-04687c11127d
 # ╠═27b0e6c5-3d68-403b-ae7d-4a6eeaba7957
+# ╠═031d4884-883e-4b4b-bba8-f45a1e11c4bb
+# ╠═2017b5ac-8a94-4bb0-97bb-6c49c8e35c09
 # ╠═24b3a146-28cc-4069-bc5c-e51e304123b2
 # ╠═c2af3e0b-d916-4ce1-ad3e-89f7d148cc9c
 # ╠═178e2186-b7a7-479d-9692-a414559d91ac

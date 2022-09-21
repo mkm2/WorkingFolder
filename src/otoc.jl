@@ -5,9 +5,16 @@ using KrylovKit
 using ..LightCones
 
 export  otoc, otoc_spat, krylov_from0, krylov_step
+export otoc_ed, otoc_edtr, otoc_edψ, otoc_spat_ed, otoc_spat_edtr, otoc_spat_edψ
 
 
-#Krylov Propagation
+ExtRange = Union{AbstractRange{Float64},Vector{Float64}}
+TvExtRange = Union{Float64,ExtRange}
+
+##########################
+### Krylov Propagation ###
+##########################
+
 
 function krylov_step(H,δt,ψ)
 	return exponentiate(H,im*δt,ψ;ishermitian=true)[1]
@@ -56,7 +63,7 @@ function otoc(H,A,B,t::Float64,ψ,tmax=1.0)
 	return real(dot(ψ,state))
 end
 
-function otoc(H,A,B,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,tmax=1.0)
+function otoc(H,A,B,trange::ExtRange,ψ,tmax=1.0)
 	res = zeros(length(trange))
 	ψl_tmp = krylov_step(H,-trange[1],ψ)
 	ψr_tmp = krylov_step(H,-trange[1],B*ψ)
@@ -73,8 +80,9 @@ function otoc(H,A,B,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,tma
 	return res
 end
 
-###OTOCs computed over spatial indices
-
+###########################################################
+### Krylov OTOCs computed over multiple spatial indices ###
+###########################################################
 
 #Single time
 
@@ -108,17 +116,17 @@ end
 
 #Time Range
 
-function calc_otoc(H,A,b,j,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0)
+function calc_otoc(H,A,b,j,trange::ExtRange,ψ,N,tmax=1.0)
 	B = single_spin_op(b,j,N)
 	return otoc(H,A,B,trange,ψ,tmax)
 end
 
-function calc_otoc(H,A,b,j,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,k,tmax=1.0)
+function calc_otoc(H,A,b,j,trange::ExtRange,ψ,N,k,tmax=1.0)
 	B = symmetrize_operator(single_spin_op(b,j,N),N,k)
 	return otoc(H,A,B,trange,ψ,tmax)
 end
 
-function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0)
+function otoc_spat(H,A,b,trange::ExtRange,ψ,N,tmax=1.0)
 	res = zeros(length(trange),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax)
@@ -126,7 +134,7 @@ function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},�
 	return res
 end
 
-function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,k,tmax=1.0)
+function otoc_spat(H,A,b,trange::ExtRange,ψ,N,k,tmax=1.0)
 	res = zeros(length(trange),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,k,tmax)
@@ -134,23 +142,124 @@ function otoc_spat(H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},�
 	return res
 end
 
-function otoc_spat!(res,H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,tmax=1.0)
+function otoc_spat!(res,H,A,b,trange::ExtRange,ψ,N,tmax=1.0)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax)
 	end
 	return res
 end
 
-function otoc_spat!(res,H,A,b,trange::Union{AbstractRange{Float64},Vector{Float64}},ψ,N,k,tmax=1.0)
+function otoc_spat!(res,H,A,b,trange::ExtRange,ψ,N,k,tmax=1.0)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,k,tmax)
 	end
 	return res
 end
 
-#####################################
-###Old implementations for comparison
 
+
+#############################
+### Exact Diagonalisation ###
+#############################
+
+#Core functions
+function Fψ(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,ψ::Vector{ComplexF64})
+	eigmt = exp(-im*Diagonal(λs)*t)
+	return real(ψ'*eigmt'*A*eigmt*Q'*B*Q*eigmt'*A*eigmt*Q'*B*Q*ψ) #much faster than trace!
+end
+Fψ(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},t::Float64,ψ::Vector{ComplexF64},N::Int) = Fψ(A,B,λs,Diagonal(ones(2^N)),t,ψ) #B already in eigenbasis
+
+function Ftr(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64)
+	eigmt = exp(-im*Diagonal(λs)*t)
+	return real(tr(eigmt'*A*eigmt*Q'*B*Q*eigmt'*A*eigmt*Q'*B*Q))
+end
+Ftr(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},t::Float64,N::Int) = Ftr(A,B,λs,Diagonal(ones(2^N)),t) #B already in eigenbasis
+
+#Single time - Typicality
+otoc_ed(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,N::Int,s::Int) = mean(Fψ(A,B,λs,Q,t,random_state(N)) for i in 1:s)
+otoc_ed(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},t::Float64,N::Int,s::Int) = otoc_ed(A,B,λs,Diagonal(ones(2^N)),t,N,s) #B already in eigenbasis
+
+#Single time - Single Vector
+otoc_edψ(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,ψ::Vector{ComplexF64}) = Fψ(A,B,λs,Q,t,ψ)
+otoc_edψ(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},t::Float64,ψ::Vector{ComplexF64},N::Int) = otoc_edψ(A,B,λs,Diagonal(ones(2^N)),t,ψ) #B already in eigenbasis
+
+#Single time - Trace
+otoc_edtr(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64) = Ftr(A,B,λs,Q,t)
+otoc_edtr(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},t::Float64,N::Int) = otoc_edtr(A,B,λs,Diagonal(ones(2^N)),t) #B already in eigenbasis
+
+#Time Range - Typicality
+function otoc_ed(A::Matrix{Float64},B::Matrix{Float64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,N::Int,s::Int)
+	res = zeros(length(trange))
+	for (ti,t) in enumerate(trange)
+		res[ti] = otoc_ed(A,B,λs,Q,t,N,s)
+	end
+	return res
+end
+otoc_ed(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},trange::ExtRange,N::Int,s::Int) = otoc_ed(A,B,λs,Diagonal(ones(2^N)),trange,N,s) #B already in eigenbasis
+
+#Time Range - Single Vector
+function otoc_edψ(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,ψ::Vector{ComplexF64})
+	res = zeros(length(trange))
+	for (ti,t) in enumerate(trange)
+		res[ti] = otoc_edψ(A,B,λs,Q,t,ψ)
+	end
+	return res
+end
+otoc_edψ(A::Matrix{Float64},B::Matrix{Float64},λs::Vector{Float64},trange::ExtRange,ψ::Vector{ComplexF64},N::Int) = otoc_edψ(A,B,λs,Diagonal(ones(2^N)),trange,ψ) #B already in eigenbasis
+
+#Time Range - Trace
+function otoc_edtr(A::Matrix{Float64},B::Matrix{Float64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange)
+	res = zeros(length(trange))
+	for (ti,t) in enumerate(trange)
+		res[ti] = otoc_edtr(A,B,λs,Q,t)
+	end
+	return res
+end
+otoc_edtr(A::Matrix{Float64},B::Matrix{Float64},λs::Vector{Float64},trange::ExtRange,N::Int) = otoc_edtr(A,B,λs,Diagonal(ones(2^N)),trange) #B already in eigenbasis
+
+
+###########################################################
+### ED OTOCs computed over multiple spatial indices ###
+###########################################################
+
+#Any Times - Typicality
+function otoc_spat_ed(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,N::Int,s::Int) #b=σ(xyz) in original basis
+	res = zeros(N)
+	for j in 1:N
+		B = single_spin_op(b,j,N)
+		res[j] = otoc_ed(A,B,λs,Q,ts,N,s)
+	end
+	return res
+end
+otoc_spat_ed(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector{Float64},ts::TvExtRange,N::Int,s::Int) = otoc_spat_ed(A,b,λs,Diagonal(ones(2^N)),ts,N,s)
+
+#Any Times - Single Vector
+function otoc_spat_edψ(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,ψ::Vector{ComplexF64}) #b=σ(xyz) in original basis
+	res = zeros(N)
+	for j in 1:N
+		B = single_spin_op(b,j,N)
+		res[j] = otoc_edψ(A,B,λs,Q,ts,ψ)
+	end
+	return res
+end
+otoc_spat_edψ(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector{Float64},ts::TvExtRange,ψ::Vector{ComplexF64},N::Int) = otoc_spat_edψ(A,b,λs,Diagonal(ones(2^N)),ts,ψ) #B already in eigenbasis
+
+#Any Times - Trace
+function otoc_spat_edtr(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange) #b=σ(xyz) in original basis
+	res = zeros(N)
+	for j in 1:N
+		B = single_spin_op(b,j,N)
+		res[j] = otoc_edtr(A,B,λs,Q,ts)
+	end
+	return res
+end
+otoc_spat_edtr(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector{Float64},ts::TvExtRange,N) = otoc_spat_edtr(A,b,λs,Diagonal(ones(2^N)),ts) #B already in eigenbasis
+
+
+
+##########################################
+### Old implementations for comparison ###
+##########################################
 
 function otoc_old(H,A,B,t,ψ)
 	state = B*ψ
