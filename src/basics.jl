@@ -17,11 +17,11 @@ export nearest_neighbourJ, nearest_neighbourJ_pbc
 export random_state, random_product_state, random_bit_state, random_bitstring_state
 export magnetisation
 
-const σplus = sparse([1],[2],[1.0+0*im],2,2)
-const σminus = sparse([2],[1],[1.0+0*im],2,2)
-const σz = spdiagm([1.0+0*im,-1.0+0*im])
-const σx = sparse([1,2],[2,1],[1.0+0*im,1.0+0*im])
-const σy = sparse([1,2],[2,1],[-1.0*im,+1.0*im])
+const σplus = sparse([1],[2],[1],2,2)
+const σminus = sparse([2],[1],[1],2,2)
+const σz = spdiagm([1,-1])
+const σx = sparse([1,2],[2,1],[1,1])
+const σy = sparse([1,2],[2,1],[-im,+im])
 const ⊗ = kron
 
 const Δ = -2

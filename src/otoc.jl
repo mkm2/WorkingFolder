@@ -164,59 +164,59 @@ end
 #############################
 
 #Core functions
-function Fψ(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,ψ::Vector{ComplexF64})
+function Fψ(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,ψ::Vector{ComplexF64})
 	eigmt = exp(-im*Diagonal(λs)*t)
 	return real(ψ'*eigmt'*A*eigmt*Q'*B*Q*eigmt'*A*eigmt*Q'*B*Q*ψ) #much faster than trace!
 end
-Fψ(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},t::Float64,ψ::Vector{ComplexF64},N::Int64) = Fψ(A,B,λs,Diagonal(ones(2^N)),t,ψ) #B already in eigenbasis
+Fψ(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},t::Float64,ψ::Vector{ComplexF64},N::Int64) = Fψ(A,B,λs,Diagonal(ones(2^N)),t,ψ) #B already in eigenbasis
 
-function Ftr(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64)
+function Ftr(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},t::Float64)
 	eigmt = exp(-im*Diagonal(λs)*t)
 	return real(tr(eigmt'*A*eigmt*Q'*B*Q*eigmt'*A*eigmt*Q'*B*Q))
 end
-Ftr(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},t::Float64,N::Int64) = Ftr(A,B,λs,Diagonal(ones(2^N)),t) #B already in eigenbasis
+Ftr(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},t::Float64,N::Int64) = Ftr(A,B,λs,Diagonal(ones(2^N)),t) #B already in eigenbasis
 
 #Single time - Typicality
-otoc_ed(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,N::Int64,s::Int64) = mean(Fψ(A,B,λs,Q,t,random_state(N)) for i in 1:s)
-otoc_ed(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},t::Float64,N::Int64,s::Int64) = otoc_ed(A,B,λs,Diagonal(ones(2^N)),t,N,s) #B already in eigenbasis
+otoc_ed(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,N::Int64,s::Int64) = mean(Fψ(A,B,λs,Q,t,random_state(N)) for i in 1:s)
+otoc_ed(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},t::Float64,N::Int64,s::Int64) = otoc_ed(A,B,λs,Diagonal(ones(2^N)),t,N,s) #B already in eigenbasis
 
 #Single time - Single Vector
-otoc_edψ(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,ψ::Vector{ComplexF64}) = Fψ(A,B,λs,Q,t,ψ)
-otoc_edψ(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},t::Float64,ψ::Vector{ComplexF64},N::Int64) = otoc_edψ(A,B,λs,Diagonal(ones(2^N)),t,ψ) #B already in eigenbasis
+otoc_edψ(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,ψ::Vector{ComplexF64}) = Fψ(A,B,λs,Q,t,ψ)
+otoc_edψ(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},t::Float64,ψ::Vector{ComplexF64},N::Int64) = otoc_edψ(A,B,λs,Diagonal(ones(2^N)),t,ψ) #B already in eigenbasis
 
 #Single time - Trace
-otoc_edtr(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64) = Ftr(A,B,λs,Q,t)
-otoc_edtr(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},t::Float64,N::Int64) = otoc_edtr(A,B,λs,Diagonal(ones(2^N)),t) #B already in eigenbasis
+otoc_edtr(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},t::Float64) = Ftr(A,B,λs,Q,t)
+otoc_edtr(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},t::Float64,N::Int64) = otoc_edtr(A,B,λs,Diagonal(ones(2^N)),t) #B already in eigenbasis
 
 #Time Range - Typicality
-function otoc_ed(A::Matrix{Float64},B::Matrix{Float64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,N::Int64,s::Int64)
+function otoc_ed(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,N::Int64,s::Int64)
 	res = zeros(length(trange))
 	for (ti,t) in enumerate(trange)
 		res[ti] = otoc_ed(A,B,λs,Q,t,N,s)
 	end
 	return res
 end
-otoc_ed(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},trange::ExtRange,N::Int64,s::Int64) = otoc_ed(A,B,λs,Diagonal(ones(2^N)),trange,N,s) #B already in eigenbasis
+otoc_ed(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},trange::ExtRange,N::Int64,s::Int64) = otoc_ed(A,B,λs,Diagonal(ones(2^N)),trange,N,s) #B already in eigenbasis
 
 #Time Range - Single Vector
-function otoc_edψ(A::Matrix{Float64},B::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,ψ::Vector{ComplexF64})
+function otoc_edψ(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,ψ::Vector{ComplexF64})
 	res = zeros(length(trange))
 	for (ti,t) in enumerate(trange)
 		res[ti] = otoc_edψ(A,B,λs,Q,t,ψ)
 	end
 	return res
 end
-otoc_edψ(A::Matrix{Float64},B::Matrix{Float64},λs::Vector{Float64},trange::ExtRange,ψ::Vector{ComplexF64},N::Int64) = otoc_edψ(A,B,λs,Diagonal(ones(2^N)),trange,ψ) #B already in eigenbasis
+otoc_edψ(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},trange::ExtRange,ψ::Vector{ComplexF64},N::Int64) = otoc_edψ(A,B,λs,Diagonal(ones(2^N)),trange,ψ) #B already in eigenbasis
 
 #Time Range - Trace
-function otoc_edtr(A::Matrix{Float64},B::Matrix{Float64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange)
+function otoc_edtr(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange)
 	res = zeros(length(trange))
 	for (ti,t) in enumerate(trange)
 		res[ti] = otoc_edtr(A,B,λs,Q,t)
 	end
 	return res
 end
-otoc_edtr(A::Matrix{Float64},B::Matrix{Float64},λs::Vector{Float64},trange::ExtRange,N::Int64) = otoc_edtr(A,B,λs,Diagonal(ones(2^N)),trange) #B already in eigenbasis
+otoc_edtr(A::Matrix{Number},B::AbstractArray{Number},λs::Vector{Float64},trange::ExtRange,N::Int64) = otoc_edtr(A,B,λs,Diagonal(ones(2^N)),trange) #B already in eigenbasis
 
 
 ###########################################################
@@ -224,7 +224,7 @@ otoc_edtr(A::Matrix{Float64},B::Matrix{Float64},λs::Vector{Float64},trange::Ext
 ###########################################################
 
 #Any Times - Typicality
-function otoc_spat_ed(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,N::Int64,s::Int64) #b=σ(xyz) in original basis
+function otoc_spat_ed(A::Matrix{Number},b::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,N::Int64,s::Int64) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
 	for j in 1:N
 		B = single_spin_op(b,j,N)
@@ -234,7 +234,7 @@ function otoc_spat_ed(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector{F
 end
 
 #Any Times - Single Vector
-function otoc_spat_edψ(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,ψ::Vector{ComplexF64}) #b=σ(xyz) in original basis
+function otoc_spat_edψ(A::Matrix{Number},b::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,ψ::Vector{ComplexF64}) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
 	for j in 1:N
 		B = single_spin_op(b,j,N)
@@ -244,7 +244,7 @@ function otoc_spat_edψ(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector
 end
 
 #Any Times - Trace
-function otoc_spat_edtr(A::Matrix{Float64},b::AbstractArray{Float64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange) #b=σ(xyz) in original basis
+function otoc_spat_edtr(A::Matrix{Number},b::AbstractArray{Number},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
 	for j in 1:N
 		B = single_spin_op(b,j,N)
@@ -257,20 +257,20 @@ end
 ### Diagonlize and Calculate OTOC ###
 #####################################
 
-function Diag_OTOC(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,s::Int64)
+function Diag_OTOC(H::Matrix{Number},A::SparseMatrixCSC{Number,Int64},b::SparseMatrixCSC{Number,Int64},ts::TvExtRange,N::Int64,s::Int64)
 	λs, Q = eigen!(H)
 	QdAQ =  Q'*A*Q
 	return otoc_spat_ed(QdAQ,b,λs,Q,ts,N,s)
 end
 
-function Diag_OTOCψ(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64})
+function Diag_OTOCψ(H::Matrix{Number},A::SparseMatrixCSC{Number,Int64},b::SparseMatrixCSC{Number,Int64},ts::TvExtRange,ψ::Vector{ComplexF64})
 	λs, Q = eigen!(H)
 	QdAQ =  Q'*A*Q
 	Qdψ = Q'*ψ
 	return otoc_spat_edψ(QdAQ,b,λs,Q,ts,Qdψ)
 end
 
-function Diag_OTOCtr(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange)
+function Diag_OTOCtr(H::Matrix{Number},A::SparseMatrixCSC{Number,Int64},b::SparseMatrixCSC{Number,Int64},ts::TvExtRange)
 	λs, Q = eigen!(H)
 	A =  Q'*A*Q
 	return otoc_spat_edtr(QdAQ,b,λs,Q,ts)
