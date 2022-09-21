@@ -68,7 +68,7 @@ trange = 0:δt:T
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
-A = single_spin_op(σz,i,N)
+A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σz,i,N))
 
 if OBSERVABLE == "x"
     B = σx
@@ -77,6 +77,7 @@ elseif OBSERVABLE == "y"
 elseif OBSERVABLE == "z"
     B = σz
 end
+B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 
 H = xxz(N,6)
 
