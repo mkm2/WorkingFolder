@@ -1,6 +1,6 @@
 module OTOC
 using SparseArrays, LinearAlgebra, Plots
-using SpinSymmetry
+using SpinSymmetry, Statistics
 using KrylovKit
 using ..LightCones
 
