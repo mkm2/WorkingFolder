@@ -82,7 +82,7 @@ H = xxz(N,6)
 
 #Start simulation
 
-otocs = zeros(length(trange,N,SHOTS))
+otocs = zeros(length(trange),N,SHOTS)
 H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
 @sync for shot in SHOTS
     H_tot[shot] = H + field_term(DISORDER_PARAM,N)
