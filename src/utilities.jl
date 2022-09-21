@@ -7,7 +7,7 @@ import Dates
 using ..LightCones
 
 export logmsg, path_prefix, save, save_with_pos
-export SimulationParams
+export SimulationParams, SimulationParamsED
 export logrange
 
 struct SimulationParams
@@ -15,6 +15,13 @@ struct SimulationParams
     SHOTS::Int
     RANDOM_STATES::Bool
     N_RANDOM_STATES::Int
+    OBSERVABLE::String
+    DISORDER_PARAM::Float64
+end
+
+struct SimulationParamsED
+    N::Int
+    SHOTS::Int
     OBSERVABLE::String
     DISORDER_PARAM::Float64
 end
