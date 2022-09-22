@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.11
+# v0.19.12
 
 using Markdown
 using InteractiveUtils
@@ -17,7 +17,7 @@ end
 using SparseArrays, LinearAlgebra, Plots, SpinSymmetry, BenchmarkTools
 
 # ╔═╡ b2c2cedc-c382-450b-84d8-026f3c1a543e
-using MatrixChainMultiply, Tullio, PlutoUI
+using Tullio, PlutoUI #,MatrixChainMultiply
 
 # ╔═╡ d6b82f30-3e38-492d-88e9-8bdd414935fd
 TableOfContents()

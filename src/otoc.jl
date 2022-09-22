@@ -226,9 +226,9 @@ otoc_edtr(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64
 #Any Times - Typicality
 function otoc_spat_ed(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,N::Int64,s::Int64) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
-	for j in 1:N
+	@sync for j in 1:N
 		B = single_spin_op(b,j,N)
-		res[:,j] = otoc_ed(A,B,λs,Q,ts,N,s)
+		Threads.@spawn res[:,j] .= otoc_ed(A,B,λs,Q,ts,N,s)
 	end
 	return res
 end
@@ -236,9 +236,9 @@ end
 #Any Times - Single Vector
 function otoc_spat_edψ(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,ψ::Vector{ComplexF64}) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
-	for j in 1:N
+	@sync for j in 1:N
 		B = single_spin_op(b,j,N)
-		res[:,j] = otoc_edψ(A,B,λs,Q,ts,ψ)
+		Threads.@spawn res[:,j] .= otoc_edψ(A,B,λs,Q,ts,ψ)
 	end
 	return res
 end
@@ -246,9 +246,9 @@ end
 #Any Times - Trace
 function otoc_spat_edtr(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
-	for j in 1:N
+	@sync for j in 1:N
 		B = single_spin_op(b,j,N)
-		res[:,j] = otoc_edtr(A,B,λs,Q,ts)
+		Threads.@spawn res[:,j] .= otoc_edtr(A,B,λs,Q,ts)
 	end
 	return res
 end
