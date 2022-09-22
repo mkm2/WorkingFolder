@@ -85,7 +85,7 @@ H = xxz(N,6)
 
 otocs = zeros(length(trange),N,SHOTS)
 H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
-Threads.@threads for shot in SHOTS
+Threads.@threads for shot in 1:SHOTS
     H_tot[shot] = H + field_term(DISORDER_PARAM,N)
     logmsg("Created Hamiltonian for Shot $(shot)")
     otocs[:,:,shot] = Diag_OTOC(Matrix(H_tot[shot]),A,B,trange,N,s)

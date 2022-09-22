@@ -179,6 +179,9 @@ Ftr(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},t::F
 #Single time - Typicality
 otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,N::Int64,s::Int64) = mean(Fψ(A,B,λs,Q,t,random_state(N)) for i in 1:s)
 otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},t::Float64,N::Int64,s::Int64) = otoc_ed(A,B,λs,Diagonal(ones(2^N)),t,N,s) #B already in eigenbasis
+otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,N::Int64,s::Int64,dim::Int64) = mean(Fψ(A,B,λs,Q,t,random_state(N,dim)) for i in 1:s)
+otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},t::Float64,N::Int64,s::Int64,dim::Int64) = otoc_ed(A,B,λs,Diagonal(ones(2^N)),t,N,s,dim) #B already in eigenbasis
+
 
 #Single time - Single Vector
 otoc_edψ(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},t::Float64,ψ::Vector{ComplexF64}) = Fψ(A,B,λs,Q,t,ψ)
@@ -197,6 +200,16 @@ function otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{
 	return res
 end
 otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},trange::ExtRange,N::Int64,s::Int64) = otoc_ed(A,B,λs,Diagonal(ones(2^N)),trange,N,s) #B already in eigenbasis
+function otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,N::Int64,s::Int64,dim::Int64)
+	res = zeros(length(trange))
+	for (ti,t) in enumerate(trange)
+		res[ti] = otoc_ed(A,B,λs,Q,t,N,s,dim)
+	end
+	return res
+end
+otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},trange::ExtRange,N::Int64,s::Int64,dim::Int64) = otoc_ed(A,B,λs,Diagonal(ones(2^N)),trange,N,s,dim) #B already in eigenbasis
+
+
 
 #Time Range - Single Vector
 function otoc_edψ(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,ψ::Vector{ComplexF64})
@@ -231,12 +244,26 @@ function otoc_spat_ed(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Ve
 	end
 	return res
 end
+function otoc_spat_ed(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,N::Int64,s::Int64,symsec::Int64,dim::Int64) #b=σ(xyz) in original basis
+	res = zeros(length(ts),N)
+	@sync for j in 1:N
+		Threads.@spawn res[:,j] .= otoc_ed(A,symmetrize_operator(single_spin_op(b,j,N),N,symsec),λs,Q,ts,N,s,dim)
+	end
+	return res
+end
 
 #Any Times - Single Vector
 function otoc_spat_edψ(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,ψ::Vector{ComplexF64}) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j] .= otoc_edψ(A,single_spin_op(b,j,N),λs,Q,ts,ψ)
+	end
+	return res
+end
+function otoc_spat_edψ(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,ψ::Vector{ComplexF64},symsec::Int64) #b=σ(xyz) in original basis
+	res = zeros(length(ts),N)
+	@sync for j in 1:N
+		Threads.@spawn res[:,j] .= otoc_edψ(A,symmetrize_operator(single_spin_op(b,j,N),N,symsec),λs,Q,ts,ψ) #ψ already projected down
 	end
 	return res
 end
@@ -249,18 +276,33 @@ function otoc_spat_edtr(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::
 	end
 	return res
 end
+function otoc_spat_edtr(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,symsec::Int64) #b=σ(xyz) in original basis
+	res = zeros(length(ts),N)
+	@sync for j in 1:N
+		Threads.@spawn res[:,j] .= otoc_edtr(A,symmetrize_operator(single_spin_op(b,j,N),N,symsec),λs,Q,ts)
+	end
+	return res
+end
 
 #####################################
 ### Diagonlize and Calculate OTOC ###
 #####################################
 
+#Any Times - Typicality
 function Diag_OTOC(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,s::Int64)
 	λs, Q = eigen!(H)
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
 	return otoc_spat_ed(QdAQ,b,λs,Q,ts,N,s)
 end
+function Diag_OTOC(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,s::Int64,symsec::Int64,dim::Int64)
+	λs, Q = eigen!(H)
+	logmsg("Diagonalized H.")
+	QdAQ =  Q'*A*Q
+	return otoc_spat_ed(QdAQ,b,λs,Q,ts,N,s,symsec,dim)
+end
 
+#Any Times - Single Vector
 function Diag_OTOCψ(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64})
 	λs, Q = eigen!(H)
 	logmsg("Diagonalized H.")
@@ -268,14 +310,27 @@ function Diag_OTOCψ(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::
 	Qdψ = Q'*ψ
 	return otoc_spat_edψ(QdAQ,b,λs,Q,ts,Qdψ)
 end
+function Diag_OTOCψ(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64},symsec::Int64)
+	λs, Q = eigen!(H)
+	logmsg("Diagonalized H.")
+	QdAQ =  Q'*A*Q
+	Qdψ = Q'*ψ
+	return otoc_spat_edψ(QdAQ,b,λs,Q,ts,Qdψ,symsec)
+end
 
+#Any Times - Trace
 function Diag_OTOCtr(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange)
 	λs, Q = eigen!(H)
 	logmsg("Diagonalized H.")
 	A =  Q'*A*Q
 	return otoc_spat_edtr(QdAQ,b,λs,Q,ts)
 end
-
+function Diag_OTOCtr(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,symsec::Int64)
+	λs, Q = eigen!(H)
+	logmsg("Diagonalized H.")
+	A =  Q'*A*Q
+	return otoc_spat_edtr(QdAQ,b,λs,Q,ts,symsec)
+end
 
 ##########################################
 ### Old implementations for comparison ###
