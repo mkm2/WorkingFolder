@@ -33,6 +33,8 @@ function chainJ(N,α=6)
     Symmetric(diagm([k=>k^-float(α) * ones(N-k) for k in 1:N-1]...))
 end
 
+chainJ_pbc(N,α=6) = interaction_matrix(PowerLaw(α),distance_matrix(RegularChainPBC(N,1.0),[k*1.0 for k in 1:N]))
+
 function nearest_neighbourJ(N)
     Symmetric(diagm(1=>ones(N-1)))
 end

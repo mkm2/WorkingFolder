@@ -1,7 +1,7 @@
 module Geom
 
 using LinearAlgebra
-export sample_blockaded, distance, distance_matrix, Geometry, Box, BoxPBC, NoisyChain, NoisyChainPBC
+export sample_blockaded, distance, distance_matrix, Geometry, Box, BoxPBC, NoisyChain, NoisyChainPBC, RegularChain, RegularChainPBC
 
 ## TODO: abstract Lattice geometries and put chains as subtypes
 ##       lattices need to know at which site to generate a new point
@@ -114,6 +114,41 @@ end
 
 distance(box::BoxPBC, p1, p2) = _euclidean_pbc(p1, p2, box.lengths)
 generate_point(box::BoxPBC) = _euclidean_point(box.lengths)
+
+
+"""
+    RegularChain
+
+Representsa 1D lattice with given spacing and length (number of particles).
+Each position is exactly the spacing away from the neigbouring ones.
+
+# Fields
+- `L::Int64`: number of sites in the chain
+- `spacing::Float64`: (mean) distance between two sites
+"""
+struct RegularChain <: Geometry
+    L::Int64
+    spacing::Float64
+end
+
+distance(::RegularChain, p1, p2) = _euclidean(p1, p2)
+
+"""
+    RegularChainPBC
+
+Representsa 1D lattice with given spacing and length (number of particles).
+Each position is exactly the spacing away from the neigbouring ones.
+
+# Fields
+- `L::Int64`: number of sites in the chain
+- `spacing::Float64`: (mean) distance between two sites
+"""
+struct RegularChainPBC <: Geometry
+    L::Int64
+    spacing::Float64
+end
+
+distance(chain::RegularChainPBC, p1, p2) = _euclidean_pbc(p1, p2, chain.L * chain.spacing)
 
 """
     NoisyChain

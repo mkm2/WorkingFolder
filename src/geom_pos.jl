@@ -10,7 +10,7 @@ export geometry_from_density, create
 
 
  #from SimLib, no changes made
-const GEOMETRIES = [:box, :box_pbc, :noisy_chain, :noisy_chain_pbc]
+const GEOMETRIES = [:box, :box_pbc, :noisy_chain, :noisy_chain_pbc, :regular_chain, :regular_chain_pbc]
 
 # The OBC Volume coeffs should probably be a bit bigger to accommodate for the extra space outside
 # Right now results won't really be comparable, but we will not need this (right now that is)
