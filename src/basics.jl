@@ -11,8 +11,8 @@ using ..LightCones
 @reexport using ..GeomPos
 
 export σplus, σminus, σz, σx, σy, ⊗, Δ, 𝟙
-export chainJ, correlator, single_spin_op
-export xxz, field_term, hamiltonian_from_positions
+export chainJ, chainJ_pbc, correlator, single_spin_op
+export xxz, xxz_pbc, field_term, hamiltonian_from_positions
 export nearest_neighbourJ, nearest_neighbourJ_pbc
 export random_state, random_product_state, random_bit_state, random_bitstring_state
 export magnetisation
@@ -25,6 +25,11 @@ const σy = sparse([1,2],[2,1],[-im,+im])
 const ⊗ = kron
 
 const Δ = -2
+
+const up = [1.0, 0.0]
+const down = [0.0, 1.0]
+const rightx = [1.0, 1.0]/sqrt(2.0)
+const leftx = [1.0, -1.0]/sqrt(2.0)
 
 speye(k) = spdiagm(ones(k))
 𝟙(N) = speye(2^N)
@@ -53,11 +58,25 @@ single_spin_op(op, k::Integer, N::Integer) = 𝟙(k-1) ⊗ op ⊗ 𝟙(N-k)
 
 xxz(J::AbstractMatrix) = xxz(J, size(J,1))
 xxz(N::Int, α=6) = xxz(chainJ(N,α), N)
+xxz_pbc(N::Int,α=6) = xxz(chainJ_pbc(N,α), N)
 function xxz(J::AbstractMatrix, N)
     res = spzeros(Float64, 2^N, 2^N)
     for i in 1:size(J,1)
         for j in i+1:size(J,2)
-            res += J[i,j]*(2*correlator(σplus,σminus,i,j,N) + 2*correlator(σminus,σplus,i,j,N) + Δ*correlator(σz, i,j,N))
+            res += J[i,j]*(2*correlator(σplus,σminus,i,j,N) + 2*correlator(σminus,σplus,i,j,N) + Δ*correlator(σz, i,j,N)) #σxσx+σyσy-2σzσz
+        end
+    end
+    return res
+end
+
+xyz(J::AbstractMatrix,Jx,Jy,Jz) = xyz(J,Jx,Jy,Jz,size(J,1))
+xyz(N::Int,Jx,Jy,Jz,α=6) = xyz(chainJ(N,α),Jx,Jy,Jz,N)
+xyz_pbc(N::Int,Jx,Jy,Jz,α=6) = xyz(chainJ_pbc(N,α),Jx,Jy,Jz,N)
+function xyz(J::AbstractMatrix, Jx, Jy, Jz, N) #xxz = xyz with Jx = Jy = 1, Jz = Δ = -2
+    res = spzeros(Float64, 2^N, 2^N)
+    for i in 1:size(J,1)
+        for j in i+1:size(J,2)
+            res += J[i,j]*(Jx*correlator(σx,σx,i,j,N) + Jy*correlator(σx,σy,i,j,N) + Jz*correlator(σz, i,j,N))
         end
     end
     return res
@@ -110,6 +129,16 @@ function random_bitstring_state(N::Int, d::Int) #simply choose random basis stat
 end
 random_bitstring_state(N::Int) = random_bitstring_state(N, 2^N)
 
+
+function neel_state(N::Int,d::Int)
+    N%2 == 0 || throw("N has to be even to create a Néel state.")
+    return kron((i%2 == 1 ? up : down for i in 1:N)...)
+end
+
+function neel_x_state(N::Int,d::Int)
+    N%2 == 0 || throw("N has to be even to create a Néel state.")
+    return kron((i%2 == 1 ? rightx : leftx for i in 1:N)...)
+end
 
 #function random_bit_state()
 #    x = Vector{ComplexF64}(undef,2)
