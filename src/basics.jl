@@ -77,7 +77,7 @@ function xyz(J::AbstractMatrix, Jx, Jy, Jz, N) #xxz = xyz with Jx = Jy = 1, Jz =
     res = spzeros(Float64, 2^N, 2^N)
     for i in 1:size(J,1)
         for j in i+1:size(J,2)
-            res += J[i,j]*(Jx*correlator(σx,σx,i,j,N) + Jy*correlator(σx,σy,i,j,N) + Jz*correlator(σz, i,j,N))
+            res += J[i,j]*(Jx*correlator(σx,σx,i,j,N) + Jy*correlator(σy,σy,i,j,N) + Jz*correlator(σz, i,j,N))
         end
     end
     return res
