@@ -62,8 +62,9 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 δt = 0.1
 T = 5
-#trange = logrange(-5,0,2)
-trange = 0:δt:T
+s = 10
+trange = logrange(-2,4,1e4)
+#trange = 0:δt:T
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
@@ -97,5 +98,5 @@ end
 logmsg("*"^10*"Simulation completed!"*"*"^10)
 
 logmsg("*"^10 * "Saving" * "*"^10)
-save(otocs, params, JOBID, joinpath(LOCATION,"$(JOBID)_N$(N)_$(TYPE_OF_RS).jld2"))
+save(otocs, params, JOBID, joinpath(LOCATION,"$(JOBID)_N$(N)_ED.jld2"))
 logmsg("*"^10 * "Run completed!" * "*"^10)
