@@ -11,8 +11,9 @@ using ..LightCones
 @reexport using ..GeomPos
 
 export σplus, σminus, σz, σx, σy, ⊗, Δ, 𝟙
+export up, down, rightx, leftx, neel_state, neel_x_state
 export chainJ, chainJ_pbc, correlator, single_spin_op
-export xxz, xxz_pbc, field_term, hamiltonian_from_positions
+export xxz, xxz_pbc, xyz, xyz_pbc, field_term, hamiltonian_from_positions
 export nearest_neighbourJ, nearest_neighbourJ_pbc
 export random_state, random_product_state, random_bit_state, random_bitstring_state
 export magnetisation
