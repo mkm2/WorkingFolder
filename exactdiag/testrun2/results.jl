@@ -182,9 +182,6 @@ heatmap(1:15,trange[2:110],data_20_mean[2:110,:],yaxis=:log)
 # ╔═╡ 46a58d6f-90ba-45a8-b03e-4a0aff3ebaa1
 M = 8
 
-# ╔═╡ 851d9d59-a662-4946-9ad1-2cca54ecb234
-H = xxz(M)
-
 # ╔═╡ fc838549-7ced-4ffb-9c4d-797ad8398eed
 A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σz,2,M))
 
@@ -201,13 +198,26 @@ s = 10
 ψ = convert(Vector{ComplexF64},neel_state(M,2^M))
 
 # ╔═╡ 2c5e0641-8e8a-4ea4-ae71-5076bd93601d
+xyz(M,1.,1.,0.2)
 
+# ╔═╡ 2758a6d1-3276-4faa-b1d2-c9e56d50deef
+begin
+	SHOTS = 1000
+	test = zeros(110,M,SHOTS)
+	for shot in 1:SHOTS
+		H = xyz(M,1.,1.,0.2) + field_term(20.,M)
+		test[:,:,shot] = Diag_OTOCψ(Matrix(H),A,B,trange,ψ,M)
+	end
+end
 
-# ╔═╡ d5528466-001e-4e16-a320-fd5007879959
-test = Diag_OTOCψ(Matrix(H),A,B,trange,ψ)
+# ╔═╡ 41b6a655-5865-4b8c-b165-8712b9f68373
+begin
+	test_mean = disorder_mean(test,SHOTS)
+	test_std = disorder_std(test,SHOTS)
+end
 
 # ╔═╡ 083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
-plot(trange[2:110],2*(ones(109,11)-test[2:110,:]),xaxis=:log,legend=nothing)
+plot(trange[2:110],test_mean[2:110,8],xaxis=:log,legend=nothing)
 
 # ╔═╡ e445e317-eff1-40e1-8cec-26d5337755ad
 
@@ -248,13 +258,13 @@ plot(trange[2:110],2*(ones(109,11)-test[2:110,:]),xaxis=:log,legend=nothing)
 # ╠═3c6f6533-9a2c-4663-a6c3-0fe813ac9a0c
 # ╠═140693d2-1d1e-4445-bd0a-3aaa1fde6ce4
 # ╠═46a58d6f-90ba-45a8-b03e-4a0aff3ebaa1
-# ╠═851d9d59-a662-4946-9ad1-2cca54ecb234
 # ╠═729d35fd-db62-4f26-8b7b-6aea5733b940
 # ╠═fc838549-7ced-4ffb-9c4d-797ad8398eed
 # ╠═af4eb76f-2933-4fcb-aa8b-caba4e29b9ec
 # ╠═a86c6b6d-19c0-4663-a9c6-55ad7dca90d0
 # ╠═a98acd99-7990-4b76-9b33-df31f652fb32
 # ╠═2c5e0641-8e8a-4ea4-ae71-5076bd93601d
-# ╠═d5528466-001e-4e16-a320-fd5007879959
+# ╠═2758a6d1-3276-4faa-b1d2-c9e56d50deef
+# ╠═41b6a655-5865-4b8c-b165-8712b9f68373
 # ╠═083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
 # ╠═e445e317-eff1-40e1-8cec-26d5337755ad
