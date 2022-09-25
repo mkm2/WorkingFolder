@@ -208,7 +208,7 @@ begin
 	SHOTS = 1000
 	test = zeros(110,M,SHOTS)
 	for shot in 1:SHOTS
-		H = xyz(nearest_neighbourJ(M),1.,1.,-2.) + field_term(20.,M)
+		H = xyz(chainJ(M),1.,1.,-2.) + field_term(20.,M)
 		test[:,:,shot] = Diag_OTOCψ(Matrix(H),A,B,trange,ψ,M)
 		@show shot
 	end
@@ -223,14 +223,14 @@ end
 # ╔═╡ 017c1eb6-aa62-42ce-a5de-232d9c28b88b
 length(trange)
 
+# ╔═╡ cce076d3-2569-47b1-aae7-fc9883b43c36
+Tmin = 10
+
 # ╔═╡ 49dbb045-1e82-4516-8d2e-20a04ecbfb54
-Tmax = 110
+Tmax = 80
 
 # ╔═╡ 083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
-plot(trange[2:Tmax],2*(ones(Tmax-1,8)-test_mean[2:Tmax,:]),xaxis=:log,legend=:bottomright,ribbon=test_std[2:Tmax,:]/sqrt(SHOTS))
-
-# ╔═╡ c5308466-49ee-4a95-b386-382ba0b89787
-
+plot(trange[Tmin:Tmax],2*(ones(Tmax-Tmin+1,8)-test_mean[Tmin:Tmax,:]),xaxis=:log,legend=nothing,ribbon=test_std[Tmin:Tmax,:]/sqrt(SHOTS))
 
 # ╔═╡ e445e317-eff1-40e1-8cec-26d5337755ad
 heatmap(1:8,trange[2:110],2*(ones(109,8)-test_mean[2:110,:]),yaxis=:log)
@@ -281,7 +281,7 @@ heatmap(1:8,trange[2:110],2*(ones(109,8)-test_mean[2:110,:]),yaxis=:log)
 # ╠═2758a6d1-3276-4faa-b1d2-c9e56d50deef
 # ╠═41b6a655-5865-4b8c-b165-8712b9f68373
 # ╠═017c1eb6-aa62-42ce-a5de-232d9c28b88b
+# ╠═cce076d3-2569-47b1-aae7-fc9883b43c36
 # ╠═49dbb045-1e82-4516-8d2e-20a04ecbfb54
 # ╠═083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
-# ╠═c5308466-49ee-4a95-b386-382ba0b89787
 # ╠═e445e317-eff1-40e1-8cec-26d5337755ad
