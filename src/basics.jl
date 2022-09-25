@@ -16,7 +16,6 @@ export chainJ, chainJ_pbc, correlator, single_spin_op
 export xxz, xxz_pbc, xyz, xyz_pbc, field_term, hamiltonian_from_positions
 export nearest_neighbourJ, nearest_neighbourJ_pbc
 export random_state, random_product_state, random_bit_state, random_bitstring_state
-export neel_state, neel_x_state
 export magnetisation
 
 const σplus = sparse([1],[2],[1.0],2,2)
@@ -28,10 +27,10 @@ const ⊗ = kron
 
 const Δ = -2
 
-const up = [1.0, 0.0]
-const down = [0.0, 1.0]
-const rightx = [1.0, 1.0]/sqrt(2.0)
-const leftx = [1.0, -1.0]/sqrt(2.0)
+const up = convert(Vector{ComplexF64},[1.0, 0.0])
+const down = convert(Vector{ComplexF64},[0.0, 1.0])
+const rightx = convert(Vector{ComplexF64},[1.0, 1.0]/sqrt(2.0))
+const leftx = convert(Vector{ComplexF64},[1.0, -1.0]/sqrt(2.0))
 
 speye(k) = spdiagm(ones(k))
 𝟙(N) = speye(2^N)
