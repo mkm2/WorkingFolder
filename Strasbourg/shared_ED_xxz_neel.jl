@@ -24,7 +24,7 @@ LOGS = get(ENV, "LOGS", "")
 JOBID = get(ENV, "SLURM_JOB_ID", "")
 
 logmsg("*"^10*"RANDOM FIELDS"*"*"^10)
-println("shared_krylov_sector.jl")
+println("shared_krylov.jl")
 
 println("Working Directory:          $(pwd())" )
 println("SLURM Directory:            $(get(ENV, "SLURM_SUBMIT_DIR", "")) ")
@@ -60,18 +60,15 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 #Set up simulation parameters
 
-δt = 0.1
-T = 5
+#δt = 0.1
+#T = 5
 s = 10
 trange = logrange(-2,10,1e10)
 #trange = 0:δt:T
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
-k = div(N-1,2)+1 #largest sector
-d = basissize(symmetrized_basis(N,k))
-
-A = convert(SparseMatrixCSC{ComplexF64,Int64},symmetrize_operator(single_spin_op(σx,i,N),N,k))
+A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σx,i,N))
 
 if OBSERVABLE == "x"
     B = σx
@@ -82,17 +79,16 @@ elseif OBSERVABLE == "z"
 end
 B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 
-H = convert(SparseMatrixCSC{ComplexF64,Int64},symmetrize_operator(xxz(N,6),N,k))
-logmsg(typeof(H))
+H = convert(SparseMatrixCSC{ComplexF64,Int64},xyz(nearest_neighbour(J),1.,1.,-1.))
 
 #Start simulation
 
 otocs = zeros(length(trange),N,SHOTS)
-H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(d,d) for l in 1:SHOTS])
+H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
 Threads.@threads for shot in 1:SHOTS
-    H_tot[shot] = H + field_term(DISORDER_PARAM,N,k)
+    H_tot[shot] = H + field_term(DISORDER_PARAM,N)
     logmsg("Created Hamiltonian for Shot $(shot)")
-    otocs[:,:,shot] = Diag_OTOC(Matrix(H_tot[shot]),A,B,trange,N,s,k,d)
+    otocs[:,:,shot] = Diag_OTOC(Matrix(H_tot[shot]),A,B,trange,N,s)
     logmsg("Completed Shot $(shot)")
 end
 

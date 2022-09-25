@@ -14,5 +14,5 @@
 
 # export JULIA_DEPOT_PATH=$SCRATCH
 export ON_CLUSTER=1
-exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/averaging_procedure/shared_krylov_sector_mixed.jl" 11 50 50 BS z $1
+exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/averaging_procedure/shared_krylov_sector_mixed.jl" 11 50 50 BS x $1
 =#

@@ -68,7 +68,7 @@ trange = 0:δt:T
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
-A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σz,i,N))
+A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σx,i,N))
 
 if OBSERVABLE == "x"
     B = σx
@@ -79,7 +79,7 @@ elseif OBSERVABLE == "z"
 end
 B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 
-H = xxz(N,6)
+H = convert(SparseMatricCSC{ComplexF64,Int64},xxz(N,6))
 
 #Start simulation
 
