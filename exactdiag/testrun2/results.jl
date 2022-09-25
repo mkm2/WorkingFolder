@@ -177,17 +177,17 @@ plot(trange[2:110],data_20_mean[2:110,:],xaxis=:log,legend=nothing,ribbon=data_2
 heatmap(1:15,trange[2:110],data_20_mean[2:110,:],yaxis=:log)
 
 # ╔═╡ 140693d2-1d1e-4445-bd0a-3aaa1fde6ce4
-
+md"# Fast test"
 
 # ╔═╡ 46a58d6f-90ba-45a8-b03e-4a0aff3ebaa1
 M = 8
 
 # ╔═╡ fc838549-7ced-4ffb-9c4d-797ad8398eed
-A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σz,2,M))
+A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σx,2,M))
 
 # ╔═╡ af4eb76f-2933-4fcb-aa8b-caba4e29b9ec
 begin
-	B = σz
+	B = σx
 	B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 end
 
@@ -208,8 +208,9 @@ begin
 	SHOTS = 1000
 	test = zeros(110,M,SHOTS)
 	for shot in 1:SHOTS
-		H = xyz(nearest_neighbourJ(M),1.,1.,0.2) + field_term(20.,M)
-		test[:,:,shot] = Diag_OTOCtr(Matrix(H),A,B,trange,M)
+		H = xyz(nearest_neighbourJ(M),1.,1.,-2.) + field_term(12.,M)
+		test[:,:,shot] = Diag_OTOCψ(Matrix(H),A,B,trange,ψ,M)
+		@show shot
 	end
 end
 
@@ -219,11 +220,17 @@ begin
 	test_std = disorder_std(test,SHOTS)
 end
 
+# ╔═╡ 017c1eb6-aa62-42ce-a5de-232d9c28b88b
+length(trange)
+
+# ╔═╡ 49dbb045-1e82-4516-8d2e-20a04ecbfb54
+Tmax = 110
+
 # ╔═╡ 083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
-plot(trange[2:110],test_mean[2:110,:],xaxis=:log,legend=nothing,ribbon=test_std[2:110,:]/sqrt(SHOTS))
+plot(trange[2:Tmax],2*(ones(Tmax-1,8)-test_mean[2:Tmax,:]),xaxis=:log,legend=:bottomright,ribbon=test_std[2:Tmax,:]/sqrt(SHOTS))
 
 # ╔═╡ e445e317-eff1-40e1-8cec-26d5337755ad
-
+heatmap(1:8,trange[2:110],2*(ones(109,8)-test_mean[2:110,:]),yaxis=:log)
 
 # ╔═╡ Cell order:
 # ╠═300894b6-3cf1-11ed-23f6-8f618c96822a
@@ -270,5 +277,7 @@ plot(trange[2:110],test_mean[2:110,:],xaxis=:log,legend=nothing,ribbon=test_std[
 # ╠═b8fc528a-0456-4f4d-8cdd-6b2dadcda951
 # ╠═2758a6d1-3276-4faa-b1d2-c9e56d50deef
 # ╠═41b6a655-5865-4b8c-b165-8712b9f68373
+# ╠═017c1eb6-aa62-42ce-a5de-232d9c28b88b
+# ╠═49dbb045-1e82-4516-8d2e-20a04ecbfb54
 # ╠═083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
 # ╠═e445e317-eff1-40e1-8cec-26d5337755ad
