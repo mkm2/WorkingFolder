@@ -82,13 +82,13 @@ elseif OBSERVABLE == "z"
 end
 B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 
-H = convert(SparseMatrixCSC{ComplexF64,Int64},symmetrize_operator(xxz(N,6),N,k))
+H = symmetrize_operator(xxz(N,6),N,k)
 logmsg(typeof(H))
 
 #Start simulation
 
 otocs = zeros(length(trange),N,SHOTS)
-H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(d,d) for l in 1:SHOTS])
+H_tot = Vector{SparseMatrixCSC{ComplexF64,Int64}}([spzeros(d,d) for l in 1:SHOTS])
 Threads.@threads for shot in 1:SHOTS
     H_tot[shot] = H + field_term(DISORDER_PARAM,N,k)
     logmsg("Created Hamiltonian for Shot $(shot)")
