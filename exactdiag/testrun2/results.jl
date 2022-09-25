@@ -208,7 +208,7 @@ begin
 	SHOTS = 1000
 	test = zeros(110,M,SHOTS)
 	for shot in 1:SHOTS
-		H = xyz(nearest_neighbourJ(M),1.,1.,-2.) + field_term(12.,M)
+		H = xyz(chainJ(M),1.,1.,-2.) + field_term(20.,M)
 		test[:,:,shot] = Diag_OTOCψ(Matrix(H),A,B,trange,ψ,M)
 		@show shot
 	end
