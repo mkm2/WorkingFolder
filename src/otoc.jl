@@ -253,14 +253,14 @@ function otoc_spat_ed(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Ve
 end
 
 #Any Times - Single Vector
-function otoc_spat_edψ(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,ψ::Vector{ComplexF64}) #b=σ(xyz) in original basis
+function otoc_spat_edψ(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,ψ::Vector{ComplexF64},N::Int64) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j] .= otoc_edψ(A,single_spin_op(b,j,N),λs,Q,ts,ψ)
 	end
 	return res
 end
-function otoc_spat_edψ(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,ψ::Vector{ComplexF64},symsec::Int64) #b=σ(xyz) in original basis
+function otoc_spat_edψ(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,ψ::Vector{ComplexF64},N::Int64,symsec::Int64) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j] .= otoc_edψ(A,symmetrize_operator(single_spin_op(b,j,N),N,symsec),λs,Q,ts,ψ) #ψ already projected down
@@ -269,14 +269,14 @@ function otoc_spat_edψ(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::
 end
 
 #Any Times - Trace
-function otoc_spat_edtr(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange) #b=σ(xyz) in original basis
+function otoc_spat_edtr(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,N::Int64) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j] .= otoc_edtr(A,single_spin_op(b,j,N),λs,Q,ts)
 	end
 	return res
 end
-function otoc_spat_edtr(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,symsec::Int64) #b=σ(xyz) in original basis
+function otoc_spat_edtr(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,N::Int64,symsec::Int64) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j] .= otoc_edtr(A,symmetrize_operator(single_spin_op(b,j,N),N,symsec),λs,Q,ts)
@@ -303,33 +303,33 @@ function Diag_OTOC(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::Sp
 end
 
 #Any Times - Single Vector
-function Diag_OTOCψ(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64})
+function Diag_OTOCψ(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64},N::Int64)
 	λs, Q = eigen!(H)
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
 	Qdψ = Q'*ψ
-	return otoc_spat_edψ(QdAQ,b,λs,Q,ts,Qdψ)
+	return otoc_spat_edψ(QdAQ,b,λs,Q,ts,Qdψ,N)
 end
-function Diag_OTOCψ(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64},symsec::Int64)
+function Diag_OTOCψ(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64},N::Int64,symsec::Int64)
 	λs, Q = eigen!(H)
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
 	Qdψ = Q'*ψ
-	return otoc_spat_edψ(QdAQ,b,λs,Q,ts,Qdψ,symsec)
+	return otoc_spat_edψ(QdAQ,b,λs,Q,ts,Qdψ,N,symsec)
 end
 
 #Any Times - Trace
-function Diag_OTOCtr(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange)
+function Diag_OTOCtr(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64)
 	λs, Q = eigen!(H)
 	logmsg("Diagonalized H.")
 	A =  Q'*A*Q
-	return otoc_spat_edtr(QdAQ,b,λs,Q,ts)
+	return otoc_spat_edtr(QdAQ,b,λs,Q,ts,N)
 end
-function Diag_OTOCtr(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,symsec::Int64)
+function Diag_OTOCtr(H::Matrix{Float64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,symsec::Int64)
 	λs, Q = eigen!(H)
 	logmsg("Diagonalized H.")
 	A =  Q'*A*Q
-	return otoc_spat_edtr(QdAQ,b,λs,Q,ts,symsec)
+	return otoc_spat_edtr(QdAQ,b,λs,Q,ts,N,symsec)
 end
 
 ##########################################

@@ -14,6 +14,9 @@ end
 # ╔═╡ 514bb0f4-3b25-11ed-1979-71d8df805c28
 using LinearAlgebra,Plots,JLD2,Statistics,PlutoUI
 
+# ╔═╡ da1da17d-156d-41c9-995d-12b1a0ffe73a
+TableOfContents()
+
 # ╔═╡ 559a03c0-a43a-4fa5-a558-5b1ae71dd7f9
 function combine_files(files,path,new_file)
 	jobids = Vector{String}(undef,length(files))
@@ -56,8 +59,11 @@ trange = logrange(-2,4,1e4)
 # ╔═╡ a812e486-b2d1-4172-890c-b92524b639d1
 length(trange)
 
+# ╔═╡ 93e6eef7-3200-4d56-a90b-1acb1f2d5adb
+md"# tmax = 1e4"
+
 # ╔═╡ c7201d3b-ac4b-45ff-98ac-606e23003e5a
-md"# h = 0"
+md"## h = 0"
 
 # ╔═╡ b3373faa-a84a-404c-8f38-c89e28fad71b
 N = 15
@@ -89,7 +95,7 @@ plot(trange[2:56],data_0_mean[2:56,:],xaxis=:log,legend=nothing,ribbon=data_0_st
 heatmap(1:15,trange[2:56],data_0_mean[2:56,:],yaxis=:log)
 
 # ╔═╡ ff4eb17b-bf50-42b6-ac95-69a681e35934
-md"# h=4"
+md"## h=4"
 
 # ╔═╡ 459fb66e-ba82-4cd6-88b9-19ca3d395258
 shots4 = 1000
@@ -120,7 +126,7 @@ plot(trange[2:56],data_4_mean[2:56,:],xaxis=:log,legend=nothing,ribbon=data_4_st
 heatmap(1:15,trange[2:56],data_4_mean[2:56,:],yaxis=:log)
 
 # ╔═╡ f8476e50-cdc7-4239-ace4-cfc90fd94e4e
-md"# h=12"
+md"## h=12"
 
 # ╔═╡ 033e3abe-318b-4ccc-a18d-f4b692312d92
 shots12 = 100
@@ -153,10 +159,12 @@ heatmap(1:15,trange[2:56],data_12_mean[2:56,:],yaxis=:log)
 # ╔═╡ Cell order:
 # ╠═514bb0f4-3b25-11ed-1979-71d8df805c28
 # ╠═51dbff79-d4aa-4a47-920b-9c481d5c25fa
+# ╠═da1da17d-156d-41c9-995d-12b1a0ffe73a
 # ╠═559a03c0-a43a-4fa5-a558-5b1ae71dd7f9
 # ╠═757cf2b6-3fb0-4f8a-9977-111059553d13
 # ╠═2cea701f-f745-4d29-bcba-5983e10182ba
 # ╠═a812e486-b2d1-4172-890c-b92524b639d1
+# ╠═93e6eef7-3200-4d56-a90b-1acb1f2d5adb
 # ╠═c7201d3b-ac4b-45ff-98ac-606e23003e5a
 # ╠═b3373faa-a84a-404c-8f38-c89e28fad71b
 # ╠═6436b188-b3f4-4f65-aef9-6990c2613f5d

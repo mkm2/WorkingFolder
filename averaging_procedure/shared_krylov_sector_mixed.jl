@@ -108,7 +108,7 @@ print("test\n")
 Threads.@threads for ψshot in 1:SHOTS*N_RANDOM_STATES
     #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
     @time otocs[:,:,ψshot] = otoc_spat(H + field_term(DISORDER_PARAM,N,k),A,B,trange,random_bitstring_state(N,d),N,k,tmax)
-    logmsg("Completed Shot $(shot), state $(s)")
+    logmsg("Completed Shot $(ψshot).")
 end
 
 logmsg("*"^10*"Simulation completed!"*"*"^10)
