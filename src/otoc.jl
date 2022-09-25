@@ -327,14 +327,14 @@ function Diag_OTOCtr(H::Matrix{ComplexF64},A::SparseMatrixCSC{ComplexF64,Int64},
 	λs, Q = eigen!(H)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
-	A =  Q'*A*Q
+	QdAQ =  Q'*A*Q
 	return otoc_spat_edtr(QdAQ,b,λs,Q,ts,N)
 end
 function Diag_OTOCtr(H::Matrix{ComplexF64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,symsec::Int64)
 	λs, Q = eigen!(H)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
-	A =  Q'*A*Q
+	QdAQ =  Q'*A*Q
 	return otoc_spat_edtr(QdAQ,b,λs,Q,ts,N,symsec)
 end
 

@@ -197,19 +197,19 @@ s = 10
 # ╔═╡ a98acd99-7990-4b76-9b33-df31f652fb32
 ψ = convert(Vector{ComplexF64},neel_state(M,2^M))
 
-# ╔═╡ 2c5e0641-8e8a-4ea4-ae71-5076bd93601d
-xyz(M,1.,1.,0.2)
+# ╔═╡ c6efffc4-ddef-4a2f-9c7a-01450bb76d75
+xxz(nearest_neighbourJ(M))
 
-# ╔═╡ 3c4542a5-bd33-49cf-9541-fb0e1852952c
-convert(Matrix{Float64},(eigen(Matrix(xyz(M,1.,1.,0.2))).vectors))
+# ╔═╡ b8fc528a-0456-4f4d-8cdd-6b2dadcda951
+
 
 # ╔═╡ 2758a6d1-3276-4faa-b1d2-c9e56d50deef
 begin
 	SHOTS = 1000
 	test = zeros(110,M,SHOTS)
 	for shot in 1:SHOTS
-		H = xyz(M,1.,1.,0.2) + field_term(20.,M)
-		test[:,:,shot] = Diag_OTOCψ(Matrix(H),A,B,trange,ψ,M)
+		H = xyz(nearest_neighbourJ(M),1.,1.,0.2) + field_term(20.,M)
+		test[:,:,shot] = Diag_OTOCtr(Matrix(H),A,B,trange,M)
 	end
 end
 
@@ -220,7 +220,7 @@ begin
 end
 
 # ╔═╡ 083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
-plot(trange[2:110],test_mean[2:110,8],xaxis=:log,legend=nothing)
+plot(trange[2:110],test_mean[2:110,:],xaxis=:log,legend=nothing,ribbon=test_std[2:110,:]/sqrt(SHOTS))
 
 # ╔═╡ e445e317-eff1-40e1-8cec-26d5337755ad
 
@@ -266,8 +266,8 @@ plot(trange[2:110],test_mean[2:110,8],xaxis=:log,legend=nothing)
 # ╠═af4eb76f-2933-4fcb-aa8b-caba4e29b9ec
 # ╠═a86c6b6d-19c0-4663-a9c6-55ad7dca90d0
 # ╠═a98acd99-7990-4b76-9b33-df31f652fb32
-# ╠═2c5e0641-8e8a-4ea4-ae71-5076bd93601d
-# ╠═3c4542a5-bd33-49cf-9541-fb0e1852952c
+# ╠═c6efffc4-ddef-4a2f-9c7a-01450bb76d75
+# ╠═b8fc528a-0456-4f4d-8cdd-6b2dadcda951
 # ╠═2758a6d1-3276-4faa-b1d2-c9e56d50deef
 # ╠═41b6a655-5865-4b8c-b165-8712b9f68373
 # ╠═083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
