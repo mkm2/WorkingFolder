@@ -16,6 +16,7 @@ export chainJ, chainJ_pbc, correlator, single_spin_op
 export xxz, xxz_pbc, xyz, xyz_pbc, field_term, hamiltonian_from_positions
 export nearest_neighbourJ, nearest_neighbourJ_pbc
 export random_state, random_product_state, random_bit_state, random_bitstring_state
+export neel_state, neel_x_state
 export magnetisation
 
 const σplus = sparse([1],[2],[1.0],2,2)
@@ -101,6 +102,14 @@ function field_term(h::Float64, N::Int, k::Int)
     return symmetrize_operator(res,N,k)
 end
 
+function const_field(h::Float64, N::Int)
+    res = spzeros(Float64, 2^N, 2^N)
+    for i in 1:N
+        res += h*single_spin_op(σz,i,N)
+    end
+    return res
+end
+
 hamiltonian_from_positions(pd::PositionData,shot::Int) = hamiltonian_from_positions(pd.data[:,shot],geometry_from_density(pd.descriptor.geometry,pd.descriptor.ρ,pd.descriptor.system_size,1))
 
 function hamiltonian_from_positions(positions::Vector{Float64},geometry::Union{Box, BoxPBC, NoisyChain, NoisyChainPBC};α=6)
@@ -131,12 +140,12 @@ end
 random_bitstring_state(N::Int) = random_bitstring_state(N, 2^N)
 
 
-function neel_state(N::Int,d::Int)
+function neel_state(N::Int)
     N%2 == 0 || throw("N has to be even to create a Néel state.")
     return kron((i%2 == 1 ? up : down for i in 1:N)...)
 end
 
-function neel_x_state(N::Int,d::Int)
+function neel_x_state(N::Int)
     N%2 == 0 || throw("N has to be even to create a Néel state.")
     return kron((i%2 == 1 ? rightx : leftx for i in 1:N)...)
 end
