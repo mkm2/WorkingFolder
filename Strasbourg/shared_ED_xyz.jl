@@ -79,7 +79,7 @@ elseif OBSERVABLE == "z"
 end
 B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 
-H = xyz(nearest_neighbour(J),1.,0.8,-0.5)
+H = xyz(nearest_neighbourJ(N),1.,0.8,-0.5)
 
 #Start simulation
 

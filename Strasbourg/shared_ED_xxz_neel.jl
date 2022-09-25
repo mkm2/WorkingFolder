@@ -79,7 +79,7 @@ elseif OBSERVABLE == "z"
 end
 B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 
-H = xyz(nearest_neighbour(J),1.,1.,-1.)
+H = xyz(nearest_neighbourJ(N),1.,1.,-1.)
 ψ = neel_state(N)
 
 #Start simulation
