@@ -289,14 +289,14 @@ end
 #####################################
 
 #Any Times - Typicality
-function Diag_OTOC(H::Matrix{Union{Float64,ComplexF64}},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,s::Int64)
+function Diag_OTOC(H::Matrix{ComplexF64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,s::Int64)
 	λs, Q = eigen!(H)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
 	return otoc_spat_ed(QdAQ,b,λs,Q,ts,N,s)
 end
-function Diag_OTOC(H::Matrix{Union{Float64,ComplexF64}},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,s::Int64,symsec::Int64,dim::Int64)
+function Diag_OTOC(H::Matrix{ComplexF64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,s::Int64,symsec::Int64,dim::Int64)
 	λs, Q = eigen!(H)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
@@ -305,7 +305,7 @@ function Diag_OTOC(H::Matrix{Union{Float64,ComplexF64}},A::SparseMatrixCSC{Compl
 end
 
 #Any Times - Single Vector
-function Diag_OTOCψ(H::Matrix{Union{Float64,ComplexF64}},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64},N::Int64)
+function Diag_OTOCψ(H::Matrix{ComplexF64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64},N::Int64)
 	λs, Q = eigen!(H)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
@@ -313,7 +313,7 @@ function Diag_OTOCψ(H::Matrix{Union{Float64,ComplexF64}},A::SparseMatrixCSC{Com
 	Qdψ = Q'*ψ
 	return otoc_spat_edψ(QdAQ,b,λs,Q,ts,Qdψ,N)
 end
-function Diag_OTOCψ(H::Matrix{Union{Float64,ComplexF64}},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64},N::Int64,symsec::Int64)
+function Diag_OTOCψ(H::Matrix{ComplexF64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,ψ::Vector{ComplexF64},N::Int64,symsec::Int64)
 	λs, Q = eigen!(H)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
@@ -323,14 +323,14 @@ function Diag_OTOCψ(H::Matrix{Union{Float64,ComplexF64}},A::SparseMatrixCSC{Com
 end
 
 #Any Times - Trace
-function Diag_OTOCtr(H::Matrix{Union{Float64,ComplexF64}},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64)
+function Diag_OTOCtr(H::Matrix{ComplexF64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64)
 	λs, Q = eigen!(H)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
 	return otoc_spat_edtr(QdAQ,b,λs,Q,ts,N)
 end
-function Diag_OTOCtr(H::Matrix{Union{Float64,ComplexF64}},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,symsec::Int64)
+function Diag_OTOCtr(H::Matrix{ComplexF64},A::SparseMatrixCSC{ComplexF64,Int64},b::SparseMatrixCSC{ComplexF64,Int64},ts::TvExtRange,N::Int64,symsec::Int64)
 	λs, Q = eigen!(H)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
