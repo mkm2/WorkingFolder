@@ -195,7 +195,7 @@ end
 s = 10
 
 # ╔═╡ a98acd99-7990-4b76-9b33-df31f652fb32
-ψ = convert(Vector{ComplexF64},neel_state(M,2^M))
+ψ = convert(Vector{ComplexF64},neel_x_state(M))
 
 # ╔═╡ c6efffc4-ddef-4a2f-9c7a-01450bb76d75
 xxz(nearest_neighbourJ(M))
@@ -205,11 +205,11 @@ xxz(nearest_neighbourJ(M))
 
 # ╔═╡ 2758a6d1-3276-4faa-b1d2-c9e56d50deef
 begin
-	SHOTS = 1000
+	SHOTS = 100
 	test = zeros(110,M,SHOTS)
 	for shot in 1:SHOTS
-		H = xyz(chainJ(M),1.,1.,-2.) + field_term(20.,M)
-		test[:,:,shot] = Diag_OTOCψ(Matrix(H),A,B,trange,ψ,M)
+		H = xyz(nearest_neighbourJ(M),1.,1.,-1.) + field_term(12.,M)
+		test[:,:,shot] = Diag_OTOC(Matrix(H),A,B,trange,M,s)
 		@show shot
 	end
 end
@@ -224,16 +224,70 @@ end
 length(trange)
 
 # ╔═╡ cce076d3-2569-47b1-aae7-fc9883b43c36
-Tmin = 10
+Tmin = 2
 
 # ╔═╡ 49dbb045-1e82-4516-8d2e-20a04ecbfb54
-Tmax = 80
+Tmax = 110
 
 # ╔═╡ 083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
-plot(trange[Tmin:Tmax],2*(ones(Tmax-Tmin+1,8)-test_mean[Tmin:Tmax,:]),xaxis=:log,legend=nothing,ribbon=test_std[Tmin:Tmax,:]/sqrt(SHOTS))
+plot(trange[Tmin:Tmax],2*(ones(Tmax-Tmin+1,8)-test_mean[Tmin:Tmax,:]),xaxis=:log,legend=:bottomright,ribbon=test_std[Tmin:Tmax,:]/sqrt(SHOTS))
 
 # ╔═╡ e445e317-eff1-40e1-8cec-26d5337755ad
 heatmap(1:8,trange[2:110],2*(ones(109,8)-test_mean[2:110,:]),yaxis=:log)
+
+# ╔═╡ 0bd25535-7915-4450-ab2a-e7b1c6513863
+md"# Test Diag Tr"
+
+# ╔═╡ f37043ef-2484-4d3d-82da-adc9a50b51af
+begin
+	f1 = "7170170_N12_ED.jld2"
+	jobid1 = load(path*f1,"jobid")
+	params1 = load(path*f1,"params")
+	data1 = 2*ones(110,12,1)-2*load(path*f1,"data")/2^12
+
+	size(data1)
+end
+
+# ╔═╡ 0abde248-e353-40fd-a565-c97aea86355f
+plot(trange[2:110],data1[2:110,:,1],xaxis=:log)
+
+# ╔═╡ a6e6d32b-cdb9-4eef-9ebf-340c5e1a49bf
+begin
+	f2 = "7171791_N12_ED.jld2"
+	jobid2 = load(path*f2,"jobid")
+	params2 = load(path*f2,"params")
+	data2 = 2*ones(20,12,1)-2*load(path*f2,"data")/2^12
+
+	size(data2)
+end
+
+# ╔═╡ f657d8c3-ceac-448b-9c87-829ce720f64a
+plot(trange[2:20],data2[2:20,:,1],xaxis=:log)
+
+# ╔═╡ 24c50b86-1dcd-4d11-b85e-dc18bdd6e971
+begin
+	f3 = "7177675_N12_ED.jld2"
+	jobid3 = load(path*f3,"jobid")
+	params3 = load(path*f3,"params")
+	data3 = 2*ones(110,12,50)-2*load(path*f3,"data")
+
+	size(data3)
+end
+
+# ╔═╡ ba314a93-b277-48a5-97c1-b9f7e7ed5d0a
+plot(trange[2:110],data3[2:110,:,4],xaxis=:log)
+
+# ╔═╡ e5024e33-fd94-4eec-8d36-bff6a1cbcb5d
+begin
+	data3_mean = disorder_mean(data3,size(data3)[3])
+	data3_std = disorder_std(data3,size(data3)[3])
+end
+
+# ╔═╡ 774ac312-060b-483a-a6a8-1117253f2618
+plot(trange[2:110],(data1[2:110,:,1]-data3_mean[2:110,:]),xaxis=:log)
+
+# ╔═╡ 115a8c08-b4ea-4a18-bac8-d5c0da89ab3d
+data3_mean
 
 # ╔═╡ Cell order:
 # ╠═300894b6-3cf1-11ed-23f6-8f618c96822a
@@ -285,3 +339,13 @@ heatmap(1:8,trange[2:110],2*(ones(109,8)-test_mean[2:110,:]),yaxis=:log)
 # ╠═49dbb045-1e82-4516-8d2e-20a04ecbfb54
 # ╠═083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
 # ╠═e445e317-eff1-40e1-8cec-26d5337755ad
+# ╠═0bd25535-7915-4450-ab2a-e7b1c6513863
+# ╠═f37043ef-2484-4d3d-82da-adc9a50b51af
+# ╠═0abde248-e353-40fd-a565-c97aea86355f
+# ╠═a6e6d32b-cdb9-4eef-9ebf-340c5e1a49bf
+# ╠═f657d8c3-ceac-448b-9c87-829ce720f64a
+# ╠═24c50b86-1dcd-4d11-b85e-dc18bdd6e971
+# ╠═ba314a93-b277-48a5-97c1-b9f7e7ed5d0a
+# ╠═e5024e33-fd94-4eec-8d36-bff6a1cbcb5d
+# ╠═774ac312-060b-483a-a6a8-1117253f2618
+# ╠═115a8c08-b4ea-4a18-bac8-d5c0da89ab3d
