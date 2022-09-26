@@ -24,7 +24,7 @@ LOGS = get(ENV, "LOGS", "")
 JOBID = get(ENV, "SLURM_JOB_ID", "")
 
 logmsg("*"^10*"RANDOM FIELDS"*"*"^10)
-println("shared_krylov.jl")
+println("shared_krylov_pbc.jl")
 
 println("Working Directory:          $(pwd())" )
 println("SLURM Directory:            $(get(ENV, "SLURM_SUBMIT_DIR", "")) ")
@@ -63,13 +63,13 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 δt = 0.1
 T = 5
 s = 10
-trange = logrange(-2,0,1)
+trange = logrange(-2,10,1e10)
 #trange = 0:δt:T
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
 A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σx,i,N))
-
+logmsg("A=σx")
 if OBSERVABLE == "x"
     B = σx
 elseif OBSERVABLE == "y"
@@ -79,7 +79,7 @@ elseif OBSERVABLE == "z"
 end
 B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 
-H = xxz(N,6)
+H = xxz_pbc(N,6)
 
 #Start simulation
 
