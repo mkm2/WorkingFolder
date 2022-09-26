@@ -17,8 +17,14 @@ using LinearAlgebra,Plots,JLD2,Statistics,PlutoUI
 # ╔═╡ 729d35fd-db62-4f26-8b7b-6aea5733b940
 using SparseArrays
 
+# ╔═╡ 953f81d6-0c25-476a-a760-67a9240bfcf9
+using SpinSymmetry
+
 # ╔═╡ 6267285a-85f0-4c8c-859a-f0e9ae2b2dcf
 TableOfContents()
+
+# ╔═╡ bfbdc00d-3768-4b80-801d-286e52941244
+H = xyz(nearest_neighbourJ(8),1.,0.,0.) + const_field(2.0,8)
 
 # ╔═╡ 649d4204-cb0f-4126-996b-422286123841
 function combine_files(files,path,new_file)
@@ -201,7 +207,7 @@ s = 10
 xxz(nearest_neighbourJ(M))
 
 # ╔═╡ b8fc528a-0456-4f4d-8cdd-6b2dadcda951
-
+random_bitstring_state(1)
 
 # ╔═╡ 2758a6d1-3276-4faa-b1d2-c9e56d50deef
 begin
@@ -209,7 +215,7 @@ begin
 	test = zeros(110,M,SHOTS)
 	for shot in 1:SHOTS
 		H = xyz(nearest_neighbourJ(M),1.,1.,-1.) + field_term(12.,M)
-		test[:,:,shot] = Diag_OTOC(Matrix(H),A,B,trange,M,s)
+		test[:,:,shot] = Diag_OTOCψ(Matrix(H),A,B,trange,random_bitstring_state(M),M)
 		@show shot
 	end
 end
@@ -234,6 +240,21 @@ plot(trange[Tmin:Tmax],2*(ones(Tmax-Tmin+1,8)-test_mean[Tmin:Tmax,:]),xaxis=:log
 
 # ╔═╡ e445e317-eff1-40e1-8cec-26d5337755ad
 heatmap(1:8,trange[2:110],2*(ones(109,8)-test_mean[2:110,:]),yaxis=:log)
+
+# ╔═╡ b088b42d-5496-4204-b4f2-732aa5a5b971
+
+
+# ╔═╡ b10b11c2-30fd-411e-bd1e-ac20bc3f809c
+
+
+# ╔═╡ b996990f-b223-4789-b4d1-3129c20a5bd1
+single_spin_op(σx,1,8)
+
+# ╔═╡ 9e60ee33-c2b3-4045-ace8-ebf7755ec962
+
+
+# ╔═╡ e49532e7-f3d2-47f3-b1d1-20adfc084b6e
+
 
 # ╔═╡ 0bd25535-7915-4450-ab2a-e7b1c6513863
 md"# Test Diag Tr"
@@ -293,6 +314,7 @@ data3_mean
 # ╠═300894b6-3cf1-11ed-23f6-8f618c96822a
 # ╠═f76a6752-ccd3-4601-8498-916de97c8a4f
 # ╠═6267285a-85f0-4c8c-859a-f0e9ae2b2dcf
+# ╠═bfbdc00d-3768-4b80-801d-286e52941244
 # ╠═649d4204-cb0f-4126-996b-422286123841
 # ╠═0719d385-9603-45f7-8da3-93a1ac29f8f5
 # ╠═4b5386b8-79bf-46b2-943f-6463f2f7b97e
@@ -339,6 +361,12 @@ data3_mean
 # ╠═49dbb045-1e82-4516-8d2e-20a04ecbfb54
 # ╠═083adbec-7e1f-4bff-b3c4-8a37ff7c8de3
 # ╠═e445e317-eff1-40e1-8cec-26d5337755ad
+# ╠═b088b42d-5496-4204-b4f2-732aa5a5b971
+# ╠═b10b11c2-30fd-411e-bd1e-ac20bc3f809c
+# ╠═953f81d6-0c25-476a-a760-67a9240bfcf9
+# ╠═b996990f-b223-4789-b4d1-3129c20a5bd1
+# ╠═9e60ee33-c2b3-4045-ace8-ebf7755ec962
+# ╠═e49532e7-f3d2-47f3-b1d1-20adfc084b6e
 # ╠═0bd25535-7915-4450-ab2a-e7b1c6513863
 # ╠═f37043ef-2484-4d3d-82da-adc9a50b51af
 # ╠═0abde248-e353-40fd-a565-c97aea86355f
