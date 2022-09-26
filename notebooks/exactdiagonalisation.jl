@@ -27,7 +27,7 @@ html"""<style>main {max-width: 60%;}</style>"""
 
 # ╔═╡ 484e4df3-aebb-4ea7-bc1a-61262d252872
 begin
-	N = 11
+	N = 12
 	i = div(N,2)+1
 	k = div(N-1,2)+1 #largest sector
 	d = basissize(symmetrized_basis(N,k))
@@ -106,9 +106,6 @@ end
 
 # ╔═╡ 3e7f2f54-fb02-40fa-b635-e8ae951b5641
 @btime otoc(H,A,B,1.2,ψ0)
-
-# ╔═╡ c6e82c6c-e49f-4ae7-a9b4-89ec456b5956
-
 
 # ╔═╡ 8f31b022-2b10-439e-9ef7-80df1588965a
 @benchmark Ftr(1.0,Aeig,Beig,evals)/2^N
@@ -222,7 +219,6 @@ end
 # ╠═4e988e7f-e445-4ab3-843b-ebb4273d8b47
 # ╠═26dd5aae-561f-4020-9aa8-a5c8bd652aad
 # ╠═3e7f2f54-fb02-40fa-b635-e8ae951b5641
-# ╠═c6e82c6c-e49f-4ae7-a9b4-89ec456b5956
 # ╠═8f31b022-2b10-439e-9ef7-80df1588965a
 # ╠═41a1d686-38a6-4a71-9437-5c6a3a549be5
 # ╠═823d0291-d192-44f0-9e73-8d1e2e9d7df7
