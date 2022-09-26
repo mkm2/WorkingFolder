@@ -105,7 +105,7 @@ H_tot = Vector{SparseMatrixCSC{ComplexF64,Int64}}([spzeros(2^N,2^N) for l in 1:S
 Threads.@threads for shot in 1:SHOTS
     H_tot[shot] = hamiltonian_from_positions(pd,shot)
     logmsg("Created Hamiltonian for Shot $(shot)")
-    otocs[:,:,shot] = Diag_OTOCtr(Matrix(H_tot[shot]),A,B,trange,N)
+    otocs[:,:,shot] = Diag_OTOC(Matrix(H_tot[shot]),A,B,trange,N,s)
     logmsg("Completed Shot $(shot)")
 end
 
