@@ -23,9 +23,6 @@ using SpinSymmetry
 # ╔═╡ 6267285a-85f0-4c8c-859a-f0e9ae2b2dcf
 TableOfContents()
 
-# ╔═╡ bfbdc00d-3768-4b80-801d-286e52941244
-H = xyz(nearest_neighbourJ(8),1.,0.,0.) + const_field(2.0,8)
-
 # ╔═╡ 649d4204-cb0f-4126-996b-422286123841
 function combine_files(files,path,new_file)
 	jobids = Vector{String}(undef,length(files))
@@ -314,7 +311,6 @@ data3_mean
 # ╠═300894b6-3cf1-11ed-23f6-8f618c96822a
 # ╠═f76a6752-ccd3-4601-8498-916de97c8a4f
 # ╠═6267285a-85f0-4c8c-859a-f0e9ae2b2dcf
-# ╠═bfbdc00d-3768-4b80-801d-286e52941244
 # ╠═649d4204-cb0f-4126-996b-422286123841
 # ╠═0719d385-9603-45f7-8da3-93a1ac29f8f5
 # ╠═4b5386b8-79bf-46b2-943f-6463f2f7b97e
