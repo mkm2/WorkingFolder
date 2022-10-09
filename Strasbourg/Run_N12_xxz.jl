@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=24:00:00
-#SBATCH --mem=150gb
+#SBATCH --mem=250gb
 #SBATCH --cpus-per-task=48
 #SBATCH --job-name=otoc_simulation_N12_ED_xxz
 #SBATCH --output="otoc_simulation_N12_ED_xxz-%j.out"
@@ -14,5 +14,5 @@
 
 # export JULIA_DEPOT_PATH=$SCRATCH
 export ON_CLUSTER=1
-exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/Strasbourg/shared_ED_xxz.jl" 12 25 x $1
+exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/Strasbourg/shared_ED_xxz.jl" 12 100 z $1
 =#

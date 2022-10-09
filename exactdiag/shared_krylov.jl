@@ -62,13 +62,14 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 δt = 0.1
 T = 5
-s = 10
-trange = logrange(-2,0,1)
+s = 1
+trange = logrange(-2,10,1e10)
 #trange = 0:δt:T
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
 A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σx,i,N))
+logmsg("A = σx")
 
 if OBSERVABLE == "x"
     B = σx

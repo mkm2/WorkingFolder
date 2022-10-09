@@ -24,7 +24,7 @@ LOGS = get(ENV, "LOGS", "")
 JOBID = get(ENV, "SLURM_JOB_ID", "")
 
 logmsg("*"^10*"RANDOM FIELDS"*"*"^10)
-println("shared_krylov.jl")
+println("shared_krylov_tfim_neel.jl")
 
 println("Working Directory:          $(pwd())" )
 println("SLURM Directory:            $(get(ENV, "SLURM_SUBMIT_DIR", "")) ")
@@ -68,7 +68,8 @@ trange = logrange(-2,10,1e10)
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
-A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σx,i,N))
+A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σz,i,N))
+logmsg("A=σz")
 
 if OBSERVABLE == "x"
     B = σx

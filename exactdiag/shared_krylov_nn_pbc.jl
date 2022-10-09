@@ -68,8 +68,8 @@ trange = logrange(-2,10,1e10)
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
-A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σx,i,N))
-logmsg("A=σx")
+A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σz,i,N))
+logmsg("A=σz")
 
 if OBSERVABLE == "x"
     B = σx
