@@ -27,7 +27,7 @@ html"""<style>main {max-width: 60%;}</style>"""
 
 # ╔═╡ 484e4df3-aebb-4ea7-bc1a-61262d252872
 begin
-	N = 12
+	N = 9
 	i = div(N,2)+1
 	k = div(N-1,2)+1 #largest sector
 	d = basissize(symmetrized_basis(N,k))
@@ -154,16 +154,22 @@ end
 # ╔═╡ 40b45ebd-1ccc-4449-ac4e-c2397fa14c75
 plot(1:S,test*100)
 
-# ╔═╡ a3936956-11da-4259-8e4b-fc9d72e78838
-
+# ╔═╡ 417f8665-de9f-4276-8752-6e878b530e74
+begin
+	Atest = convert(Matrix{ComplexF64},Aeig)
+	Btest = convert(Matrix{ComplexF64},B)
+	
+end
 
 # ╔═╡ ac0dda2b-f27e-47a5-a312-0be44d2d722d
 begin
 	corr = zeros(length(trange))
 	corr2 = similar(corr)
+	corr3 = similar(corr)
 	for (i,t) in enumerate(trange)
 		corr[i] = 2*(1-otoc(H,A,B,t,ψ0))
-		corr2[i] = 2*(1-real(Frandmean(t,Aeig,Beig,evals,N,10)))
+		corr2[i] = 2*(1-real(FψQ(t,Aeig,Beig,evals,ψeig,N)))
+		corr3[i] = 2*(1-otoc_edψ(Atest,Btest,evals,evecs,t,ψeig))
 	end
 end
 
@@ -171,22 +177,17 @@ end
 begin
 	plot(trange,corr)
 	plot!(trange,corr2)
+	plot!(trange,corr3)
 end
 
-# ╔═╡ 17990458-4a94-401e-a6ea-db68edbc93bd
-
-
-# ╔═╡ 417f8665-de9f-4276-8752-6e878b530e74
-
-
 # ╔═╡ 5f75543f-f484-41b9-85f7-839a30841725
-
+otoc_edψ(Atest,Btest,evals,evecs,1.0,ψ0)
 
 # ╔═╡ 1cb0bb29-52c9-4daf-adbf-94e0432469e2
-
+convert(Vector{Float64},evals)
 
 # ╔═╡ 67134d83-709b-4147-987b-32754e2c162c
-
+Diagonal(ones(2^N)) isa AbstractArray
 
 # ╔═╡ 2d7998f4-912e-4ce9-b2ca-9080266701aa
 md"# Speed of MatrixChainMultiply"
@@ -230,10 +231,8 @@ end
 # ╠═6029cc6c-a61e-4b6d-b60b-dd9f639fc8ca
 # ╠═4cdd0c2e-3ea6-4a2a-b282-76bc74922f89
 # ╠═40b45ebd-1ccc-4449-ac4e-c2397fa14c75
-# ╠═a3936956-11da-4259-8e4b-fc9d72e78838
 # ╠═ac0dda2b-f27e-47a5-a312-0be44d2d722d
 # ╠═7eb5529e-fcb1-468d-8b0d-ad34d8df807c
-# ╠═17990458-4a94-401e-a6ea-db68edbc93bd
 # ╠═417f8665-de9f-4276-8752-6e878b530e74
 # ╠═5f75543f-f484-41b9-85f7-839a30841725
 # ╠═1cb0bb29-52c9-4daf-adbf-94e0432469e2

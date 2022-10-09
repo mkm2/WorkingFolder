@@ -87,6 +87,7 @@ k = div(N-1,2)+1 #largest sector
 d = basissize(symmetrized_basis(N,k))
 
 A = symmetrize_operator(single_spin_op(σx,i,N),N,k)
+logmsg("A=σz")
 
 if OBSERVABLE == "x"
     B = σx
