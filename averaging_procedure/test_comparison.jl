@@ -94,14 +94,37 @@ begin
 	size(data_m)
 end
 
+# ╔═╡ 69a6f50b-fb91-4e66-b2e4-8cc8c59accc1
+std(data_m[:,:,1];dims=3)
+
 # ╔═╡ 4e5a645a-f930-4179-898a-7861584e5bb2
 n_m = 2500
 
 # ╔═╡ 2291487f-b9a7-4d05-9cf8-ab326e285d68
-data_m
+state_mean(disorder_mean(data_sf,50),50)
 
 # ╔═╡ 162feefd-1c8b-4d21-bf80-f662b47a319f
+begin
+	#df_mean =  
+	sf_mean = state_mean(disorder_mean(data_sf,shots),states)
+	m_mean = disorder_mean(data_m,shots*states)
 
+	sf_std = Vector{Matrix{Float64}}(undef,states)
+	m_std = Vector{Matrix{Float64}}(undef,shots)
+
+	for i in 1:states
+		sf_std[i] = state_std(disorder_mean(data_sf,shots),i)/sqrt(50*i)
+	end
+	for i in 1:shots
+		m_std[i] = disorder_std(data_m,50*i)/sqrt(50*i)
+	end
+end
+
+# ╔═╡ 081ef8da-667a-4fc6-95be-1f0e2fb51412
+plot(trange,sf_mean,ribbon=sf_std[2])
+
+# ╔═╡ 2e714e7b-b376-4833-bda0-f914787c0511
+plot(trange,m_mean,ribbon=m_std[1])
 
 # ╔═╡ c309b799-b9da-4b1c-90e7-b99ec5b0d516
 disorder_mean(data_sf,3)
@@ -140,10 +163,13 @@ md"# Strong disorder h=12"
 # ╠═01b54b4d-47dc-4a57-9490-b691de6fd997
 # ╠═264929c4-375e-4146-a61c-9ce0782433d9
 # ╠═9c6e9d29-8041-494a-b30b-ff042cad3fe5
+# ╠═69a6f50b-fb91-4e66-b2e4-8cc8c59accc1
 # ╠═da94efac-baa7-4b7f-a049-554b026da248
 # ╠═4e5a645a-f930-4179-898a-7861584e5bb2
 # ╠═2291487f-b9a7-4d05-9cf8-ab326e285d68
 # ╠═162feefd-1c8b-4d21-bf80-f662b47a319f
+# ╠═081ef8da-667a-4fc6-95be-1f0e2fb51412
+# ╠═2e714e7b-b376-4833-bda0-f914787c0511
 # ╠═c309b799-b9da-4b1c-90e7-b99ec5b0d516
 # ╠═b6b888c7-b46f-49d0-8115-e755ec272027
 # ╠═0c32ce58-58b4-4c29-b9d8-8de92849cea0
