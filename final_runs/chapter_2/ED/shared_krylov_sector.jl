@@ -94,7 +94,7 @@ H_tot = Vector{SparseMatrixCSC{ComplexF64,Int64}}([spzeros(d,d) for l in 1:SHOTS
 Threads.@threads for shot in 1:SHOTS
     H_tot[shot] = H + field_term(DISORDER_PARAM,N,k)
     logmsg("Created Hamiltonian for Shot $(shot)")
-    otocs[:,:,shot,:] = DiagOTOC_multiplestates(Matrix(H_tot[shot]),A,B,trange,N,s,k)
+    otocs[:,:,shot,:] = DiagOTOC_multiplestates(Matrix(H_tot[shot]),A,B,trange,N,s,k,d)
     logmsg("Completed Shot $(shot)")
 end
 

@@ -329,14 +329,14 @@ function DiagOTOC_multiplestates(H,A,b,ts,N,s)
 	return oto
 end
 
-function DiagOTOC_multiplestates(H,A,b,ts,N,s,symsec)
+function DiagOTOC_multiplestates(H,A,b,ts,N,s,symsec,dim)
 	λs, Q = eigen!(H)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
 	oto = zeros(length(ts),N,s)
 	for i in 1:s
-		ψ = random_state(N)
+		ψ = random_state(N,dim)
 		oto[:,:,i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N,symsec)
 	end
 	return oto
