@@ -239,17 +239,29 @@ otoc_edtr(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64
 #Any Times - Typicality
 function otoc_spat_ed(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,N::Int64,s::Int64) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
-	@sync for j in 1:N
-		Threads.@spawn res[:,j] .= otoc_ed(A,single_spin_op(b,j,N),λs,Q,ts,N,s)
+	ψs = Vector{Vector{ComplexF64}}(undef,s)
+	for ind in 1:s
+		ψs[ind] = random_state(N)
 	end
-	return res
+	@sync for j in 1:N
+		for ind in 1:s
+			Threads.@spawn res[:,j] .= res[:,j] .+ otoc_edψ(A,single_spin_op(b,j,N),λs,Q,ts,ψs[ind])
+		end
+	end
+	return res./s
 end
 function otoc_spat_ed(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,N::Int64,s::Int64,symsec::Int64,dim::Int64) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
-	@sync for j in 1:N
-		Threads.@spawn res[:,j] .= otoc_ed(A,symmetrize_operator(single_spin_op(b,j,N),N,symsec),λs,Q,ts,N,s,dim)
+	ψs = Vector{Vector{ComplexF64}}(undef,s)
+	for ind in 1:s
+		ψs[ind] = random_state(N,dim)
 	end
-	return res
+	@sync for j in 1:N
+		for ind in 1:s
+			Threads.@spawn res[:,j] .= res[:,j] .+ otoc_edψ(A,symmetrize_operator(single_spin_op(b,j,N),N,symsec),λs,Q,ts,ψs[ind])
+		end
+	end
+	return res./s
 end
 
 #Any Times - Single Vector
@@ -302,6 +314,32 @@ function Diag_OTOC(H::Matrix{ComplexF64},A::SparseMatrixCSC{ComplexF64,Int64},b:
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
 	return otoc_spat_ed(QdAQ,b,λs,Q,ts,N,s,symsec,dim)
+end
+
+function DiagOTOC_multiplestates(H,A,b,ts,N,s)
+	λs, Q = eigen!(H)
+	Q = convert(Matrix{Float64},Q)
+	logmsg("Diagonalized H.")
+	QdAQ =  Q'*A*Q
+	oto = zeros(length(trange),N,SHOTS,s)
+	for i in 1:s
+		ψ = random_state(N)
+		oto[i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N)
+	end
+	return oto
+end
+
+function DiagOTOC_multiplestates(H,A,b,ts,N,s,symsec)
+	λs, Q = eigen!(H)
+	Q = convert(Matrix{Float64},Q)
+	logmsg("Diagonalized H.")
+	QdAQ =  Q'*A*Q
+	oto = zeros(length(trange),N,SHOTS,s)
+	for i in 1:s
+		ψ = random_state(N)
+		oto[i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N,symsec)
+	end
+	return oto
 end
 
 #Any Times - Single Vector

@@ -173,11 +173,11 @@ end
 
 # ╔═╡ d8c42b82-5828-4b14-9288-44a11938afcb
 begin
-	plot(2:1000,mean_mean_BS_13,label="13",title="Mean",xlabel="n_states")
-	plot!(2:1000,mean_mean_BS_15,label="15",title="Mean",xlabel="n_states")
-	plot!(2:1000,mean_mean_BS_17,label="17",title="Mean",xlabel="n_states")
-	plot!(2:1000,mean_mean_BS_19,label="19",title="Mean",xlabel="n_states")
-	plot!(2:1000,mean_mean_BS_21,label="21",title="Mean",xlabel="n_states")
+	plot(2:100,mean_mean_RPS_13,label="13",title="Mean",xlabel="n_states")
+	plot!(2:100,mean_mean_RPS_15,label="15",title="Mean",xlabel="n_states")
+	plot!(2:100,mean_mean_RPS_17,label="17",title="Mean",xlabel="n_states")
+	plot!(2:100,mean_mean_RPS_19,label="19",title="Mean",xlabel="n_states")
+	plot!(2:100,mean_mean_RPS_21,label="21",title="Mean",xlabel="n_states")
 	
 end
 

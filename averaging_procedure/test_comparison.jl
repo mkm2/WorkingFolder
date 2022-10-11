@@ -70,6 +70,20 @@ begin
 	T = length(trange)
 end
 
+# ╔═╡ 421be086-0122-4a72-98b3-c3914f032c71
+begin
+	ψs = Vector{Vector{ComplexF64}}(undef,10)
+		for ind in 1:10
+			ψs[ind] = random_state(N)
+		end
+end
+
+# ╔═╡ dc6e8621-b575-4014-987b-ae9f38431c29
+ψs
+
+# ╔═╡ dbd00835-2ca3-4dc9-875b-71fb2dcc03d1
+N
+
 # ╔═╡ 9c6e9d29-8041-494a-b30b-ff042cad3fe5
 md"# No disorder h=0"
 
@@ -101,7 +115,7 @@ std(data_m[:,:,1];dims=3)
 n_m = 2500
 
 # ╔═╡ 2291487f-b9a7-4d05-9cf8-ab326e285d68
-state_mean(disorder_mean(data_sf,50),50)
+mean(state_mean(disorder_mean(data_sf,shots),2))
 
 # ╔═╡ 162feefd-1c8b-4d21-bf80-f662b47a319f
 begin
@@ -109,15 +123,29 @@ begin
 	sf_mean = state_mean(disorder_mean(data_sf,shots),states)
 	m_mean = disorder_mean(data_m,shots*states)
 
-	sf_std = Vector{Matrix{Float64}}(undef,states)
-	m_std = Vector{Matrix{Float64}}(undef,shots)
+	sf_mean_byi = Vector{Float64}(undef,states)
+	m_mean_byi = Vector{Float64}(undef,shots)
+	
+	sf_std_byi = Vector{Matrix{Float64}}(undef,states)
+	m_std_byi = Vector{Matrix{Float64}}(undef,shots)
 
 	for i in 1:states
-		sf_std[i] = state_std(disorder_mean(data_sf,shots),i)/sqrt(50*i)
+		sf_mean_byi[i] = mean(state_mean(disorder_mean(data_sf,shots),i))
+		sf_std_byi[i] = state_std(disorder_mean(data_sf,shots),i)/sqrt(50*i)
 	end
 	for i in 1:shots
-		m_std[i] = disorder_std(data_m,50*i)/sqrt(50*i)
+		m_mean_byi[i] = mean(disorder_mean(data_m,50*i))
+		m_std_byi[i] = disorder_std(data_m,50*i)/sqrt(50*i)
 	end
+end
+
+# ╔═╡ 4316ddfd-9044-489d-8352-4c1931481849
+plot(sf_mean)
+
+# ╔═╡ c415e17b-413e-49aa-9dcb-9a8318f7b907
+begin
+	plot(m_mean_byi,legend=nothing)
+	plot!(sf_mean_byi)
 end
 
 # ╔═╡ 081ef8da-667a-4fc6-95be-1f0e2fb51412
@@ -160,6 +188,9 @@ md"# Strong disorder h=12"
 # ╠═313705be-481a-11ed-17bb-f130b983a175
 # ╠═2b39b6c0-4255-4008-8413-bda1ea656650
 # ╠═89e38344-a7c8-4581-ab5e-2e031d1b05a2
+# ╠═421be086-0122-4a72-98b3-c3914f032c71
+# ╠═dbd00835-2ca3-4dc9-875b-71fb2dcc03d1
+# ╠═dc6e8621-b575-4014-987b-ae9f38431c29
 # ╠═01b54b4d-47dc-4a57-9490-b691de6fd997
 # ╠═264929c4-375e-4146-a61c-9ce0782433d9
 # ╠═9c6e9d29-8041-494a-b30b-ff042cad3fe5
@@ -168,6 +199,8 @@ md"# Strong disorder h=12"
 # ╠═4e5a645a-f930-4179-898a-7861584e5bb2
 # ╠═2291487f-b9a7-4d05-9cf8-ab326e285d68
 # ╠═162feefd-1c8b-4d21-bf80-f662b47a319f
+# ╠═4316ddfd-9044-489d-8352-4c1931481849
+# ╠═c415e17b-413e-49aa-9dcb-9a8318f7b907
 # ╠═081ef8da-667a-4fc6-95be-1f0e2fb51412
 # ╠═2e714e7b-b376-4833-bda0-f914787c0511
 # ╠═c309b799-b9da-4b1c-90e7-b99ec5b0d516
