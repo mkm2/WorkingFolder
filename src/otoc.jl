@@ -6,7 +6,7 @@ using ..LightCones
 
 export  otoc, otoc_spat, krylov_from0, krylov_step, krylov_from0_alternative
 export otoc_ed, otoc_edtr, otoc_edψ, otoc_spat_ed, otoc_spat_edtr, otoc_spat_edψ
-export Diag_OTOC, Diag_OTOCψ, Diag_OTOCtr
+export Diag_OTOC, Diag_OTOCψ, Diag_OTOCtr, DiagOTOC_multiplestates
 
 
 ExtRange = Union{AbstractRange{Float64},Vector{Float64}}
