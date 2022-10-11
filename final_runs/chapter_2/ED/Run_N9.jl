@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=10:00:00
-#SBATCH --mem=250gb
+#SBATCH --mem=150gb
 #SBATCH --cpus-per-task=48
 #SBATCH --job-name=otoc_simulation_N9_ED
 #SBATCH --output="otoc_simulation_N9_ED-%j.out"

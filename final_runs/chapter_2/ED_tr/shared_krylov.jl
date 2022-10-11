@@ -62,7 +62,7 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 δt = 0.1
 T = 10.0
-trange = 0.0:δT:T
+trange = 0.0:δt:T
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
