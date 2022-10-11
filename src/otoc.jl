@@ -324,7 +324,7 @@ function DiagOTOC_multiplestates(H,A,b,ts,N,s)
 	oto = zeros(length(ts),N,s)
 	for i in 1:s
 		ψ = random_state(N)
-		oto[i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N)
+		oto[:,:,i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N)
 	end
 	return oto
 end
@@ -337,7 +337,7 @@ function DiagOTOC_multiplestates(H,A,b,ts,N,s,symsec)
 	oto = zeros(length(ts),N,s)
 	for i in 1:s
 		ψ = random_state(N)
-		oto[i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N,symsec)
+		oto[:,:,i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N,symsec)
 	end
 	return oto
 end

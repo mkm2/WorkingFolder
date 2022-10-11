@@ -10,15 +10,6 @@ using LinearAlgebra,Plots,JLD2,Statistics,PlutoUI,LsqFit
 # ╔═╡ b7e74acb-12b0-4a52-b8a9-315ebf9d2ee0
 TableOfContents()
 
-# ╔═╡ 23028419-8d27-468d-b8ac-bbbca2557d00
-test2 = zeros(2,2,2,2)
-
-# ╔═╡ bfa7f901-70d5-4499-87f4-f31b88a5a990
-test2[:,:,1,:] = ones(2,2,2)
-
-# ╔═╡ 52eca0c9-e5bb-45bf-97a3-f9938f9d7c8e
-test2
-
 # ╔═╡ b267a4e7-840a-47cf-82c1-2a265ad05252
 begin
 	function state_mean(A,n_states=10)
@@ -1537,9 +1528,6 @@ version = "1.4.1+0"
 # ╔═╡ Cell order:
 # ╠═79fc26b0-18ba-11ed-208d-75b4a297af49
 # ╠═b7e74acb-12b0-4a52-b8a9-315ebf9d2ee0
-# ╠═23028419-8d27-468d-b8ac-bbbca2557d00
-# ╠═bfa7f901-70d5-4499-87f4-f31b88a5a990
-# ╠═52eca0c9-e5bb-45bf-97a3-f9938f9d7c8e
 # ╠═b267a4e7-840a-47cf-82c1-2a265ad05252
 # ╠═6e40e406-ce73-4e5e-8ac8-799f09369707
 # ╠═ea553d3f-7600-4b8c-b63d-9c97ea42f827
