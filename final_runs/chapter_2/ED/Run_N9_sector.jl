@@ -5,8 +5,8 @@
 #SBATCH --time=10:00:00
 #SBATCH --mem=250gb
 #SBATCH --cpus-per-task=48
-#SBATCH --job-name=otoc_simulation_N13_ED
-#SBATCH --output="otoc_simulation_N13_ED-%j.out"
+#SBATCH --job-name=otoc_simulation_N9_ED_sector
+#SBATCH --output="otoc_simulation_N9_ED_sector-%j.out"
 ########### End Slurm header ##########
 #=
 # load modules
@@ -14,5 +14,5 @@
 
 # export JULIA_DEPOT_PATH=$SCRATCH
 export ON_CLUSTER=1
-exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/final_runs/chapter_2/ED/shared_krylov.jl" 13 1 x $1
+exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/final_runs/chapter_2/ED/shared_krylov_sector.jl" 9 1 z $1
 =#

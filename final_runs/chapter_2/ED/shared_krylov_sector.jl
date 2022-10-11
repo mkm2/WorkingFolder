@@ -60,10 +60,10 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 #Set up simulation parameters
 
+s = 1000
 δt = 0.1
-T = 5
-s = 10
-trange = logrange(-2,10,1e10)
+T = 10.0
+trange = 0.0:δT:T
 #trange = 0:δt:T
 logmsg("trange = ",trange)
 
@@ -71,7 +71,9 @@ i = div(N,2)+1
 k = div(N-1,2)+1 #largest sector
 d = basissize(symmetrized_basis(N,k))
 
-A = convert(SparseMatrixCSC{ComplexF64,Int64},symmetrize_operator(single_spin_op(σx,i,N),N,k))
+A = convert(SparseMatrixCSC{ComplexF64,Int64},symmetrize_operator(single_spin_op(σz,i,N),N,k))
+logmsg("A = σz")
+
 
 if OBSERVABLE == "x"
     B = σx
@@ -87,12 +89,12 @@ logmsg(typeof(H))
 
 #Start simulation
 
-otocs = zeros(length(trange),N,SHOTS)
+otocs = zeros(length(trange),N,SHOTS,s)
 H_tot = Vector{SparseMatrixCSC{ComplexF64,Int64}}([spzeros(d,d) for l in 1:SHOTS])
 Threads.@threads for shot in 1:SHOTS
     H_tot[shot] = H + field_term(DISORDER_PARAM,N,k)
     logmsg("Created Hamiltonian for Shot $(shot)")
-    otocs[:,:,shot] = Diag_OTOC(Matrix(H_tot[shot]),A,B,trange,N,s,k,d)
+    otocs[:,:,shot,:] = DiagOTOC_multiplestates(Matrix(H_tot[shot]),A,B,trange,N,s,k)
     logmsg("Completed Shot $(shot)")
 end
 
