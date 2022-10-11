@@ -321,7 +321,7 @@ function DiagOTOC_multiplestates(H,A,b,ts,N,s)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
-	oto = zeros(length(trange),N,SHOTS,s)
+	oto = zeros(length(ts),N,SHOTS,s)
 	for i in 1:s
 		ψ = random_state(N)
 		oto[i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N)
@@ -334,7 +334,7 @@ function DiagOTOC_multiplestates(H,A,b,ts,N,s,symsec)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
-	oto = zeros(length(trange),N,SHOTS,s)
+	oto = zeros(length(ts),N,SHOTS,s)
 	for i in 1:s
 		ψ = random_state(N)
 		oto[i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N,symsec)

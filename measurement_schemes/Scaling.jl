@@ -119,65 +119,90 @@ begin
 	mean_std_RPS_21 = Vector{Float64}(undef,99)
 	mean_std_BS_21 = Vector{Float64}(undef,999)
 
+	T = 10
 	for i in 2:10
 		mean_mean_RS_13[i-1] = mean(reduce_by_last(state_mean(data_RS_13,i)))
-		mean_std_RS_13[i-1] = mean(reduce_by_last(state_std(data_RS_13,i)))/sqrt(i)
+		mean_std_RS_13[i-1] = mean(reduce_by_last(state_std(data_RS_13,i))[1:T,:])/sqrt(i)
 
 		mean_mean_RS_15[i-1] = mean(reduce_by_last(state_mean(data_RS_15,i)))
-		mean_std_RS_15[i-1] = mean(reduce_by_last(state_std(data_RS_15,i)))/sqrt(i)
+		mean_std_RS_15[i-1] = mean(reduce_by_last(state_std(data_RS_15,i))[1:T,:])/sqrt(i)
 
 		mean_mean_RS_17[i-1] = mean(reduce_by_last(state_mean(data_RS_17,i)))
-		mean_std_RS_17[i-1] = mean(reduce_by_last(state_std(data_RS_17,i)))/sqrt(i)
+		mean_std_RS_17[i-1] = mean(reduce_by_last(state_std(data_RS_17,i))[1:T,:])/sqrt(i)
 
 		mean_mean_RS_19[i-1] = mean(reduce_by_last(state_mean(data_RS_19,i)))
-		mean_std_RS_19[i-1] = mean(reduce_by_last(state_std(data_RS_19,i)))/sqrt(i)
+		mean_std_RS_19[i-1] = mean(reduce_by_last(state_std(data_RS_19,i))[1:T,:])/sqrt(i)
 
 		mean_mean_RS_21[i-1] = mean(reduce_by_last(state_mean(data_RS_21,i)))
-		mean_std_RS_21[i-1] = mean(reduce_by_last(state_std(data_RS_21,i)))/sqrt(i)
+		mean_std_RS_21[i-1] = mean(reduce_by_last(state_std(data_RS_21,i))[1:T,:])/sqrt(i)
 	end
 
 	for i in 2:100
 		mean_mean_RPS_13[i-1] = mean(reduce_by_last(state_mean(data_RPS_13,i)))
-		mean_std_RPS_13[i-1] = mean(reduce_by_last(state_std(data_RPS_13,i)))/sqrt(i)
+		mean_std_RPS_13[i-1] = mean(reduce_by_last(state_std(data_RPS_13,i))[1:T,:])/sqrt(i)
 
 		mean_mean_RPS_15[i-1] = mean(reduce_by_last(state_mean(data_RPS_15,i)))
-		mean_std_RPS_15[i-1] = mean(reduce_by_last(state_std(data_RPS_15,i)))/sqrt(i)
+		mean_std_RPS_15[i-1] = mean(reduce_by_last(state_std(data_RPS_15,i))[1:T,:])/sqrt(i)
 
 		mean_mean_RPS_17[i-1] = mean(reduce_by_last(state_mean(data_RPS_17,i)))
-		mean_std_RPS_17[i-1] = mean(reduce_by_last(state_std(data_RPS_17,i)))/sqrt(i)
+		mean_std_RPS_17[i-1] = mean(reduce_by_last(state_std(data_RPS_17,i))[1:T,:])/sqrt(i)
 
 		mean_mean_RPS_19[i-1] = mean(reduce_by_last(state_mean(data_RPS_19,i)))
-		mean_std_RPS_19[i-1] = mean(reduce_by_last(state_std(data_RPS_19,i)))/sqrt(i)
+		mean_std_RPS_19[i-1] = mean(reduce_by_last(state_std(data_RPS_19,i))[1:T,:])/sqrt(i)
 
 		mean_mean_RPS_21[i-1] = mean(reduce_by_last(state_mean(data_RPS_21,i)))
-		mean_std_RPS_21[i-1] = mean(reduce_by_last(state_std(data_RPS_21,i)))/sqrt(i)
+		mean_std_RPS_21[i-1] = mean(reduce_by_last(state_std(data_RPS_21,i))[1:T,:])/sqrt(i)
 	end
 	
 	for i in 2:1000
 		mean_mean_BS_13[i-1] = mean(reduce_by_last(state_mean(data_BS_13,i)))
-		mean_std_BS_13[i-1] = mean(reduce_by_last(state_std(data_BS_13,i)))/sqrt(i)
+		mean_std_BS_13[i-1] = mean(reduce_by_last(state_std(data_BS_13,i))[1:T,:])/sqrt(i)
 
 		mean_mean_BS_15[i-1] = mean(reduce_by_last(state_mean(data_BS_15,i)))
-		mean_std_BS_15[i-1] = mean(reduce_by_last(state_std(data_BS_15,i)))/sqrt(i)
+		mean_std_BS_15[i-1] = mean(reduce_by_last(state_std(data_BS_15,i))[1:T,:])/sqrt(i)
 
 		mean_mean_BS_17[i-1] = mean(reduce_by_last(state_mean(data_BS_17,i)))
-		mean_std_BS_17[i-1] = mean(reduce_by_last(state_std(data_BS_17,i)))/sqrt(i)
+		mean_std_BS_17[i-1] = mean(reduce_by_last(state_std(data_BS_17,i))[1:T,:])/sqrt(i)
 
 		mean_mean_BS_19[i-1] = mean(reduce_by_last(state_mean(data_BS_19,i)))
-		mean_std_BS_19[i-1] = mean(reduce_by_last(state_std(data_BS_19,i)))/sqrt(i)
+		mean_std_BS_19[i-1] = mean(reduce_by_last(state_std(data_BS_19,i))[1:T,:])/sqrt(i)
 
 		mean_mean_BS_21[i-1] = mean(reduce_by_last(state_mean(data_BS_21,i)))
-		mean_std_BS_21[i-1] = mean(reduce_by_last(state_std(data_BS_21,i)))/sqrt(i)
+		mean_std_BS_21[i-1] = mean(reduce_by_last(state_std(data_BS_21,i))[1:T,:])/sqrt(i)
 	end
 end
 
+# ╔═╡ 22d964af-9650-4592-987d-39935d2a2f3f
+size(data_BS_21)
+
+# ╔═╡ 9356fcd7-5dff-44f4-a660-94d8ff404c2d
+i = div(13,2)+1
+
+# ╔═╡ e2787d11-9fa6-4282-8fc1-79fb238d7f1b
+i2 = div(15,2)+1
+
+# ╔═╡ 050753e5-6ef7-486d-811f-dfeee3809b7c
+mean(mean(data_RS_13;dims=4)[1:20,i,1])
+
+# ╔═╡ eccd2b17-f384-43c3-b40c-2c2b3a17ec08
+mean(mean(data_RS_15;dims=4)[1:20,i,1])
+
+# ╔═╡ 29be6b12-c5c7-4bc2-9b82-cab6ec11d258
+
+
+# ╔═╡ a1ff129e-ac3a-4023-889e-5fe4d9f11f0c
+plot(mean(data_RS_13;dims=4)[:,:,1])
+
+# ╔═╡ 8a41823d-0660-4e85-ab1e-8ef36a5558cc
+heatmap(mean(data_BS_13;dims=4)[:,:,1])
+
 # ╔═╡ d8c42b82-5828-4b14-9288-44a11938afcb
 begin
-	plot(2:100,mean_mean_RPS_13,label="13",title="Mean",xlabel="n_states")
-	plot!(2:100,mean_mean_RPS_15,label="15",title="Mean",xlabel="n_states")
-	plot!(2:100,mean_mean_RPS_17,label="17",title="Mean",xlabel="n_states")
-	plot!(2:100,mean_mean_RPS_19,label="19",title="Mean",xlabel="n_states")
-	plot!(2:100,mean_mean_RPS_21,label="21",title="Mean",xlabel="n_states")
+	plot(2:10,mean_mean_RS_13,label="13",title="Mean",xlabel="n_states")
+	plot!(2:10,mean_mean_RS_15,label="15",title="Mean",xlabel="n_states")
+	plot!(2:10,mean_mean_RS_17,label="17",title="Mean",xlabel="n_states")
+	plot!(2:10,mean_mean_RS_19,label="19",title="Mean",xlabel="n_states")
+	plot!(2:10,mean_mean_RS_21,label="21",title="Mean",xlabel="n_states")
 	
 end
 
@@ -1531,6 +1556,14 @@ version = "1.4.1+0"
 # ╠═6e40e406-ce73-4e5e-8ac8-799f09369707
 # ╠═ea553d3f-7600-4b8c-b63d-9c97ea42f827
 # ╠═63d716f0-d660-4a0e-8b4e-8bcfef78054a
+# ╠═22d964af-9650-4592-987d-39935d2a2f3f
+# ╠═9356fcd7-5dff-44f4-a660-94d8ff404c2d
+# ╠═e2787d11-9fa6-4282-8fc1-79fb238d7f1b
+# ╠═050753e5-6ef7-486d-811f-dfeee3809b7c
+# ╠═eccd2b17-f384-43c3-b40c-2c2b3a17ec08
+# ╠═29be6b12-c5c7-4bc2-9b82-cab6ec11d258
+# ╠═a1ff129e-ac3a-4023-889e-5fe4d9f11f0c
+# ╠═8a41823d-0660-4e85-ab1e-8ef36a5558cc
 # ╠═d8c42b82-5828-4b14-9288-44a11938afcb
 # ╠═d44c702d-934e-459f-aea1-cadbe97d1420
 # ╠═b7ded707-d001-40d1-b590-0d60f125dc50
