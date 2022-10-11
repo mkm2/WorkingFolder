@@ -10,6 +10,15 @@ using LinearAlgebra,Plots,JLD2,Statistics,PlutoUI,LsqFit
 # ╔═╡ b7e74acb-12b0-4a52-b8a9-315ebf9d2ee0
 TableOfContents()
 
+# ╔═╡ 23028419-8d27-468d-b8ac-bbbca2557d00
+test2 = zeros(2,2,2,2)
+
+# ╔═╡ bfa7f901-70d5-4499-87f4-f31b88a5a990
+test2[:,:,1,:] = ones(2,2,2)
+
+# ╔═╡ 52eca0c9-e5bb-45bf-97a3-f9938f9d7c8e
+test2
+
 # ╔═╡ b267a4e7-840a-47cf-82c1-2a265ad05252
 begin
 	function state_mean(A,n_states=10)
@@ -119,7 +128,7 @@ begin
 	mean_std_RPS_21 = Vector{Float64}(undef,99)
 	mean_std_BS_21 = Vector{Float64}(undef,999)
 
-	T = 10
+	T = 25
 	for i in 2:10
 		mean_mean_RS_13[i-1] = mean(reduce_by_last(state_mean(data_RS_13,i)))
 		mean_std_RS_13[i-1] = mean(reduce_by_last(state_std(data_RS_13,i))[1:T,:])/sqrt(i)
@@ -171,30 +180,6 @@ begin
 		mean_std_BS_21[i-1] = mean(reduce_by_last(state_std(data_BS_21,i))[1:T,:])/sqrt(i)
 	end
 end
-
-# ╔═╡ 22d964af-9650-4592-987d-39935d2a2f3f
-size(data_BS_21)
-
-# ╔═╡ 9356fcd7-5dff-44f4-a660-94d8ff404c2d
-i = div(13,2)+1
-
-# ╔═╡ e2787d11-9fa6-4282-8fc1-79fb238d7f1b
-i2 = div(15,2)+1
-
-# ╔═╡ 050753e5-6ef7-486d-811f-dfeee3809b7c
-mean(mean(data_RS_13;dims=4)[1:20,i,1])
-
-# ╔═╡ eccd2b17-f384-43c3-b40c-2c2b3a17ec08
-mean(mean(data_RS_15;dims=4)[1:20,i,1])
-
-# ╔═╡ 29be6b12-c5c7-4bc2-9b82-cab6ec11d258
-
-
-# ╔═╡ a1ff129e-ac3a-4023-889e-5fe4d9f11f0c
-plot(mean(data_RS_13;dims=4)[:,:,1])
-
-# ╔═╡ 8a41823d-0660-4e85-ab1e-8ef36a5558cc
-heatmap(mean(data_BS_13;dims=4)[:,:,1])
 
 # ╔═╡ d8c42b82-5828-4b14-9288-44a11938afcb
 begin
@@ -1552,18 +1537,13 @@ version = "1.4.1+0"
 # ╔═╡ Cell order:
 # ╠═79fc26b0-18ba-11ed-208d-75b4a297af49
 # ╠═b7e74acb-12b0-4a52-b8a9-315ebf9d2ee0
+# ╠═23028419-8d27-468d-b8ac-bbbca2557d00
+# ╠═bfa7f901-70d5-4499-87f4-f31b88a5a990
+# ╠═52eca0c9-e5bb-45bf-97a3-f9938f9d7c8e
 # ╠═b267a4e7-840a-47cf-82c1-2a265ad05252
 # ╠═6e40e406-ce73-4e5e-8ac8-799f09369707
 # ╠═ea553d3f-7600-4b8c-b63d-9c97ea42f827
 # ╠═63d716f0-d660-4a0e-8b4e-8bcfef78054a
-# ╠═22d964af-9650-4592-987d-39935d2a2f3f
-# ╠═9356fcd7-5dff-44f4-a660-94d8ff404c2d
-# ╠═e2787d11-9fa6-4282-8fc1-79fb238d7f1b
-# ╠═050753e5-6ef7-486d-811f-dfeee3809b7c
-# ╠═eccd2b17-f384-43c3-b40c-2c2b3a17ec08
-# ╠═29be6b12-c5c7-4bc2-9b82-cab6ec11d258
-# ╠═a1ff129e-ac3a-4023-889e-5fe4d9f11f0c
-# ╠═8a41823d-0660-4e85-ab1e-8ef36a5558cc
 # ╠═d8c42b82-5828-4b14-9288-44a11938afcb
 # ╠═d44c702d-934e-459f-aea1-cadbe97d1420
 # ╠═b7ded707-d001-40d1-b590-0d60f125dc50

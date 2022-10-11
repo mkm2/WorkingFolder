@@ -87,7 +87,7 @@ end
 
 #Single time
 
-function otoc_spat(H,A,b,t::Float64,ψ,N,tmax=1.0) #b in single-particle Hilbert space
+function otoc_spat(H,A,b,t::Float64,ψ,N,tmax) #b in single-particle Hilbert space
 	σiUψ = A * krylov_from0_alternative(H,-t,ψ,tmax)
 	UdσiUψ = krylov_from0_alternative(H,t,σiUψ,tmax)
 	res = zeros(N)
@@ -101,7 +101,7 @@ function otoc_spat(H,A,b,t::Float64,ψ,N,tmax=1.0) #b in single-particle Hilbert
 	return res
 end
 
-function otoc_spat(H,A,b,t::Float64,ψ,N,k,tmax=1.0) #b in single-particle Hilbert space
+function otoc_spat(H,A,b,t::Float64,ψ,N,k,tmax) #b in single-particle Hilbert space
 	σiUψ = A * krylov_from0_alternative(H,-t,ψ,tmax)
 	UdσiUψ = krylov_from0_alternative(H,t,σiUψ,tmax)
 	res = zeros(N)
@@ -117,17 +117,17 @@ end
 
 #Time Range
 
-function calc_otoc(H,A,b,j,trange::ExtRange,ψ,N,tmax=1.0)
+function calc_otoc(H,A,b,j,trange::ExtRange,ψ,N,tmax)
 	B = single_spin_op(b,j,N)
 	return otoc(H,A,B,trange,ψ,tmax)
 end
 
-function calc_otoc(H,A,b,j,trange::ExtRange,ψ,N,k,tmax=1.0)
+function calc_otoc(H,A,b,j,trange::ExtRange,ψ,N,k,tmax)
 	B = symmetrize_operator(single_spin_op(b,j,N),N,k)
 	return otoc(H,A,B,trange,ψ,tmax)
 end
 
-function otoc_spat(H,A,b,trange::ExtRange,ψ,N,tmax=1.0)
+function otoc_spat(H,A,b,trange::ExtRange,ψ,N,tmax)
 	res = zeros(length(trange),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax)
@@ -135,7 +135,7 @@ function otoc_spat(H,A,b,trange::ExtRange,ψ,N,tmax=1.0)
 	return res
 end
 
-function otoc_spat(H,A,b,trange::ExtRange,ψ,N,k,tmax=1.0)
+function otoc_spat(H,A,b,trange::ExtRange,ψ,N,k,tmax)
 	res = zeros(length(trange),N)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,k,tmax)
@@ -143,14 +143,14 @@ function otoc_spat(H,A,b,trange::ExtRange,ψ,N,k,tmax=1.0)
 	return res
 end
 
-function otoc_spat!(res,H,A,b,trange::ExtRange,ψ,N,tmax=1.0)
+function otoc_spat!(res,H,A,b,trange::ExtRange,ψ,N,tmax)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,tmax)
 	end
 	return res
 end
 
-function otoc_spat!(res,H,A,b,trange::ExtRange,ψ,N,k,tmax=1.0)
+function otoc_spat!(res,H,A,b,trange::ExtRange,ψ,N,k,tmax)
 	@sync for j in 1:N
 		Threads.@spawn res[:,j]=calc_otoc(H,A,b,j,trange,ψ,N,k,tmax)
 	end
@@ -321,7 +321,7 @@ function DiagOTOC_multiplestates(H,A,b,ts,N,s)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
-	oto = zeros(length(ts),N,SHOTS,s)
+	oto = zeros(length(ts),N,s)
 	for i in 1:s
 		ψ = random_state(N)
 		oto[i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N)
@@ -334,7 +334,7 @@ function DiagOTOC_multiplestates(H,A,b,ts,N,s,symsec)
 	Q = convert(Matrix{Float64},Q)
 	logmsg("Diagonalized H.")
 	QdAQ =  Q'*A*Q
-	oto = zeros(length(ts),N,SHOTS,s)
+	oto = zeros(length(ts),N,s)
 	for i in 1:s
 		ψ = random_state(N)
 		oto[i] = otoc_spat_edψ(QdAQ,b,λs,Q,ts,ψ,N,symsec)
