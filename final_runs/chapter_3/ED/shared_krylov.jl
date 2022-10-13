@@ -65,8 +65,8 @@ trange = 10. .^LinRange(-3,8,100)
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
-A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σz,i,N))
-logmsg("A = σz")
+A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σx,i,N))
+logmsg("A = σx")
 
 if OBSERVABLE == "x"
     B = σx
