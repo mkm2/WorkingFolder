@@ -76,9 +76,7 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 #Set up simulation parameters
 
 tmax = 0.5
-δt = 0.1
-T = 10.0
-trange = 0.0:δt:T
+trange = 10. .^LinRange(-3,1,100)
 logmsg("trange = ",trange)
 
 i = div(N,2)+1

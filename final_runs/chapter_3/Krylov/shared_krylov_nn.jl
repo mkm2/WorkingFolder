@@ -24,7 +24,7 @@ LOGS = get(ENV, "LOGS", "")
 JOBID = get(ENV, "SLURM_JOB_ID", "")
 
 logmsg("*"^10*"RANDOM FIELDS"*"*"^10)
-println("shared_krylov.jl")
+println("shared_krylov_nn.jl")
 
 println("Working Directory:          $(pwd())" )
 println("SLURM Directory:            $(get(ENV, "SLURM_SUBMIT_DIR", "")) ")
@@ -91,7 +91,8 @@ elseif OBSERVABLE == "z"
     B = σz
 end
 
-H = xxz(N,6)
+H = xxz(nearest_neighbourJ(N))
+
 
 if MULT_RANDOM_STATES == false
     ψ0 = random_state(N)#normalize!(ones(2^N))

@@ -24,7 +24,7 @@ LOGS = get(ENV, "LOGS", "")
 JOBID = get(ENV, "SLURM_JOB_ID", "")
 
 logmsg("*"^10*"RANDOM FIELDS"*"*"^10)
-println("shared_krylov.jl")
+println("shared_krylov_sector_nn.jl")
 
 println("Working Directory:          $(pwd())" )
 println("SLURM Directory:            $(get(ENV, "SLURM_SUBMIT_DIR", "")) ")
@@ -80,7 +80,10 @@ trange = 10. .^LinRange(-3,1,100)
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
-A = single_spin_op(σz,i,N)
+k = div(N-1,2)+1 #largest sector
+d = basissize(symmetrized_basis(N,k))
+
+A = symmetrize_operator(single_spin_op(σz,i,N),N,k)
 logmsg("A = σz")
 
 if OBSERVABLE == "x"
@@ -91,24 +94,28 @@ elseif OBSERVABLE == "z"
     B = σz
 end
 
-H = xxz(N,6)
+print("before H\n")
+H = symmetrize_operator(xxz(nearest_neighbourJ(N)),N,k)
+print("after H\n")
+print(string("memory allocated: ",Base.summarysize(H)))
+print(string("memory of full H: ",Base.summarysize(xxz(N,6))))
 
 if MULT_RANDOM_STATES == false
-    ψ0 = random_state(N)#normalize!(ones(2^N))
+    ψ0 = random_state(N,d)#normalize!(ones(2^N))
     logmsg("Sampled 1 random initial state")
 else
-    ψs = zeros(ComplexF64,2^N,N_RANDOM_STATES)
+    ψs = zeros(ComplexF64,d,N_RANDOM_STATES)
     if TYPE_OF_RS == "RS"
         for s in 1:N_RANDOM_STATES
-            ψs[:,s] = random_state(N)
+            ψs[:,s] = random_state(N,d)
         end
     elseif TYPE_OF_RS == "RPS"
         for s in 1:N_RANDOM_STATES
-            ψs[:,s] = random_product_state(N)
+            ψs[:,s] = random_product_state(N,k)
         end
     elseif TYPE_OF_RS == "BS"
         for s in 1:N_RANDOM_STATES
-            ψs[:,s] = random_bitstring_state(N)
+            ψs[:,s] = random_bitstring_state(N,d)
         end
     else
         logmsg("No states sampled. Wrong input.")
@@ -120,24 +127,27 @@ end
 
 if MULT_RANDOM_STATES == false
     otocs = zeros(length(trange),N,SHOTS)
-    H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
+    H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(d,d) for l in 1:SHOTS])
     #H_tot = Vector{Adjoint{Float64, ThreadedSparseMatrixCSC{Float64, Int64, SparseMatrixCSC{Float64, Int64}}}}([ThreadedSparseMatrixCSC(spzeros(2^N,2^N))' for l in 1:4])
+    print(string("memory allocated: ",Base.summarysize(H_tot)))    
     Threads.@threads for shot in 1:SHOTS
-        H_tot[shot] = H + field_term(DISORDER_PARAM,N)
+        H_tot[shot] = H + field_term(DISORDER_PARAM,N,k)
         logmsg("Created Hamiltonian for Shot $(shot)")
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
-        @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,tmax)
+        @time otocs[:,:,shot] = otoc_spat(H_tot[shot],A,B,trange,ψ0,N,k,tmax)
         logmsg("Completed Shot $(shot)")
     end
+    print(string("memory allocated: ",Base.summarysize(H_tot)))
+
 else
     otocs = zeros(length(trange),N,SHOTS,N_RANDOM_STATES)
-    H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
+    H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(d,d) for l in 1:SHOTS])
     print("test\n")
     for shot in 1:SHOTS
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
-        H_tot[shot] = H + field_term(DISORDER_PARAM,N)
+        H_tot[shot] = H + field_term(DISORDER_PARAM,N,k)
         Threads.@threads for s in 1:N_RANDOM_STATES
-            @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[:,s],N,tmax)
+            @time otocs[:,:,shot,s] = otoc_spat(H_tot[shot],A,B,trange,ψs[:,s],N,k,tmax)
             logmsg("Completed Shot $(shot), state $(s)")
         end
     end
