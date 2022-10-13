@@ -2,8 +2,8 @@
 # ########## Begin Slurm header ##########
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --time=5:00:00
-#SBATCH --mem=150gb
+#SBATCH --time=1-0
+#SBATCH --mem=250gb
 #SBATCH --cpus-per-task=48
 #SBATCH --job-name=otoc_simulation_N19_RPS_sector
 #SBATCH --output="otoc_simulation_N19_RPS_sector-%j.out"
@@ -14,5 +14,5 @@
 
 # export JULIA_DEPOT_PATH=$SCRATCH
 export ON_CLUSTER=1
-exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/measurement_schemes/shared_krylov_sector.jl" 19 1 10 RPS z $1
+exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/measurement_schemes/shared_krylov_sector.jl" 19 1 50 RPS z $1
 =#

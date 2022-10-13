@@ -2,7 +2,7 @@
 # ########## Begin Slurm header ##########
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --time=10:00:00
+#SBATCH --time=2-0
 #SBATCH --mem=150gb
 #SBATCH --cpus-per-task=48
 #SBATCH --job-name=otoc_simulation_N15_Krylov_sector
