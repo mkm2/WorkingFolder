@@ -123,7 +123,7 @@ begin
 end
 
 # ╔═╡ 9f5dcb52-8418-417b-b7a3-0f7f7682fcbc
-plot(trange[2:T],data_4_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_4_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h = 4",markers="+")
+plot(trange[2:T],data_4_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_4_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h = 4",markers="+",yaxis=:log,xlim=[1e-2,1e1])
 
 # ╔═╡ a148f020-cb39-4820-b868-503d2dca252c
 heatmap(1:N,trange[2:T],data_4_mean[2:T,:],yaxis=:log)
@@ -149,8 +149,17 @@ begin
 	data_12_std = disorder_std(data_12,shots)
 end
 
+# ╔═╡ be7d456d-b84d-47fd-a750-949227cbea71
+10. .^LinRange(-3,8,120)
+
+# ╔═╡ e8d0bd88-11aa-419a-98bc-05c3cfc3cb13
+data_12_mean
+
 # ╔═╡ c4f385eb-6e67-402d-9f98-c8ac8621c9a2
-plot(trange[2:T],data_12_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h= 12",ylims=[0.,3.2])
+begin
+	plot(trange[2:T],data_12_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h= 12",ylims=[0.001,3.2],xlim=[1e-2,1e8],yaxis=:log)
+	plot!(10. .^ LinRange(-3,8,100),ones(100),xaxis=:log,markershape=:cross)
+end
 
 # ╔═╡ 4302e49d-d06a-4e22-86a1-75669096779f
 heatmap(1:N,trange[2:T],data_12_mean[2:T,:],yaxis=:log)
@@ -179,7 +188,7 @@ begin
 end
 
 # ╔═╡ a939797d-8e74-4d0f-bfff-deec14b7ac51
-plot(trange[2:T],data_0_nn_mean[2:110,:],xaxis=:log,legend=:bottomright,ylabel="OTOC xx",xlabel="Jt",title="Nearest Neighbour OBC, h = 0")
+plot(trange[2:T],abs.(data_0_nn_mean[2:110,:]),xaxis=:log,legend=:bottomright,ylabel="OTOC xx",xlabel="Jt",title="Nearest Neighbour OBC, h = 0",xlim=[1e-2,5e0],yaxis=:log)
 
 # ╔═╡ 33282538-dadb-4487-986e-ea89f33ebe88
 heatmap(1:N,trange[2:T],data_0_nn_mean[2:T,:],yaxis=:log)
@@ -233,7 +242,13 @@ begin
 end
 
 # ╔═╡ 44181015-34a4-47ef-aefb-6f8509fdfca1
-plot(trange[2:T],data_12_nn_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_nn_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Nearest Neighbour OBC, h = 12")
+begin
+	plot(trange[2:T],abs.(data_12_nn_mean[2:110,:]),xaxis=:log,legend=nothing,ribbon=data_12_nn_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Nearest Neighbour OBC, h = 12",xlim=[1e-2,1e1],yaxis=:log)
+	plot!(10. .^ LinRange(-3,1,100),ones(100),xaxis=:log,markershape=:cross)
+end
+
+# ╔═╡ 50f76e36-ec8b-4989-bfe2-d109f811ae26
+log10(5)
 
 # ╔═╡ 54d6b8bc-6b9b-4243-9aea-56eafbf9f701
 heatmap(1:N,trange[2:T],data_12_nn_mean[2:T,:],yaxis=:log)
@@ -780,6 +795,8 @@ heatmap(1:N,trange[2:T],data_12_nn_pbczz_mean[2:T,:],yaxis=:log)
 # ╠═10ca2e1c-d5dc-4c39-bb86-0981d951d283
 # ╠═880c16dd-240b-4ad5-92f1-54b923ef75da
 # ╠═8bbe06ac-a2da-4ceb-bc5c-3c442a78c54c
+# ╠═be7d456d-b84d-47fd-a750-949227cbea71
+# ╠═e8d0bd88-11aa-419a-98bc-05c3cfc3cb13
 # ╠═c4f385eb-6e67-402d-9f98-c8ac8621c9a2
 # ╠═4302e49d-d06a-4e22-86a1-75669096779f
 # ╠═9380deb5-848b-40f9-a58d-0a8d157c90b1
@@ -797,6 +814,7 @@ heatmap(1:N,trange[2:T],data_12_nn_pbczz_mean[2:T,:],yaxis=:log)
 # ╠═b72312cb-98a8-4a93-bd9f-8a5b5e8c6750
 # ╠═88300d49-ecb9-4f08-9262-f109b8297b03
 # ╠═44181015-34a4-47ef-aefb-6f8509fdfca1
+# ╠═50f76e36-ec8b-4989-bfe2-d109f811ae26
 # ╠═54d6b8bc-6b9b-4243-9aea-56eafbf9f701
 # ╠═b969969c-967e-4ff6-b781-62087e167f29
 # ╠═d21541e3-ba62-4dd5-844e-1751cf134d29
