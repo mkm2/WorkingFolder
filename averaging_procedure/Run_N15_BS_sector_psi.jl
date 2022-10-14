@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=30:00:00
-#SBATCH --mem=350gb
+#SBATCH --mem=180gb
 #SBATCH --cpus-per-task=48
 #SBATCH --job-name=otoc_simulation_N13_BS_sector_AVP_psi
 #SBATCH --output="otoc_simulation_N13_BS_sector_AVP_psi-%j.out"
