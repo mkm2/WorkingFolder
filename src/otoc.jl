@@ -176,8 +176,7 @@ function Ftr(A::Matrix{ComplexF64},B::Matrix{ComplexF64},λs::Vector{Float64},t:
 end
 
 #Single time - Typicality
-otoc_ed(A::Matrix{ComplexF64},B::Matrix{ComplexF64},λs::Vector{Float64},t::Float64,N::Int64,s::Int64) = mean(Fψ(A,B,λs,t,random_state(N)) for i in 1:s)
-otoc_ed(A::Matrix{ComplexF64},B::Matrix{ComplexF64},λs::Vector{Float64},t::Float64,N::Int64,s::Int64,dim::Int64) = mean(Fψ(A,B,λs,t,random_state(N,dim)) for i in 1:s)
+otoc_ed(A::Matrix{ComplexF64},B::Matrix{ComplexF64},λs::Vector{Float64},t::Float64,ψs::Vector{Vector{ComplexF64}},s::Int64) = mean(Fψ(A,B,λs,t,ψs[i]) for i in 1:s)
 
 #Single time - Single Vector
 otoc_edψ(A::Matrix{ComplexF64},B::Matrix{ComplexF64},λs::Vector{Float64},t::Float64,ψ::Vector{ComplexF64}) = Fψ(A,B,λs,t,ψ)
@@ -186,20 +185,11 @@ otoc_edψ(A::Matrix{ComplexF64},B::Matrix{ComplexF64},λs::Vector{Float64},t::Fl
 otoc_edtr(A::Matrix{ComplexF64},B::Matrix{ComplexF64},λs::Vector{Float64},t::Float64) = Ftr(A,B,λs,t)
 
 #Time Range - Typicality
-function otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,N::Int64,s::Int64)
+function otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,ψs::Vector{Vector{ComplexF64}},s::Int64)
 	res = zeros(length(trange))
 	QdBQ = Q'B*Q
 	for (ti,t) in enumerate(trange)
-		res[ti] = otoc_ed(A,QdBQ,λs,t,N,s)
-	end
-	return res
-end
-
-function otoc_ed(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},trange::ExtRange,N::Int64,s::Int64,dim::Int64)
-	res = zeros(length(trange))
-	QdBQ = Q'B*Q
-	for (ti,t) in enumerate(trange)
-		res[ti] = otoc_ed(A,QdBQ,λs,t,N,s,dim)
+		res[ti] = otoc_ed(A,QdBQ,λs,t,ψs,s)
 	end
 	return res
 end
@@ -239,11 +229,9 @@ function otoc_spat_ed(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Ve
 		ψs[ind] = random_state(N)
 	end
 	@sync for j in 1:N
-		for ind in 1:s
-			Threads.@spawn res[:,j] .= res[:,j] .+ otoc_edψ(A,single_spin_op(b,j,N),λs,Q,ts,ψs[ind])
-		end
+		Threads.@spawn res[:,j] .= otoc_ed(A,single_spin_op(b,j,N),λs,Q,ts,ψs,s)
 	end
-	return res./s
+	return res
 end
 function otoc_spat_ed(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Vector{Float64},Q::Matrix{Float64},ts::TvExtRange,N::Int64,s::Int64,symsec::Int64,dim::Int64) #b=σ(xyz) in original basis
 	res = zeros(length(ts),N)
@@ -252,11 +240,9 @@ function otoc_spat_ed(A::Matrix{ComplexF64},b::AbstractArray{ComplexF64},λs::Ve
 		ψs[ind] = random_state(N,dim)
 	end
 	@sync for j in 1:N
-		for ind in 1:s
-			Threads.@spawn res[:,j] .= res[:,j] .+ otoc_edψ(A,symmetrize_operator(single_spin_op(b,j,N),N,symsec),λs,Q,ts,ψs[ind])
-		end
+		Threads.@spawn res[:,j] .= otoc_ed(A,symmetrize_operator(single_spin_op(b,j,N),N,symsec),λs,Q,ts,ψs,s)
 	end
-	return res./s
+	return res
 end
 
 #Any Times - Single Vector
