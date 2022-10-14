@@ -89,9 +89,10 @@ md"# No disorder h=0"
 
 # ╔═╡ da94efac-baa7-4b7f-a049-554b026da248
 begin
-	f_df = "7273734_N13_BS.jld2"
+	f_df = "7301823_N13_BS.jld2"
 	f_sf = "7273738_N13_BS.jld2"
 	f_m = "7273742_N13_BS.jld2"
+	f_ref = "7296575_N13_RS.jld2"
 	
 	jobids_df = load(path*f_df,"jobid")
 	params_df = load(path*f_df,"params")
@@ -105,84 +106,197 @@ begin
 	params_m = load(path*f_m,"params")
 	data_m = 2*ones(T,N,shots*states)-2*load(path*f_m,"data")
 
-	size(data_m)
+	jobids_ref = load(path*f_ref,"jobid")
+	params_ref = load(path*f_ref,"params")
+	data_ref = 2*ones(T,N,100,10)-2*load(path*f_ref,"data")
+
+	size(data_ref)
 end
 
-# ╔═╡ 69a6f50b-fb91-4e66-b2e4-8cc8c59accc1
-std(data_m[:,:,1];dims=3)
+# ╔═╡ 56b08a04-4ae1-43b6-ae5a-32e997357f3a
+ref = disorder_mean(state_mean(data_ref,10),100)
 
-# ╔═╡ 4e5a645a-f930-4179-898a-7861584e5bb2
-n_m = 2500
-
-# ╔═╡ 2291487f-b9a7-4d05-9cf8-ab326e285d68
-mean(state_mean(disorder_mean(data_sf,shots),2))
-
-# ╔═╡ 162feefd-1c8b-4d21-bf80-f662b47a319f
+# ╔═╡ f8b8c837-ed9e-43f6-a2fb-b1e6908c010b
 begin
-	#df_mean =  
-	sf_mean = state_mean(disorder_mean(data_sf,shots),states)
-	m_mean = disorder_mean(data_m,shots*states)
+	sample_states = 5
+	sample_disorder = 10
+end
 
-	sf_mean_byi = Vector{Float64}(undef,states)
-	m_mean_byi = Vector{Float64}(undef,shots)
-	
-	sf_std_byi = Vector{Matrix{Float64}}(undef,states)
-	m_std_byi = Vector{Matrix{Float64}}(undef,shots)
-
-	for i in 1:states
-		sf_mean_byi[i] = mean(state_mean(disorder_mean(data_sf,shots),i))
-		sf_std_byi[i] = state_std(disorder_mean(data_sf,shots),i)/sqrt(50*i)
-	end
+# ╔═╡ d37571e5-9e66-4410-815f-71227cf15598
+begin
+	df_mean_byd = Vector{Matrix{Float64}}(undef,shots)
+	sf_mean_bys = Vector{Matrix{Float64}}(undef,states)
+	m_mean_bysample = Vector{Matrix{Float64}}(undef,shots*states)
 	for i in 1:shots
-		m_mean_byi[i] = mean(disorder_mean(data_m,50*i))
-		m_std_byi[i] = disorder_std(data_m,50*i)/sqrt(50*i)
+		df_mean_byd[i] = disorder_mean(state_mean(data_df,sample_states),i)
+	end
+	for i in 1:states
+		sf_mean_bys[i] = state_mean(disorder_mean(data_sf,sample_disorder),i)
+	end
+	for i in 1:shots*states
+		m_mean_bysample[i] = disorder_mean(data_m,i)
 	end
 end
 
-# ╔═╡ 4316ddfd-9044-489d-8352-4c1931481849
-plot(sf_mean)
-
-# ╔═╡ c415e17b-413e-49aa-9dcb-9a8318f7b907
+# ╔═╡ 879c6440-2888-4770-93ff-7e33fe8cf1ee
 begin
-	plot(m_mean_byi,legend=nothing)
-	plot!(sf_mean_byi)
+	df_meandeviation = Vector{Float64}(undef,shots)
+	sf_meandeviation = Vector{Float64}(undef,states)
+	m_meandeviation = Vector{Float64}(undef,shots*states)
+	
+	for i in 1:shots
+		df_meandeviation[i] = sum(abs.(df_mean_byd[i]-ref))
+	end
+	for i in 1:states
+		sf_meandeviation[i] = sum(abs.(sf_mean_bys[i]-ref))
+	end
+	for i in 1:shots*states
+		m_meandeviation[i] = sum(abs.(m_mean_bysample[i]-ref))
+	end
 end
 
-# ╔═╡ 081ef8da-667a-4fc6-95be-1f0e2fb51412
-plot(trange,sf_mean,ribbon=sf_std[2])
+# ╔═╡ f1b5be26-ef2d-4b1a-8284-797171679664
+m_meandeviation/(51*13)
 
-# ╔═╡ 2e714e7b-b376-4833-bda0-f914787c0511
-plot(trange,m_mean,ribbon=m_std[1])
+# ╔═╡ d83ee2b2-4163-43f1-b0ee-3bcc39a7b580
+sample_states * (1:50)
 
-# ╔═╡ c309b799-b9da-4b1c-90e7-b99ec5b0d516
-disorder_mean(data_sf,3)
-
-# ╔═╡ b6b888c7-b46f-49d0-8115-e755ec272027
+# ╔═╡ bb450ebe-b836-4143-be7a-dccf930aad4c
 
 
-# ╔═╡ 0c32ce58-58b4-4c29-b9d8-8de92849cea0
-plot(mean(disorder_std(data_m,n_m);dims=1))
-
-# ╔═╡ aa5f26ed-c2f7-4191-8260-0865d5d610a0
-mean(disorder_std(data_m,n_m);dims=2)
+# ╔═╡ fc2c15cd-156e-4c89-a90d-330d88d1cd25
+begin
+	plot(sample_states * (1:50),df_meandeviation,yaxis=:log)
+	plot!(sample_disorder * (1:50),sf_meandeviation)
+	plot!(1:2500,m_meandeviation)
+end
 
 # ╔═╡ cc9e8551-6291-41fb-b0dd-36f4c2f2849d
 md"# Weak disorder h=4"
 
-# ╔═╡ 4357fec9-fec3-428e-99d4-210bf6150695
-
-
-# ╔═╡ d407860a-5fc0-4928-bbb9-a86f79e29e86
-
-
 # ╔═╡ d9c874bf-37b5-4a5d-b1f0-880016ee7302
 md"# Strong disorder h=12"
 
-# ╔═╡ 9e78403a-600f-48f0-bfd7-82c3893fd63b
-
-
 # ╔═╡ ff2f277f-2d0e-448a-979d-4050b35a0983
 
+
+# ╔═╡ 189594bf-20cc-4dd5-9583-cbe930a04c4a
+begin
+	df_meandeviation_weak = Vector{Float64}(undef,shots)
+	sf_meandeviation_weak = Vector{Float64}(undef,states)
+	m_meandeviation_weak = Vector{Float64}(undef,shots*states)
+	
+	for i in 1:shots
+		df_meandeviation_weak[i] = sum(abs.(df_mean_byd_weak[i]-ref))
+	end
+	for i in 1:states
+		sf_meandeviation_weak[i] = sum(abs.(sf_mean_bys_weak[i]-ref))
+	end
+	for i in 1:shots*states
+		m_meandeviation_weak[i] = sum(abs.(m_mean_bysample_weak[i]-ref))
+	end
+end
+
+# ╔═╡ cf45a056-dac7-4f2b-b972-05764077f107
+begin
+	f_df_weak = "XXX_N13_BS.jld2"
+	f_sf_weak = "XXX_N13_BS.jld2"
+	f_m_weak = "XXX_N13_BS.jld2"
+	f_ref_weak = "XXX_N13_RS.jld2"
+	
+	jobids_df_weak = load(path*f_df_weak,"jobid")
+	params_df_weak = load(path*f_df_weak,"params")
+	data_df_weak = 2*ones(T,N,shots,states)-2*load(path*f_df_weak,"data")
+
+	jobids_sf_weak = load(path*f_sf_weak,"jobid")
+	params_sf_weak = load(path*f_sf_weak,"params")
+	data_sf_weak = 2*ones(T,N,shots,states)-2*load(path*f_sf_weak,"data")
+
+	jobids_m_weak = load(path*f_m_weak,"jobid")
+	params_m_weak = load(path*f_m_weak,"params")
+	data_m_weak = 2*ones(T,N,shots*states)-2*load(path*f_m_weak,"data")
+
+	jobids_ref_weak = load(path*f_ref_weak,"jobid")
+	params_ref_weak = load(path*f_ref_weak,"params")
+	data_ref_weak = 2*ones(T,N,100,10)-2*load(path*f_ref_weak,"data")
+
+	size(data_ref_weak)
+end
+
+# ╔═╡ 4357fec9-fec3-428e-99d4-210bf6150695
+begin
+	df_mean_byd_weak = Vector{Matrix{Float64}}(undef,shots)
+	sf_mean_bys_weak = Vector{Matrix{Float64}}(undef,states)
+	m_mean_bysample_weak = Vector{Matrix{Float64}}(undef,shots*states)
+	for i in 1:shots
+		df_mean_byd_weak[i] = disorder_mean(state_mean(data_df_weak,sample_states),i)
+	end
+	for i in 1:states
+		sf_mean_bys_weak[i] = state_mean(disorder_mean(data_sf_weak,sample_disorder),i)
+	end
+	for i in 1:shots*states
+		m_mean_bysample_weak[i] = disorder_mean(data_m_weak,i)
+	end
+end
+
+# ╔═╡ 0c598c0f-ac2c-41c8-8174-c968a2cb6540
+begin
+	f_df_weak = "XXX_N13_BS.jld2"
+	f_sf_weak = "XXX_N13_BS.jld2"
+	f_m_weak = "XXX_N13_BS.jld2"
+	f_ref_weak = "XXX_N13_RS.jld2"
+	
+	jobids_df_weak = load(path*f_df_weak,"jobid")
+	params_df_weak = load(path*f_df_weak,"params")
+	data_df_weak = 2*ones(T,N,shots,states)-2*load(path*f_df_weak,"data")
+
+	jobids_sf_weak = load(path*f_sf_weak,"jobid")
+	params_sf_weak = load(path*f_sf_weak,"params")
+	data_sf_weak = 2*ones(T,N,shots,states)-2*load(path*f_sf_weak,"data")
+
+	jobids_m_weak = load(path*f_m_weak,"jobid")
+	params_m_weak = load(path*f_m_weak,"params")
+	data_m_weak = 2*ones(T,N,shots*states)-2*load(path*f_m_weak,"data")
+
+	jobids_ref_weak = load(path*f_ref_weak,"jobid")
+	params_ref_weak = load(path*f_ref_weak,"params")
+	data_ref_weak = 2*ones(T,N,100,10)-2*load(path*f_ref_weak,"data")
+
+	size(data_ref_weak)
+end
+
+# ╔═╡ d407860a-5fc0-4928-bbb9-a86f79e29e86
+begin
+	df_meandeviation_weak = Vector{Float64}(undef,shots)
+	sf_meandeviation_weak = Vector{Float64}(undef,states)
+	m_meandeviation_weak = Vector{Float64}(undef,shots*states)
+	
+	for i in 1:shots
+		df_meandeviation_weak[i] = sum(abs.(df_mean_byd_weak[i]-ref))
+	end
+	for i in 1:states
+		sf_meandeviation_weak[i] = sum(abs.(sf_mean_bys_weak[i]-ref))
+	end
+	for i in 1:shots*states
+		m_meandeviation_weak[i] = sum(abs.(m_mean_bysample_weak[i]-ref))
+	end
+end
+
+# ╔═╡ b47b5869-fba8-458b-9b8a-03ba89dcef9b
+begin
+	df_mean_byd_weak = Vector{Matrix{Float64}}(undef,shots)
+	sf_mean_bys_weak = Vector{Matrix{Float64}}(undef,states)
+	m_mean_bysample_weak = Vector{Matrix{Float64}}(undef,shots*states)
+	for i in 1:shots
+		df_mean_byd_weak[i] = disorder_mean(state_mean(data_df_weak,sample_states),i)
+	end
+	for i in 1:states
+		sf_mean_bys_weak[i] = state_mean(disorder_mean(data_sf_weak,sample_disorder),i)
+	end
+	for i in 1:shots*states
+		m_mean_bysample_weak[i] = disorder_mean(data_m_weak,i)
+	end
+end
 
 # ╔═╡ Cell order:
 # ╠═313705be-481a-11ed-17bb-f130b983a175
@@ -194,22 +308,21 @@ md"# Strong disorder h=12"
 # ╠═01b54b4d-47dc-4a57-9490-b691de6fd997
 # ╠═264929c4-375e-4146-a61c-9ce0782433d9
 # ╠═9c6e9d29-8041-494a-b30b-ff042cad3fe5
-# ╠═69a6f50b-fb91-4e66-b2e4-8cc8c59accc1
 # ╠═da94efac-baa7-4b7f-a049-554b026da248
-# ╠═4e5a645a-f930-4179-898a-7861584e5bb2
-# ╠═2291487f-b9a7-4d05-9cf8-ab326e285d68
-# ╠═162feefd-1c8b-4d21-bf80-f662b47a319f
-# ╠═4316ddfd-9044-489d-8352-4c1931481849
-# ╠═c415e17b-413e-49aa-9dcb-9a8318f7b907
-# ╠═081ef8da-667a-4fc6-95be-1f0e2fb51412
-# ╠═2e714e7b-b376-4833-bda0-f914787c0511
-# ╠═c309b799-b9da-4b1c-90e7-b99ec5b0d516
-# ╠═b6b888c7-b46f-49d0-8115-e755ec272027
-# ╠═0c32ce58-58b4-4c29-b9d8-8de92849cea0
-# ╠═aa5f26ed-c2f7-4191-8260-0865d5d610a0
+# ╠═56b08a04-4ae1-43b6-ae5a-32e997357f3a
+# ╠═f8b8c837-ed9e-43f6-a2fb-b1e6908c010b
+# ╠═d37571e5-9e66-4410-815f-71227cf15598
+# ╠═879c6440-2888-4770-93ff-7e33fe8cf1ee
+# ╠═f1b5be26-ef2d-4b1a-8284-797171679664
+# ╠═d83ee2b2-4163-43f1-b0ee-3bcc39a7b580
+# ╠═bb450ebe-b836-4143-be7a-dccf930aad4c
+# ╠═fc2c15cd-156e-4c89-a90d-330d88d1cd25
 # ╠═cc9e8551-6291-41fb-b0dd-36f4c2f2849d
+# ╠═cf45a056-dac7-4f2b-b972-05764077f107
 # ╠═4357fec9-fec3-428e-99d4-210bf6150695
 # ╠═d407860a-5fc0-4928-bbb9-a86f79e29e86
 # ╠═d9c874bf-37b5-4a5d-b1f0-880016ee7302
-# ╠═9e78403a-600f-48f0-bfd7-82c3893fd63b
+# ╠═0c598c0f-ac2c-41c8-8174-c968a2cb6540
+# ╠═b47b5869-fba8-458b-9b8a-03ba89dcef9b
+# ╠═189594bf-20cc-4dd5-9583-cbe930a04c4a
 # ╠═ff2f277f-2d0e-448a-979d-4050b35a0983

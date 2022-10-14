@@ -1,0 +1,2056 @@
+Added MKL.jl
+Project LightCones v0.1.0
+Status `/lustre/work/ws/ws1/hd_ku269-light_cones/LightCones/Project.toml`
+  [7d9fca2a] Arpack v0.5.3
+  [7073ff75] IJulia v1.23.3
+  [033835bb] JLD2 v0.4.25
+  [0b1a1467] KrylovKit v0.5.4
+  [d3d80556] LineSearches v7.2.0
+  [33e6dc65] MKL v0.5.0
+  [429524aa] Optim v1.7.3
+  [91a5bcdd] Plots v1.35.3
+  [c3e4b0f8] Pluto v0.19.13
+  [3c0b384b] QuantumInformation v0.4.9
+  [189a3867] Reexport v1.2.2
+  [295af30f] Revise v3.4.0
+  [ebcc8a00] SpinSymmetry v0.3.3
+  [59d54670] ThreadedSparseArrays v0.2.2
+  [ade2ca70] Dates
+  [8ba89e20] Distributed
+  [37e2e46d] LinearAlgebra
+  [de0858da] Printf
+  [9a3f8284] Random
+  [1a1011a3] SharedArrays
+  [2f01184e] SparseArrays
+  [10745b16] Statistics
+[2022-10-13T23:51:25.416]**********RANDOM FIELDS**********
+shared_krylov.jl
+Working Directory:          /lustre/work/ws/ws1/hd_ku269-light_cones/LightCones
+SLURM Directory:            /lustre/work/ws/ws1/hd_ku269-light_cones/LightCones 
+Running on host:            n1427
+Job id:                     7347454
+Job name:                   otoc_simulation_N13_BS_sector_AVP_ref
+Number of nodes allocated:  
+Number of cores allocated:  1
+#threads of Julia:          96
+#threads of BLAS:           1
+ARGS = ["13", "100", "10", "RS", "z", "0"]
+LOCATION = "/lustre/work/ws/ws1/hd_ku269-logs/LightCones/2022-10-13"
+N = 13
+SHOTS = 100
+MULT_RANDOM_STATES = true
+N_RANDOM_STATES = 10
+TYPE_OF_RS = "RS"
+OBSERVABLE = "z"
+DISORDER_PARAM = 0.0
+[2022-10-13T23:51:25.604]**********Running simulation**********
+[2022-10-13T23:51:25.659]trange = 0.0:0.1:5.0
+[2022-10-13T23:51:27.271]A=σz
+before H
+after H
+memory allocated: 1194504memory of full H: 5308584test
+ 84.361232 seconds (137.33 M allocations: 155.626 GiB, 38.81% gc time, 22.96% compilation time) 75.427741 seconds (109.28 M allocations: 154.293 GiB, 42.32% gc time, 13.84% compilation time)
+ 84.349784 seconds (137.30 M allocations: 155.615 GiB, 38.81% gc time, 22.94% compilation time)
+[[2022-10-13T23:52:53.817]Completed Shot 1, state 7
+2022-10-13T23:52:53.817]Completed Shot 1, state 5
+
+ 84.343102 seconds (137.30 M allocations: 155.607 GiB, 38.82% gc time, 22.95% compilation time)
+[2022-10-13T23:52:53.817]Completed Shot 1, state 10
+[2022-10-13T23:52:53.817]Completed Shot 1, state 6
+ 75.255085 seconds (107.78 M allocations: 153.956 GiB, 42.42% gc time, 13.65% compilation time)
+[2022-10-13T23:52:53.818]Completed Shot 1, state 9
+ 75.323667 seconds (107.90 M allocations: 154.028 GiB, 42.38% gc time, 13.69% compilation time)
+[2022-10-13T23:52:53.847]Completed Shot 1, state 3
+ 84.423904 seconds (137.37 M allocations: 155.669 GiB, 38.78% gc time, 22.96% compilation time)
+[2022-10-13T23:52:53.868]Completed Shot 1, state 1
+ 84.445240 seconds (137.37 M allocations: 155.684 GiB, 38.77% gc time, 22.94% compilation time)
+[2022-10-13T23:52:53.898]Completed Shot 1, state 2
+ 75.567465 seconds (109.88 M allocations: 154.461 GiB, 42.24% gc time, 13.88% compilation time)
+[2022-10-13T23:52:53.910]Completed Shot 1, state 8
+ 75.863807 seconds (109.03 M allocations: 154.341 GiB, 42.08% gc time, 13.78% compilation time)
+[2022-10-13T23:52:54.242]Completed Shot 1, state 4
+ 35.007187 seconds (103.10 M allocations: 153.899 GiB, 38.62% gc time)
+[2022-10-13T23:53:29.258]Completed Shot 2, state 4
+ 35.072542 seconds (103.23 M allocations: 154.094 GiB, 38.55% gc time)
+[2022-10-13T23:53:29.323]Completed Shot 2, state 1
+ 35.080264 seconds (103.24 M allocations: 154.109 GiB, 38.54% gc time)
+[2022-10-13T23:53:29.331]Completed Shot 2, state 6
+ 35.101199 seconds (103.26 M allocations: 154.139 GiB, 38.51% gc time)
+[2022-10-13T23:53:29.351]Completed Shot 2, state 2
+ 35.116903 seconds (103.27 M allocations: 154.152 GiB, 38.50% gc time)
+[2022-10-13T23:53:29.368]Completed Shot 2, state 10
+ 35.125891 seconds (103.27 M allocations: 154.159 GiB, 38.49% gc time)
+ 35.125788 seconds (103.27 M allocations: 154.159 GiB, 38.49% gc time)
+[2022-10-13T23:53:29.376]Completed Shot 2, state 3
+[2022-10-13T23:53:29.377]Completed Shot 2, state 5
+ 35.129635 seconds (103.27 M allocations: 154.160 GiB, 38.48% gc time)
+[2022-10-13T23:53:29.380]Completed Shot 2, state 7
+ 35.136743 seconds (103.28 M allocations: 154.162 GiB, 38.48% gc time)
+[2022-10-13T23:53:29.387]Completed Shot 2, state 8
+ 35.243683 seconds (103.28 M allocations: 154.168 GiB, 38.36% gc time)
+[2022-10-13T23:53:29.494]Completed Shot 2, state 9
+ 37.496599 seconds (103.17 M allocations: 154.010 GiB, 38.45% gc time)
+[2022-10-13T23:54:06.999]Completed Shot 3, state 10
+ 37.530501 seconds (103.22 M allocations: 154.079 GiB, 38.41% gc time)
+[2022-10-13T23:54:07.032]Completed Shot 3, state 8
+ 37.535807 seconds (103.23 M allocations: 154.088 GiB, 38.41% gc time)
+[2022-10-13T23:54:07.037]Completed Shot 3, state 2
+ 37.547869 seconds (103.24 M allocations: 154.102 GiB, 38.39% gc time)
+[2022-10-13T23:54:07.049]Completed Shot 3, state 4
+ 37.591652 seconds (103.26 M allocations: 154.141 GiB, 38.35% gc time)
+[2022-10-13T23:54:07.093]Completed Shot 3, state 6
+ 37.601486 seconds (103.27 M allocations: 154.149 GiB, 38.34% gc time)
+[2022-10-13T23:54:07.103]Completed Shot 3, state 1
+ 37.604584 seconds (103.27 M allocations: 154.151 GiB, 38.34% gc time)
+[2022-10-13T23:54:07.106]Completed Shot 3, state 3
+ 37.623032 seconds (103.28 M allocations: 154.161 GiB, 38.32% gc time)
+[2022-10-13T23:54:07.125]Completed Shot 3, state 7
+ 37.628774 seconds (103.28 M allocations: 154.164 GiB, 38.31% gc time)
+[2022-10-13T23:54:07.130]Completed Shot 3, state 5
+ 37.714703 seconds (103.28 M allocations: 154.168 GiB, 38.22% gc time)
+[2022-10-13T23:54:07.216]Completed Shot 3, state 9
+ 40.478056 seconds (103.21 M allocations: 154.067 GiB, 40.32% gc time)
+[2022-10-13T23:54:47.703]Completed Shot 4, state 5
+ 40.478644 seconds (103.21 M allocations: 154.068 GiB, 40.32% gc time)
+[2022-10-13T23:54:47.703]Completed Shot 4, state 2
+ 40.486828 seconds (103.22 M allocations: 154.081 GiB, 40.32% gc time)
+[2022-10-13T23:54:47.711]Completed Shot 4, state 7
+ 40.510664 seconds (103.24 M allocations: 154.109 GiB, 40.29% gc time)
+[2022-10-13T23:54:47.735]Completed Shot 4, state 9
+ 40.533125 seconds (103.26 M allocations: 154.130 GiB, 40.27% gc time)
+[2022-10-13T23:54:47.758]Completed Shot 4, state 6
+ 40.575633 seconds (103.27 M allocations: 154.157 GiB, 40.23% gc time)
+[2022-10-13T23:54:47.800]Completed Shot 4, state 1
+ 40.575999 seconds (103.27 M allocations: 154.157 GiB, 40.23% gc time)
+[2022-10-13T23:54:47.801]Completed Shot 4, state 4
+ 40.594732 seconds (103.28 M allocations: 154.163 GiB, 40.21% gc time)
+[2022-10-13T23:54:47.819]Completed Shot 4, state 10
+ 40.600686 seconds (103.28 M allocations: 154.166 GiB, 40.20% gc time)
+[2022-10-13T23:54:47.825]Completed Shot 4, state 8
+ 40.648026 seconds (103.28 M allocations: 154.168 GiB, 40.16% gc time)
+[2022-10-13T23:54:47.873]Completed Shot 4, state 3
+ 38.051126 seconds (103.13 M allocations: 153.957 GiB, 37.53% gc time)
+[2022-10-13T23:55:25.932]Completed Shot 5, state 6
+ 38.101950 seconds (103.22 M allocations: 154.076 GiB, 37.48% gc time)
+[2022-10-13T23:55:25.983]Completed Shot 5, state 7
+ 38.113991 seconds (103.23 M allocations: 154.096 GiB, 37.47% gc time)
+[2022-10-13T23:55:25.995]Completed Shot 5, state 2
+ 38.146714 seconds (103.25 M allocations: 154.133 GiB, 37.44% gc time)
+[2022-10-13T23:55:26.027]Completed Shot 5, state 4
+ 38.157220 seconds (103.26 M allocations: 154.142 GiB, 37.43% gc time)
+[2022-10-13T23:55:26.038]Completed Shot 5, state 10
+ 38.178153 seconds (103.27 M allocations: 154.157 GiB, 37.40% gc time)
+[2022-10-13T23:55:26.059]Completed Shot 5, state 3
+ 38.179189 seconds (103.27 M allocations: 154.158 GiB, 37.40% gc time)
+[2022-10-13T23:55:26.059]Completed Shot 5, state 1
+ 38.190915 seconds (103.28 M allocations: 154.163 GiB, 37.39% gc time)
+[2022-10-13T23:55:26.072]Completed Shot 5, state 8
+ 38.195729 seconds (103.28 M allocations: 154.165 GiB, 37.39% gc time)
+[2022-10-13T23:55:26.076]Completed Shot 5, state 5
+ 38.214961 seconds (103.28 M allocations: 154.167 GiB, 37.37% gc time)
+[2022-10-13T23:55:26.096]Completed Shot 5, state 9
+ 37.691156 seconds (103.21 M allocations: 154.068 GiB, 36.93% gc time)
+[2022-10-13T23:56:03.794]Completed Shot 6, state 2
+ 37.715433 seconds (103.24 M allocations: 154.100 GiB, 36.91% gc time)
+[2022-10-13T23:56:03.819]Completed Shot 6, state 9
+ 37.731830 seconds (103.25 M allocations: 154.120 GiB, 36.89% gc time)
+[2022-10-13T23:56:03.835]Completed Shot 6, state 3
+ 37.738964 seconds (103.25 M allocations: 154.129 GiB, 36.89% gc time)
+[2022-10-13T23:56:03.842]Completed Shot 6, state 6
+ 37.747447 seconds (103.26 M allocations: 154.137 GiB, 36.88% gc time)
+[2022-10-13T23:56:03.851]Completed Shot 6, state 8
+ 37.751814 seconds (103.26 M allocations: 154.141 GiB, 36.88% gc time)
+[2022-10-13T23:56:03.855]Completed Shot 6, state 1
+ 37.755265 seconds (103.26 M allocations: 154.142 GiB, 36.87% gc time)
+[2022-10-13T23:56:03.859]Completed Shot 6, state 10
+ 37.783223 seconds (103.27 M allocations: 154.156 GiB, 36.84% gc time)
+[2022-10-13T23:56:03.887]Completed Shot 6, state 4
+ 37.799258 seconds (103.28 M allocations: 154.162 GiB, 36.83% gc time)
+[2022-10-13T23:56:03.903]Completed Shot 6, state 7
+ 37.935480 seconds (103.28 M allocations: 154.168 GiB, 36.70% gc time)
+[2022-10-13T23:56:04.039]Completed Shot 6, state 5
+ 56.381163 seconds (103.22 M allocations: 154.084 GiB, 60.23% gc time)
+[2022-10-13T23:57:00.427]Completed Shot 7, state 6
+ 56.383089 seconds (103.23 M allocations: 154.087 GiB, 60.23% gc time)
+[2022-10-13T23:57:00.429]Completed Shot 7, state 2
+ 56.383116 seconds (103.23 M allocations: 154.087 GiB, 60.23% gc time)
+[2022-10-13T23:57:00.429]Completed Shot 7, state 3
+ 56.391659 seconds (103.23 M allocations: 154.097 GiB, 60.22% gc time)
+[2022-10-13T23:57:00.438]Completed Shot 7, state 4
+ 56.411594 seconds (103.24 M allocations: 154.116 GiB, 60.20% gc time)
+[2022-10-13T23:57:00.458]Completed Shot 7, state 10
+ 56.438217 seconds (103.26 M allocations: 154.139 GiB, 60.17% gc time)
+[2022-10-13T23:57:00.484]Completed Shot 7, state 7
+ 56.459503 seconds (103.27 M allocations: 154.154 GiB, 60.15% gc time)
+[2022-10-13T23:57:00.506]Completed Shot 7, state 5
+ 56.462200 seconds (103.27 M allocations: 154.155 GiB, 60.15% gc time)
+[2022-10-13T23:57:00.508]Completed Shot 7, state 8
+ 56.478711 seconds (103.28 M allocations: 154.162 GiB, 60.13% gc time)
+[2022-10-13T23:57:00.525]Completed Shot 7, state 1
+ 56.617244 seconds (103.28 M allocations: 154.168 GiB, 59.98% gc time)
+[2022-10-13T23:57:00.664]Completed Shot 7, state 9
+ 36.431107 seconds (103.19 M allocations: 154.030 GiB, 42.07% gc time)
+[2022-10-13T23:57:37.103]Completed Shot 8, state 7
+ 36.436792 seconds (103.20 M allocations: 154.042 GiB, 42.07% gc time)
+[2022-10-13T23:57:37.109]Completed Shot 8, state 9
+ 36.458857 seconds (103.22 M allocations: 154.076 GiB, 42.04% gc time)
+[2022-10-13T23:57:37.131]Completed Shot 8, state 4
+ 36.474797 seconds (103.23 M allocations: 154.094 GiB, 42.02% gc time)
+[2022-10-13T23:57:37.147]Completed Shot 8, state 6
+ 36.491701 seconds (103.24 M allocations: 154.111 GiB, 42.00% gc time)
+[2022-10-13T23:57:37.164]Completed Shot 8, state 5
+ 36.519467 seconds (103.26 M allocations: 154.135 GiB, 41.97% gc time)
+[2022-10-13T23:57:37.191]Completed Shot 8, state 3
+ 36.536456 seconds (103.26 M allocations: 154.143 GiB, 41.95% gc time)
+[2022-10-13T23:57:37.208]Completed Shot 8, state 8
+ 36.537128 seconds (103.26 M allocations: 154.143 GiB, 41.95% gc time)
+[2022-10-13T23:57:37.209]Completed Shot 8, state 1
+ 36.605308 seconds (103.28 M allocations: 154.164 GiB, 41.87% gc time)
+[2022-10-13T23:57:37.277]Completed Shot 8, state 10
+ 36.671089 seconds (103.28 M allocations: 154.168 GiB, 41.80% gc time)
+[2022-10-13T23:57:37.343]Completed Shot 8, state 2
+ 36.541795 seconds (103.22 M allocations: 154.088 GiB, 41.98% gc time)
+[2022-10-13T23:58:13.892]Completed Shot 9, state 5
+ 36.543717 seconds (103.23 M allocations: 154.090 GiB, 41.98% gc time)
+[2022-10-13T23:58:13.894]Completed Shot 9, state 10
+ 36.563229 seconds (103.24 M allocations: 154.114 GiB, 41.96% gc time)
+[2022-10-13T23:58:13.914]Completed Shot 9, state 9
+ 36.579620 seconds (103.25 M allocations: 154.132 GiB, 41.94% gc time)
+[2022-10-13T23:58:13.930]Completed Shot 9, state 4
+ 36.582571 seconds (103.26 M allocations: 154.134 GiB, 41.94% gc time)
+[2022-10-13T23:58:13.933]Completed Shot 9, state 6
+ 36.583551 seconds (103.26 M allocations: 154.135 GiB, 41.93% gc time)
+[2022-10-13T23:58:13.934]Completed Shot 9, state 1
+ 36.592202 seconds (103.26 M allocations: 154.140 GiB, 41.92% gc time)
+[2022-10-13T23:58:13.943]Completed Shot 9, state 3
+ 36.646944 seconds (103.28 M allocations: 154.165 GiB, 41.86% gc time)
+[2022-10-13T23:58:13.997]Completed Shot 9, state 2
+ 36.653181 seconds (103.28 M allocations: 154.167 GiB, 41.85% gc time)
+[2022-10-13T23:58:14.004]Completed Shot 9, state 8
+ 36.676767 seconds (103.28 M allocations: 154.168 GiB, 41.83% gc time)
+[2022-10-13T23:58:14.027]Completed Shot 9, state 7
+ 36.726685 seconds (103.21 M allocations: 154.068 GiB, 41.65% gc time)
+ 36.726531 seconds (103.21 M allocations: 154.068 GiB, 41.65% gc time)
+[[2022-10-13T23:58:50.764]Completed Shot 10, state 1
+2022-10-13T23:58:50.764]Completed Shot 10, state 2
+ 36.739795 seconds (103.23 M allocations: 154.092 GiB, 41.63% gc time)
+[2022-10-13T23:58:50.777]Completed Shot 10, state 5
+ 36.762789 seconds (103.25 M allocations: 154.123 GiB, 41.60% gc time)
+[2022-10-13T23:58:50.800]Completed Shot 10, state 3
+ 36.774985 seconds (103.26 M allocations: 154.136 GiB, 41.59% gc time)
+[2022-10-13T23:58:50.812]Completed Shot 10, state 10
+ 36.787832 seconds (103.27 M allocations: 154.148 GiB, 41.58% gc time)
+[2022-10-13T23:58:50.825]Completed Shot 10, state 6
+ 36.797471 seconds (103.27 M allocations: 154.155 GiB, 41.57% gc time)
+[2022-10-13T23:58:50.835]Completed Shot 10, state 4
+ 36.800242 seconds (103.27 M allocations: 154.157 GiB, 41.56% gc time)
+[2022-10-13T23:58:50.838]Completed Shot 10, state 7
+ 36.821299 seconds (103.28 M allocations: 154.167 GiB, 41.54% gc time)
+[2022-10-13T23:58:50.859]Completed Shot 10, state 9
+ 36.845414 seconds (103.28 M allocations: 154.168 GiB, 41.51% gc time)
+[2022-10-13T23:58:50.883]Completed Shot 10, state 8
+ 36.485654 seconds (103.12 M allocations: 153.929 GiB, 41.38% gc time)
+[2022-10-13T23:59:27.376]Completed Shot 11, state 10
+ 36.515427 seconds (103.17 M allocations: 154.010 GiB, 41.34% gc time)
+[2022-10-13T23:59:27.406]Completed Shot 11, state 4
+ 36.541242 seconds (103.21 M allocations: 154.063 GiB, 41.31% gc time)
+[2022-10-13T23:59:27.432]Completed Shot 11, state 3
+ 36.584920 seconds (103.25 M allocations: 154.123 GiB, 41.26% gc time)
+[2022-10-13T23:59:27.476]Completed Shot 11, state 9
+ 36.602363 seconds (103.26 M allocations: 154.142 GiB, 41.24% gc time)
+[2022-10-13T23:59:27.493]Completed Shot 11, state 8
+ 36.602864 seconds (103.26 M allocations: 154.143 GiB, 41.24% gc time)
+[2022-10-13T23:59:27.493]Completed Shot 11, state 1
+ 36.610359 seconds (103.27 M allocations: 154.150 GiB, 41.23% gc time)
+[2022-10-13T23:59:27.501]Completed Shot 11, state 2
+ 36.623488 seconds (103.27 M allocations: 154.155 GiB, 41.22% gc time)
+[2022-10-13T23:59:27.514]Completed Shot 11, state 6
+ 36.626920 seconds (103.27 M allocations: 154.156 GiB, 41.22% gc time)
+[2022-10-13T23:59:27.518]Completed Shot 11, state 7
+ 36.759160 seconds (103.28 M allocations: 154.168 GiB, 41.07% gc time)
+[2022-10-13T23:59:27.650]Completed Shot 11, state 5
+ 36.897277 seconds (103.10 M allocations: 153.897 GiB, 40.16% gc time)
+[2022-10-14T00:00:04.555]Completed Shot 12, state 5
+ 36.974056 seconds (103.21 M allocations: 154.066 GiB, 40.08% gc time)
+[2022-10-14T00:00:04.631]Completed Shot 12, state 6
+ 36.974135 seconds (103.21 M allocations: 154.066 GiB, 40.08% gc time)
+[2022-10-14T00:00:04.631]Completed Shot 12, state 7
+ 36.980812 seconds (103.22 M allocations: 154.075 GiB, 40.07% gc time)
+[2022-10-14T00:00:04.638]Completed Shot 12, state 8
+ 36.997144 seconds (103.23 M allocations: 154.094 GiB, 40.05% gc time)
+[2022-10-14T00:00:04.654]Completed Shot 12, state 4
+ 37.008874 seconds (103.24 M allocations: 154.107 GiB, 40.04% gc time)
+[2022-10-14T00:00:04.666]Completed Shot 12, state 3
+ 37.063173 seconds (103.27 M allocations: 154.148 GiB, 39.98% gc time)
+[2022-10-14T00:00:04.720]Completed Shot 12, state 9
+ 37.089165 seconds (103.28 M allocations: 154.160 GiB, 39.95% gc time)
+[2022-10-14T00:00:04.746]Completed Shot 12, state 1
+ 37.096103 seconds (103.28 M allocations: 154.161 GiB, 39.95% gc time)
+[2022-10-14T00:00:04.753]Completed Shot 12, state 10
+ 37.247404 seconds (103.28 M allocations: 154.168 GiB, 39.78% gc time)
+[2022-10-14T00:00:04.905]Completed Shot 12, state 2
+ 39.816979 seconds (103.18 M allocations: 154.017 GiB, 42.43% gc time)
+[2022-10-14T00:00:44.732]Completed Shot 13, state 6
+ 39.817483 seconds (103.18 M allocations: 154.019 GiB, 42.43% gc time)
+[2022-10-14T00:00:44.732]Completed Shot 13, state 5
+ 39.838272 seconds (103.20 M allocations: 154.054 GiB, 42.40% gc time)
+[2022-10-14T00:00:44.753]Completed Shot 13, state 3
+ 39.863971 seconds (103.22 M allocations: 154.090 GiB, 42.38% gc time)
+[2022-10-14T00:00:44.778]Completed Shot 13, state 2
+ 39.920624 seconds (103.26 M allocations: 154.142 GiB, 42.32% gc time)
+[2022-10-14T00:00:44.835]Completed Shot 13, state 8
+ 39.921254 seconds (103.26 M allocations: 154.143 GiB, 42.32% gc time)
+[2022-10-14T00:00:44.836]Completed Shot 13, state 7
+ 39.938753 seconds (103.27 M allocations: 154.150 GiB, 42.30% gc time)
+[2022-10-14T00:00:44.853]Completed Shot 13, state 10
+ 39.938737 seconds (103.27 M allocations: 154.150 GiB, 42.30% gc time)
+[2022-10-14T00:00:44.853]Completed Shot 13, state 9
+ 39.972967 seconds (103.27 M allocations: 154.162 GiB, 42.26% gc time)
+[2022-10-14T00:00:44.887]Completed Shot 13, state 1
+ 40.088878 seconds (103.28 M allocations: 154.168 GiB, 42.14% gc time)
+[2022-10-14T00:00:45.003]Completed Shot 13, state 4
+ 36.034318 seconds (102.93 M allocations: 153.641 GiB, 41.38% gc time)
+[2022-10-14T00:01:21.046]Completed Shot 14, state 2
+ 36.123780 seconds (103.15 M allocations: 153.981 GiB, 41.28% gc time)
+[2022-10-14T00:01:21.135]Completed Shot 14, state 9
+ 36.134068 seconds (103.17 M allocations: 154.006 GiB, 41.27% gc time)
+[2022-10-14T00:01:21.145]Completed Shot 14, state 1
+ 36.204913 seconds (103.25 M allocations: 154.116 GiB, 41.19% gc time)
+[2022-10-14T00:01:21.217]Completed Shot 14, state 7
+ 36.242944 seconds (103.27 M allocations: 154.148 GiB, 41.15% gc time)
+[2022-10-14T00:01:21.255]Completed Shot 14, state 5
+ 36.254363 seconds (103.27 M allocations: 154.156 GiB, 41.13% gc time)
+ 36.254393 seconds (103.27 M allocations: 154.156 GiB, 41.13% gc time)
+[2022-10-14T00:01:21.266]Completed Shot 14, state 10
+[2022-10-14T00:01:21.266]Completed Shot 14, state 6
+ 36.264326 seconds (103.28 M allocations: 154.160 GiB, 41.12% gc time)
+[2022-10-14T00:01:21.276]Completed Shot 14, state 8
+ 36.282552 seconds (103.28 M allocations: 154.166 GiB, 41.10% gc time)
+[2022-10-14T00:01:21.294]Completed Shot 14, state 3
+ 36.294595 seconds (103.28 M allocations: 154.167 GiB, 41.09% gc time)
+[2022-10-14T00:01:21.306]Completed Shot 14, state 4
+ 35.307385 seconds (103.16 M allocations: 153.996 GiB, 39.72% gc time)
+[2022-10-14T00:01:56.621]Completed Shot 15, state 6
+ 35.320321 seconds (103.18 M allocations: 154.025 GiB, 39.70% gc time)
+[2022-10-14T00:01:56.634]Completed Shot 15, state 5
+ 35.347966 seconds (103.22 M allocations: 154.074 GiB, 39.67% gc time)
+[2022-10-14T00:01:56.662]Completed Shot 15, state 10
+ 35.348243 seconds (103.22 M allocations: 154.074 GiB, 39.67% gc time)
+[2022-10-14T00:01:56.662]Completed Shot 15, state 7
+ 35.362776 seconds (103.23 M allocations: 154.092 GiB, 39.66% gc time)
+[2022-10-14T00:01:56.677]Completed Shot 15, state 3
+ 35.397347 seconds (103.25 M allocations: 154.122 GiB, 39.62% gc time)
+[2022-10-14T00:01:56.711]Completed Shot 15, state 9
+ 35.445619 seconds (103.27 M allocations: 154.161 GiB, 39.56% gc time)
+[2022-10-14T00:01:56.759]Completed Shot 15, state 2
+ 35.451380 seconds (103.28 M allocations: 154.164 GiB, 39.56% gc time)
+[2022-10-14T00:01:56.765]Completed Shot 15, state 1
+ 35.463248 seconds (103.28 M allocations: 154.167 GiB, 39.54% gc time)
+[2022-10-14T00:01:56.777]Completed Shot 15, state 8
+ 35.463412 seconds (103.28 M allocations: 154.168 GiB, 39.54% gc time)
+[2022-10-14T00:01:56.777]Completed Shot 15, state 4
+ 36.353389 seconds (103.18 M allocations: 154.027 GiB, 41.65% gc time)
+[2022-10-14T00:02:33.138]Completed Shot 16, state 3
+ 36.362126 seconds (103.20 M allocations: 154.048 GiB, 41.64% gc time)
+[2022-10-14T00:02:33.147]Completed Shot 16, state 7
+ 36.386116 seconds (103.23 M allocations: 154.092 GiB, 41.61% gc time)
+[2022-10-14T00:02:33.171]Completed Shot 16, state 10
+ 36.402383 seconds (103.24 M allocations: 154.111 GiB, 41.59% gc time)
+[2022-10-14T00:02:33.187]Completed Shot 16, state 6
+ 36.413747 seconds (103.25 M allocations: 154.121 GiB, 41.58% gc time)
+[2022-10-14T00:02:33.199]Completed Shot 16, state 9
+ 36.432573 seconds (103.26 M allocations: 154.133 GiB, 41.56% gc time)
+[2022-10-14T00:02:33.217]Completed Shot 16, state 8
+ 36.432872 seconds (103.26 M allocations: 154.133 GiB, 41.56% gc time)
+[2022-10-14T00:02:33.218]Completed Shot 16, state 4
+ 36.481951 seconds (103.27 M allocations: 154.157 GiB, 41.50% gc time)
+[2022-10-14T00:02:33.267]Completed Shot 16, state 2
+ 36.506420 seconds (103.28 M allocations: 154.166 GiB, 41.47% gc time)
+[2022-10-14T00:02:33.291]Completed Shot 16, state 1
+ 36.541408 seconds (103.28 M allocations: 154.168 GiB, 41.43% gc time)
+[2022-10-14T00:02:33.326]Completed Shot 16, state 5
+ 36.837175 seconds (103.18 M allocations: 154.023 GiB, 42.22% gc time)
+[2022-10-14T00:03:10.171]Completed Shot 17, state 8
+ 36.845943 seconds (103.19 M allocations: 154.040 GiB, 42.21% gc time)
+[2022-10-14T00:03:10.180]Completed Shot 17, state 2
+ 36.851747 seconds (103.20 M allocations: 154.051 GiB, 42.20% gc time)
+[2022-10-14T00:03:10.186]Completed Shot 17, state 7
+ 36.870744 seconds (103.22 M allocations: 154.079 GiB, 42.18% gc time)
+[2022-10-14T00:03:10.204]Completed Shot 17, state 1
+ 36.875257 seconds (103.22 M allocations: 154.084 GiB, 42.17% gc time)
+[2022-10-14T00:03:10.209]Completed Shot 17, state 6
+ 36.918689 seconds (103.25 M allocations: 154.133 GiB, 42.12% gc time)
+[2022-10-14T00:03:10.253]Completed Shot 17, state 4
+ 36.950578 seconds (103.27 M allocations: 154.158 GiB, 42.09% gc time)
+[2022-10-14T00:03:10.285]Completed Shot 17, state 9
+ 36.957807 seconds (103.27 M allocations: 154.162 GiB, 42.08% gc time)
+[2022-10-14T00:03:10.292]Completed Shot 17, state 5
+ 36.969942 seconds (103.28 M allocations: 154.166 GiB, 42.07% gc time)
+[2022-10-14T00:03:10.304]Completed Shot 17, state 3
+ 37.015965 seconds (103.28 M allocations: 154.166 GiB, 42.01% gc time)
+[2022-10-14T00:03:10.350]Completed Shot 17, state 10
+ 35.991962 seconds (103.22 M allocations: 154.091 GiB, 39.68% gc time)
+[2022-10-14T00:03:46.350]Completed Shot 18, state 7
+ 36.002052 seconds (103.23 M allocations: 154.104 GiB, 39.67% gc time)
+[2022-10-14T00:03:46.360]Completed Shot 18, state 5
+ 36.004836 seconds (103.23 M allocations: 154.107 GiB, 39.67% gc time)
+[2022-10-14T00:03:46.363]Completed Shot 18, state 3
+ 36.023395 seconds (103.25 M allocations: 154.127 GiB, 39.65% gc time)
+[2022-10-14T00:03:46.382]Completed Shot 18, state 2
+ 36.047036 seconds (103.26 M allocations: 154.147 GiB, 39.62% gc time)
+[2022-10-14T00:03:46.405]Completed Shot 18, state 1
+ 36.046884 seconds (103.26 M allocations: 154.146 GiB, 39.62% gc time)
+[2022-10-14T00:03:46.405]Completed Shot 18, state 8
+ 36.051371 seconds (103.26 M allocations: 154.149 GiB, 39.62% gc time)
+[2022-10-14T00:03:46.410]Completed Shot 18, state 6
+ 36.053327 seconds (103.26 M allocations: 154.150 GiB, 39.61% gc time)
+[2022-10-14T00:03:46.412]Completed Shot 18, state 10
+ 36.105300 seconds (103.28 M allocations: 154.168 GiB, 39.56% gc time)
+[2022-10-14T00:03:46.464]Completed Shot 18, state 4
+ 36.105257 seconds (103.28 M allocations: 154.168 GiB, 39.56% gc time)
+[2022-10-14T00:03:46.464]Completed Shot 18, state 9
+ 36.730755 seconds (103.22 M allocations: 154.074 GiB, 41.35% gc time)
+[2022-10-14T00:04:23.202]Completed Shot 19, state 7
+ 38.009054 seconds (103.24 M allocations: 154.116 GiB, 43.26% gc time)
+[2022-10-14T00:04:24.480]Completed Shot 19, state 2
+ 38.020516 seconds (103.25 M allocations: 154.131 GiB, 43.25% gc time)
+[2022-10-14T00:04:24.491]Completed Shot 19, state 6
+ 38.025330 seconds (103.26 M allocations: 154.136 GiB, 43.24% gc time)
+[2022-10-14T00:04:24.496]Completed Shot 19, state 8
+ 38.025716 seconds (103.26 M allocations: 154.136 GiB, 43.24% gc time)
+[2022-10-14T00:04:24.497]Completed Shot 19, state 9
+ 38.038621 seconds (103.26 M allocations: 154.145 GiB, 43.23% gc time)
+[2022-10-14T00:04:24.509]Completed Shot 19, state 1
+ 38.061929 seconds (103.27 M allocations: 154.160 GiB, 43.20% gc time)
+[2022-10-14T00:04:24.533]Completed Shot 19, state 4
+ 38.064828 seconds (103.28 M allocations: 154.161 GiB, 43.20% gc time)
+[2022-10-14T00:04:24.536]Completed Shot 19, state 5
+ 38.084432 seconds (103.28 M allocations: 154.167 GiB, 43.17% gc time)
+[2022-10-14T00:04:24.555]Completed Shot 19, state 3
+ 38.101307 seconds (103.28 M allocations: 154.168 GiB, 43.15% gc time)
+[2022-10-14T00:04:24.572]Completed Shot 19, state 10
+ 35.247068 seconds (103.13 M allocations: 153.955 GiB, 39.91% gc time)
+[2022-10-14T00:04:59.827]Completed Shot 20, state 7
+ 35.302753 seconds (103.23 M allocations: 154.099 GiB, 39.85% gc time)
+[2022-10-14T00:04:59.883]Completed Shot 20, state 3
+ 35.308509 seconds (103.24 M allocations: 154.107 GiB, 39.84% gc time)
+[2022-10-14T00:04:59.889]Completed Shot 20, state 2
+ 35.320250 seconds (103.25 M allocations: 154.121 GiB, 39.83% gc time)
+[2022-10-14T00:04:59.900]Completed Shot 20, state 6
+ 35.325813 seconds (103.25 M allocations: 154.126 GiB, 39.82% gc time)
+[2022-10-14T00:04:59.906]Completed Shot 20, state 10
+ 35.344927 seconds (103.26 M allocations: 154.141 GiB, 39.80% gc time)
+[2022-10-14T00:04:59.925]Completed Shot 20, state 1
+ 35.358908 seconds (103.27 M allocations: 154.147 GiB, 39.79% gc time)
+[2022-10-14T00:04:59.939]Completed Shot 20, state 4
+ 35.374580 seconds (103.27 M allocations: 154.152 GiB, 39.77% gc time)
+[2022-10-14T00:04:59.955]Completed Shot 20, state 9
+ 35.410653 seconds (103.28 M allocations: 154.165 GiB, 39.73% gc time)
+[2022-10-14T00:04:59.991]Completed Shot 20, state 5
+ 35.441062 seconds (103.28 M allocations: 154.168 GiB, 39.69% gc time)
+[2022-10-14T00:05:00.021]Completed Shot 20, state 8
+ 36.821552 seconds (103.16 M allocations: 153.989 GiB, 42.60% gc time)
+[2022-10-14T00:05:36.850]Completed Shot 21, state 2
+ 36.870918 seconds (103.23 M allocations: 154.100 GiB, 42.54% gc time)
+ 36.870906 seconds (103.23 M allocations: 154.100 GiB, 42.54% gc time)
+[[2022-10-14T00:05:36.899]Completed Shot 21, state 5
+2022-10-14T00:05:36.899]Completed Shot 21, state 6
+ 36.880232 seconds (103.24 M allocations: 154.116 GiB, 42.53% gc time)
+[2022-10-14T00:05:36.909]Completed Shot 21, state 7
+ 36.909369 seconds (103.27 M allocations: 154.148 GiB, 42.50% gc time)
+[2022-10-14T00:05:36.938]Completed Shot 21, state 1
+ 36.916507 seconds (103.27 M allocations: 154.153 GiB, 42.49% gc time)
+[2022-10-14T00:05:36.945]Completed Shot 21, state 9
+ 36.921313 seconds (103.27 M allocations: 154.156 GiB, 42.48% gc time)
+[2022-10-14T00:05:36.950]Completed Shot 21, state 4
+ 36.942972 seconds (103.28 M allocations: 154.165 GiB, 42.46% gc time)
+[2022-10-14T00:05:36.971]Completed Shot 21, state 10
+ 36.948811 seconds (103.28 M allocations: 154.168 GiB, 42.45% gc time)
+ 36.948778 seconds (103.28 M allocations: 154.168 GiB, 42.45% gc time)
+[2022-10-14T00:05:36.977]Completed Shot 21, state 3
+[2022-10-14T00:05:36.977]Completed Shot 21, state 8
+ 34.567387 seconds (103.18 M allocations: 154.030 GiB, 38.77% gc time)
+[2022-10-14T00:06:11.552]Completed Shot 22, state 1
+ 34.589334 seconds (103.22 M allocations: 154.088 GiB, 38.75% gc time)
+[2022-10-14T00:06:11.574]Completed Shot 22, state 5
+ 34.607707 seconds (103.24 M allocations: 154.114 GiB, 38.73% gc time)
+[2022-10-14T00:06:11.592]Completed Shot 22, state 2
+ 34.616084 seconds (103.25 M allocations: 154.122 GiB, 38.72% gc time)
+[2022-10-14T00:06:11.601]Completed Shot 22, state 6
+ 34.622366 seconds (103.25 M allocations: 154.125 GiB, 38.71% gc time)
+[2022-10-14T00:06:11.607]Completed Shot 22, state 8
+ 34.630308 seconds (103.25 M allocations: 154.130 GiB, 38.70% gc time)
+[2022-10-14T00:06:11.615]Completed Shot 22, state 10
+ 34.644757 seconds (103.26 M allocations: 154.139 GiB, 38.69% gc time)
+[2022-10-14T00:06:11.629]Completed Shot 22, state 9
+ 34.684183 seconds (103.28 M allocations: 154.165 GiB, 38.64% gc time)
+[2022-10-14T00:06:11.669]Completed Shot 22, state 4
+ 34.690002 seconds (103.28 M allocations: 154.167 GiB, 38.64% gc time)
+[2022-10-14T00:06:11.674]Completed Shot 22, state 3
+ 34.698839 seconds (103.28 M allocations: 154.168 GiB, 38.63% gc time)
+[2022-10-14T00:06:11.683]Completed Shot 22, state 7
+ 36.338314 seconds (103.14 M allocations: 153.966 GiB, 41.94% gc time)
+[2022-10-14T00:06:48.030]Completed Shot 23, state 3
+ 36.386662 seconds (103.22 M allocations: 154.077 GiB, 41.89% gc time)
+[2022-10-14T00:06:48.078]Completed Shot 23, state 5
+ 36.397938 seconds (103.23 M allocations: 154.095 GiB, 41.87% gc time)
+[2022-10-14T00:06:48.089]Completed Shot 23, state 7
+ 36.419941 seconds (103.25 M allocations: 154.129 GiB, 41.85% gc time)
+[2022-10-14T00:06:48.111]Completed Shot 23, state 9
+ 36.421645 seconds (103.25 M allocations: 154.132 GiB, 41.84% gc time)
+[2022-10-14T00:06:48.113]Completed Shot 23, state 2
+ 36.448063 seconds (103.27 M allocations: 154.157 GiB, 41.81% gc time)
+[2022-10-14T00:06:48.139]Completed Shot 23, state 6
+ 36.453389 seconds (103.27 M allocations: 154.160 GiB, 41.81% gc time)
+[2022-10-14T00:06:48.145]Completed Shot 23, state 8
+ 36.459351 seconds (103.28 M allocations: 154.164 GiB, 41.80% gc time)
+[2022-10-14T00:06:48.151]Completed Shot 23, state 4
+ 36.464887 seconds (103.28 M allocations: 154.165 GiB, 41.80% gc time)
+[2022-10-14T00:06:48.156]Completed Shot 23, state 10
+ 36.491034 seconds (103.28 M allocations: 154.168 GiB, 41.77% gc time)
+[2022-10-14T00:06:48.182]Completed Shot 23, state 1
+ 35.712043 seconds (103.02 M allocations: 153.786 GiB, 39.90% gc time)
+[2022-10-14T00:07:23.901]Completed Shot 24, state 9
+ 35.781950 seconds (103.19 M allocations: 154.033 GiB, 39.82% gc time)
+[2022-10-14T00:07:23.971]Completed Shot 24, state 1
+ 35.803532 seconds (103.21 M allocations: 154.071 GiB, 39.80% gc time)
+[2022-10-14T00:07:23.993]Completed Shot 24, state 6
+ 35.830055 seconds (103.24 M allocations: 154.107 GiB, 39.77% gc time)
+[2022-10-14T00:07:24.019]Completed Shot 24, state 7
+ 35.851302 seconds (103.25 M allocations: 154.128 GiB, 39.74% gc time)
+[2022-10-14T00:07:24.041]Completed Shot 24, state 8
+ 35.851771 seconds (103.25 M allocations: 154.129 GiB, 39.74% gc time)
+[2022-10-14T00:07:24.041]Completed Shot 24, state 4
+ 35.854500 seconds (103.25 M allocations: 154.131 GiB, 39.74% gc time)
+[2022-10-14T00:07:24.044]Completed Shot 24, state 2
+ 35.885643 seconds (103.27 M allocations: 154.151 GiB, 39.71% gc time)
+[2022-10-14T00:07:24.075]Completed Shot 24, state 5
+ 35.903559 seconds (103.27 M allocations: 154.161 GiB, 39.69% gc time)
+[2022-10-14T00:07:24.093]Completed Shot 24, state 3
+ 35.955108 seconds (103.28 M allocations: 154.168 GiB, 39.63% gc time)
+[2022-10-14T00:07:24.144]Completed Shot 24, state 10
+ 37.956378 seconds (103.17 M allocations: 154.005 GiB, 41.35% gc time)
+[2022-10-14T00:08:02.108]Completed Shot 25, state 6
+ 37.993507 seconds (103.22 M allocations: 154.079 GiB, 41.31% gc time)
+[2022-10-14T00:08:02.145]Completed Shot 25, state 2
+ 37.996354 seconds (103.22 M allocations: 154.083 GiB, 41.31% gc time)
+[2022-10-14T00:08:02.148]Completed Shot 25, state 5
+ 38.015456 seconds (103.24 M allocations: 154.107 GiB, 41.29% gc time)
+[2022-10-14T00:08:02.167]Completed Shot 25, state 8
+ 38.052907 seconds (103.26 M allocations: 154.142 GiB, 41.25% gc time)
+[2022-10-14T00:08:02.205]Completed Shot 25, state 10
+ 38.053855 seconds (103.26 M allocations: 154.143 GiB, 41.25% gc time)
+[2022-10-14T00:08:02.206]Completed Shot 25, state 7
+ 38.065112 seconds (103.27 M allocations: 154.152 GiB, 41.24% gc time)
+[2022-10-14T00:08:02.217]Completed Shot 25, state 1
+ 38.072830 seconds (103.27 M allocations: 154.156 GiB, 41.23% gc time)
+[2022-10-14T00:08:02.225]Completed Shot 25, state 4
+ 38.079531 seconds (103.27 M allocations: 154.156 GiB, 41.22% gc time)
+[2022-10-14T00:08:02.232]Completed Shot 25, state 9
+ 38.291821 seconds (103.28 M allocations: 154.168 GiB, 40.99% gc time)
+[2022-10-14T00:08:02.444]Completed Shot 25, state 3
+ 40.584577 seconds (103.00 M allocations: 153.749 GiB, 39.15% gc time)
+[2022-10-14T00:08:43.036]Completed Shot 26, state 10
+ 40.668990 seconds (103.17 M allocations: 154.010 GiB, 39.07% gc time)
+[2022-10-14T00:08:43.121]Completed Shot 26, state 2
+ 40.704923 seconds (103.21 M allocations: 154.071 GiB, 39.03% gc time)
+[2022-10-14T00:08:43.156]Completed Shot 26, state 3
+ 40.743059 seconds (103.25 M allocations: 154.125 GiB, 39.00% gc time)
+[2022-10-14T00:08:43.194]Completed Shot 26, state 5
+ 40.752289 seconds (103.26 M allocations: 154.137 GiB, 38.99% gc time)
+[2022-10-14T00:08:43.203]Completed Shot 26, state 1
+ 40.779329 seconds (103.27 M allocations: 154.159 GiB, 38.96% gc time)
+[2022-10-14T00:08:43.231]Completed Shot 26, state 8
+ 40.782486 seconds (103.27 M allocations: 154.161 GiB, 38.96% gc time)
+[2022-10-14T00:08:43.234]Completed Shot 26, state 6
+ 40.789241 seconds (103.28 M allocations: 154.163 GiB, 38.95% gc time)
+[2022-10-14T00:08:43.241]Completed Shot 26, state 9
+ 40.796392 seconds (103.28 M allocations: 154.166 GiB, 38.95% gc time)
+[2022-10-14T00:08:43.248]Completed Shot 26, state 4
+ 40.819747 seconds (103.28 M allocations: 154.166 GiB, 38.92% gc time)
+[2022-10-14T00:08:43.271]Completed Shot 26, state 7
+ 36.938077 seconds (103.20 M allocations: 154.057 GiB, 42.27% gc time)
+[2022-10-14T00:09:20.217]Completed Shot 27, state 3
+ 36.953937 seconds (103.22 M allocations: 154.086 GiB, 42.25% gc time)
+[2022-10-14T00:09:20.233]Completed Shot 27, state 10
+ 36.960486 seconds (103.23 M allocations: 154.097 GiB, 42.25% gc time)
+[2022-10-14T00:09:20.239]Completed Shot 27, state 1
+ 36.995600 seconds (103.26 M allocations: 154.137 GiB, 42.21% gc time)
+[2022-10-14T00:09:20.274]Completed Shot 27, state 6
+ 37.004210 seconds (103.26 M allocations: 154.142 GiB, 42.20% gc time)
+[2022-10-14T00:09:20.283]Completed Shot 27, state 8
+ 37.012134 seconds (103.26 M allocations: 154.147 GiB, 42.19% gc time)
+[2022-10-14T00:09:20.291]Completed Shot 27, state 2
+ 37.015649 seconds (103.27 M allocations: 154.149 GiB, 42.18% gc time)
+[2022-10-14T00:09:20.294]Completed Shot 27, state 9
+ 37.033860 seconds (103.27 M allocations: 154.157 GiB, 42.16% gc time)
+[2022-10-14T00:09:20.312]Completed Shot 27, state 4
+ 37.055533 seconds (103.28 M allocations: 154.165 GiB, 42.14% gc time)
+[2022-10-14T00:09:20.334]Completed Shot 27, state 5
+ 37.112551 seconds (103.28 M allocations: 154.168 GiB, 42.07% gc time)
+[2022-10-14T00:09:20.391]Completed Shot 27, state 7
+ 34.837287 seconds (103.19 M allocations: 154.046 GiB, 38.58% gc time)
+[2022-10-14T00:09:55.236]Completed Shot 28, state 1
+ 34.852534 seconds (103.22 M allocations: 154.079 GiB, 38.57% gc time)
+[2022-10-14T00:09:55.252]Completed Shot 28, state 3
+ 34.861327 seconds (103.23 M allocations: 154.095 GiB, 38.56% gc time)
+[2022-10-14T00:09:55.260]Completed Shot 28, state 6
+ 34.866371 seconds (103.23 M allocations: 154.103 GiB, 38.55% gc time)
+[2022-10-14T00:09:55.265]Completed Shot 28, state 4
+ 34.878716 seconds (103.25 M allocations: 154.120 GiB, 38.54% gc time)
+[2022-10-14T00:09:55.278]Completed Shot 28, state 9
+ 34.884065 seconds (103.25 M allocations: 154.125 GiB, 38.53% gc time)
+[2022-10-14T00:09:55.283]Completed Shot 28, state 8
+ 34.903389 seconds (103.26 M allocations: 154.144 GiB, 38.51% gc time)
+[2022-10-14T00:09:55.302]Completed Shot 28, state 7
+ 34.915005 seconds (103.27 M allocations: 154.150 GiB, 38.50% gc time)
+[2022-10-14T00:09:55.314]Completed Shot 28, state 2
+ 34.921562 seconds (103.27 M allocations: 154.153 GiB, 38.49% gc time)
+[2022-10-14T00:09:55.321]Completed Shot 28, state 5
+ 35.230097 seconds (103.28 M allocations: 154.167 GiB, 38.15% gc time)
+[2022-10-14T00:09:55.629]Completed Shot 28, state 10
+ 37.132088 seconds (103.15 M allocations: 153.986 GiB, 42.82% gc time)
+[2022-10-14T00:10:32.769]Completed Shot 29, state 6
+ 37.145766 seconds (103.18 M allocations: 154.023 GiB, 42.80% gc time)
+[2022-10-14T00:10:32.782]Completed Shot 29, state 2
+ 37.150043 seconds (103.19 M allocations: 154.032 GiB, 42.80% gc time)
+[2022-10-14T00:10:32.786]Completed Shot 29, state 1
+ 37.179710 seconds (103.22 M allocations: 154.089 GiB, 42.76% gc time)
+[2022-10-14T00:10:32.816]Completed Shot 29, state 4
+ 37.211798 seconds (103.25 M allocations: 154.129 GiB, 42.73% gc time)
+[2022-10-14T00:10:32.848]Completed Shot 29, state 5
+ 37.231411 seconds (103.26 M allocations: 154.146 GiB, 42.70% gc time)
+[2022-10-14T00:10:32.868]Completed Shot 29, state 8
+ 37.235417 seconds (103.27 M allocations: 154.148 GiB, 42.70% gc time)
+[2022-10-14T00:10:32.872]Completed Shot 29, state 10
+ 37.241286 seconds (103.27 M allocations: 154.152 GiB, 42.69% gc time)
+[2022-10-14T00:10:32.878]Completed Shot 29, state 7
+ 37.249391 seconds (103.27 M allocations: 154.156 GiB, 42.68% gc time)
+[2022-10-14T00:10:32.886]Completed Shot 29, state 3
+ 37.443306 seconds (103.28 M allocations: 154.168 GiB, 42.46% gc time)
+[2022-10-14T00:10:33.080]Completed Shot 29, state 9
+ 34.266755 seconds (103.23 M allocations: 154.106 GiB, 38.54% gc time)
+[2022-10-14T00:11:07.354]Completed Shot 30, state 4
+ 34.273740 seconds (103.24 M allocations: 154.117 GiB, 38.53% gc time)
+[2022-10-14T00:11:07.361]Completed Shot 30, state 2
+ 34.289896 seconds (103.26 M allocations: 154.142 GiB, 38.51% gc time)
+[2022-10-14T00:11:07.377]Completed Shot 30, state 3
+ 34.294888 seconds (103.26 M allocations: 154.147 GiB, 38.51% gc time)
+[2022-10-14T00:11:07.382]Completed Shot 30, state 1
+ 34.297934 seconds (103.27 M allocations: 154.150 GiB, 38.50% gc time)
+[2022-10-14T00:11:07.385]Completed Shot 30, state 8
+ 34.297943 seconds (103.27 M allocations: 154.150 GiB, 38.50% gc time)
+[2022-10-14T00:11:07.385]Completed Shot 30, state 6
+ 34.301987 seconds (103.27 M allocations: 154.152 GiB, 38.50% gc time)
+[2022-10-14T00:11:07.389]Completed Shot 30, state 7
+ 34.311870 seconds (103.27 M allocations: 154.156 GiB, 38.49% gc time)
+[2022-10-14T00:11:07.399]Completed Shot 30, state 5
+ 34.317721 seconds (103.27 M allocations: 154.158 GiB, 38.48% gc time)
+[2022-10-14T00:11:07.405]Completed Shot 30, state 10
+ 34.474200 seconds (103.28 M allocations: 154.168 GiB, 38.31% gc time)
+[2022-10-14T00:11:07.561]Completed Shot 30, state 9
+ 36.477600 seconds (103.18 M allocations: 154.031 GiB, 40.30% gc time)
+[2022-10-14T00:11:44.046]Completed Shot 31, state 5
+ 36.480846 seconds (103.19 M allocations: 154.039 GiB, 40.30% gc time)
+[2022-10-14T00:11:44.050]Completed Shot 31, state 6
+ 36.528057 seconds (103.25 M allocations: 154.124 GiB, 40.25% gc time)
+[2022-10-14T00:11:44.097]Completed Shot 31, state 9
+ 36.536672 seconds (103.26 M allocations: 154.136 GiB, 40.24% gc time)
+[2022-10-14T00:11:44.105]Completed Shot 31, state 1
+ 36.546127 seconds (103.26 M allocations: 154.144 GiB, 40.23% gc time)
+[2022-10-14T00:11:44.115]Completed Shot 31, state 8
+ 36.553641 seconds (103.27 M allocations: 154.149 GiB, 40.22% gc time)
+[2022-10-14T00:11:44.122]Completed Shot 31, state 10
+ 36.554357 seconds (103.27 M allocations: 154.150 GiB, 40.22% gc time)
+[2022-10-14T00:11:44.123]Completed Shot 31, state 7
+ 36.567797 seconds (103.27 M allocations: 154.158 GiB, 40.20% gc time)
+[2022-10-14T00:11:44.136]Completed Shot 31, state 2
+ 36.567856 seconds (103.27 M allocations: 154.158 GiB, 40.20% gc time)
+[2022-10-14T00:11:44.137]Completed Shot 31, state 4
+ 36.805500 seconds (103.28 M allocations: 154.168 GiB, 39.94% gc time)
+[2022-10-14T00:11:44.374]Completed Shot 31, state 3
+ 35.874174 seconds (103.19 M allocations: 154.046 GiB, 41.04% gc time)
+[2022-10-14T00:12:20.256]Completed Shot 32, state 1
+ 35.903114 seconds (103.23 M allocations: 154.090 GiB, 41.01% gc time)
+[2022-10-14T00:12:20.285]Completed Shot 32, state 10
+ 35.910665 seconds (103.23 M allocations: 154.100 GiB, 41.00% gc time)
+[2022-10-14T00:12:20.293]Completed Shot 32, state 8
+ 35.923978 seconds (103.24 M allocations: 154.112 GiB, 40.99% gc time)
+[2022-10-14T00:12:20.306]Completed Shot 32, state 5
+ 35.926479 seconds (103.24 M allocations: 154.114 GiB, 40.99% gc time)
+[2022-10-14T00:12:20.308]Completed Shot 32, state 7
+ 35.926613 seconds (103.24 M allocations: 154.115 GiB, 40.99% gc time)
+[2022-10-14T00:12:20.308]Completed Shot 32, state 3
+ 35.983708 seconds (103.26 M allocations: 154.148 GiB, 40.92% gc time)
+[2022-10-14T00:12:20.366]Completed Shot 32, state 4
+ 36.002941 seconds (103.27 M allocations: 154.157 GiB, 40.90% gc time)
+[2022-10-14T00:12:20.385]Completed Shot 32, state 2
+ 36.031828 seconds (103.28 M allocations: 154.165 GiB, 40.87% gc time)
+[2022-10-14T00:12:20.414]Completed Shot 32, state 9
+ 36.054979 seconds (103.28 M allocations: 154.166 GiB, 40.84% gc time)
+[2022-10-14T00:12:20.437]Completed Shot 32, state 6
+ 38.798914 seconds (103.23 M allocations: 154.098 GiB, 45.20% gc time)
+[2022-10-14T00:12:59.243]Completed Shot 33, state 2
+ 38.823695 seconds (103.25 M allocations: 154.130 GiB, 45.17% gc time)
+[2022-10-14T00:12:59.268]Completed Shot 33, state 3
+ 38.827023 seconds (103.25 M allocations: 154.134 GiB, 45.17% gc time)
+[2022-10-14T00:12:59.272]Completed Shot 33, state 4
+ 38.832402 seconds (103.26 M allocations: 154.139 GiB, 45.16% gc time)
+[2022-10-14T00:12:59.277]Completed Shot 33, state 7
+ 38.840317 seconds (103.26 M allocations: 154.147 GiB, 45.16% gc time)
+[2022-10-14T00:12:59.285]Completed Shot 33, state 8
+ 38.850882 seconds (103.27 M allocations: 154.154 GiB, 45.14% gc time)
+[2022-10-14T00:12:59.296]Completed Shot 33, state 10
+ 38.856996 seconds (103.27 M allocations: 154.157 GiB, 45.14% gc time)
+[2022-10-14T00:12:59.302]Completed Shot 33, state 9
+ 38.871016 seconds (103.28 M allocations: 154.165 GiB, 45.12% gc time)
+[2022-10-14T00:12:59.316]Completed Shot 33, state 6
+ 38.877028 seconds (103.28 M allocations: 154.167 GiB, 45.11% gc time)
+[2022-10-14T00:12:59.321]Completed Shot 33, state 1
+ 38.886760 seconds (103.28 M allocations: 154.168 GiB, 45.10% gc time)
+[2022-10-14T00:12:59.331]Completed Shot 33, state 5
+ 35.773834 seconds (103.21 M allocations: 154.065 GiB, 40.57% gc time)
+[2022-10-14T00:13:35.113]Completed Shot 34, state 10
+ 35.780215 seconds (103.21 M allocations: 154.074 GiB, 40.56% gc time)
+[2022-10-14T00:13:35.119]Completed Shot 34, state 7
+ 35.780588 seconds (103.21 M allocations: 154.074 GiB, 40.56% gc time)
+[2022-10-14T00:13:35.120]Completed Shot 34, state 6
+ 35.821297 seconds (103.25 M allocations: 154.122 GiB, 40.51% gc time)
+[2022-10-14T00:13:35.160]Completed Shot 34, state 2
+ 35.828727 seconds (103.25 M allocations: 154.130 GiB, 40.51% gc time)
+[2022-10-14T00:13:35.167]Completed Shot 34, state 1
+ 35.860327 seconds (103.27 M allocations: 154.155 GiB, 40.47% gc time)
+[2022-10-14T00:13:35.199]Completed Shot 34, state 3
+ 35.867373 seconds (103.27 M allocations: 154.158 GiB, 40.46% gc time)
+[2022-10-14T00:13:35.206]Completed Shot 34, state 5
+ 35.878618 seconds (103.28 M allocations: 154.163 GiB, 40.45% gc time)
+[2022-10-14T00:13:35.218]Completed Shot 34, state 9
+ 35.878705 seconds (103.28 M allocations: 154.164 GiB, 40.45% gc time)
+[2022-10-14T00:13:35.218]Completed Shot 34, state 4
+ 35.912752 seconds (103.28 M allocations: 154.168 GiB, 40.41% gc time)
+[2022-10-14T00:13:35.252]Completed Shot 34, state 8
+ 35.263624 seconds (102.97 M allocations: 153.708 GiB, 40.39% gc time)
+[2022-10-14T00:14:10.523]Completed Shot 35, state 1
+ 35.313220 seconds (103.10 M allocations: 153.900 GiB, 40.33% gc time)
+[2022-10-14T00:14:10.573]Completed Shot 35, state 2
+ 35.400468 seconds (103.23 M allocations: 154.092 GiB, 40.23% gc time)
+[2022-10-14T00:14:10.660]Completed Shot 35, state 5
+ 35.408508 seconds (103.23 M allocations: 154.102 GiB, 40.23% gc time)
+[2022-10-14T00:14:10.668]Completed Shot 35, state 8
+ 35.442520 seconds (103.26 M allocations: 154.136 GiB, 40.19% gc time)
+[2022-10-14T00:14:10.702]Completed Shot 35, state 7
+ 35.449672 seconds (103.26 M allocations: 154.141 GiB, 40.18% gc time)
+[2022-10-14T00:14:10.709]Completed Shot 35, state 4
+ 35.457453 seconds (103.26 M allocations: 154.145 GiB, 40.17% gc time)
+[2022-10-14T00:14:10.717]Completed Shot 35, state 3
+ 35.475665 seconds (103.27 M allocations: 154.154 GiB, 40.15% gc time)
+[2022-10-14T00:14:10.735]Completed Shot 35, state 6
+ 35.481776 seconds (103.27 M allocations: 154.156 GiB, 40.14% gc time)
+[2022-10-14T00:14:10.742]Completed Shot 35, state 10
+ 35.755914 seconds (103.28 M allocations: 154.168 GiB, 39.84% gc time)
+[2022-10-14T00:14:11.016]Completed Shot 35, state 9
+ 36.097456 seconds (103.19 M allocations: 154.043 GiB, 40.56% gc time)
+[2022-10-14T00:14:47.121]Completed Shot 36, state 2
+ 36.136963 seconds (103.23 M allocations: 154.103 GiB, 40.52% gc time)
+[2022-10-14T00:14:47.160]Completed Shot 36, state 8
+ 36.139517 seconds (103.24 M allocations: 154.106 GiB, 40.51% gc time)
+[2022-10-14T00:14:47.163]Completed Shot 36, state 6
+ 36.140669 seconds (103.24 M allocations: 154.108 GiB, 40.51% gc time)
+[2022-10-14T00:14:47.164]Completed Shot 36, state 1
+ 36.159032 seconds (103.25 M allocations: 154.122 GiB, 40.49% gc time)
+[2022-10-14T00:14:47.182]Completed Shot 36, state 9
+ 36.188516 seconds (103.26 M allocations: 154.137 GiB, 40.46% gc time)
+[2022-10-14T00:14:47.212]Completed Shot 36, state 7
+ 36.196904 seconds (103.26 M allocations: 154.140 GiB, 40.45% gc time)
+[2022-10-14T00:14:47.220]Completed Shot 36, state 10
+ 36.204847 seconds (103.26 M allocations: 154.144 GiB, 40.44% gc time)
+[2022-10-14T00:14:47.228]Completed Shot 36, state 4
+ 36.212517 seconds (103.26 M allocations: 154.146 GiB, 40.43% gc time)
+[2022-10-14T00:14:47.236]Completed Shot 36, state 5
+ 36.720804 seconds (103.28 M allocations: 154.168 GiB, 39.87% gc time)
+[2022-10-14T00:14:47.744]Completed Shot 36, state 3
+ 35.990247 seconds (103.12 M allocations: 153.936 GiB, 41.46% gc time)
+[2022-10-14T00:15:23.742]Completed Shot 37, state 4
+ 36.059030 seconds (103.23 M allocations: 154.101 GiB, 41.38% gc time)
+[2022-10-14T00:15:23.810]Completed Shot 37, state 1
+ 36.065768 seconds (103.24 M allocations: 154.111 GiB, 41.38% gc time)
+[2022-10-14T00:15:23.817]Completed Shot 37, state 9
+ 36.078102 seconds (103.25 M allocations: 154.128 GiB, 41.36% gc time)
+[2022-10-14T00:15:23.830]Completed Shot 37, state 10
+ 36.081057 seconds (103.25 M allocations: 154.132 GiB, 41.36% gc time)
+[2022-10-14T00:15:23.833]Completed Shot 37, state 5
+ 36.100927 seconds (103.26 M allocations: 154.148 GiB, 41.33% gc time)
+[2022-10-14T00:15:23.852]Completed Shot 37, state 6
+ 36.103393 seconds (103.27 M allocations: 154.151 GiB, 41.33% gc time)
+[2022-10-14T00:15:23.855]Completed Shot 37, state 3
+ 36.117150 seconds (103.27 M allocations: 154.157 GiB, 41.32% gc time)
+[2022-10-14T00:15:23.869]Completed Shot 37, state 7
+ 36.123344 seconds (103.27 M allocations: 154.161 GiB, 41.31% gc time)
+[2022-10-14T00:15:23.875]Completed Shot 37, state 8
+ 36.150445 seconds (103.28 M allocations: 154.168 GiB, 41.28% gc time)
+[2022-10-14T00:15:23.902]Completed Shot 37, state 2
+ 36.145703 seconds (103.06 M allocations: 153.838 GiB, 41.50% gc time)
+[2022-10-14T00:16:00.055]Completed Shot 38, state 3
+ 36.196639 seconds (103.17 M allocations: 154.013 GiB, 41.44% gc time)
+[2022-10-14T00:16:00.106]Completed Shot 38, state 4
+ 36.219544 seconds (103.20 M allocations: 154.055 GiB, 41.42% gc time)
+[2022-10-14T00:16:00.129]Completed Shot 38, state 8
+ 36.285070 seconds (103.24 M allocations: 154.118 GiB, 41.34% gc time)
+[2022-10-14T00:16:00.194]Completed Shot 38, state 5
+ 36.290777 seconds (103.25 M allocations: 154.122 GiB, 41.34% gc time)
+[2022-10-14T00:16:00.200]Completed Shot 38, state 1
+ 36.298926 seconds (103.25 M allocations: 154.126 GiB, 41.33% gc time)
+[2022-10-14T00:16:00.208]Completed Shot 38, state 10
+ 36.351055 seconds (103.27 M allocations: 154.154 GiB, 41.27% gc time)
+[2022-10-14T00:16:00.260]Completed Shot 38, state 7
+ 36.351123 seconds (103.27 M allocations: 154.154 GiB, 41.27% gc time)
+[2022-10-14T00:16:00.260]Completed Shot 38, state 9
+ 36.364203 seconds (103.27 M allocations: 154.159 GiB, 41.25% gc time)
+[2022-10-14T00:16:00.273]Completed Shot 38, state 2
+ 36.556524 seconds (103.28 M allocations: 154.168 GiB, 41.04% gc time)
+[2022-10-14T00:16:00.466]Completed Shot 38, state 6
+ 34.585521 seconds (103.13 M allocations: 153.954 GiB, 38.18% gc time)
+[2022-10-14T00:16:35.059]Completed Shot 39, state 6
+ 34.660739 seconds (103.22 M allocations: 154.095 GiB, 38.10% gc time)
+[2022-10-14T00:16:35.134]Completed Shot 39, state 2
+ 34.674959 seconds (103.24 M allocations: 154.113 GiB, 38.08% gc time)
+[2022-10-14T00:16:35.149]Completed Shot 39, state 4
+ 34.678302 seconds (103.24 M allocations: 154.117 GiB, 38.08% gc time)
+[2022-10-14T00:16:35.152]Completed Shot 39, state 8
+ 34.680008 seconds (103.24 M allocations: 154.119 GiB, 38.08% gc time)
+[2022-10-14T00:16:35.154]Completed Shot 39, state 10
+ 34.710533 seconds (103.26 M allocations: 154.143 GiB, 38.04% gc time)
+[2022-10-14T00:16:35.184]Completed Shot 39, state 3
+ 34.713714 seconds (103.26 M allocations: 154.145 GiB, 38.04% gc time)
+[2022-10-14T00:16:35.187]Completed Shot 39, state 5
+ 34.735986 seconds (103.27 M allocations: 154.156 GiB, 38.01% gc time)
+[2022-10-14T00:16:35.209]Completed Shot 39, state 1
+ 34.754018 seconds (103.27 M allocations: 154.162 GiB, 37.99% gc time)
+[2022-10-14T00:16:35.228]Completed Shot 39, state 7
+ 34.814139 seconds (103.28 M allocations: 154.168 GiB, 37.93% gc time)
+[2022-10-14T00:16:35.288]Completed Shot 39, state 9
+ 59.342000 seconds (103.14 M allocations: 153.966 GiB, 61.53% gc time)
+[2022-10-14T00:17:34.637]Completed Shot 40, state 2
+ 59.361693 seconds (103.18 M allocations: 154.022 GiB, 61.51% gc time)
+[2022-10-14T00:17:34.657]Completed Shot 40, state 9
+ 59.390794 seconds (103.22 M allocations: 154.085 GiB, 61.48% gc time)
+[2022-10-14T00:17:34.686]Completed Shot 40, state 6
+ 59.396158 seconds (103.23 M allocations: 154.093 GiB, 61.47% gc time)
+[2022-10-14T00:17:34.691]Completed Shot 40, state 4
+ 59.422524 seconds (103.25 M allocations: 154.125 GiB, 61.44% gc time)
+[2022-10-14T00:17:34.717]Completed Shot 40, state 1
+ 59.434131 seconds (103.26 M allocations: 154.134 GiB, 61.43% gc time)
+[2022-10-14T00:17:34.729]Completed Shot 40, state 8
+ 59.444352 seconds (103.26 M allocations: 154.141 GiB, 61.42% gc time)
+[2022-10-14T00:17:34.739]Completed Shot 40, state 3
+ 59.471694 seconds (103.27 M allocations: 154.156 GiB, 61.39% gc time)
+[2022-10-14T00:17:34.767]Completed Shot 40, state 7
+ 59.499862 seconds (103.28 M allocations: 154.164 GiB, 61.36% gc time)
+[2022-10-14T00:17:34.795]Completed Shot 40, state 5
+ 59.569554 seconds (103.28 M allocations: 154.168 GiB, 61.29% gc time)
+[2022-10-14T00:17:34.865]Completed Shot 40, state 10
+ 37.493872 seconds (103.16 M allocations: 153.994 GiB, 41.99% gc time)
+[2022-10-14T00:18:12.367]Completed Shot 41, state 1
+ 37.514185 seconds (103.19 M allocations: 154.038 GiB, 41.97% gc time)
+[2022-10-14T00:18:12.388]Completed Shot 41, state 7
+ 37.518942 seconds (103.20 M allocations: 154.046 GiB, 41.96% gc time)
+[2022-10-14T00:18:12.392]Completed Shot 41, state 10
+ 37.542263 seconds (103.22 M allocations: 154.078 GiB, 41.94% gc time)
+[2022-10-14T00:18:12.416]Completed Shot 41, state 6
+ 37.551911 seconds (103.22 M allocations: 154.088 GiB, 41.92% gc time)
+[2022-10-14T00:18:12.425]Completed Shot 41, state 2
+ 37.578824 seconds (103.24 M allocations: 154.113 GiB, 41.89% gc time)
+[2022-10-14T00:18:12.452]Completed Shot 41, state 5
+ 37.594436 seconds (103.25 M allocations: 154.124 GiB, 41.88% gc time)
+[2022-10-14T00:18:12.468]Completed Shot 41, state 3
+ 37.641831 seconds (103.27 M allocations: 154.155 GiB, 41.82% gc time)
+[2022-10-14T00:18:12.515]Completed Shot 41, state 4
+ 37.671428 seconds (103.28 M allocations: 154.165 GiB, 41.79% gc time)
+[2022-10-14T00:18:12.545]Completed Shot 41, state 9
+ 37.718797 seconds (103.28 M allocations: 154.168 GiB, 41.74% gc time)
+[2022-10-14T00:18:12.592]Completed Shot 41, state 8
+ 35.593357 seconds (103.16 M allocations: 154.001 GiB, 41.31% gc time)
+[2022-10-14T00:18:48.197]Completed Shot 42, state 9
+ 35.618367 seconds (103.21 M allocations: 154.067 GiB, 41.28% gc time)
+[2022-10-14T00:18:48.219]Completed Shot 42, state 10
+ 35.630837 seconds (103.22 M allocations: 154.090 GiB, 41.26% gc time)
+[2022-10-14T00:18:48.231]Completed Shot 42, state 5
+ 35.664601 seconds (103.25 M allocations: 154.130 GiB, 41.22% gc time)
+[2022-10-14T00:18:48.265]Completed Shot 42, state 3
+ 35.667020 seconds (103.25 M allocations: 154.132 GiB, 41.22% gc time)
+[2022-10-14T00:18:48.267]Completed Shot 42, state 4
+ 35.693505 seconds (103.27 M allocations: 154.153 GiB, 41.19% gc time)
+[2022-10-14T00:18:48.293]Completed Shot 42, state 1
+ 35.693643 seconds (103.27 M allocations: 154.153 GiB, 41.19% gc time)
+[2022-10-14T00:18:48.294]Completed Shot 42, state 6
+ 35.697744 seconds (103.27 M allocations: 154.155 GiB, 41.18% gc time)
+[2022-10-14T00:18:48.298]Completed Shot 42, state 2
+ 35.724107 seconds (103.28 M allocations: 154.164 GiB, 41.15% gc time)
+[2022-10-14T00:18:48.324]Completed Shot 42, state 7
+ 35.781249 seconds (103.28 M allocations: 154.168 GiB, 41.09% gc time)
+[2022-10-14T00:18:48.381]Completed Shot 42, state 8
+ 36.316447 seconds (102.96 M allocations: 153.688 GiB, 42.04% gc time)
+[2022-10-14T00:19:24.706]Completed Shot 43, state 6
+ 36.421981 seconds (103.19 M allocations: 154.042 GiB, 41.92% gc time)
+[2022-10-14T00:19:24.811]Completed Shot 43, state 4
+ 36.456411 seconds (103.23 M allocations: 154.102 GiB, 41.88% gc time)
+[2022-10-14T00:19:24.845]Completed Shot 43, state 1
+ 36.472929 seconds (103.25 M allocations: 154.125 GiB, 41.86% gc time)
+[2022-10-14T00:19:24.862]Completed Shot 43, state 3
+ 36.475478 seconds (103.25 M allocations: 154.128 GiB, 41.86% gc time)
+[2022-10-14T00:19:24.865]Completed Shot 43, state 7
+ 36.476031 seconds (103.25 M allocations: 154.128 GiB, 41.86% gc time)
+[2022-10-14T00:19:24.866]Completed Shot 43, state 9
+ 36.527841 seconds (103.27 M allocations: 154.161 GiB, 41.80% gc time)
+[2022-10-14T00:19:24.917]Completed Shot 43, state 5
+ 36.534497 seconds (103.28 M allocations: 154.164 GiB, 41.79% gc time)
+ 36.534484 seconds (103.28 M allocations: 154.164 GiB, 41.79% gc time)
+[[2022-10-14T00:19:24.924]Completed Shot 43, state 8
+2022-10-14T00:19:24.924]Completed Shot 43, state 10
+ 36.592448 seconds (103.28 M allocations: 154.168 GiB, 41.72% gc time)
+[2022-10-14T00:19:24.982]Completed Shot 43, state 2
+ 35.751074 seconds (103.20 M allocations: 154.055 GiB, 40.87% gc time)
+[2022-10-14T00:20:00.740]Completed Shot 44, state 2
+ 35.765800 seconds (103.22 M allocations: 154.081 GiB, 40.86% gc time)
+[2022-10-14T00:20:00.755]Completed Shot 44, state 9
+ 35.798902 seconds (103.25 M allocations: 154.126 GiB, 40.82% gc time)
+[2022-10-14T00:20:00.788]Completed Shot 44, state 1
+ 35.806994 seconds (103.25 M allocations: 154.133 GiB, 40.81% gc time)
+[2022-10-14T00:20:00.796]Completed Shot 44, state 10
+ 35.810557 seconds (103.26 M allocations: 154.137 GiB, 40.81% gc time)
+[2022-10-14T00:20:00.800]Completed Shot 44, state 6
+ 35.816682 seconds (103.26 M allocations: 154.143 GiB, 40.80% gc time)
+[2022-10-14T00:20:00.806]Completed Shot 44, state 4
+ 35.816708 seconds (103.26 M allocations: 154.143 GiB, 40.80% gc time)
+[2022-10-14T00:20:00.806]Completed Shot 44, state 3
+ 35.840440 seconds (103.27 M allocations: 154.156 GiB, 40.77% gc time)
+[2022-10-14T00:20:00.830]Completed Shot 44, state 8
+ 35.852194 seconds (103.27 M allocations: 154.161 GiB, 40.76% gc time)
+[2022-10-14T00:20:00.841]Completed Shot 44, state 5
+ 36.001314 seconds (103.28 M allocations: 154.168 GiB, 40.59% gc time)
+[2022-10-14T00:20:00.991]Completed Shot 44, state 7
+ 36.084315 seconds (103.16 M allocations: 153.989 GiB, 41.31% gc time)
+[2022-10-14T00:20:37.082]Completed Shot 45, state 1
+ 36.102292 seconds (103.18 M allocations: 154.027 GiB, 41.29% gc time)
+[2022-10-14T00:20:37.101]Completed Shot 45, state 9
+ 36.108603 seconds (103.19 M allocations: 154.037 GiB, 41.28% gc time)
+[2022-10-14T00:20:37.107]Completed Shot 45, state 10
+ 36.147600 seconds (103.23 M allocations: 154.094 GiB, 41.24% gc time)
+[2022-10-14T00:20:37.146]Completed Shot 45, state 4
+ 36.168928 seconds (103.25 M allocations: 154.119 GiB, 41.21% gc time)
+[2022-10-14T00:20:37.167]Completed Shot 45, state 6
+ 37.038625 seconds (103.26 M allocations: 154.141 GiB, 42.51% gc time)
+[2022-10-14T00:20:38.037]Completed Shot 45, state 7
+ 37.060451 seconds (103.27 M allocations: 154.154 GiB, 42.48% gc time)
+[2022-10-14T00:20:38.058]Completed Shot 45, state 2
+ 37.086087 seconds (103.28 M allocations: 154.163 GiB, 42.46% gc time)
+[2022-10-14T00:20:38.084]Completed Shot 45, state 8
+ 37.098810 seconds (103.28 M allocations: 154.168 GiB, 42.44% gc time)
+[2022-10-14T00:20:38.097]Completed Shot 45, state 5
+ 37.099472 seconds (103.28 M allocations: 154.168 GiB, 42.44% gc time)
+[2022-10-14T00:20:38.098]Completed Shot 45, state 3
+ 36.854675 seconds (102.94 M allocations: 153.671 GiB, 42.82% gc time)
+[2022-10-14T00:21:14.961]Completed Shot 46, state 7
+ 36.946260 seconds (103.16 M allocations: 153.999 GiB, 42.72% gc time)
+[2022-10-14T00:21:15.053]Completed Shot 46, state 4
+ 36.972063 seconds (103.20 M allocations: 154.053 GiB, 42.69% gc time)
+[2022-10-14T00:21:15.078]Completed Shot 46, state 3
+ 37.003137 seconds (103.23 M allocations: 154.098 GiB, 42.65% gc time)
+[2022-10-14T00:21:15.109]Completed Shot 46, state 1
+ 37.031652 seconds (103.25 M allocations: 154.125 GiB, 42.62% gc time)
+[2022-10-14T00:21:15.138]Completed Shot 46, state 10
+ 37.039453 seconds (103.25 M allocations: 154.132 GiB, 42.61% gc time)
+[2022-10-14T00:21:15.145]Completed Shot 46, state 2
+ 37.053243 seconds (103.26 M allocations: 154.142 GiB, 42.59% gc time)
+[2022-10-14T00:21:15.160]Completed Shot 46, state 6
+ 37.070294 seconds (103.27 M allocations: 154.152 GiB, 42.57% gc time)
+[2022-10-14T00:21:15.177]Completed Shot 46, state 5
+ 37.087883 seconds (103.27 M allocations: 154.160 GiB, 42.55% gc time)
+[2022-10-14T00:21:15.194]Completed Shot 46, state 8
+ 37.275534 seconds (103.28 M allocations: 154.168 GiB, 42.34% gc time)
+[2022-10-14T00:21:15.382]Completed Shot 46, state 9
+ 36.055364 seconds (103.14 M allocations: 153.963 GiB, 41.71% gc time)
+[2022-10-14T00:21:51.445]Completed Shot 47, state 4
+ 36.094535 seconds (103.21 M allocations: 154.060 GiB, 41.66% gc time)
+[2022-10-14T00:21:51.484]Completed Shot 47, state 3
+ 36.118346 seconds (103.23 M allocations: 154.097 GiB, 41.63% gc time)
+[2022-10-14T00:21:51.508]Completed Shot 47, state 8
+ 36.123300 seconds (103.24 M allocations: 154.103 GiB, 41.63% gc time)
+[2022-10-14T00:21:51.513]Completed Shot 47, state 6
+ 36.125060 seconds (103.24 M allocations: 154.104 GiB, 41.63% gc time)
+[2022-10-14T00:21:51.515]Completed Shot 47, state 9
+ 36.154757 seconds (103.26 M allocations: 154.131 GiB, 41.59% gc time)
+[2022-10-14T00:21:51.545]Completed Shot 47, state 2
+ 36.179026 seconds (103.27 M allocations: 154.148 GiB, 41.56% gc time)
+[2022-10-14T00:21:51.569]Completed Shot 47, state 7
+ 36.198165 seconds (103.28 M allocations: 154.160 GiB, 41.54% gc time)
+[2022-10-14T00:21:51.588]Completed Shot 47, state 1
+ 36.217906 seconds (103.28 M allocations: 154.165 GiB, 41.52% gc time)
+[2022-10-14T00:21:51.608]Completed Shot 47, state 5
+ 36.261207 seconds (103.28 M allocations: 154.168 GiB, 41.47% gc time)
+[2022-10-14T00:21:51.651]Completed Shot 47, state 10
+ 35.619083 seconds (103.15 M allocations: 153.981 GiB, 40.54% gc time)
+[2022-10-14T00:22:27.278]Completed Shot 48, state 7
+ 35.640337 seconds (103.19 M allocations: 154.033 GiB, 40.52% gc time)
+[2022-10-14T00:22:27.299]Completed Shot 48, state 3
+ 35.687140 seconds (103.24 M allocations: 154.115 GiB, 40.47% gc time)
+[2022-10-14T00:22:27.346]Completed Shot 48, state 4
+ 35.697206 seconds (103.25 M allocations: 154.126 GiB, 40.46% gc time)
+[2022-10-14T00:22:27.356]Completed Shot 48, state 9
+ 35.711751 seconds (103.26 M allocations: 154.142 GiB, 40.44% gc time)
+[2022-10-14T00:22:27.370]Completed Shot 48, state 5
+ 35.728509 seconds (103.27 M allocations: 154.156 GiB, 40.42% gc time)
+[2022-10-14T00:22:27.387]Completed Shot 48, state 2
+ 35.742743 seconds (103.27 M allocations: 154.161 GiB, 40.40% gc time)
+[2022-10-14T00:22:27.401]Completed Shot 48, state 10
+ 35.743205 seconds (103.27 M allocations: 154.162 GiB, 40.40% gc time)
+[2022-10-14T00:22:27.402]Completed Shot 48, state 6
+ 35.754546 seconds (103.28 M allocations: 154.166 GiB, 40.39% gc time)
+[2022-10-14T00:22:27.413]Completed Shot 48, state 8
+ 35.799332 seconds (103.28 M allocations: 154.168 GiB, 40.34% gc time)
+[2022-10-14T00:22:27.458]Completed Shot 48, state 1
+ 35.901704 seconds (103.06 M allocations: 153.842 GiB, 41.05% gc time)
+[2022-10-14T00:23:03.368]Completed Shot 49, state 1
+ 35.949835 seconds (103.17 M allocations: 154.006 GiB, 41.00% gc time)
+[2022-10-14T00:23:03.416]Completed Shot 49, state 8
+ 35.974223 seconds (103.21 M allocations: 154.074 GiB, 40.97% gc time)
+[2022-10-14T00:23:03.440]Completed Shot 49, state 7
+ 36.005476 seconds (103.25 M allocations: 154.128 GiB, 40.93% gc time)
+[2022-10-14T00:23:03.471]Completed Shot 49, state 5
+ 36.012888 seconds (103.26 M allocations: 154.136 GiB, 40.93% gc time)
+[2022-10-14T00:23:03.479]Completed Shot 49, state 3
+ 36.020855 seconds (103.26 M allocations: 154.143 GiB, 40.92% gc time)
+[2022-10-14T00:23:03.487]Completed Shot 49, state 10
+ 36.024396 seconds (103.26 M allocations: 154.147 GiB, 40.91% gc time)
+[2022-10-14T00:23:03.490]Completed Shot 49, state 4
+ 36.032242 seconds (103.27 M allocations: 154.152 GiB, 40.90% gc time)
+[2022-10-14T00:23:03.498]Completed Shot 49, state 2
+ 36.063111 seconds (103.28 M allocations: 154.164 GiB, 40.87% gc time)
+[2022-10-14T00:23:03.529]Completed Shot 49, state 6
+ 36.126464 seconds (103.28 M allocations: 154.167 GiB, 40.80% gc time)
+[2022-10-14T00:23:03.593]Completed Shot 49, state 9
+ 34.618003 seconds (103.20 M allocations: 154.052 GiB, 38.75% gc time)
+[2022-10-14T00:23:38.220]Completed Shot 50, state 8
+ 34.636097 seconds (103.22 M allocations: 154.085 GiB, 38.73% gc time)
+[2022-10-14T00:23:38.238]Completed Shot 50, state 1
+ 34.648504 seconds (103.23 M allocations: 154.102 GiB, 38.72% gc time)
+[2022-10-14T00:23:38.250]Completed Shot 50, state 10
+ 34.655900 seconds (103.24 M allocations: 154.111 GiB, 38.71% gc time)
+[2022-10-14T00:23:38.258]Completed Shot 50, state 5
+ 34.669436 seconds (103.25 M allocations: 154.127 GiB, 38.70% gc time)
+[2022-10-14T00:23:38.271]Completed Shot 50, state 3
+ 34.675149 seconds (103.25 M allocations: 154.132 GiB, 38.69% gc time)
+[2022-10-14T00:23:38.277]Completed Shot 50, state 2
+ 34.699475 seconds (103.27 M allocations: 154.150 GiB, 38.66% gc time)
+[2022-10-14T00:23:38.301]Completed Shot 50, state 4
+ 34.705282 seconds (103.27 M allocations: 154.154 GiB, 38.66% gc time)
+[2022-10-14T00:23:38.307]Completed Shot 50, state 9
+ 34.722445 seconds (103.27 M allocations: 154.163 GiB, 38.64% gc time)
+[2022-10-14T00:23:38.324]Completed Shot 50, state 6
+ 34.784703 seconds (103.28 M allocations: 154.168 GiB, 38.57% gc time)
+[2022-10-14T00:23:38.386]Completed Shot 50, state 7
+ 37.039575 seconds (103.22 M allocations: 154.080 GiB, 41.25% gc time)
+[2022-10-14T00:24:15.434]Completed Shot 51, state 6
+ 37.058071 seconds (103.23 M allocations: 154.102 GiB, 41.22% gc time)
+[2022-10-14T00:24:15.453]Completed Shot 51, state 5
+ 37.067830 seconds (103.24 M allocations: 154.112 GiB, 41.21% gc time)
+[2022-10-14T00:24:15.462]Completed Shot 51, state 1
+ 37.072486 seconds (103.24 M allocations: 154.115 GiB, 41.21% gc time)
+[2022-10-14T00:24:15.467]Completed Shot 51, state 10
+ 37.100534 seconds (103.26 M allocations: 154.138 GiB, 41.18% gc time)
+[2022-10-14T00:24:15.495]Completed Shot 51, state 2
+ 37.122709 seconds (103.27 M allocations: 154.153 GiB, 41.15% gc time)
+[2022-10-14T00:24:15.517]Completed Shot 51, state 4
+ 37.141153 seconds (103.27 M allocations: 154.164 GiB, 41.13% gc time)
+[2022-10-14T00:24:15.536]Completed Shot 51, state 8
+ 37.144600 seconds (103.28 M allocations: 154.165 GiB, 41.13% gc time)
+[ 37.144649 seconds (103.28 M allocations: 154.165 GiB, 41.13% gc time)
+2022-10-14T00:24:15.539]Completed Shot 51, state 9
+[2022-10-14T00:24:15.539]Completed Shot 51, state 3
+ 37.210054 seconds (103.28 M allocations: 154.168 GiB, 41.06% gc time)
+[2022-10-14T00:24:15.605]Completed Shot 51, state 7
+ 38.249474 seconds (103.17 M allocations: 154.011 GiB, 43.62% gc time)
+[2022-10-14T00:24:53.861]Completed Shot 52, state 1
+ 38.286694 seconds (103.21 M allocations: 154.077 GiB, 43.57% gc time)
+[2022-10-14T00:24:53.899]Completed Shot 52, state 3
+ 38.290332 seconds (103.22 M allocations: 154.081 GiB, 43.57% gc time)
+[2022-10-14T00:24:53.902]Completed Shot 52, state 10
+ 38.312247 seconds (103.23 M allocations: 154.104 GiB, 43.54% gc time)
+[2022-10-14T00:24:53.924]Completed Shot 52, state 4
+ 38.341811 seconds (103.25 M allocations: 154.131 GiB, 43.51% gc time)
+[2022-10-14T00:24:53.954]Completed Shot 52, state 5
+ 38.341894 seconds (103.25 M allocations: 154.130 GiB, 43.51% gc time)
+[2022-10-14T00:24:53.954]Completed Shot 52, state 7
+ 38.359708 seconds (103.26 M allocations: 154.140 GiB, 43.49% gc time)
+[2022-10-14T00:24:53.972]Completed Shot 52, state 8
+ 38.389286 seconds (103.27 M allocations: 154.154 GiB, 43.46% gc time)
+[2022-10-14T00:24:54.001]Completed Shot 52, state 2
+ 38.412345 seconds (103.27 M allocations: 154.162 GiB, 43.43% gc time)
+[2022-10-14T00:24:54.024]Completed Shot 52, state 9
+ 38.523810 seconds (103.28 M allocations: 154.168 GiB, 43.31% gc time)
+[2022-10-14T00:24:54.136]Completed Shot 52, state 6
+ 36.039439 seconds (103.16 M allocations: 153.994 GiB, 40.88% gc time)
+[2022-10-14T00:25:30.183]Completed Shot 53, state 4
+ 36.097274 seconds (103.23 M allocations: 154.099 GiB, 40.82% gc time)
+[2022-10-14T00:25:30.241]Completed Shot 53, state 6
+ 36.097732 seconds (103.23 M allocations: 154.099 GiB, 40.82% gc time)
+[2022-10-14T00:25:30.241]Completed Shot 53, state 5
+ 36.106000 seconds (103.24 M allocations: 154.107 GiB, 40.81% gc time)
+[2022-10-14T00:25:30.249]Completed Shot 53, state 9
+ 36.125629 seconds (103.25 M allocations: 154.128 GiB, 40.79% gc time)
+[2022-10-14T00:25:30.269]Completed Shot 53, state 3
+ 36.145426 seconds (103.26 M allocations: 154.144 GiB, 40.76% gc time)
+[2022-10-14T00:25:30.289]Completed Shot 53, state 1
+ 36.145925 seconds (103.26 M allocations: 154.144 GiB, 40.76% gc time)
+[2022-10-14T00:25:30.289]Completed Shot 53, state 8
+ 36.157418 seconds (103.26 M allocations: 154.150 GiB, 40.75% gc time)
+[2022-10-14T00:25:30.301]Completed Shot 53, state 7
+ 36.185714 seconds (103.27 M allocations: 154.161 GiB, 40.72% gc time)
+[2022-10-14T00:25:30.329]Completed Shot 53, state 10
+ 36.312386 seconds (103.28 M allocations: 154.168 GiB, 40.58% gc time)
+[2022-10-14T00:25:30.456]Completed Shot 53, state 2
+ 36.679257 seconds (103.18 M allocations: 154.025 GiB, 42.07% gc time)
+[2022-10-14T00:26:07.143]Completed Shot 54, state 4
+ 36.710653 seconds (103.22 M allocations: 154.085 GiB, 42.03% gc time)
+[2022-10-14T00:26:07.174]Completed Shot 54, state 1
+ 36.715568 seconds (103.23 M allocations: 154.090 GiB, 42.02% gc time)
+[2022-10-14T00:26:07.179]Completed Shot 54, state 8
+ 36.722124 seconds (103.23 M allocations: 154.101 GiB, 42.02% gc time)
+[2022-10-14T00:26:07.185]Completed Shot 54, state 3
+ 36.723197 seconds (103.23 M allocations: 154.101 GiB, 42.02% gc time)
+[2022-10-14T00:26:07.187]Completed Shot 54, state 6
+ 36.737367 seconds (103.24 M allocations: 154.118 GiB, 42.00% gc time)
+[2022-10-14T00:26:07.201]Completed Shot 54, state 2
+ 36.760791 seconds (103.26 M allocations: 154.137 GiB, 41.97% gc time)
+[2022-10-14T00:26:07.224]Completed Shot 54, state 5
+ 36.772163 seconds (103.26 M allocations: 154.144 GiB, 41.96% gc time)
+[2022-10-14T00:26:07.236]Completed Shot 54, state 9
+ 36.796989 seconds (103.27 M allocations: 154.154 GiB, 41.93% gc time)
+[2022-10-14T00:26:07.260]Completed Shot 54, state 10
+ 37.060502 seconds (103.28 M allocations: 154.166 GiB, 41.63% gc time)
+[2022-10-14T00:26:07.524]Completed Shot 54, state 7
+ 34.692317 seconds (103.16 M allocations: 153.990 GiB, 38.70% gc time)
+[2022-10-14T00:26:42.224]Completed Shot 55, state 1
+ 34.719834 seconds (103.19 M allocations: 154.043 GiB, 38.67% gc time)
+[2022-10-14T00:26:42.251]Completed Shot 55, state 9
+ 34.756477 seconds (103.23 M allocations: 154.099 GiB, 38.63% gc time)
+[2022-10-14T00:26:42.288]Completed Shot 55, state 10
+ 34.762907 seconds (103.24 M allocations: 154.107 GiB, 38.62% gc time)
+[2022-10-14T00:26:42.294]Completed Shot 55, state 6
+ 34.764336 seconds (103.24 M allocations: 154.109 GiB, 38.62% gc time)
+[2022-10-14T00:26:42.296]Completed Shot 55, state 3
+ 34.779240 seconds (103.24 M allocations: 154.120 GiB, 38.60% gc time)
+[2022-10-14T00:26:42.311]Completed Shot 55, state 5
+ 34.834265 seconds (103.27 M allocations: 154.157 GiB, 38.54% gc time)
+[2022-10-14T00:26:42.366]Completed Shot 55, state 4
+ 34.838155 seconds (103.27 M allocations: 154.158 GiB, 38.54% gc time)
+[2022-10-14T00:26:42.370]Completed Shot 55, state 7
+ 34.845236 seconds (103.27 M allocations: 154.160 GiB, 38.53% gc time)
+[2022-10-14T00:26:42.377]Completed Shot 55, state 2
+ 34.997780 seconds (103.28 M allocations: 154.168 GiB, 38.36% gc time)
+[2022-10-14T00:26:42.529]Completed Shot 55, state 8
+ 36.417368 seconds (103.13 M allocations: 153.946 GiB, 41.60% gc time)
+[2022-10-14T00:27:18.955]Completed Shot 56, state 3
+ 36.445042 seconds (103.18 M allocations: 154.023 GiB, 41.56% gc time)
+[2022-10-14T00:27:18.982]Completed Shot 56, state 1
+ 36.472228 seconds (103.21 M allocations: 154.069 GiB, 41.53% gc time)
+[2022-10-14T00:27:19.009]Completed Shot 56, state 9
+ 36.483590 seconds (103.22 M allocations: 154.084 GiB, 41.52% gc time)
+[2022-10-14T00:27:19.021]Completed Shot 56, state 4
+ 36.494185 seconds (103.23 M allocations: 154.096 GiB, 41.51% gc time)
+[2022-10-14T00:27:19.031]Completed Shot 56, state 8
+ 36.521014 seconds (103.25 M allocations: 154.121 GiB, 41.48% gc time)
+[2022-10-14T00:27:19.058]Completed Shot 56, state 2
+ 36.528643 seconds (103.25 M allocations: 154.127 GiB, 41.47% gc time)
+[2022-10-14T00:27:19.066]Completed Shot 56, state 7
+ 36.576627 seconds (103.27 M allocations: 154.161 GiB, 41.41% gc time)
+[2022-10-14T00:27:19.114]Completed Shot 56, state 10
+ 36.594773 seconds (103.28 M allocations: 154.167 GiB, 41.39% gc time)
+[2022-10-14T00:27:19.132]Completed Shot 56, state 5
+ 36.618423 seconds (103.28 M allocations: 154.168 GiB, 41.37% gc time)
+[2022-10-14T00:27:19.155]Completed Shot 56, state 6
+ 35.526315 seconds (103.07 M allocations: 153.858 GiB, 40.31% gc time)
+[2022-10-14T00:27:54.690]Completed Shot 57, state 9
+ 35.589267 seconds (103.19 M allocations: 154.045 GiB, 40.24% gc time)
+[2022-10-14T00:27:54.753]Completed Shot 57, state 1
+ 35.597498 seconds (103.21 M allocations: 154.064 GiB, 40.23% gc time)
+[2022-10-14T00:27:54.761]Completed Shot 57, state 2
+ 35.620822 seconds (103.23 M allocations: 154.102 GiB, 40.20% gc time)
+[2022-10-14T00:27:54.784]Completed Shot 57, state 3
+ 35.626686 seconds (103.24 M allocations: 154.110 GiB, 40.20% gc time)
+[2022-10-14T00:27:54.790]Completed Shot 57, state 5
+ 35.629937 seconds (103.24 M allocations: 154.113 GiB, 40.19% gc time)
+[2022-10-14T00:27:54.794]Completed Shot 57, state 7
+ 35.661475 seconds (103.26 M allocations: 154.135 GiB, 40.16% gc time)
+[2022-10-14T00:27:54.825]Completed Shot 57, state 4
+ 35.695319 seconds (103.27 M allocations: 154.150 GiB, 40.12% gc time)
+[2022-10-14T00:27:54.859]Completed Shot 57, state 10
+ 35.743991 seconds (103.28 M allocations: 154.167 GiB, 40.06% gc time)
+[2022-10-14T00:27:54.908]Completed Shot 57, state 6
+ 35.762134 seconds (103.28 M allocations: 154.168 GiB, 40.04% gc time)
+[2022-10-14T00:27:54.926]Completed Shot 57, state 8
+ 36.644426 seconds (103.22 M allocations: 154.087 GiB, 41.60% gc time)
+[2022-10-14T00:28:31.578]Completed Shot 58, state 8
+ 36.663448 seconds (103.24 M allocations: 154.113 GiB, 41.58% gc time)
+[2022-10-14T00:28:31.597]Completed Shot 58, state 10
+ 36.668607 seconds (103.24 M allocations: 154.121 GiB, 41.57% gc time)
+[2022-10-14T00:28:31.602]Completed Shot 58, state 5
+ 36.669098 seconds (103.24 M allocations: 154.121 GiB, 41.57% gc time)
+[2022-10-14T00:28:31.602]Completed Shot 58, state 4
+ 36.670762 seconds (103.25 M allocations: 154.122 GiB, 41.57% gc time)
+[2022-10-14T00:28:31.604]Completed Shot 58, state 7
+ 36.690895 seconds (103.26 M allocations: 154.137 GiB, 41.55% gc time)
+[2022-10-14T00:28:31.624]Completed Shot 58, state 6
+ 36.695075 seconds (103.26 M allocations: 154.140 GiB, 41.54% gc time)
+[2022-10-14T00:28:31.628]Completed Shot 58, state 1
+ 36.702156 seconds (103.26 M allocations: 154.141 GiB, 41.53% gc time)
+[2022-10-14T00:28:31.636]Completed Shot 58, state 9
+ 36.774888 seconds (103.28 M allocations: 154.167 GiB, 41.45% gc time)
+[2022-10-14T00:28:31.708]Completed Shot 58, state 3
+ 36.796578 seconds (103.28 M allocations: 154.168 GiB, 41.43% gc time)
+[2022-10-14T00:28:31.730]Completed Shot 58, state 2
+ 34.483723 seconds (103.16 M allocations: 153.994 GiB, 38.07% gc time)
+[2022-10-14T00:29:06.221]Completed Shot 59, state 6
+ 37.404867 seconds (103.19 M allocations: 154.039 GiB, 42.85% gc time)
+[2022-10-14T00:29:09.142]Completed Shot 59, state 5
+ 37.427543 seconds (103.22 M allocations: 154.090 GiB, 42.83% gc time)
+[2022-10-14T00:29:09.165]Completed Shot 59, state 10
+ 37.435333 seconds (103.23 M allocations: 154.106 GiB, 42.82% gc time)
+[2022-10-14T00:29:09.172]Completed Shot 59, state 1
+ 37.462340 seconds (103.26 M allocations: 154.139 GiB, 42.79% gc time)
+[2022-10-14T00:29:09.200]Completed Shot 59, state 9
+ 37.466216 seconds (103.26 M allocations: 154.143 GiB, 42.78% gc time)
+[2022-10-14T00:29:09.203]Completed Shot 59, state 8
+ 37.484365 seconds (103.27 M allocations: 154.154 GiB, 42.76% gc time)
+[2022-10-14T00:29:09.221]Completed Shot 59, state 4
+ 37.502463 seconds (103.27 M allocations: 154.162 GiB, 42.74% gc time)
+[2022-10-14T00:29:09.240]Completed Shot 59, state 7
+ 37.502502 seconds (103.27 M allocations: 154.162 GiB, 42.74% gc time)
+[2022-10-14T00:29:09.240]Completed Shot 59, state 2
+ 37.633183 seconds (103.28 M allocations: 154.168 GiB, 42.59% gc time)
+[2022-10-14T00:29:09.370]Completed Shot 59, state 3
+ 36.255145 seconds (103.19 M allocations: 154.039 GiB, 40.97% gc time)
+[2022-10-14T00:29:45.634]Completed Shot 60, state 4
+ 36.277557 seconds (103.21 M allocations: 154.072 GiB, 40.94% gc time)
+[2022-10-14T00:29:45.657]Completed Shot 60, state 9
+ 36.281687 seconds (103.22 M allocations: 154.077 GiB, 40.94% gc time)
+[2022-10-14T00:29:45.660]Completed Shot 60, state 3
+ 36.304534 seconds (103.24 M allocations: 154.104 GiB, 40.91% gc time)
+[2022-10-14T00:29:45.683]Completed Shot 60, state 1
+ 36.311527 seconds (103.24 M allocations: 154.112 GiB, 40.91% gc time)
+[2022-10-14T00:29:45.691]Completed Shot 60, state 7
+ 36.360052 seconds (103.27 M allocations: 154.154 GiB, 40.85% gc time)
+[2022-10-14T00:29:45.738]Completed Shot 60, state 2
+ 36.359592 seconds (103.27 M allocations: 154.154 GiB, 40.85% gc time)
+[2022-10-14T00:29:45.738]Completed Shot 60, state 5
+ 36.362294 seconds (103.27 M allocations: 154.155 GiB, 40.85% gc time)
+[2022-10-14T00:29:45.741]Completed Shot 60, state 6
+ 36.396669 seconds (103.28 M allocations: 154.167 GiB, 40.81% gc time)
+[2022-10-14T00:29:45.776]Completed Shot 60, state 8
+ 36.408332 seconds (103.28 M allocations: 154.168 GiB, 40.80% gc time)
+[2022-10-14T00:29:45.787]Completed Shot 60, state 10
+ 36.127228 seconds (103.10 M allocations: 153.903 GiB, 41.73% gc time)
+[2022-10-14T00:30:21.922]Completed Shot 61, state 1
+ 36.180728 seconds (103.19 M allocations: 154.034 GiB, 41.67% gc time)
+[2022-10-14T00:30:21.976]Completed Shot 61, state 7
+ 36.219745 seconds (103.22 M allocations: 154.083 GiB, 41.62% gc time)
+[2022-10-14T00:30:22.015]Completed Shot 61, state 3
+ 36.223769 seconds (103.22 M allocations: 154.088 GiB, 41.62% gc time)
+[2022-10-14T00:30:22.019]Completed Shot 61, state 4
+ 36.243110 seconds (103.24 M allocations: 154.107 GiB, 41.60% gc time)
+[2022-10-14T00:30:22.038]Completed Shot 61, state 6
+ 36.273606 seconds (103.25 M allocations: 154.129 GiB, 41.56% gc time)
+[2022-10-14T00:30:22.068]Completed Shot 61, state 8
+ 36.308250 seconds (103.27 M allocations: 154.154 GiB, 41.52% gc time)
+[2022-10-14T00:30:22.103]Completed Shot 61, state 5
+ 36.308395 seconds (103.27 M allocations: 154.154 GiB, 41.52% gc time)
+[2022-10-14T00:30:22.103]Completed Shot 61, state 9
+ 36.314415 seconds (103.27 M allocations: 154.156 GiB, 41.52% gc time)
+[2022-10-14T00:30:22.109]Completed Shot 61, state 10
+ 36.474988 seconds (103.28 M allocations: 154.168 GiB, 41.33% gc time)
+[2022-10-14T00:30:22.270]Completed Shot 61, state 2
+ 36.284679 seconds (103.06 M allocations: 153.842 GiB, 41.20% gc time)
+[2022-10-14T00:30:58.562]Completed Shot 62, state 2
+ 36.374656 seconds (103.22 M allocations: 154.077 GiB, 41.10% gc time)
+[2022-10-14T00:30:58.652]Completed Shot 62, state 6
+ 36.399242 seconds (103.24 M allocations: 154.111 GiB, 41.07% gc time)
+[2022-10-14T00:30:58.677]Completed Shot 62, state 5
+ 36.430852 seconds (103.26 M allocations: 154.141 GiB, 41.03% gc time)
+[2022-10-14T00:30:58.708]Completed Shot 62, state 7
+ 36.431131 seconds (103.26 M allocations: 154.141 GiB, 41.03% gc time)
+[2022-10-14T00:30:58.709]Completed Shot 62, state 10
+ 36.439431 seconds (103.26 M allocations: 154.149 GiB, 41.02% gc time)
+[2022-10-14T00:30:58.717]Completed Shot 62, state 3
+ 36.449418 seconds (103.27 M allocations: 154.153 GiB, 41.01% gc time)
+[2022-10-14T00:30:58.727]Completed Shot 62, state 9
+ 36.457687 seconds (103.27 M allocations: 154.158 GiB, 41.00% gc time)
+[2022-10-14T00:30:58.735]Completed Shot 62, state 1
+ 36.468367 seconds (103.27 M allocations: 154.161 GiB, 40.99% gc time)
+[2022-10-14T00:30:58.746]Completed Shot 62, state 8
+ 36.529143 seconds (103.28 M allocations: 154.168 GiB, 40.92% gc time)
+[2022-10-14T00:30:58.806]Completed Shot 62, state 4
+ 36.219766 seconds (103.19 M allocations: 154.043 GiB, 41.78% gc time)
+[2022-10-14T00:31:35.036]Completed Shot 63, state 5
+ 36.234092 seconds (103.21 M allocations: 154.075 GiB, 41.76% gc time)
+[2022-10-14T00:31:35.048]Completed Shot 63, state 1
+ 36.251089 seconds (103.23 M allocations: 154.103 GiB, 41.74% gc time)
+[2022-10-14T00:31:35.066]Completed Shot 63, state 4
+ 36.263174 seconds (103.24 M allocations: 154.117 GiB, 41.73% gc time)
+[2022-10-14T00:31:35.078]Completed Shot 63, state 10
+ 36.277051 seconds (103.26 M allocations: 154.133 GiB, 41.71% gc time)
+[2022-10-14T00:31:35.091]Completed Shot 63, state 2
+ 36.284784 seconds (103.26 M allocations: 154.141 GiB, 41.70% gc time)
+[2022-10-14T00:31:35.099]Completed Shot 63, state 7
+ 36.287953 seconds (103.26 M allocations: 154.143 GiB, 41.70% gc time)
+[2022-10-14T00:31:35.102]Completed Shot 63, state 8
+ 36.299510 seconds (103.27 M allocations: 154.151 GiB, 41.68% gc time)
+[2022-10-14T00:31:35.114]Completed Shot 63, state 3
+ 36.302747 seconds (103.27 M allocations: 154.152 GiB, 41.68% gc time)
+[2022-10-14T00:31:35.117]Completed Shot 63, state 6
+ 36.491454 seconds (103.28 M allocations: 154.168 GiB, 41.46% gc time)
+[2022-10-14T00:31:35.306]Completed Shot 63, state 9
+ 35.446001 seconds (103.01 M allocations: 153.773 GiB, 40.60% gc time)
+[2022-10-14T00:32:10.760]Completed Shot 64, state 5
+ 35.532729 seconds (103.21 M allocations: 154.074 GiB, 40.50% gc time)
+[2022-10-14T00:32:10.846]Completed Shot 64, state 2
+ 35.535724 seconds (103.22 M allocations: 154.081 GiB, 40.50% gc time)
+[2022-10-14T00:32:10.850]Completed Shot 64, state 4
+ 35.545688 seconds (103.23 M allocations: 154.099 GiB, 40.49% gc time)
+[2022-10-14T00:32:10.859]Completed Shot 64, state 3
+ 35.572713 seconds (103.25 M allocations: 154.128 GiB, 40.46% gc time)
+[2022-10-14T00:32:10.887]Completed Shot 64, state 6
+ 35.590816 seconds (103.26 M allocations: 154.142 GiB, 40.44% gc time)
+ 35.590845 seconds (103.26 M allocations: 154.142 GiB, 40.44% gc time)
+[2022-10-14T00:32:10.905]Completed Shot 64, state 9
+[2022-10-14T00:32:10.905]Completed Shot 64, state 8
+ 35.594387 seconds (103.26 M allocations: 154.143 GiB, 40.43% gc time)
+[2022-10-14T00:32:10.908]Completed Shot 64, state 10
+ 35.628283 seconds (103.27 M allocations: 154.156 GiB, 40.39% gc time)
+[2022-10-14T00:32:10.942]Completed Shot 64, state 1
+ 35.903530 seconds (103.28 M allocations: 154.168 GiB, 40.08% gc time)
+[2022-10-14T00:32:11.217]Completed Shot 64, state 7
+ 36.570414 seconds (103.14 M allocations: 153.956 GiB, 42.02% gc time)
+[2022-10-14T00:32:47.796]Completed Shot 65, state 5
+ 36.636759 seconds (103.22 M allocations: 154.085 GiB, 41.94% gc time)
+[2022-10-14T00:32:47.862]Completed Shot 65, state 6
+ 36.640758 seconds (103.23 M allocations: 154.090 GiB, 41.93% gc time)
+[2022-10-14T00:32:47.866]Completed Shot 65, state 10
+ 36.660767 seconds (103.24 M allocations: 154.118 GiB, 41.91% gc time)
+[2022-10-14T00:32:47.886]Completed Shot 65, state 2
+ 36.673978 seconds (103.25 M allocations: 154.132 GiB, 41.90% gc time)
+[2022-10-14T00:32:47.899]Completed Shot 65, state 1
+ 36.680960 seconds (103.26 M allocations: 154.137 GiB, 41.89% gc time)
+[2022-10-14T00:32:47.906]Completed Shot 65, state 7
+ 36.688508 seconds (103.26 M allocations: 154.143 GiB, 41.88% gc time)
+[2022-10-14T00:32:47.914]Completed Shot 65, state 8
+ 36.728742 seconds (103.28 M allocations: 154.164 GiB, 41.83% gc time)
+[2022-10-14T00:32:47.954]Completed Shot 65, state 4
+ 36.729239 seconds (103.28 M allocations: 154.164 GiB, 41.83% gc time)
+[2022-10-14T00:32:47.955]Completed Shot 65, state 9
+ 36.796751 seconds (103.28 M allocations: 154.168 GiB, 41.76% gc time)
+[2022-10-14T00:32:48.022]Completed Shot 65, state 3
+ 34.458884 seconds (103.21 M allocations: 154.072 GiB, 38.47% gc time)
+[2022-10-14T00:33:22.489]Completed Shot 66, state 9
+ 34.461296 seconds (103.21 M allocations: 154.077 GiB, 38.47% gc time)
+[2022-10-14T00:33:22.491]Completed Shot 66, state 2
+ 34.462276 seconds (103.22 M allocations: 154.078 GiB, 38.47% gc time)
+[2022-10-14T00:33:22.492]Completed Shot 66, state 7
+ 34.492788 seconds (103.24 M allocations: 154.113 GiB, 38.43% gc time)
+[2022-10-14T00:33:22.523]Completed Shot 66, state 4
+ 34.505031 seconds (103.25 M allocations: 154.124 GiB, 38.42% gc time)
+[2022-10-14T00:33:22.535]Completed Shot 66, state 8
+ 34.506810 seconds (103.25 M allocations: 154.125 GiB, 38.42% gc time)
+[2022-10-14T00:33:22.537]Completed Shot 66, state 1
+ 34.535419 seconds (103.26 M allocations: 154.144 GiB, 38.39% gc time)
+[2022-10-14T00:33:22.565]Completed Shot 66, state 10
+ 34.540711 seconds (103.26 M allocations: 154.147 GiB, 38.38% gc time)
+[2022-10-14T00:33:22.571]Completed Shot 66, state 6
+ 34.551638 seconds (103.27 M allocations: 154.151 GiB, 38.37% gc time)
+[2022-10-14T00:33:22.582]Completed Shot 66, state 5
+ 35.883765 seconds (103.28 M allocations: 154.168 GiB, 39.82% gc time)
+[2022-10-14T00:33:23.914]Completed Shot 66, state 3
+ 36.225813 seconds (103.17 M allocations: 154.003 GiB, 41.17% gc time)
+[2022-10-14T00:34:00.148]Completed Shot 67, state 3
+ 36.230367 seconds (103.18 M allocations: 154.016 GiB, 41.16% gc time)
+[2022-10-14T00:34:00.153]Completed Shot 67, state 7
+ 36.244313 seconds (103.20 M allocations: 154.046 GiB, 41.15% gc time)
+[2022-10-14T00:34:00.166]Completed Shot 67, state 1
+ 36.245534 seconds (103.20 M allocations: 154.050 GiB, 41.14% gc time)
+[2022-10-14T00:34:00.168]Completed Shot 67, state 9
+ 36.292847 seconds (103.25 M allocations: 154.120 GiB, 41.09% gc time)
+[2022-10-14T00:34:00.215]Completed Shot 67, state 8
+ 36.308157 seconds (103.26 M allocations: 154.136 GiB, 41.07% gc time)
+[2022-10-14T00:34:00.231]Completed Shot 67, state 10
+ 36.322835 seconds (103.27 M allocations: 154.146 GiB, 41.06% gc time)
+[2022-10-14T00:34:00.245]Completed Shot 67, state 6
+ 36.346567 seconds (103.27 M allocations: 154.158 GiB, 41.03% gc time)
+[2022-10-14T00:34:00.269]Completed Shot 67, state 4
+ 36.374783 seconds (103.28 M allocations: 154.168 GiB, 41.00% gc time)
+[2022-10-14T00:34:00.297]Completed Shot 67, state 5
+ 36.375366 seconds (103.28 M allocations: 154.168 GiB, 41.00% gc time)
+[2022-10-14T00:34:00.297]Completed Shot 67, state 2
+ 35.922114 seconds (103.12 M allocations: 153.933 GiB, 40.65% gc time)
+[2022-10-14T00:34:36.227]Completed Shot 68, state 10
+ 36.001218 seconds (103.22 M allocations: 154.087 GiB, 40.57% gc time)
+[2022-10-14T00:34:36.306]Completed Shot 68, state 6
+ 36.028096 seconds (103.24 M allocations: 154.119 GiB, 40.54% gc time)
+[2022-10-14T00:34:36.333]Completed Shot 68, state 9
+ 36.034705 seconds (103.25 M allocations: 154.127 GiB, 40.53% gc time)
+[2022-10-14T00:34:36.339]Completed Shot 68, state 1
+ 36.035992 seconds (103.25 M allocations: 154.128 GiB, 40.53% gc time)
+[2022-10-14T00:34:36.340]Completed Shot 68, state 8
+ 36.043457 seconds (103.25 M allocations: 154.134 GiB, 40.52% gc time)
+[2022-10-14T00:34:36.348]Completed Shot 68, state 2
+ 36.074946 seconds (103.27 M allocations: 154.153 GiB, 40.48% gc time)
+[2022-10-14T00:34:36.379]Completed Shot 68, state 3
+ 36.090328 seconds (103.27 M allocations: 154.159 GiB, 40.47% gc time)
+[2022-10-14T00:34:36.395]Completed Shot 68, state 5
+ 36.111719 seconds (103.28 M allocations: 154.168 GiB, 40.44% gc time)
+[2022-10-14T00:34:36.416]Completed Shot 68, state 7
+ 36.111792 seconds (103.28 M allocations: 154.168 GiB, 40.44% gc time)
+[2022-10-14T00:34:36.416]Completed Shot 68, state 4
+ 37.119448 seconds (103.15 M allocations: 153.981 GiB, 43.07% gc time)
+[2022-10-14T00:35:13.543]Completed Shot 69, state 6
+ 37.137448 seconds (103.19 M allocations: 154.039 GiB, 43.05% gc time)
+[2022-10-14T00:35:13.561]Completed Shot 69, state 7
+ 37.173724 seconds (103.24 M allocations: 154.110 GiB, 43.00% gc time)
+[2022-10-14T00:35:13.597]Completed Shot 69, state 5
+ 37.180560 seconds (103.24 M allocations: 154.117 GiB, 43.00% gc time)
+[2022-10-14T00:35:13.604]Completed Shot 69, state 2
+ 37.200499 seconds (103.26 M allocations: 154.134 GiB, 42.97% gc time)
+[2022-10-14T00:35:13.624]Completed Shot 69, state 4
+ 37.206381 seconds (103.26 M allocations: 154.139 GiB, 42.97% gc time)
+[2022-10-14T00:35:13.630]Completed Shot 69, state 8
+ 37.212576 seconds (103.26 M allocations: 154.144 GiB, 42.96% gc time)
+[2022-10-14T00:35:13.636]Completed Shot 69, state 9
+ 37.217283 seconds (103.27 M allocations: 154.147 GiB, 42.95% gc time)
+[2022-10-14T00:35:13.641]Completed Shot 69, state 1
+ 37.262096 seconds (103.28 M allocations: 154.163 GiB, 42.90% gc time)
+[2022-10-14T00:35:13.686]Completed Shot 69, state 3
+ 37.353923 seconds (103.28 M allocations: 154.168 GiB, 42.80% gc time)
+[2022-10-14T00:35:13.777]Completed Shot 69, state 10
+ 35.087205 seconds (103.12 M allocations: 153.932 GiB, 39.43% gc time)
+[2022-10-14T00:35:48.874]Completed Shot 70, state 8
+ 35.091574 seconds (103.13 M allocations: 153.943 GiB, 39.42% gc time)
+[2022-10-14T00:35:48.878]Completed Shot 70, state 5
+ 35.154665 seconds (103.21 M allocations: 154.069 GiB, 39.35% gc time)
+[2022-10-14T00:35:48.941]Completed Shot 70, state 4
+ 35.200325 seconds (103.25 M allocations: 154.124 GiB, 39.30% gc time)
+[2022-10-14T00:35:48.987]Completed Shot 70, state 10
+ 35.231641 seconds (103.27 M allocations: 154.153 GiB, 39.26% gc time)
+[2022-10-14T00:35:49.018]Completed Shot 70, state 1
+ 35.235253 seconds (103.27 M allocations: 154.156 GiB, 39.26% gc time)
+[2022-10-14T00:35:49.022]Completed Shot 70, state 2
+ 35.238983 seconds (103.27 M allocations: 154.158 GiB, 39.26% gc time)
+[2022-10-14T00:35:49.026]Completed Shot 70, state 6
+ 35.242857 seconds (103.27 M allocations: 154.159 GiB, 39.25% gc time)
+[2022-10-14T00:35:49.030]Completed Shot 70, state 7
+ 35.249868 seconds (103.27 M allocations: 154.161 GiB, 39.24% gc time)
+[2022-10-14T00:35:49.037]Completed Shot 70, state 3
+ 35.345520 seconds (103.28 M allocations: 154.168 GiB, 39.14% gc time)
+[2022-10-14T00:35:49.132]Completed Shot 70, state 9
+ 36.425899 seconds (102.99 M allocations: 153.748 GiB, 41.84% gc time)
+[2022-10-14T00:36:25.566]Completed Shot 71, state 3
+ 36.445011 seconds (103.05 M allocations: 153.829 GiB, 41.82% gc time)
+[2022-10-14T00:36:25.586]Completed Shot 71, state 10
+ 36.533558 seconds (103.21 M allocations: 154.071 GiB, 41.72% gc time)
+[2022-10-14T00:36:25.674]Completed Shot 71, state 1
+ 36.548144 seconds (103.23 M allocations: 154.091 GiB, 41.70% gc time)
+[2022-10-14T00:36:25.689]Completed Shot 71, state 4
+ 36.580098 seconds (103.25 M allocations: 154.126 GiB, 41.67% gc time)
+[2022-10-14T00:36:25.720]Completed Shot 71, state 2
+ 36.615270 seconds (103.27 M allocations: 154.153 GiB, 41.63% gc time)
+[2022-10-14T00:36:25.756]Completed Shot 71, state 9
+ 36.622652 seconds (103.27 M allocations: 154.159 GiB, 41.62% gc time)
+[2022-10-14T00:36:25.763]Completed Shot 71, state 8
+ 36.632167 seconds (103.27 M allocations: 154.163 GiB, 41.61% gc time)
+[2022-10-14T00:36:25.773]Completed Shot 71, state 6
+ 36.632910 seconds (103.27 M allocations: 154.163 GiB, 41.61% gc time)
+[2022-10-14T00:36:25.773]Completed Shot 71, state 7
+ 36.707728 seconds (103.28 M allocations: 154.168 GiB, 41.52% gc time)
+[2022-10-14T00:36:25.848]Completed Shot 71, state 5
+ 37.389945 seconds (103.18 M allocations: 154.024 GiB, 43.15% gc time)
+[2022-10-14T00:37:03.246]Completed Shot 72, state 4
+ 37.411923 seconds (103.20 M allocations: 154.054 GiB, 43.13% gc time)
+[2022-10-14T00:37:03.268]Completed Shot 72, state 9
+ 37.436519 seconds (103.23 M allocations: 154.089 GiB, 43.10% gc time)
+[2022-10-14T00:37:03.292]Completed Shot 72, state 7
+ 37.440638 seconds (103.23 M allocations: 154.095 GiB, 43.09% gc time)
+[2022-10-14T00:37:03.296]Completed Shot 72, state 5
+ 37.488128 seconds (103.26 M allocations: 154.140 GiB, 43.04% gc time)
+[2022-10-14T00:37:03.344]Completed Shot 72, state 2
+ 37.499126 seconds (103.26 M allocations: 154.148 GiB, 43.03% gc time)
+[2022-10-14T00:37:03.355]Completed Shot 72, state 6
+ 37.502712 seconds (103.27 M allocations: 154.148 GiB, 43.02% gc time)
+[2022-10-14T00:37:03.358]Completed Shot 72, state 10
+ 37.523584 seconds (103.27 M allocations: 154.159 GiB, 43.00% gc time)
+[2022-10-14T00:37:03.379]Completed Shot 72, state 1
+ 37.534708 seconds (103.27 M allocations: 154.161 GiB, 42.99% gc time)
+[2022-10-14T00:37:03.390]Completed Shot 72, state 8
+ 37.603443 seconds (103.28 M allocations: 154.168 GiB, 42.91% gc time)
+[2022-10-14T00:37:03.459]Completed Shot 72, state 3
+ 36.455178 seconds (103.15 M allocations: 153.987 GiB, 39.97% gc time)
+[2022-10-14T00:37:39.922]Completed Shot 73, state 3
+ 36.475301 seconds (103.19 M allocations: 154.037 GiB, 39.95% gc time)
+[2022-10-14T00:37:39.942]Completed Shot 73, state 10
+ 36.475389 seconds (103.19 M allocations: 154.038 GiB, 39.95% gc time)
+[2022-10-14T00:37:39.942]Completed Shot 73, state 7
+ 36.504965 seconds (103.22 M allocations: 154.088 GiB, 39.91% gc time)
+[2022-10-14T00:37:39.972]Completed Shot 73, state 9
+ 36.552182 seconds (103.26 M allocations: 154.143 GiB, 39.86% gc time)
+[2022-10-14T00:37:40.019]Completed Shot 73, state 1
+ 36.560012 seconds (103.26 M allocations: 154.149 GiB, 39.85% gc time)
+[2022-10-14T00:37:40.027]Completed Shot 73, state 8
+ 36.563916 seconds (103.27 M allocations: 154.152 GiB, 39.85% gc time)
+[2022-10-14T00:37:40.030]Completed Shot 73, state 6
+ 36.571964 seconds (103.27 M allocations: 154.158 GiB, 39.84% gc time)
+[2022-10-14T00:37:40.038]Completed Shot 73, state 4
+ 36.594725 seconds (103.28 M allocations: 154.167 GiB, 39.82% gc time)
+[2022-10-14T00:37:40.061]Completed Shot 73, state 5
+ 36.605250 seconds (103.28 M allocations: 154.168 GiB, 39.80% gc time)
+[2022-10-14T00:37:40.072]Completed Shot 73, state 2
+ 37.901614 seconds (102.99 M allocations: 153.737 GiB, 41.17% gc time)
+[2022-10-14T00:38:17.981]Completed Shot 74, state 5
+ 37.985854 seconds (103.16 M allocations: 153.999 GiB, 41.08% gc time)
+[2022-10-14T00:38:18.065]Completed Shot 74, state 7
+ 37.989983 seconds (103.17 M allocations: 154.007 GiB, 41.08% gc time)
+[2022-10-14T00:38:18.069]Completed Shot 74, state 4
+ 38.041610 seconds (103.22 M allocations: 154.089 GiB, 41.02% gc time)
+[2022-10-14T00:38:18.121]Completed Shot 74, state 6
+ 38.093556 seconds (103.26 M allocations: 154.148 GiB, 40.96% gc time)
+[2022-10-14T00:38:18.173]Completed Shot 74, state 3
+ 38.097053 seconds (103.27 M allocations: 154.151 GiB, 40.96% gc time)
+[2022-10-14T00:38:18.176]Completed Shot 74, state 2
+ 38.097318 seconds (103.27 M allocations: 154.150 GiB, 40.96% gc time)
+ 38.097521 seconds (103.27 M allocations: 154.151 GiB, 40.96% gc time)
+[[2022-10-14T00:38:18.177]Completed Shot 74, state 1
+2022-10-14T00:38:18.177]Completed Shot 74, state 9
+ 38.124764 seconds (103.27 M allocations: 154.158 GiB, 40.93% gc time)
+[2022-10-14T00:38:18.204]Completed Shot 74, state 10
+ 38.249526 seconds (103.28 M allocations: 154.168 GiB, 40.80% gc time)
+[2022-10-14T00:38:18.329]Completed Shot 74, state 8
+ 35.699419 seconds (103.13 M allocations: 153.950 GiB, 36.97% gc time)
+[2022-10-14T00:38:54.036]Completed Shot 75, state 2
+ 35.714831 seconds (103.16 M allocations: 153.995 GiB, 36.96% gc time)
+[2022-10-14T00:38:54.051]Completed Shot 75, state 3
+ 35.749092 seconds (103.21 M allocations: 154.069 GiB, 36.92% gc time)
+[2022-10-14T00:38:54.085]Completed Shot 75, state 6
+ 35.795674 seconds (103.26 M allocations: 154.140 GiB, 36.88% gc time)
+[2022-10-14T00:38:54.132]Completed Shot 75, state 4
+ 35.797987 seconds (103.26 M allocations: 154.142 GiB, 36.87% gc time)
+[2022-10-14T00:38:54.134]Completed Shot 75, state 1
+ 35.806888 seconds (103.26 M allocations: 154.148 GiB, 36.86% gc time)
+[2022-10-14T00:38:54.143]Completed Shot 75, state 9
+ 35.813871 seconds (103.27 M allocations: 154.153 GiB, 36.86% gc time)
+[2022-10-14T00:38:54.150]Completed Shot 75, state 10
+ 35.825387 seconds (103.27 M allocations: 154.161 GiB, 36.84% gc time)
+[2022-10-14T00:38:54.162]Completed Shot 75, state 8
+ 35.837927 seconds (103.28 M allocations: 154.166 GiB, 36.83% gc time)
+[2022-10-14T00:38:54.174]Completed Shot 75, state 7
+ 35.851194 seconds (103.28 M allocations: 154.168 GiB, 36.82% gc time)
+[2022-10-14T00:38:54.187]Completed Shot 75, state 5
+ 37.908273 seconds (103.14 M allocations: 153.965 GiB, 44.40% gc time)
+[2022-10-14T00:39:32.103]Completed Shot 76, state 3
+ 37.974698 seconds (103.25 M allocations: 154.126 GiB, 44.32% gc time)
+[2022-10-14T00:39:32.170]Completed Shot 76, state 6
+ 37.975995 seconds (103.25 M allocations: 154.127 GiB, 44.32% gc time)
+[2022-10-14T00:39:32.171]Completed Shot 76, state 10
+ 37.977843 seconds (103.25 M allocations: 154.130 GiB, 44.32% gc time)
+[2022-10-14T00:39:32.173]Completed Shot 76, state 2
+ 38.005547 seconds (103.27 M allocations: 154.151 GiB, 44.28% gc time)
+[2022-10-14T00:39:32.201]Completed Shot 76, state 9
+ 38.006697 seconds (103.27 M allocations: 154.152 GiB, 44.28% gc time)
+[2022-10-14T00:39:32.202]Completed Shot 76, state 5
+ 38.007343 seconds (103.27 M allocations: 154.152 GiB, 44.28% gc time)
+[2022-10-14T00:39:32.202]Completed Shot 76, state 7
+ 38.012970 seconds (103.27 M allocations: 154.155 GiB, 44.27% gc time)
+[2022-10-14T00:39:32.208]Completed Shot 76, state 8
+ 38.041646 seconds (103.28 M allocations: 154.166 GiB, 44.24% gc time)
+[2022-10-14T00:39:32.237]Completed Shot 76, state 4
+ 38.083419 seconds (103.28 M allocations: 154.168 GiB, 44.19% gc time)
+[2022-10-14T00:39:32.278]Completed Shot 76, state 1
+ 35.724867 seconds (103.23 M allocations: 154.089 GiB, 40.66% gc time)
+[2022-10-14T00:40:08.011]Completed Shot 77, state 10
+ 35.730002 seconds (103.23 M allocations: 154.097 GiB, 40.65% gc time)
+[2022-10-14T00:40:08.017]Completed Shot 77, state 5
+ 35.743327 seconds (103.24 M allocations: 154.116 GiB, 40.64% gc time)
+[2022-10-14T00:40:08.030]Completed Shot 77, state 8
+ 35.748844 seconds (103.25 M allocations: 154.123 GiB, 40.63% gc time)
+[2022-10-14T00:40:08.035]Completed Shot 77, state 6
+ 35.771388 seconds (103.26 M allocations: 154.146 GiB, 40.61% gc time)
+[2022-10-14T00:40:08.058]Completed Shot 77, state 3
+ 35.780843 seconds (103.27 M allocations: 154.151 GiB, 40.59% gc time)
+[2022-10-14T00:40:08.067]Completed Shot 77, state 1
+ 35.787367 seconds (103.27 M allocations: 154.153 GiB, 40.59% gc time)
+[2022-10-14T00:40:08.074]Completed Shot 77, state 9
+ 35.810137 seconds (103.28 M allocations: 154.163 GiB, 40.56% gc time)
+[2022-10-14T00:40:08.096]Completed Shot 77, state 2
+ 35.823938 seconds (103.28 M allocations: 154.167 GiB, 40.55% gc time)
+[2022-10-14T00:40:08.110]Completed Shot 77, state 7
+ 35.829886 seconds (103.28 M allocations: 154.168 GiB, 40.54% gc time)
+[2022-10-14T00:40:08.116]Completed Shot 77, state 4
+ 36.862612 seconds (103.16 M allocations: 153.997 GiB, 42.95% gc time)
+[2022-10-14T00:40:44.988]Completed Shot 78, state 1
+ 36.875112 seconds (103.19 M allocations: 154.029 GiB, 42.94% gc time)
+[2022-10-14T00:40:45]Completed Shot 78, state 4
+ 36.896274 seconds (103.22 M allocations: 154.072 GiB, 42.92% gc time)
+[2022-10-14T00:40:45.022]Completed Shot 78, state 8
+ 36.918726 seconds (103.24 M allocations: 154.112 GiB, 42.89% gc time)
+[2022-10-14T00:40:45.044]Completed Shot 78, state 9
+ 36.947505 seconds (103.26 M allocations: 154.143 GiB, 42.86% gc time)
+[2022-10-14T00:40:45.073]Completed Shot 78, state 7
+ 36.951441 seconds (103.27 M allocations: 154.146 GiB, 42.85% gc time)
+[2022-10-14T00:40:45.077]Completed Shot 78, state 5
+ 36.954288 seconds (103.27 M allocations: 154.148 GiB, 42.85% gc time)
+[2022-10-14T00:40:45.080]Completed Shot 78, state 10
+ 36.966422 seconds (103.27 M allocations: 154.155 GiB, 42.83% gc time)
+[2022-10-14T00:40:45.092]Completed Shot 78, state 2
+ 36.987362 seconds (103.28 M allocations: 154.164 GiB, 42.81% gc time)
+[2022-10-14T00:40:45.113]Completed Shot 78, state 6
+ 37.066072 seconds (103.28 M allocations: 154.168 GiB, 42.72% gc time)
+[2022-10-14T00:40:45.191]Completed Shot 78, state 3
+ 36.001999 seconds (103.23 M allocations: 154.094 GiB, 40.92% gc time)
+[2022-10-14T00:41:21.201]Completed Shot 79, state 4
+ 36.009596 seconds (103.23 M allocations: 154.103 GiB, 40.91% gc time)
+[2022-10-14T00:41:21.208]Completed Shot 79, state 9
+ 36.019478 seconds (103.24 M allocations: 154.116 GiB, 40.90% gc time)
+[2022-10-14T00:41:21.218]Completed Shot 79, state 1
+  Activating project at `/lustre/work/ws/ws1/hd_ku269-light_cones/LightCones`
+ 36.027530 seconds (103.25 M allocations: 154.125 GiB, 40.89% gc time)
+[2022-10-14T00:41:21.226]Completed Shot 79, state 7
+ 36.038089 seconds (103.25 M allocations: 154.132 GiB, 40.88% gc time)
+[2022-10-14T00:41:21.237]Completed Shot 79, state 8
+ 36.048220 seconds (103.26 M allocations: 154.139 GiB, 40.87% gc time)
+[2022-10-14T00:41:21.247]Completed Shot 79, state 10
+ 36.074439 seconds (103.27 M allocations: 154.154 GiB, 40.84% gc time)
+[2022-10-14T00:41:21.273]Completed Shot 79, state 5
+ 36.089646 seconds (103.27 M allocations: 154.161 GiB, 40.82% gc time)
+[2022-10-14T00:41:21.288]Completed Shot 79, state 6
+ 36.106910 seconds (103.28 M allocations: 154.167 GiB, 40.80% gc time)
+[2022-10-14T00:41:21.306]Completed Shot 79, state 3
+ 36.130206 seconds (103.28 M allocations: 154.168 GiB, 40.78% gc time)
+[2022-10-14T00:41:21.329]Completed Shot 79, state 2
+ 34.845752 seconds (103.21 M allocations: 154.073 GiB, 38.72% gc time)
+[2022-10-14T00:41:56.183]Completed Shot 80, state 9
+ 34.872955 seconds (103.24 M allocations: 154.114 GiB, 38.69% gc time)
+[2022-10-14T00:41:56.210]Completed Shot 80, state 1
+ 36.258504 seconds (103.25 M allocations: 154.129 GiB, 41.00% gc time)
+[2022-10-14T00:41:57.595]Completed Shot 80, state 5
+ 36.264509 seconds (103.25 M allocations: 154.135 GiB, 40.99% gc time)
+[2022-10-14T00:41:57.601]Completed Shot 80, state 2
+ 36.269927 seconds (103.26 M allocations: 154.141 GiB, 40.98% gc time)
+[2022-10-14T00:41:57.607]Completed Shot 80, state 7
+ 36.280001 seconds (103.26 M allocations: 154.150 GiB, 40.97% gc time)
+[2022-10-14T00:41:57.617]Completed Shot 80, state 8
+ 36.293337 seconds (103.27 M allocations: 154.160 GiB, 40.96% gc time)
+[2022-10-14T00:41:57.630]Completed Shot 80, state 3
+ 36.300000 seconds (103.27 M allocations: 154.163 GiB, 40.95% gc time)
+[2022-10-14T00:41:57.637]Completed Shot 80, state 6
+ 36.304618 seconds (103.27 M allocations: 154.165 GiB, 40.94% gc time)
+[2022-10-14T00:41:57.641]Completed Shot 80, state 10
+ 36.315033 seconds (103.28 M allocations: 154.168 GiB, 40.93% gc time)
+[2022-10-14T00:41:57.652]Completed Shot 80, state 4
+ 34.629630 seconds (103.23 M allocations: 154.091 GiB, 38.92% gc time)
+[2022-10-14T00:42:32.289]Completed Shot 81, state 6
+ 34.631814 seconds (103.23 M allocations: 154.095 GiB, 38.92% gc time)
+[2022-10-14T00:42:32.291]Completed Shot 81, state 7
+ 34.648064 seconds (103.24 M allocations: 154.118 GiB, 38.90% gc time)
+[2022-10-14T00:42:32.307]Completed Shot 81, state 1
+ 34.649423 seconds (103.25 M allocations: 154.120 GiB, 38.90% gc time)
+[2022-10-14T00:42:32.309]Completed Shot 81, state 9
+ 34.657070 seconds (103.25 M allocations: 154.128 GiB, 38.89% gc time)
+[2022-10-14T00:42:32.317]Completed Shot 81, state 8
+ 34.665954 seconds (103.26 M allocations: 154.136 GiB, 38.88% gc time)
+[2022-10-14T00:42:32.325]Completed Shot 81, state 3
+ 34.673214 seconds (103.26 M allocations: 154.143 GiB, 38.87% gc time)
+[2022-10-14T00:42:32.333]Completed Shot 81, state 10
+ 34.687658 seconds (103.27 M allocations: 154.149 GiB, 38.85% gc time)
+[2022-10-14T00:42:32.347]Completed Shot 81, state 4
+ 34.706393 seconds (103.27 M allocations: 154.156 GiB, 38.83% gc time)
+[2022-10-14T00:42:32.366]Completed Shot 81, state 5
+ 34.906044 seconds (103.28 M allocations: 154.168 GiB, 38.61% gc time)
+[2022-10-14T00:42:32.565]Completed Shot 81, state 2
+ 38.006197 seconds (103.17 M allocations: 154.014 GiB, 42.25% gc time)
+[2022-10-14T00:43:10.579]Completed Shot 82, state 2
+ 38.061621 seconds (103.24 M allocations: 154.118 GiB, 42.19% gc time)
+[2022-10-14T00:43:10.634]Completed Shot 82, state 7
+ 38.069101 seconds (103.25 M allocations: 154.128 GiB, 42.18% gc time)
+[2022-10-14T00:43:10.642]Completed Shot 82, state 6
+ 38.080629 seconds (103.26 M allocations: 154.142 GiB, 42.17% gc time)
+[2022-10-14T00:43:10.653]Completed Shot 82, state 8
+ 38.092968 seconds (103.27 M allocations: 154.155 GiB, 42.15% gc time)
+[2022-10-14T00:43:10.666]Completed Shot 82, state 4
+ 38.100391 seconds (103.27 M allocations: 154.161 GiB, 42.15% gc time)
+[2022-10-14T00:43:10.673]Completed Shot 82, state 10
+ 38.109533 seconds (103.28 M allocations: 154.166 GiB, 42.14% gc time)
+[2022-10-14T00:43:10.682]Completed Shot 82, state 9
+ 38.109717 seconds (103.28 M allocations: 154.167 GiB, 42.14% gc time)
+[2022-10-14T00:43:10.682]Completed Shot 82, state 3
+ 38.110552 seconds (103.28 M allocations: 154.167 GiB, 42.14% gc time)
+[2022-10-14T00:43:10.683]Completed Shot 82, state 1
+ 38.121886 seconds (103.28 M allocations: 154.168 GiB, 42.12% gc time)
+[2022-10-14T00:43:10.694]Completed Shot 82, state 5
+ 37.306358 seconds (103.17 M allocations: 154.006 GiB, 39.92% gc time)
+[2022-10-14T00:43:48.010]Completed Shot 83, state 7
+ 37.313980 seconds (103.18 M allocations: 154.025 GiB, 39.91% gc time)
+[2022-10-14T00:43:48.017]Completed Shot 83, state 6
+ 37.343412 seconds (103.22 M allocations: 154.083 GiB, 39.88% gc time)
+[2022-10-14T00:43:48.046]Completed Shot 83, state 4
+ 37.373043 seconds (103.25 M allocations: 154.130 GiB, 39.85% gc time)
+[2022-10-14T00:43:48.076]Completed Shot 83, state 2
+ 37.391374 seconds (103.26 M allocations: 154.145 GiB, 39.83% gc time)
+[2022-10-14T00:43:48.095]Completed Shot 83, state 8
+ 37.392475 seconds (103.26 M allocations: 154.146 GiB, 39.83% gc time)
+[2022-10-14T00:43:48.096]Completed Shot 83, state 10
+ 37.404480 seconds (103.27 M allocations: 154.154 GiB, 39.81% gc time)
+[2022-10-14T00:43:48.107]Completed Shot 83, state 1
+ 37.403772 seconds (103.27 M allocations: 154.154 GiB, 39.81% gc time)
+[2022-10-14T00:43:48.107]Completed Shot 83, state 9
+ 37.434003 seconds (103.28 M allocations: 154.165 GiB, 39.78% gc time)
+[2022-10-14T00:43:48.137]Completed Shot 83, state 5
+ 37.474542 seconds (103.28 M allocations: 154.168 GiB, 39.74% gc time)
+[2022-10-14T00:43:48.177]Completed Shot 83, state 3
+ 36.125151 seconds (103.12 M allocations: 153.939 GiB, 41.36% gc time)
+[2022-10-14T00:44:24.310]Completed Shot 84, state 7
+ 36.149057 seconds (103.17 M allocations: 154.013 GiB, 41.33% gc time)
+[2022-10-14T00:44:24.334]Completed Shot 84, state 8
+ 36.199960 seconds (103.24 M allocations: 154.107 GiB, 41.27% gc time)
+[2022-10-14T00:44:24.385]Completed Shot 84, state 10
+ 36.219971 seconds (103.25 M allocations: 154.128 GiB, 41.25% gc time)
+[2022-10-14T00:44:24.405]Completed Shot 84, state 3
+ 36.222375 seconds (103.25 M allocations: 154.130 GiB, 41.25% gc time)
+[2022-10-14T00:44:24.408]Completed Shot 84, state 6
+ 36.229378 seconds (103.26 M allocations: 154.135 GiB, 41.24% gc time)
+[2022-10-14T00:44:24.415]Completed Shot 84, state 4
+ 36.253086 seconds (103.27 M allocations: 154.148 GiB, 41.21% gc time)
+[2022-10-14T00:44:24.438]Completed Shot 84, state 2
+ 36.268610 seconds (103.27 M allocations: 154.154 GiB, 41.19% gc time)
+[2022-10-14T00:44:24.454]Completed Shot 84, state 9
+ 36.295784 seconds (103.28 M allocations: 154.162 GiB, 41.16% gc time)
+[2022-10-14T00:44:24.481]Completed Shot 84, state 1
+ 36.388901 seconds (103.28 M allocations: 154.168 GiB, 41.06% gc time)
+[2022-10-14T00:44:24.574]Completed Shot 84, state 5
+ 35.159592 seconds (103.16 M allocations: 153.994 GiB, 38.87% gc time)
+[2022-10-14T00:44:59.742]Completed Shot 85, state 7
+ 35.165966 seconds (103.17 M allocations: 154.011 GiB, 38.87% gc time)
+[2022-10-14T00:44:59.748]Completed Shot 85, state 9
+ 35.219777 seconds (103.24 M allocations: 154.109 GiB, 38.81% gc time)
+[2022-10-14T00:44:59.802]Completed Shot 85, state 3
+ 35.222901 seconds (103.24 M allocations: 154.113 GiB, 38.81% gc time)
+[2022-10-14T00:44:59.804]Completed Shot 85, state 1
+ 35.225831 seconds (103.24 M allocations: 154.113 GiB, 38.80% gc time)
+[2022-10-14T00:44:59.808]Completed Shot 85, state 8
+ 35.225935 seconds (103.24 M allocations: 154.114 GiB, 38.80% gc time)
+[2022-10-14T00:44:59.808]Completed Shot 85, state 5
+ 35.293789 seconds (103.27 M allocations: 154.155 GiB, 38.73% gc time)
+[2022-10-14T00:44:59.876]Completed Shot 85, state 4
+ 35.298619 seconds (103.27 M allocations: 154.155 GiB, 38.72% gc time)
+[2022-10-14T00:44:59.881]Completed Shot 85, state 10
+ 36.116076 seconds (103.28 M allocations: 154.167 GiB, 40.02% gc time)
+[2022-10-14T00:45:00.698]Completed Shot 85, state 2
+ 36.124035 seconds (103.28 M allocations: 154.167 GiB, 40.01% gc time)
+[2022-10-14T00:45:00.706]Completed Shot 85, state 6
+ 34.726172 seconds (103.22 M allocations: 154.086 GiB, 38.78% gc time)
+[2022-10-14T00:45:35.441]Completed Shot 86, state 2
+ 34.739861 seconds (103.24 M allocations: 154.109 GiB, 38.77% gc time)
+[2022-10-14T00:45:35.455]Completed Shot 86, state 6
+ 34.767432 seconds (103.26 M allocations: 154.137 GiB, 38.73% gc time)
+[2022-10-14T00:45:35.482]Completed Shot 86, state 5
+ 34.772228 seconds (103.26 M allocations: 154.141 GiB, 38.73% gc time)
+[2022-10-14T00:45:35.487]Completed Shot 86, state 8
+ 34.790405 seconds (103.27 M allocations: 154.154 GiB, 38.71% gc time)
+[2022-10-14T00:45:35.505]Completed Shot 86, state 1
+ 34.805215 seconds (103.27 M allocations: 154.162 GiB, 38.69% gc time)
+[2022-10-14T00:45:35.520]Completed Shot 86, state 10
+ 34.806073 seconds (103.27 M allocations: 154.162 GiB, 38.69% gc time)
+[2022-10-14T00:45:35.521]Completed Shot 86, state 9
+ 34.813203 seconds (103.28 M allocations: 154.165 GiB, 38.68% gc time)
+[2022-10-14T00:45:35.528]Completed Shot 86, state 3
+ 34.814012 seconds (103.28 M allocations: 154.165 GiB, 38.68% gc time)
+[2022-10-14T00:45:35.529]Completed Shot 86, state 7
+ 34.841615 seconds (103.28 M allocations: 154.168 GiB, 38.65% gc time)
+[2022-10-14T00:45:35.557]Completed Shot 86, state 4
+ 36.208637 seconds (103.19 M allocations: 154.035 GiB, 40.55% gc time)
+[2022-10-14T00:46:11.774]Completed Shot 87, state 4
+ 36.232737 seconds (103.22 M allocations: 154.092 GiB, 40.52% gc time)
+[2022-10-14T00:46:11.798]Completed Shot 87, state 6
+ 36.242699 seconds (103.23 M allocations: 154.109 GiB, 40.51% gc time)
+[2022-10-14T00:46:11.808]Completed Shot 87, state 9
+ 36.256638 seconds (103.25 M allocations: 154.127 GiB, 40.49% gc time)
+[2022-10-14T00:46:11.822]Completed Shot 87, state 8
+ 36.259622 seconds (103.25 M allocations: 154.130 GiB, 40.49% gc time)
+[2022-10-14T00:46:11.824]Completed Shot 87, state 1
+ 36.284200 seconds (103.26 M allocations: 154.150 GiB, 40.46% gc time)
+[2022-10-14T00:46:11.849]Completed Shot 87, state 3
+ 36.309787 seconds (103.27 M allocations: 154.162 GiB, 40.43% gc time)
+[2022-10-14T00:46:11.875]Completed Shot 87, state 5
+ 36.313976 seconds (103.27 M allocations: 154.165 GiB, 40.43% gc time)
+[2022-10-14T00:46:11.879]Completed Shot 87, state 2
+ 36.313687 seconds (103.27 M allocations: 154.163 GiB, 40.43% gc time)
+[2022-10-14T00:46:11.879]Completed Shot 87, state 7
+ 36.349053 seconds (103.28 M allocations: 154.166 GiB, 40.39% gc time)
+[2022-10-14T00:46:11.914]Completed Shot 87, state 10
+ 37.969011 seconds (103.05 M allocations: 153.832 GiB, 44.15% gc time)
+[2022-10-14T00:46:49.892]Completed Shot 88, state 9
+ 38.059638 seconds (103.23 M allocations: 154.095 GiB, 44.05% gc time)
+[2022-10-14T00:46:49.983]Completed Shot 88, state 7
+ 38.065157 seconds (103.23 M allocations: 154.104 GiB, 44.04% gc time)
+[2022-10-14T00:46:49.988]Completed Shot 88, state 8
+ 38.087599 seconds (103.25 M allocations: 154.130 GiB, 44.01% gc time)
+[2022-10-14T00:46:50.011]Completed Shot 88, state 2
+ 38.102328 seconds (103.26 M allocations: 154.146 GiB, 44.00% gc time)
+[2022-10-14T00:46:50.025]Completed Shot 88, state 4
+ 38.106381 seconds (103.26 M allocations: 154.149 GiB, 43.99% gc time)
+[2022-10-14T00:46:50.029]Completed Shot 88, state 5
+ 38.116493 seconds (103.27 M allocations: 154.155 GiB, 43.98% gc time)
+[2022-10-14T00:46:50.039]Completed Shot 88, state 6
+ 38.134172 seconds (103.28 M allocations: 154.165 GiB, 43.96% gc time)
+[2022-10-14T00:46:50.057]Completed Shot 88, state 3
+ 38.139735 seconds (103.28 M allocations: 154.166 GiB, 43.95% gc time)
+[2022-10-14T00:46:50.063]Completed Shot 88, state 10
+ 38.159336 seconds (103.28 M allocations: 154.168 GiB, 43.93% gc time)
+[2022-10-14T00:46:50.082]Completed Shot 88, state 1
+ 36.658897 seconds (103.16 M allocations: 153.999 GiB, 41.69% gc time)
+[2022-10-14T00:47:26.749]Completed Shot 89, state 1
+ 36.679937 seconds (103.19 M allocations: 154.035 GiB, 41.67% gc time)
+[2022-10-14T00:47:26.770]Completed Shot 89, state 5
+ 36.689062 seconds (103.20 M allocations: 154.049 GiB, 41.66% gc time)
+[2022-10-14T00:47:26.779]Completed Shot 89, state 8
+ 36.726570 seconds (103.23 M allocations: 154.095 GiB, 41.62% gc time)
+[2022-10-14T00:47:26.816]Completed Shot 89, state 2
+ 36.766992 seconds (103.25 M allocations: 154.130 GiB, 41.57% gc time)
+[2022-10-14T00:47:26.857]Completed Shot 89, state 10
+ 36.773245 seconds (103.25 M allocations: 154.134 GiB, 41.57% gc time)
+[2022-10-14T00:47:26.863]Completed Shot 89, state 4
+ 36.785016 seconds (103.26 M allocations: 154.140 GiB, 41.55% gc time)
+[2022-10-14T00:47:26.875]Completed Shot 89, state 9
+ 36.804028 seconds (103.27 M allocations: 154.151 GiB, 41.53% gc time)
+[2022-10-14T00:47:26.894]Completed Shot 89, state 6
+ 36.812390 seconds (103.27 M allocations: 154.155 GiB, 41.52% gc time)
+[2022-10-14T00:47:26.902]Completed Shot 89, state 3
+ 36.882334 seconds (103.28 M allocations: 154.168 GiB, 41.44% gc time)
+[2022-10-14T00:47:26.972]Completed Shot 89, state 7
+ 35.456445 seconds (103.23 M allocations: 154.104 GiB, 36.72% gc time)
+[2022-10-14T00:48:02.436]Completed Shot 90, state 1
+ 35.487124 seconds (103.26 M allocations: 154.149 GiB, 36.69% gc time)
+[2022-10-14T00:48:02.467]Completed Shot 90, state 7
+ 35.495599 seconds (103.27 M allocations: 154.159 GiB, 36.68% gc time)
+[2022-10-14T00:48:02.476]Completed Shot 90, state 8
+ 35.495887 seconds (103.27 M allocations: 154.159 GiB, 36.68% gc time)
+[2022-10-14T00:48:02.476]Completed Shot 90, state 9
+ 35.496917 seconds (103.27 M allocations: 154.160 GiB, 36.68% gc time)
+[2022-10-14T00:48:02.477]Completed Shot 90, state 3
+ 35.498657 seconds (103.27 M allocations: 154.161 GiB, 36.68% gc time)
+[2022-10-14T00:48:02.479]Completed Shot 90, state 5
+ 35.499449 seconds (103.27 M allocations: 154.161 GiB, 36.68% gc time)
+[2022-10-14T00:48:02.479]Completed Shot 90, state 10
+ 35.506751 seconds (103.27 M allocations: 154.164 GiB, 36.67% gc time)
+[2022-10-14T00:48:02.487]Completed Shot 90, state 2
+ 35.512892 seconds (103.27 M allocations: 154.166 GiB, 36.67% gc time)
+[2022-10-14T00:48:02.493]Completed Shot 90, state 6
+ 35.562041 seconds (103.28 M allocations: 154.168 GiB, 36.62% gc time)
+[2022-10-14T00:48:02.542]Completed Shot 90, state 4
+ 39.950819 seconds (103.20 M allocations: 154.065 GiB, 45.14% gc time)
+[2022-10-14T00:48:42.500]Completed Shot 91, state 3
+ 39.965018 seconds (103.23 M allocations: 154.096 GiB, 45.13% gc time)
+[2022-10-14T00:48:42.514]Completed Shot 91, state 1
+ 39.973188 seconds (103.24 M allocations: 154.110 GiB, 45.12% gc time)
+[2022-10-14T00:48:42.523]Completed Shot 91, state 5
+ 39.991924 seconds (103.25 M allocations: 154.136 GiB, 45.10% gc time)
+[2022-10-14T00:48:42.541]Completed Shot 91, state 2
+ 39.996590 seconds (103.26 M allocations: 154.140 GiB, 45.09% gc time)
+[2022-10-14T00:48:42.546]Completed Shot 91, state 7
+ 39.999381 seconds (103.26 M allocations: 154.142 GiB, 45.09% gc time)
+[2022-10-14T00:48:42.549]Completed Shot 91, state 10
+ 40.019066 seconds (103.27 M allocations: 154.156 GiB, 45.07% gc time)
+[2022-10-14T00:48:42.569]Completed Shot 91, state 8
+ 40.024893 seconds (103.27 M allocations: 154.159 GiB, 45.06% gc time)
+[2022-10-14T00:48:42.575]Completed Shot 91, state 4
+ 40.030387 seconds (103.27 M allocations: 154.160 GiB, 45.05% gc time)
+[2022-10-14T00:48:42.580]Completed Shot 91, state 9
+ 40.138211 seconds (103.28 M allocations: 154.167 GiB, 44.93% gc time)
+[2022-10-14T00:48:42.688]Completed Shot 91, state 6
+ 37.184037 seconds (103.09 M allocations: 153.885 GiB, 43.01% gc time)
+[2022-10-14T00:49:19.880]Completed Shot 92, state 9
+ 37.226687 seconds (103.16 M allocations: 153.993 GiB, 42.96% gc time)
+[2022-10-14T00:49:19.922]Completed Shot 92, state 6
+ 37.241815 seconds (103.18 M allocations: 154.021 GiB, 42.95% gc time)
+[2022-10-14T00:49:19.938]Completed Shot 92, state 8
+ 37.262890 seconds (103.20 M allocations: 154.057 GiB, 42.92% gc time)
+[2022-10-14T00:49:19.959]Completed Shot 92, state 10
+ 37.292975 seconds (103.23 M allocations: 154.098 GiB, 42.89% gc time)
+[2022-10-14T00:49:19.989]Completed Shot 92, state 4
+ 37.308985 seconds (103.24 M allocations: 154.116 GiB, 42.87% gc time)
+[2022-10-14T00:49:20.005]Completed Shot 92, state 3
+ 37.329854 seconds (103.26 M allocations: 154.133 GiB, 42.84% gc time)
+[2022-10-14T00:49:20.026]Completed Shot 92, state 2
+ 37.353667 seconds (103.27 M allocations: 154.145 GiB, 42.82% gc time)
+[2022-10-14T00:49:20.049]Completed Shot 92, state 7
+ 37.381921 seconds (103.27 M allocations: 154.156 GiB, 42.78% gc time)
+[2022-10-14T00:49:20.077]Completed Shot 92, state 1
+ 37.540584 seconds (103.28 M allocations: 154.168 GiB, 42.60% gc time)
+[2022-10-14T00:49:20.236]Completed Shot 92, state 5
+ 36.209469 seconds (103.12 M allocations: 153.931 GiB, 41.04% gc time)
+[2022-10-14T00:49:56.454]Completed Shot 93, state 6
+ 36.229882 seconds (103.16 M allocations: 153.989 GiB, 41.02% gc time)
+[2022-10-14T00:49:56.474]Completed Shot 93, state 2
+ 36.258700 seconds (103.20 M allocations: 154.052 GiB, 40.99% gc time)
+[2022-10-14T00:49:56.503]Completed Shot 93, state 9
+ 36.309845 seconds (103.25 M allocations: 154.123 GiB, 40.93% gc time)
+[2022-10-14T00:49:56.554]Completed Shot 93, state 8
+ 36.320170 seconds (103.25 M allocations: 154.135 GiB, 40.92% gc time)
+[2022-10-14T00:49:56.564]Completed Shot 93, state 4
+ 36.330865 seconds (103.26 M allocations: 154.142 GiB, 40.91% gc time)
+[2022-10-14T00:49:56.575]Completed Shot 93, state 10
+ 36.334208 seconds (103.26 M allocations: 154.145 GiB, 40.90% gc time)
+[2022-10-14T00:49:56.579]Completed Shot 93, state 7
+ 36.345659 seconds (103.27 M allocations: 154.151 GiB, 40.89% gc time)
+[2022-10-14T00:49:56.590]Completed Shot 93, state 1
+ 36.363502 seconds (103.27 M allocations: 154.158 GiB, 40.87% gc time)
+[2022-10-14T00:49:56.608]Completed Shot 93, state 5
+ 36.430583 seconds (103.28 M allocations: 154.168 GiB, 40.80% gc time)
+[2022-10-14T00:49:56.675]Completed Shot 93, state 3
+ 35.133451 seconds (103.16 M allocations: 153.997 GiB, 39.20% gc time)
+[2022-10-14T00:50:31.816]Completed Shot 94, state 3
+ 35.145925 seconds (103.18 M allocations: 154.019 GiB, 39.18% gc time)
+[2022-10-14T00:50:31.828]Completed Shot 94, state 5
+ 35.167572 seconds (103.20 M allocations: 154.049 GiB, 39.16% gc time)
+[2022-10-14T00:50:31.850]Completed Shot 94, state 9
+ 35.221188 seconds (103.24 M allocations: 154.112 GiB, 39.10% gc time)
+[2022-10-14T00:50:31.904]Completed Shot 94, state 2
+ 35.225313 seconds (103.24 M allocations: 154.117 GiB, 39.10% gc time)
+[2022-10-14T00:50:31.908]Completed Shot 94, state 1
+ 35.249584 seconds (103.26 M allocations: 154.138 GiB, 39.07% gc time)
+[2022-10-14T00:50:31.932]Completed Shot 94, state 4
+ 35.268879 seconds (103.26 M allocations: 154.148 GiB, 39.05% gc time)
+[2022-10-14T00:50:31.951]Completed Shot 94, state 10
+ 35.293824 seconds (103.27 M allocations: 154.159 GiB, 39.02% gc time)
+[2022-10-14T00:50:31.976]Completed Shot 94, state 8
+ 35.311840 seconds (103.28 M allocations: 154.166 GiB, 39.00% gc time)
+[2022-10-14T00:50:31.994]Completed Shot 94, state 6
+ 35.352654 seconds (103.28 M allocations: 154.168 GiB, 38.96% gc time)
+[2022-10-14T00:50:32.035]Completed Shot 94, state 7
+ 36.120085 seconds (103.12 M allocations: 153.934 GiB, 41.60% gc time)
+[2022-10-14T00:51:08.163]Completed Shot 95, state 6
+ 36.150184 seconds (103.19 M allocations: 154.035 GiB, 41.56% gc time)
+[2022-10-14T00:51:08.193]Completed Shot 95, state 8
+ 36.162703 seconds (103.21 M allocations: 154.062 GiB, 41.55% gc time)
+[2022-10-14T00:51:08.206]Completed Shot 95, state 9
+ 36.223562 seconds (103.26 M allocations: 154.142 GiB, 41.48% gc time)
+[2022-10-14T00:51:08.267]Completed Shot 95, state 4
+ 36.223766 seconds (103.26 M allocations: 154.143 GiB, 41.48% gc time)
+[2022-10-14T00:51:08.267]Completed Shot 95, state 2
+ 36.239475 seconds (103.27 M allocations: 154.154 GiB, 41.46% gc time)
+[2022-10-14T00:51:08.283]Completed Shot 95, state 10
+ 36.244599 seconds (103.27 M allocations: 154.160 GiB, 41.45% gc time)
+[2022-10-14T00:51:08.288]Completed Shot 95, state 5
+ 36.259198 seconds (103.28 M allocations: 154.166 GiB, 41.44% gc time)
+[2022-10-14T00:51:08.302]Completed Shot 95, state 3
+ 36.265294 seconds (103.28 M allocations: 154.168 GiB, 41.43% gc time)
+ 36.265515 seconds (103.28 M allocations: 154.168 GiB, 41.43% gc time)
+[[2022-10-14T00:51:08.308]Completed Shot 95, state 1
+2022-10-14T00:51:08.308]Completed Shot 95, state 7
+ 36.359418 seconds (103.19 M allocations: 154.032 GiB, 41.57% gc time)
+[2022-10-14T00:51:44.677]Completed Shot 96, state 4
+ 36.377913 seconds (103.21 M allocations: 154.071 GiB, 41.55% gc time)
+[2022-10-14T00:51:44.695]Completed Shot 96, state 6
+ 36.411032 seconds (103.25 M allocations: 154.125 GiB, 41.52% gc time)
+[2022-10-14T00:51:44.728]Completed Shot 96, state 3
+ 36.413759 seconds (103.25 M allocations: 154.127 GiB, 41.51% gc time)
+[2022-10-14T00:51:44.731]Completed Shot 96, state 10
+ 36.430068 seconds (103.26 M allocations: 154.144 GiB, 41.49% gc time)
+[2022-10-14T00:51:44.747]Completed Shot 96, state 2
+ 36.454480 seconds (103.27 M allocations: 154.160 GiB, 41.47% gc time)
+[2022-10-14T00:51:44.772]Completed Shot 96, state 1
+ 36.454155 seconds (103.27 M allocations: 154.159 GiB, 41.47% gc time)
+[2022-10-14T00:51:44.772]Completed Shot 96, state 9
+ 36.454395 seconds (103.27 M allocations: 154.159 GiB, 41.47% gc time)
+[2022-10-14T00:51:44.772]Completed Shot 96, state 8
+ 36.465471 seconds (103.28 M allocations: 154.163 GiB, 41.45% gc time)
+[2022-10-14T00:51:44.783]Completed Shot 96, state 7
+ 36.517234 seconds (103.28 M allocations: 154.168 GiB, 41.39% gc time)
+[2022-10-14T00:51:44.835]Completed Shot 96, state 5
+ 36.355316 seconds (103.21 M allocations: 154.078 GiB, 40.89% gc time)
+[2022-10-14T00:52:21.198]Completed Shot 97, state 7
+ 36.372722 seconds (103.23 M allocations: 154.107 GiB, 40.87% gc time)
+[2022-10-14T00:52:21.215]Completed Shot 97, state 3
+ 36.397353 seconds (103.25 M allocations: 154.135 GiB, 40.84% gc time)
+[2022-10-14T00:52:21.240]Completed Shot 97, state 2
+ 36.399276 seconds (103.26 M allocations: 154.137 GiB, 40.84% gc time)
+[2022-10-14T00:52:21.242]Completed Shot 97, state 6
+ 36.399219 seconds (103.26 M allocations: 154.136 GiB, 40.84% gc time)
+[2022-10-14T00:52:21.242]Completed Shot 97, state 10
+ 36.417717 seconds (103.27 M allocations: 154.152 GiB, 40.82% gc time)
+[2022-10-14T00:52:21.260]Completed Shot 97, state 9
+ 36.417988 seconds (103.27 M allocations: 154.153 GiB, 40.82% gc time)
+[2022-10-14T00:52:21.260]Completed Shot 97, state 1
+ 36.435456 seconds (103.27 M allocations: 154.162 GiB, 40.80% gc time)
+[2022-10-14T00:52:21.278]Completed Shot 97, state 8
+ 36.446947 seconds (103.28 M allocations: 154.167 GiB, 40.78% gc time)
+[2022-10-14T00:52:21.289]Completed Shot 97, state 4
+ 36.469979 seconds (103.28 M allocations: 154.168 GiB, 40.76% gc time)
+[2022-10-14T00:52:21.312]Completed Shot 97, state 5
+ 37.220883 seconds (103.16 M allocations: 153.993 GiB, 42.85% gc time)
+[2022-10-14T00:52:58.540]Completed Shot 98, state 10
+ 37.237971 seconds (103.19 M allocations: 154.038 GiB, 42.83% gc time)
+[2022-10-14T00:52:58.557]Completed Shot 98, state 1
+ 37.249228 seconds (103.20 M allocations: 154.065 GiB, 42.82% gc time)
+[2022-10-14T00:52:58.569]Completed Shot 98, state 7
+ 37.269985 seconds (103.23 M allocations: 154.102 GiB, 42.79% gc time)
+[2022-10-14T00:52:58.590]Completed Shot 98, state 9
+ 37.281182 seconds (103.24 M allocations: 154.118 GiB, 42.78% gc time)
+[2022-10-14T00:52:58.601]Completed Shot 98, state 2
+ 37.285454 seconds (103.25 M allocations: 154.123 GiB, 42.78% gc time)
+[2022-10-14T00:52:58.605]Completed Shot 98, state 3
+ 37.307989 seconds (103.26 M allocations: 154.142 GiB, 42.75% gc time)
+[2022-10-14T00:52:58.627]Completed Shot 98, state 4
+ 37.337262 seconds (103.27 M allocations: 154.154 GiB, 42.72% gc time)
+[2022-10-14T00:52:58.657]Completed Shot 98, state 8
+ 37.371958 seconds (103.28 M allocations: 154.167 GiB, 42.68% gc time)
+[2022-10-14T00:52:58.691]Completed Shot 98, state 5
+ 37.378099 seconds (103.28 M allocations: 154.168 GiB, 42.67% gc time)
+[2022-10-14T00:52:58.698]Completed Shot 98, state 6
+ 36.292456 seconds (103.21 M allocations: 154.070 GiB, 39.77% gc time)
+[2022-10-14T00:53:34.997]Completed Shot 99, state 9
+ 36.294291 seconds (103.21 M allocations: 154.073 GiB, 39.77% gc time)
+[2022-10-14T00:53:34.999]Completed Shot 99, state 6
+ 36.315204 seconds (103.23 M allocations: 154.106 GiB, 39.74% gc time)
+[2022-10-14T00:53:35.020]Completed Shot 99, state 10
+ 36.325153 seconds (103.24 M allocations: 154.118 GiB, 39.73% gc time)
+[2022-10-14T00:53:35.030]Completed Shot 99, state 4
+ 36.335552 seconds (103.25 M allocations: 154.129 GiB, 39.72% gc time)
+[2022-10-14T00:53:35.040]Completed Shot 99, state 2
+ 36.371158 seconds (103.27 M allocations: 154.155 GiB, 39.68% gc time)
+[2022-10-14T00:53:35.076]Completed Shot 99, state 3
+ 36.377073 seconds (103.27 M allocations: 154.159 GiB, 39.67% gc time)
+[2022-10-14T00:53:35.082]Completed Shot 99, state 7
+ 36.385366 seconds (103.27 M allocations: 154.163 GiB, 39.67% gc time)
+[ 36.385376 seconds (103.27 M allocations: 154.163 GiB, 39.67% gc time)
+2022-10-14T00:53:35.090]Completed Shot 99, state 5
+[2022-10-14T00:53:35.090]Completed Shot 99, state 8
+ 36.431983 seconds (103.28 M allocations: 154.168 GiB, 39.61% gc time)
+[2022-10-14T00:53:35.137]Completed Shot 99, state 1
+ 39.068771 seconds (103.17 M allocations: 154.002 GiB, 45.57% gc time)
+[2022-10-14T00:54:14.213]Completed Shot 100, state 1
+ 39.075735 seconds (103.18 M allocations: 154.018 GiB, 45.57% gc time)
+[2022-10-14T00:54:14.220]Completed Shot 100, state 5
+ 39.134412 seconds (103.24 M allocations: 154.108 GiB, 45.50% gc time)
+[2022-10-14T00:54:14.279]Completed Shot 100, state 9
+ 39.160528 seconds (103.26 M allocations: 154.134 GiB, 45.47% gc time)
+[2022-10-14T00:54:14.305]Completed Shot 100, state 4
+ 39.164664 seconds (103.26 M allocations: 154.138 GiB, 45.46% gc time)
+[2022-10-14T00:54:14.309]Completed Shot 100, state 7
+ 39.174537 seconds (103.26 M allocations: 154.145 GiB, 45.45% gc time)
+[2022-10-14T00:54:14.319]Completed Shot 100, state 3
+ 39.192395 seconds (103.27 M allocations: 154.156 GiB, 45.43% gc time)
+[2022-10-14T00:54:14.337]Completed Shot 100, state 8
+ 39.209285 seconds (103.28 M allocations: 154.163 GiB, 45.41% gc time)
+[2022-10-14T00:54:14.353]Completed Shot 100, state 6
+ 39.222072 seconds (103.28 M allocations: 154.167 GiB, 45.40% gc time)
+[2022-10-14T00:54:14.366]Completed Shot 100, state 2
+ 39.227744 seconds (103.28 M allocations: 154.168 GiB, 45.39% gc time)
+[2022-10-14T00:54:14.372]Completed Shot 100, state 10
+[2022-10-14T00:54:14.373]**********Simulation completed!**********
+[2022-10-14T00:54:14.373]**********Saving**********
+[2022-10-14T00:54:19.047]Saving file: /lustre/work/ws/ws1/hd_ku269-logs/LightCones/2022-10-13/7347454_N13_RS.jld2
+[2022-10-14T00:54:23.196]**********Run completed!**********

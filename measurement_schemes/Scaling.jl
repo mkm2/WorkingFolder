@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.12
+# v0.19.13
 
 using Markdown
 using InteractiveUtils
@@ -35,46 +35,46 @@ begin
 	path_RPS = pwd()*"/sector/RPS/"
 	path_BS = pwd()*"/sector/BS/"
 
-	f_RS_13 = "6440087_N13_RS.jld2"
-	f_RPS_13 = "6286564_N13_RPS.jld2"
-	f_BS_13 =  "6286554-6286563_N13_BS.jld2"
+	f_RS_13 = "combined_file_N13.jld2"
+	f_RPS_13 = "combined_file_N13.jld2"
+	f_BS_13 =  "combined_file_N13.jld2"
 
-	f_RS_15 = "6286567_N15_RS.jld2"
-	f_RPS_15 = "6440088_N15_RPS.jld2"
-	f_BS_15 =  "6286616-6286625_N15_BS.jld2"
+	f_RS_15 = "combined_file_N15.jld2"
+	f_RPS_15 = "combined_file_N15.jld2"
+	f_BS_15 =  "combined_file_N15.jld2"
 
-	f_RS_17 = "6308344_N17_RS.jld2"
-	f_RPS_17 = "6308345_N17_RPS.jld2"
-	f_BS_17 =  "6308347-6308356_N17_BS.jld2"
+	f_RS_17 = "combined_file_N17.jld2"
+	f_RPS_17 = "combined_file_N17.jld2"
+	f_BS_17 =  "combined_file_N17.jld2"
 
-	f_RS_19 = "6270800_N19_RS.jld2"
-	f_RPS_19 = "6270810-627819_N19_RPS.jld2"
-	f_BS_19 =  "6309364-6309373_N19_BS.jld2"
+	f_RS_19 = "combined_file_N19.jld2"
+	f_RPS_19 = "combined_file_N19.jld2"
+	f_BS_19 =  "combined_file_N19.jld2"
 
-	f_RS_21 = "6279175_N21_RS.jld2"
-	f_RPS_21 = "6405167-6405170_N21_RPS.jld2"
-	f_BS_21 =  "6405127-6405166_N21_BS.jld2"
+	f_RS_21 = "combined_file_N21.jld2"
+	f_RPS_21 = "combined_file_N21.jld2"
+	f_BS_21 =  "combined_file_N21.jld2"
 end
 
 # ╔═╡ ea553d3f-7600-4b8c-b63d-9c97ea42f827
 begin
-	data_RS_13 = 2*ones(51,13,1,10)-2*load(path_RS*f_RS_13,"data")
-	data_RPS_13 = 2*ones(51,13,1,100)-2*load(path_RPS*f_RPS_13,"data")
+	data_RS_13 = 2*ones(51,13,1,100)-2*cat(load(path_RS*f_RS_13,"data")...,dims=4)
+	data_RPS_13 = 2*ones(51,13,1,1000)-2*cat(load(path_RPS*f_RPS_13,"data")...,dims=4)
 	data_BS_13 = 2*ones(51,13,1,1000)-2*cat(load(path_BS*f_BS_13,"data")...,dims=4)
 
-	data_RS_15 = 2*ones(51,15,1,10)-2*load(path_RS*f_RS_15,"data")
-	data_RPS_15 = 2*ones(51,15,1,100)-2*load(path_RPS*f_RPS_15,"data")
+	data_RS_15 = 2*ones(51,15,1,100)-2*cat(load(path_RS*f_RS_15,"data")...,dims=4)
+	data_RPS_15 = 2*ones(51,15,1,1000)-2*cat(load(path_RPS*f_RPS_15,"data")...,dims=4)
 	data_BS_15 = 2*ones(51,15,1,1000)-2*cat(load(path_BS*f_BS_15,"data")...,dims=4)
 
-	data_RS_17 = 2*ones(51,17,1,10)-2*load(path_RS*f_RS_17,"data")
-	data_RPS_17 = 2*ones(51,17,1,100)-2*load(path_RPS*f_RPS_17,"data")
+	data_RS_17 = 2*ones(51,17,1,100)-2*cat(load(path_RS*f_RS_17,"data")...,dims=4)
+	data_RPS_17 = 2*ones(51,17,1,1000)-2*cat(load(path_RPS*f_RPS_17,"data")...,dims=4)
 	data_BS_17 = 2*ones(51,17,1,1000)-2*cat(load(path_BS*f_BS_17,"data")...,dims=4)
 
-	data_RS_19 = 2*ones(51,19,1,10)-2*load(path_RS*f_RS_19,"data")
-	data_RPS_19 = 2*ones(51,19,1,100)-2*cat(load(path_RPS*f_RPS_19,"data")...,dims=4)
+	data_RS_19 = 2*ones(51,19,1,100)-2*cat(load(path_RS*f_RS_19,"data")...,dims=4)
+	data_RPS_19 = 2*ones(51,19,1,1000)-2*cat(load(path_RPS*f_RPS_19,"data")...,dims=4)
 	data_BS_19 = 2*ones(51,19,1,1000)-2*cat(load(path_BS*f_BS_19,"data")...,dims=4)
 
-	data_RS_21 = 2*ones(51,21,1,10)-2*load(path_RS*f_RS_21,"data")
+	data_RS_21 = 2*ones(51,21,1,10)-2*cat(load(path_RS*f_RS_21,"data")...,dims=4)
 	data_RPS_21 = 2*ones(51,21,1,100)-2*cat(load(path_RPS*f_RPS_21,"data")...,dims=4)
 	data_BS_21 = 2*ones(51,21,1,1000)-2*cat(load(path_BS*f_BS_21,"data")...,dims=4)
 	
@@ -84,43 +84,43 @@ end
 
 # ╔═╡ 63d716f0-d660-4a0e-8b4e-8bcfef78054a
 begin
-	mean_mean_RS_13 = Vector{Float64}(undef,9)
-	mean_mean_RPS_13 = Vector{Float64}(undef,99)
+	mean_mean_RS_13 = Vector{Float64}(undef,99)
+	mean_mean_RPS_13 = Vector{Float64}(undef,999)
 	mean_mean_BS_13 = Vector{Float64}(undef,999)
-	mean_std_RS_13 = Vector{Float64}(undef,9)
-	mean_std_RPS_13 = Vector{Float64}(undef,99)
+	mean_std_RS_13 = Vector{Float64}(undef,99)
+	mean_std_RPS_13 = Vector{Float64}(undef,999)
 	mean_std_BS_13 = Vector{Float64}(undef,999)
 
-	mean_mean_RS_15 = Vector{Float64}(undef,9)
-	mean_mean_RPS_15 = Vector{Float64}(undef,99)
+	mean_mean_RS_15 = Vector{Float64}(undef,99)
+	mean_mean_RPS_15 = Vector{Float64}(undef,999)
 	mean_mean_BS_15 = Vector{Float64}(undef,999)
-	mean_std_RS_15 = Vector{Float64}(undef,9)
-	mean_std_RPS_15 = Vector{Float64}(undef,99)
+	mean_std_RS_15 = Vector{Float64}(undef,99)
+	mean_std_RPS_15 = Vector{Float64}(undef,999)
 	mean_std_BS_15 = Vector{Float64}(undef,999)
 
-	mean_mean_RS_17 = Vector{Float64}(undef,9)
-	mean_mean_RPS_17 = Vector{Float64}(undef,99)
+	mean_mean_RS_17 = Vector{Float64}(undef,99)
+	mean_mean_RPS_17 = Vector{Float64}(undef,999)
 	mean_mean_BS_17 = Vector{Float64}(undef,999)
-	mean_std_RS_17 = Vector{Float64}(undef,9)
-	mean_std_RPS_17 = Vector{Float64}(undef,99)
+	mean_std_RS_17 = Vector{Float64}(undef,99)
+	mean_std_RPS_17 = Vector{Float64}(undef,999)
 	mean_std_BS_17 = Vector{Float64}(undef,999)
 
-	mean_mean_RS_19 = Vector{Float64}(undef,9)
-	mean_mean_RPS_19 = Vector{Float64}(undef,99)
+	mean_mean_RS_19 = Vector{Float64}(undef,99)
+	mean_mean_RPS_19 = Vector{Float64}(undef,999)
 	mean_mean_BS_19 = Vector{Float64}(undef,999)
-	mean_std_RS_19 = Vector{Float64}(undef,9)
-	mean_std_RPS_19 = Vector{Float64}(undef,99)
+	mean_std_RS_19 = Vector{Float64}(undef,99)
+	mean_std_RPS_19 = Vector{Float64}(undef,999)
 	mean_std_BS_19 = Vector{Float64}(undef,999)
 
-	mean_mean_RS_21 = Vector{Float64}(undef,9)
-	mean_mean_RPS_21 = Vector{Float64}(undef,99)
+	mean_mean_RS_21 = Vector{Float64}(undef,99)
+	mean_mean_RPS_21 = Vector{Float64}(undef,999)
 	mean_mean_BS_21 = Vector{Float64}(undef,999)
-	mean_std_RS_21 = Vector{Float64}(undef,9)
-	mean_std_RPS_21 = Vector{Float64}(undef,99)
+	mean_std_RS_21 = Vector{Float64}(undef,99)
+	mean_std_RPS_21 = Vector{Float64}(undef,999)
 	mean_std_BS_21 = Vector{Float64}(undef,999)
 
 	T = 25
-	for i in 2:10
+	for i in 2:100
 		mean_mean_RS_13[i-1] = mean(reduce_by_last(state_mean(data_RS_13,i)))
 		mean_std_RS_13[i-1] = mean(reduce_by_last(state_std(data_RS_13,i))[1:T,:])/sqrt(i)
 
@@ -133,11 +133,11 @@ begin
 		mean_mean_RS_19[i-1] = mean(reduce_by_last(state_mean(data_RS_19,i)))
 		mean_std_RS_19[i-1] = mean(reduce_by_last(state_std(data_RS_19,i))[1:T,:])/sqrt(i)
 
-		mean_mean_RS_21[i-1] = mean(reduce_by_last(state_mean(data_RS_21,i)))
-		mean_std_RS_21[i-1] = mean(reduce_by_last(state_std(data_RS_21,i))[1:T,:])/sqrt(i)
+		#mean_mean_RS_21[i-1] = mean(reduce_by_last(state_mean(data_RS_21,i)))
+		#mean_std_RS_21[i-1] = mean(reduce_by_last(state_std(data_RS_21,i))[1:T,:])/sqrt(i)
 	end
 
-	for i in 2:100
+	for i in 2:1000
 		mean_mean_RPS_13[i-1] = mean(reduce_by_last(state_mean(data_RPS_13,i)))
 		mean_std_RPS_13[i-1] = mean(reduce_by_last(state_std(data_RPS_13,i))[1:T,:])/sqrt(i)
 
@@ -150,8 +150,8 @@ begin
 		mean_mean_RPS_19[i-1] = mean(reduce_by_last(state_mean(data_RPS_19,i)))
 		mean_std_RPS_19[i-1] = mean(reduce_by_last(state_std(data_RPS_19,i))[1:T,:])/sqrt(i)
 
-		mean_mean_RPS_21[i-1] = mean(reduce_by_last(state_mean(data_RPS_21,i)))
-		mean_std_RPS_21[i-1] = mean(reduce_by_last(state_std(data_RPS_21,i))[1:T,:])/sqrt(i)
+		#mean_mean_RPS_21[i-1] = mean(reduce_by_last(state_mean(data_RPS_21,i)))
+		#mean_std_RPS_21[i-1] = mean(reduce_by_last(state_std(data_RPS_21,i))[1:T,:])/sqrt(i)
 	end
 	
 	for i in 2:1000
@@ -174,34 +174,34 @@ end
 
 # ╔═╡ d8c42b82-5828-4b14-9288-44a11938afcb
 begin
-	plot(2:10,mean_mean_RS_13,label="13",title="Mean",xlabel="n_states")
-	plot!(2:10,mean_mean_RS_15,label="15",title="Mean",xlabel="n_states")
-	plot!(2:10,mean_mean_RS_17,label="17",title="Mean",xlabel="n_states")
-	plot!(2:10,mean_mean_RS_19,label="19",title="Mean",xlabel="n_states")
-	plot!(2:10,mean_mean_RS_21,label="21",title="Mean",xlabel="n_states")
+	plot(2:100,mean_mean_RS_13,label="13",title="Mean",xlabel="n_states")
+	plot!(2:100,mean_mean_RS_15,label="15",title="Mean",xlabel="n_states")
+	plot!(2:100,mean_mean_RS_17,label="17",title="Mean",xlabel="n_states")
+	plot!(2:100,mean_mean_RS_19,label="19",title="Mean",xlabel="n_states")
+	#plot!(2:10,mean_mean_RS_21,label="21",title="Mean",xlabel="n_states")
 	
 end
 
 # ╔═╡ d44c702d-934e-459f-aea1-cadbe97d1420
 begin
-	plot(2:10,mean_std_RS_13,label="Haar Random States 13",title="Standard Error of the Mean (ALL)",xlabel="n_states",ylabel="err",xaxis=:log,yaxis=:log,legend=nothing)
-	plot!(2:100,mean_std_RPS_13,label="Random Product States 13")
+	plot(2:100,mean_std_RS_13,label="Haar Random States 13",title="Standard Error of the Mean (ALL)",xlabel="n_states",ylabel="err",xaxis=:log,yaxis=:log,legend=nothing)
+	plot!(2:1000,mean_std_RPS_13,label="Random Product States 13")
 	plot!(2:1000,mean_std_BS_13,label="Random Bitstring States 13")
 
-	plot!(2:10,mean_std_RS_15,label="RS 15")
-	plot!(2:100,mean_std_RPS_15,label="RPS 15")
+	plot!(2:100,mean_std_RS_15,label="RS 15")
+	plot!(2:1000,mean_std_RPS_15,label="RPS 15")
 	plot!(2:1000,mean_std_BS_15,label="BS 15")
 
-	plot!(2:10,mean_std_RS_17,label="RS 17")
-	plot!(2:100,mean_std_RPS_17,label="RPS 17")
+	plot!(2:100,mean_std_RS_17,label="RS 17")
+	plot!(2:1000,mean_std_RPS_17,label="RPS 17")
 	plot!(2:1000,mean_std_BS_17,label="BS 17")
 
-	plot!(2:10,mean_std_RS_19,label="RS 19")
-	plot!(2:100,mean_std_RPS_19,label="RPS 19")
+	plot!(2:100,mean_std_RS_19,label="RS 19")
+	plot!(2:1000,mean_std_RPS_19,label="RPS 19")
 	plot!(2:1000,mean_std_BS_19,label="BS 19")
 
-	plot!(2:10,mean_std_RS_21,label="RS 21")
-	plot!(2:100,mean_std_RPS_21,label="RPS 21")
+	#plot!(2:100,mean_std_RS_21,label="RS 21")
+	#plot!(2:1000,mean_std_RPS_21,label="RPS 21")
 	plot!(2:1000,mean_std_BS_21,label="BS 21")
 	
 	annotate!(45,0.5,text("L = 13, 15, 17, 19, 21",10))

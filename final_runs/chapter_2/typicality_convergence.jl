@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.12
+# v0.19.13
 
 using Markdown
 using InteractiveUtils
@@ -15,7 +15,7 @@ end
 using LinearAlgebra,JLD2,Statistics,PlutoUI, SpinSymmetry, BenchmarkTools
 
 # ╔═╡ 54a9508a-7182-42cd-870e-782d1f57ebb1
-using Plots; unicodeplots()
+using Plots; pyplot()
 
 # ╔═╡ c37982e1-313e-4223-a5a8-580a689a1e3a
 TableOfContents()
@@ -59,16 +59,19 @@ dims
 17: 24310
 
 # ╔═╡ f9f81652-3013-49a6-b1bf-159d5266110a
-div(17-1,2)+1
+div(18-1,2)+1
 
 # ╔═╡ 9e59a5a3-8187-4316-941b-4cc1b84ad1e7
 2^13
+
+# ╔═╡ 3477d403-2ed2-4fe5-859a-802732e17862
+2^15
 
 # ╔═╡ dc4ce9cd-18c5-448b-9f17-0ef723f14b05
 basissize(symmetrized_basis(17,9))
 
 # ╔═╡ 7908b2f0-5116-45df-847a-61e054567c15
-2 .^Ns
+Ns[8]
 
 # ╔═╡ 42bf99ad-a834-47a8-9400-9eb1a17d2fbe
 md"# Load data"
@@ -76,11 +79,11 @@ md"# Load data"
 # ╔═╡ cd98b70a-9061-4502-98c8-e70fcd44baa9
 begin
 	params1 = Vector{SimulationParamsED}(undef,11)
-	params2 = Vector{SimulationParamsED}(undef,10)
-	params3 = Vector{SimulationParams}(undef,10)
-	params4 = Vector{SimulationParamsED}(undef,8)
-	params5 = Vector{SimulationParamsED}(undef,8)
-	params6 = Vector{SimulationParams}(undef,8)
+	params2 = Vector{SimulationParamsED}(undef,11)
+	params3 = Vector{SimulationParams}(undef,11)
+	params4 = Vector{SimulationParamsED}(undef,9)
+	params5 = Vector{SimulationParamsED}(undef,9)
+	params6 = Vector{SimulationParams}(undef,9)
 	
 	
 	params = [params1,params2,params3,params4,params5,params6]
@@ -89,11 +92,11 @@ end
 # ╔═╡ a69b0740-8fd7-4cfb-bad5-c90d5ef163a5
 begin
 	data_EDtr_sector = Vector{Array{Float64,3}}(undef,11)
-	data_ED_sector = Vector{Array{Float64,4}}(undef,10)
-	data_Krylov_sector = Vector{Array{Float64,4}}(undef,10)
-	data_EDtr_total = Vector{Array{Float64,3}}(undef,8)
-	data_ED_total = Vector{Array{Float64,4}}(undef,8)
-	data_Krylov_total = Vector{Array{Float64,4}}(undef,8)
+	data_ED_sector = Vector{Array{Float64,4}}(undef,11)
+	data_Krylov_sector = Vector{Array{Float64,4}}(undef,11)
+	data_EDtr_total = Vector{Array{Float64,3}}(undef,9)
+	data_ED_total = Vector{Array{Float64,4}}(undef,9)
+	data_Krylov_total = Vector{Array{Float64,4}}(undef,9)
 	data = [data_EDtr_sector,data_ED_sector,data_Krylov_sector,data_EDtr_total,data_ED_total,data_Krylov_total]
 end
 
@@ -153,19 +156,19 @@ plot(data_EDtr_total[8][2:ts,:,1])
 
 # ╔═╡ 31b41f61-95bf-4ba4-abdd-927dcd2e8045
 begin
-	errors_ED_sector = Vector{Float64}(undef,10)
-	errors_Krylov_sector = Vector{Float64}(undef,10)
+	errors_ED_sector = Vector{Float64}(undef,11)
+	errors_Krylov_sector = Vector{Float64}(undef,11)
 	
-	errors_ED_total = Vector{Float64}(undef,8)
-	errors_Krylov_total = Vector{Float64}(undef,8)
+	errors_ED_total = Vector{Float64}(undef,9)
+	errors_Krylov_total = Vector{Float64}(undef,9)
 
 	state_index = 100
-	for i in 1:10
+	for i in 1:11
 		errors_ED_sector[i] = sum(abs.(data_EDtr_sector[i][:,:,1]-data_ED_sector[i][:,:,1,state_index]))/sum(abs.(data_EDtr_sector[i][:,:,1]))
 		errors_Krylov_sector[i] = sum(abs.(data_EDtr_sector[i][:,:,1]-data_Krylov_sector[i][:,:,1,state_index]))/sum(abs.(data_EDtr_sector[i][:,:,1]))
 	end
 
-	for i in 1:8
+	for i in 1:9
 		errors_ED_total[i] = sum(abs.(data_EDtr_total[i][:,:,1]-data_ED_total[i][:,:,1,state_index]))/sum(abs.(data_EDtr_total[i][:,:,1]))
 		errors_Krylov_total[i] = sum(abs.(data_EDtr_total[i][:,:,1]-data_Krylov_total[i][:,:,1,state_index]))/sum(abs.(data_EDtr_total[i][:,:,1]))
 	end
@@ -173,20 +176,23 @@ end
 
 # ╔═╡ 73c95dc6-85ec-4c1d-b720-d242c987af4b
 begin
-	plot(Ns[1:10],errors_ED_sector,label="ED sector",xlabel="N",ylabel="err")
-	plot!(Ns[1:10],errors_Krylov_sector,label="Krylov sector")
+	plot(Ns[1:11],errors_ED_sector,label="ED sector",xlabel="N",ylabel="err")
+	plot!(Ns[1:11],errors_Krylov_sector,label="Krylov sector")
 
-	plot!(Ns[1:8],errors_ED_total,label="ED total")
-	plot!(Ns[1:8],errors_Krylov_total,label="Krylov total",yaxis=:linear)
+	plot!(Ns[1:9],errors_ED_total,label="ED total")
+	plot!(Ns[1:9],errors_Krylov_total,label="Krylov total",yaxis=:linear)
 end
+
+# ╔═╡ 780a8317-81cd-4ce0-ac31-ce83f8b048e5
+
 
 # ╔═╡ 362bbed1-f4d4-49f4-a489-08ee68d0e27f
 errors_ED_total[8]
 
 # ╔═╡ 11d13a7f-99e5-4b83-b80c-db9729c1a974
 begin
-	plot(Ns[1:8],errors_ED_total,label="ED")
-	plot!(Ns[1:8],errors_Krylov_total,label="Krylov")
+	plot(Ns[1:9],errors_ED_total,label="ED")
+	plot!(Ns[1:9],errors_Krylov_total,label="Krylov")
 end
 
 # ╔═╡ fedfb82f-805d-4992-83fc-df4c4c937fba
@@ -194,25 +200,25 @@ md"# System Size vs. Error - Multiple states"
 
 # ╔═╡ b373574b-6d45-4d07-8563-6231a597beea
 begin
-	mean_ED_sector = Vector{Array{Float64,3}}(undef,10)
-	mean_Krylov_sector = Vector{Array{Float64,3}}(undef,10)
-	mean_ED_total = Vector{Array{Float64,3}}(undef,8)
-	mean_Krylov_total = Vector{Array{Float64,3}}(undef,8)
+	mean_ED_sector = Vector{Array{Float64,3}}(undef,11)
+	mean_Krylov_sector = Vector{Array{Float64,3}}(undef,11)
+	mean_ED_total = Vector{Array{Float64,3}}(undef,9)
+	mean_Krylov_total = Vector{Array{Float64,3}}(undef,9)
 
-	std_ED_sector = Vector{Array{Float64,3}}(undef,10)
-	std_Krylov_sector = Vector{Array{Float64,3}}(undef,10)
-	std_ED_total = Vector{Array{Float64,3}}(undef,8)
-	std_Krylov_total = Vector{Array{Float64,3}}(undef,8)
+	std_ED_sector = Vector{Array{Float64,3}}(undef,11)
+	std_Krylov_sector = Vector{Array{Float64,3}}(undef,11)
+	std_ED_total = Vector{Array{Float64,3}}(undef,9)
+	std_Krylov_total = Vector{Array{Float64,3}}(undef,9)
 
-	errors2_ED_sector = Matrix{Float64}(undef,10,999)
-	errors2_Krylov_sector = Matrix{Float64}(undef,10,999)
-	errors2_ED_total = Matrix{Float64}(undef,10,999)
-	errors2_Krylov_total = Matrix{Float64}(undef,10,999)
+	errors2_ED_sector = Matrix{Float64}(undef,11,999)
+	errors2_Krylov_sector = Matrix{Float64}(undef,11,999)
+	errors2_ED_total = Matrix{Float64}(undef,9,999)
+	errors2_Krylov_total = Matrix{Float64}(undef,9,999)
 end
 
 # ╔═╡ c6cf9fc9-f06e-466b-890b-fe3291a1610b
 begin
-	for i in 1:10
+	for i in 1:11
 		mean_ED_sector[i] = zeros(ts,Ns[i],999)
 		mean_Krylov_sector[i] = zeros(ts,Ns[i],999)
 		std_ED_sector[i] = zeros(ts,Ns[i],999)
@@ -224,11 +230,11 @@ begin
 		std_Krylov_sector[i][:,:,s] = state_std(data_ED_sector[i],s+1)[:,:,1]./sqrt(s)
 		
 		errors2_ED_sector[i,s] = sum(abs.(data_EDtr_sector[i][:,:,1]-mean_ED_sector[i][:,:,s]))/sum(abs.(data_EDtr_sector[i][:,:,1]))
-		errors2_ED_sector[i,s] = sum(abs.(data_EDtr_sector[i][:,:,1]-mean_Krylov_sector[i][:,:,s]))/sum(abs.(data_EDtr_sector[i][:,:,1]))
+		errors2_Krylov_sector[i,s] = sum(abs.(data_EDtr_sector[i][:,:,1]-mean_Krylov_sector[i][:,:,s]))/sum(abs.(data_EDtr_sector[i][:,:,1]))
 		end
 	end
 	
-	for i in 1:8
+	for i in 1:9
 		mean_ED_total[i] = zeros(ts,Ns[i],999)
 		mean_Krylov_total[i] = zeros(ts,Ns[i],999)
 		std_ED_total[i] = zeros(ts,Ns[i],999)
@@ -240,16 +246,16 @@ begin
 		std_Krylov_total[i][:,:,s] = state_std(data_ED_total[i],s+1)[:,:,1]./sqrt(s)
 
 		errors2_ED_total[i,s] = sum(abs.(data_EDtr_total[i][:,:,1]-mean_ED_total[i][:,:,s]))/sum(abs.(data_EDtr_total[i][:,:,1]))
-		errors2_ED_total[i,s] = sum(abs.(data_EDtr_total[i][:,:,1]-mean_Krylov_total[i][:,:,s]))/sum(abs.(data_EDtr_total[i][:,:,1]))
+		errors2_Krylov_total[i,s] = sum(abs.(data_EDtr_total[i][:,:,1]-mean_Krylov_total[i][:,:,s]))/sum(abs.(data_EDtr_total[i][:,:,1]))
 		end
 	end
 end
 
 # ╔═╡ 82a151e4-3d36-4da3-b1e6-ee39f4b7c16f
-plot(data_ED_total[2][:,:,1,1])
+plot(trange,data_ED_total[9][:,:,1,1])
 
-# ╔═╡ 2164b4b2-8afb-434c-af38-7a9af694e876
-pyplot()
+# ╔═╡ 12494e1b-c8d8-420a-bee8-78b3851b6331
+minimum(errors2_Krylov_total)
 
 # ╔═╡ a0da8248-9838-4207-b047-fd4ce49f5a59
 begin
@@ -263,6 +269,7 @@ begin
 	plot!(2:1000,errors2_ED_sector[8,:],yaxis=:log,xaxis=:log,label="N = 12")
 	plot!(2:1000,errors2_ED_sector[9,:],yaxis=:log,xaxis=:log,label="N = 13")
 	plot!(2:1000,errors2_ED_sector[10,:],yaxis=:log,xaxis=:log,label="N = 14")
+	plot!(2:1000,errors2_ED_sector[10,:],yaxis=:log,xaxis=:log,label="N = 15")
 end
 
 # ╔═╡ eab78ce6-fdba-4e4e-ac21-646ce1ba434b
@@ -275,6 +282,7 @@ begin
 	plot!(2:1000,errors2_ED_total[6,:],yaxis=:log,xaxis=:log,label="N = 10")
 	plot!(2:1000,errors2_ED_total[7,:],yaxis=:log,xaxis=:log,label="N = 11")
 	plot!(2:1000,errors2_ED_total[8,:],yaxis=:log,xaxis=:log,label="N = 12")
+	plot!(2:1000,errors2_ED_total[9,:],yaxis=:log,xaxis=:log,label="N = 13")
 end
 
 # ╔═╡ 7421e96e-1e70-4356-a4bc-544114afcbb3
@@ -288,14 +296,17 @@ end
 # ╔═╡ c385d15e-1e2f-4732-9173-6d217d2aaf37
 plot([2^9,2^10,2^11,2^12,2^13],[71,535,4455,31297,221948],yaxis=:log,xaxis=:log)
 
-# ╔═╡ c443896d-9f9b-41a0-9a3e-bb259f1e494d
-@benchmark otoc_edψ(test,test2,λ,1.0,random_state(nt))
+# ╔═╡ ecb3a48b-dd34-4fd7-b10d-efe4fbcb0a81
+
 
 # ╔═╡ d8a755b7-b69d-4bca-82b0-b1a915d40a50
 function Ftr2(A::Matrix{ComplexF64},B::Matrix{ComplexF64},λs::Vector{Float64},t::Float64) #A,B already in eigenbasis
 	eigmt = exp(-im*Diagonal(λs)*t)
 	return real(tr(eigmt'*A*eigmt*B*eigmt'*A*eigmt*B))
 end
+
+# ╔═╡ c443896d-9f9b-41a0-9a3e-bb259f1e494d
+@benchmark Ftr2(test,test2,λ,1.0)
 
 # ╔═╡ Cell order:
 # ╠═1fa345ce-4a5e-11ed-2fe2-75fc302d3420
@@ -310,6 +321,7 @@ end
 # ╠═074faf57-afcd-400c-a151-093e99e2392e
 # ╠═f9f81652-3013-49a6-b1bf-159d5266110a
 # ╠═9e59a5a3-8187-4316-941b-4cc1b84ad1e7
+# ╠═3477d403-2ed2-4fe5-859a-802732e17862
 # ╠═dc4ce9cd-18c5-448b-9f17-0ef723f14b05
 # ╠═7908b2f0-5116-45df-847a-61e054567c15
 # ╠═42bf99ad-a834-47a8-9400-9eb1a17d2fbe
@@ -329,16 +341,18 @@ end
 # ╠═2ee2efea-b569-4576-a507-25aca79dd1fc
 # ╠═31b41f61-95bf-4ba4-abdd-927dcd2e8045
 # ╠═73c95dc6-85ec-4c1d-b720-d242c987af4b
+# ╠═780a8317-81cd-4ce0-ac31-ce83f8b048e5
 # ╠═362bbed1-f4d4-49f4-a489-08ee68d0e27f
 # ╠═11d13a7f-99e5-4b83-b80c-db9729c1a974
 # ╠═fedfb82f-805d-4992-83fc-df4c4c937fba
 # ╠═b373574b-6d45-4d07-8563-6231a597beea
 # ╠═c6cf9fc9-f06e-466b-890b-fe3291a1610b
 # ╠═82a151e4-3d36-4da3-b1e6-ee39f4b7c16f
-# ╠═2164b4b2-8afb-434c-af38-7a9af694e876
+# ╠═12494e1b-c8d8-420a-bee8-78b3851b6331
 # ╠═a0da8248-9838-4207-b047-fd4ce49f5a59
 # ╠═eab78ce6-fdba-4e4e-ac21-646ce1ba434b
 # ╠═7421e96e-1e70-4356-a4bc-544114afcbb3
 # ╠═c385d15e-1e2f-4732-9173-6d217d2aaf37
+# ╠═ecb3a48b-dd34-4fd7-b10d-efe4fbcb0a81
 # ╠═c443896d-9f9b-41a0-9a3e-bb259f1e494d
 # ╠═d8a755b7-b69d-4bca-82b0-b1a915d40a50
