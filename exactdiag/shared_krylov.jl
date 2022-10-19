@@ -62,8 +62,9 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 δt = 0.1
 T = 5
-s = 10
-trange = logrange(-2,10,1e10)
+s = 1
+logmsg("*"^10 * "s=$s" * "*"^10)
+trange = 10.0 .^ LinRange(-3,6,100)
 #trange = 0:δt:T
 logmsg("trange = ",trange)
 

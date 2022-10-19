@@ -61,7 +61,7 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 #Set up simulation parameters
 
 δt = 0.1
-T = 10.0
+T = 5.0
 trange = 0.0:δt:T
 logmsg("trange = ",trange)
 

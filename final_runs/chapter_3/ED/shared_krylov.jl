@@ -61,6 +61,7 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 #Set up simulation parameters
 
 s = 10
+logmsg("s = $s")
 trange = 10. .^LinRange(-3,8,100)
 logmsg("trange = ",trange)
 
@@ -77,7 +78,8 @@ elseif OBSERVABLE == "z"
 end
 B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 
-H = xxz(N,6)
+H =xxz(N,6)
+logmsg("alpha = 6")
 
 #Start simulation
 

@@ -77,7 +77,7 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 δt = 0.1
 tmax = 0.5
-T = 5
+T = 3
 #trange = logrange(-5,0,2)
 trange = 0:δt:T
 logmsg("trange = ",trange)

@@ -2,7 +2,7 @@
 # ########## Begin Slurm header ##########
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --time=3-0
+#SBATCH --time=50:00:00
 #SBATCH --mem=350gb
 #SBATCH --cpus-per-task=48
 #SBATCH --job-name=otoc_simulation_N21_RPS_sector
