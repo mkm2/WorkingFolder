@@ -14,5 +14,5 @@
 
 # export JULIA_DEPOT_PATH=$SCRATCH
 export ON_CLUSTER=1
-exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/exactdiag/shared_krylov_nn_pbc.jl" 13 50 z $1
+exec julia --color=no --threads=96 --startup-file=no "$LCDIR/WorkingFolder/exactdiag/shared_krylov_nn_pbc.jl" 13 50 z $1
 =#

@@ -14,5 +14,5 @@
 
 # export JULIA_DEPOT_PATH=$SCRATCH
 export ON_CLUSTER=1
-exec julia --color=no --threads=96 --startup-file=no "$LCDIR/LightCones/final_runs/chapter_2/Krylov/shared_krylov_sector.jl" 7 1 1000 RS z $1
+exec julia --color=no --threads=96 --startup-file=no "$LCDIR/WorkingFolder/final_runs/chapter_2/Krylov/shared_krylov_sector.jl" 7 1 1000 RS z $1
 =#
