@@ -27,7 +27,7 @@ function combine_files(files,path,new_file)
 		jobids[i] = load(path*f,"jobid")
 		params[i] = load(path*f,"params")
 		#positiondata[i] = load(path*f,"positiondata")
-		data[i] = load(path*f,"data")
+		data[i] = load(path*f,"data")[1:31,:,:,:]
 	end
 	jldopen(path*new_file, "w") do file
         file["data"] = data

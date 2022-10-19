@@ -1,0 +1,75 @@
+  Activating project at `/lustre/work/ws/ws1/hd_ku269-light_cones/LightCones`
+┌ Error: Pkg.precompile error
+│   exception =
+│    IOError: stat("/home/hd/hd_hd/hd_ku269/.julia/packages/LoggingExtras/zT9ZU/src/verbosity.jl"): i/o error (EIO)
+│    Stacktrace:
+│     [1] uv_error
+│       @ ./libuv.jl:97 [inlined]
+│     [2] stat(path::String)
+│       @ Base.Filesystem ./stat.jl:152
+│     [3] mtime
+│       @ ./stat.jl:456 [inlined]
+│     [4] stale_cachefile(modkey::Base.PkgId, build_id::UInt64, modpath::String, cachefile::String; ignore_loaded::Bool)
+│       @ Base ./loading.jl:2148
+│     [5] #stale_cachefile#908
+│       @ ./loading.jl:2061 [inlined]
+│     [6] _is_stale
+│       @ /lustre/home/hd/hd_hd/hd_ku269/julia-1.8.1/share/julia/stdlib/v1.8/Pkg/src/API.jl:1029 [inlined]
+│     [7] macro expansion
+│       @ /lustre/home/hd/hd_hd/hd_ku269/julia-1.8.1/share/julia/stdlib/v1.8/Pkg/src/API.jl:1291 [inlined]
+│     [8] (::Pkg.API.var"#242#271"{Bool, Pkg.Types.Context, Vector{Task}, Pkg.API.var"#handle_interrupt#263"{Base.Event, ReentrantLock, IOContext{IOStream}}, Pkg.API.var"#color_string#261", Base.Event, Base.Event, ReentrantLock, Vector{Base.PkgId}, Vector{Base.PkgId}, Dict{Base.PkgId, String}, Vector{Base.PkgId}, Vector{Base.PkgId}, Vector{Pkg.Types.PackageSpec}, Dict{Base.PkgId, Bool}, Dict{Base.PkgId, Base.Event}, Dict{Base.PkgId, Bool}, Vector{Base.PkgId}, Bool, IOContext{IOStream}, Base.Semaphore, String, Vector{String}, Vector{Base.PkgId}, Base.PkgId})()
+│       @ Pkg.API ./task.jl:484
+└ @ Pkg.API /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/Pkg/src/API.jl:1183
+Added MKL.jl
+Project LightCones v0.1.0
+Status `/lustre/work/ws/ws1/hd_ku269-light_cones/LightCones/Project.toml`
+  [7d9fca2a] Arpack v0.5.3
+  [7073ff75] IJulia v1.23.3
+  [033835bb] JLD2 v0.4.25
+  [0b1a1467] KrylovKit v0.5.4
+  [d3d80556] LineSearches v7.2.0
+  [33e6dc65] MKL v0.5.0
+  [429524aa] Optim v1.7.3
+  [91a5bcdd] Plots v1.35.3
+  [c3e4b0f8] Pluto v0.19.13
+  [3c0b384b] QuantumInformation v0.4.9
+  [189a3867] Reexport v1.2.2
+  [295af30f] Revise v3.4.0
+  [ebcc8a00] SpinSymmetry v0.3.3
+  [59d54670] ThreadedSparseArrays v0.2.2
+  [ade2ca70] Dates
+  [8ba89e20] Distributed
+  [37e2e46d] LinearAlgebra
+  [de0858da] Printf
+  [9a3f8284] Random
+  [1a1011a3] SharedArrays
+  [2f01184e] SparseArrays
+  [10745b16] Statistics
+[2022-10-16T21:50:48.050]**********RANDOM FIELDS**********
+shared_krylov.jl
+Working Directory:          /lustre/work/ws/ws1/hd_ku269-light_cones/LightCones
+SLURM Directory:            /lustre/work/ws/ws1/hd_ku269-light_cones/LightCones 
+Running on host:            n0810
+Job id:                     7361633
+Job name:                   otoc_simulation_N14_ED
+Number of nodes allocated:  
+Number of cores allocated:  1
+#threads of Julia:          96
+#threads of BLAS:           1
+ARGS = ["14", "1", "z", "0"]
+LOCATION = "/lustre/work/ws/ws1/hd_ku269-logs/LightCones/2022-10-16"
+N = 14
+SHOTS = 1
+OBSERVABLE = "z"
+DISORDER_PARAM = 0.0
+[2022-10-16T21:50:49.016]**********Running simulation**********
+[2022-10-16T21:50:49.016]s=10
+[2022-10-16T21:50:49.086]trange = 0.0:0.1:3.0
+[2022-10-16T21:50:49.917]A = σz
+[2022-10-16T21:50:53.571]Created Hamiltonian for Shot 1
+[2022-10-16T22:23:02.882]Diagonalized H.
+[2022-10-17T03:56:17.375]Completed Shot 1
+[2022-10-17T03:56:17.376]**********Simulation completed!**********
+[2022-10-17T03:56:17.376]**********Saving**********
+[2022-10-17T03:56:22.120]Saving file: /lustre/work/ws/ws1/hd_ku269-logs/LightCones/2022-10-16/7361633_N14_ED.jld2
+[2022-10-17T03:56:24.938]**********Run completed!**********

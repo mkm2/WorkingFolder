@@ -123,7 +123,7 @@ begin
 end
 
 # ╔═╡ 9f5dcb52-8418-417b-b7a3-0f7f7682fcbc
-plot(trange[2:T],data_4_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_4_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h = 4",markers="+",yaxis=:log,xlim=[1e-2,1e1])
+plot(trange[2:T],data_4_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_4_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h = 4")
 
 # ╔═╡ a148f020-cb39-4820-b868-503d2dca252c
 heatmap(1:N,trange[2:T],data_4_mean[2:T,:],yaxis=:log)
@@ -157,8 +157,8 @@ data_12_mean
 
 # ╔═╡ c4f385eb-6e67-402d-9f98-c8ac8621c9a2
 begin
-	plot(trange[2:T],data_12_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h= 12",ylims=[0.001,3.2],xlim=[1e-2,1e8],yaxis=:log)
-	plot!(10. .^ LinRange(-3,8,100),ones(100),xaxis=:log,markershape=:cross)
+	plot(trange[2:T],data_12_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h= 12",ylims=[0.001,3.2],xlim=[1e-3,1e6])#,xlim=[1e-2,1e8],yaxis=:log)
+	#plot!(10. .^ LinRange(-3,8,100),ones(100),xaxis=:log,markershape=:cross)
 end
 
 # ╔═╡ 4302e49d-d06a-4e22-86a1-75669096779f
@@ -188,7 +188,7 @@ begin
 end
 
 # ╔═╡ a939797d-8e74-4d0f-bfff-deec14b7ac51
-plot(trange[2:T],abs.(data_0_nn_mean[2:110,:]),xaxis=:log,legend=:bottomright,ylabel="OTOC xx",xlabel="Jt",title="Nearest Neighbour OBC, h = 0",xlim=[1e-2,5e0],yaxis=:log)
+plot(trange[2:T],abs.(data_0_nn_mean[2:110,:]),xaxis=:log,legend=:bottomright,ylabel="OTOC xx",xlabel="Jt",title="Nearest Neighbour OBC, h = 0",yaxis=:linear)
 
 # ╔═╡ 33282538-dadb-4487-986e-ea89f33ebe88
 heatmap(1:N,trange[2:T],data_0_nn_mean[2:T,:],yaxis=:log)
@@ -267,6 +267,9 @@ md"# PowerLaw PBC"
 # ╔═╡ 7864764e-8f34-43b9-bedd-970847d38688
 md"## h = 0"
 
+# ╔═╡ c9d599c4-6cd8-4733-9603-8bfffd3ac836
+trange
+
 # ╔═╡ 9a75ae46-c32d-4d0d-a7d6-e1df83f17129
 begin
 	f_0_pbc = "7194612_N13_ED.jld2"
@@ -339,7 +342,7 @@ begin
 end
 
 # ╔═╡ 9378d2bd-2e31-4a7d-a81c-574e70c9a171
-plot(trange[2:T],data_12_pbc_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_pbc_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law PBC, h= 12",ylims=[0.,3.2])
+plot(trange[2:T],data_12_pbc_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_pbc_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law PBC, h= 12",ylims=[0.,3.2],xlim=[1e-3,1e6])
 
 # ╔═╡ b0ce161e-54ce-4153-abc9-6cf43b49774e
 heatmap(1:N,trange[2:T],data_12_pbc_mean[2:T,:],yaxis=:log)
@@ -628,7 +631,7 @@ begin
 end
 
 # ╔═╡ ebcc526b-d747-42f9-9b3a-56dfb37586b2
-plot(trange[2:T],data_0_pbczz_mean[2:110,:],xaxis=:linear,legend=:bottomright,ribbon=data_0_pbczz_std[2:T,:]/sqrt(shots),ylabel="OTOC zz",xlabel="Jt",title="Power Law PBC, h = 0",xlim=[1e-2,1e1])
+plot(trange[2:T],data_0_pbczz_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_0_pbczz_std[2:T,:]/sqrt(shots),ylabel="OTOC zz",xlabel="Jt",title="Power Law PBC, h = 0")
 
 # ╔═╡ 34c9f430-95f0-4899-a8e5-53a494582ea0
 heatmap(1:N,trange[2:T],data_0_pbczz_mean[2:T,:],yaxis=:log)
@@ -820,6 +823,7 @@ heatmap(1:N,trange[2:T],data_12_nn_pbczz_mean[2:T,:],yaxis=:log)
 # ╠═d21541e3-ba62-4dd5-844e-1751cf134d29
 # ╠═f55a5ebe-b8cf-4772-8aec-ee201db139ef
 # ╠═7864764e-8f34-43b9-bedd-970847d38688
+# ╠═c9d599c4-6cd8-4733-9603-8bfffd3ac836
 # ╠═9a75ae46-c32d-4d0d-a7d6-e1df83f17129
 # ╠═9dcfe111-e17f-4b7c-807b-a5692d88083a
 # ╠═0a04bf3f-9783-4d1d-99e3-a00e7d844d07

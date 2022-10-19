@@ -15,7 +15,7 @@ end
 using LinearAlgebra,JLD2,Statistics,PlutoUI, SpinSymmetry, BenchmarkTools
 
 # ╔═╡ 54a9508a-7182-42cd-870e-782d1f57ebb1
-using Plots; pyplot()
+using Plots
 
 # ╔═╡ c37982e1-313e-4223-a5a8-580a689a1e3a
 TableOfContents()
@@ -145,14 +145,14 @@ data_EDtr_sector
 # ╔═╡ 031cb4f0-8628-49ca-bbf2-73f9f53dbf3b
 (2*ones(ts,5,1)-data_EDtr_sector[1])*10
 
+# ╔═╡ cdcc9475-6305-48eb-9376-ebd0b4f1c8e8
+plot(data_EDtr_total[9][:,:,1])
+
 # ╔═╡ 03abf2d2-3461-4e19-822f-1428304b008c
-plot(abs.(data_EDtr_total[8][2:ts,:,1]-state_mean(data_ED_total[8],10)[2:ts,:])./data_EDtr_total[8][2:ts,:,1]*100)
+plot(abs.(data_EDtr_total[9][2:ts,:,1]-state_mean(data_Krylov_total[9],10)[2:ts,:])./data_EDtr_total[9][2:ts,:,1]*100)
 
 # ╔═╡ f7e68416-5ccb-49af-a80f-646e2af64ac2
 maximum(abs.(data_EDtr_total[8][2:ts,:,1]-state_mean(data_ED_total[8],10)[2:ts,:])./data_EDtr_total[8][2:ts,:,1]*100)
-
-# ╔═╡ 2ee2efea-b569-4576-a507-25aca79dd1fc
-plot(data_EDtr_total[8][2:ts,:,1])
 
 # ╔═╡ 31b41f61-95bf-4ba4-abdd-927dcd2e8045
 begin
@@ -162,38 +162,53 @@ begin
 	errors_ED_total = Vector{Float64}(undef,9)
 	errors_Krylov_total = Vector{Float64}(undef,9)
 
-	state_index = 100
-	for i in 1:11
-		errors_ED_sector[i] = sum(abs.(data_EDtr_sector[i][:,:,1]-data_ED_sector[i][:,:,1,state_index]))/sum(abs.(data_EDtr_sector[i][:,:,1]))
-		errors_Krylov_sector[i] = sum(abs.(data_EDtr_sector[i][:,:,1]-data_Krylov_sector[i][:,:,1,state_index]))/sum(abs.(data_EDtr_sector[i][:,:,1]))
-	end
+	stdEs = Vector{Float64}(undef,11)
+	stdKs = Vector{Float64}(undef,11)
 
+	stdEt = Vector{Float64}(undef,9)
+	stdKt = Vector{Float64}(undef,9)
+
+	states = 10
+	for i in 1:11
+		errors_ED_sector[i] = mean(abs.(data_EDtr_sector[i][:,:,1]-state_mean(data_ED_sector[i],states)[:,:,1]))
+		
+		errors_Krylov_sector[i] = mean(abs.(data_EDtr_sector[i][:,:,1]-state_mean(data_Krylov_sector[i],states)[:,:,1]))
+
+		stdEs[i] = std(mean(abs.(data_EDtr_sector[i][:,:,1]-data_ED_sector[i][:,:,1,j])) for j in 1:states)/sqrt(states)
+
+		stdKs[i] = std(mean(abs.(data_EDtr_sector[i][:,:,1]-data_Krylov_sector[i][:,:,1,j])) for j in 1:states)/sqrt(states)
+	end
 	for i in 1:9
-		errors_ED_total[i] = sum(abs.(data_EDtr_total[i][:,:,1]-data_ED_total[i][:,:,1,state_index]))/sum(abs.(data_EDtr_total[i][:,:,1]))
-		errors_Krylov_total[i] = sum(abs.(data_EDtr_total[i][:,:,1]-data_Krylov_total[i][:,:,1,state_index]))/sum(abs.(data_EDtr_total[i][:,:,1]))
+		errors_ED_total[i] = mean(abs.(data_EDtr_total[i][:,:,1]-state_mean(data_ED_total[i],states)[:,:,1]))
+		
+		errors_Krylov_total[i] = mean(abs.(data_EDtr_total[i][:,:,1]-state_mean(data_Krylov_total[i],states)[:,:,1]))
+
+		stdEt[i] = std(mean(abs.(data_EDtr_total[i][:,:,1]-data_ED_total[i][:,:,1,j])) for j in 1:states)/sqrt(states)
+
+		stdKt[i] = std(mean(abs.(data_EDtr_total[i][:,:,1]-data_Krylov_total[i][:,:,1,j])) for j in 1:states)/sqrt(states)
 	end
 end
 
 # ╔═╡ 73c95dc6-85ec-4c1d-b720-d242c987af4b
 begin
-	plot(Ns[1:11],errors_ED_sector,label="ED sector",xlabel="N",ylabel="err")
-	plot!(Ns[1:11],errors_Krylov_sector,label="Krylov sector")
+	plot(Ns[1:11],errors_ED_sector,yerror=stdEs,label="ED sector",xlabel="N",ylabel="ϵ",xticks=Ns,yminorticks=true)#,ylim=[1e-3,2e-1])
+	plot!(Ns[1:11],errors_Krylov_sector,yerror=stdKs,label="Krylov sector")
 
-	plot!(Ns[1:9],errors_ED_total,label="ED total")
-	plot!(Ns[1:9],errors_Krylov_total,label="Krylov total",yaxis=:linear)
+	plot!(Ns[1:9],errors_ED_total,yerror=stdEt,label="ED total")
+	plot!(Ns[1:9],errors_Krylov_total,yerror=stdKt,label="Krylov total",yaxis=:log)
 end
 
-# ╔═╡ 780a8317-81cd-4ce0-ac31-ce83f8b048e5
-
-
-# ╔═╡ 362bbed1-f4d4-49f4-a489-08ee68d0e27f
-errors_ED_total[8]
-
-# ╔═╡ 11d13a7f-99e5-4b83-b80c-db9729c1a974
-begin
-	plot(Ns[1:9],errors_ED_total,label="ED")
-	plot!(Ns[1:9],errors_Krylov_total,label="Krylov")
-end
+# ╔═╡ ef1518f2-ab35-4c98-bdfd-01397f475594
+jldopen("errors.jld2", "w") do file
+    file["ED_sec"] = errors_ED_sector
+	file["stdED_sec"] = stdEs
+	file["Kr_sec"] = errors_Krylov_sector
+	file["stdKr_sec"] = stdKs
+	file["ED_tot"] = errors_ED_total
+	file["stdED_tot"] = stdEt
+	file["Kr_tot"] = errors_Krylov_total
+	file["stdKr_tot"] = stdKt
+    end
 
 # ╔═╡ fedfb82f-805d-4992-83fc-df4c4c937fba
 md"# System Size vs. Error - Multiple states"
@@ -229,8 +244,8 @@ begin
 		std_ED_sector[i][:,:,s] = state_std(data_ED_sector[i],s+1)[:,:,1]./sqrt(s)
 		std_Krylov_sector[i][:,:,s] = state_std(data_ED_sector[i],s+1)[:,:,1]./sqrt(s)
 		
-		errors2_ED_sector[i,s] = sum(abs.(data_EDtr_sector[i][:,:,1]-mean_ED_sector[i][:,:,s]))/sum(abs.(data_EDtr_sector[i][:,:,1]))
-		errors2_Krylov_sector[i,s] = sum(abs.(data_EDtr_sector[i][:,:,1]-mean_Krylov_sector[i][:,:,s]))/sum(abs.(data_EDtr_sector[i][:,:,1]))
+		errors2_ED_sector[i,s] = mean(abs.(data_EDtr_sector[i][:,:,1]-mean_ED_sector[i][:,:,s]))
+		errors2_Krylov_sector[i,s] = mean(abs.(data_EDtr_sector[i][:,:,1]-mean_Krylov_sector[i][:,:,s]))
 		end
 	end
 	
@@ -245,17 +260,11 @@ begin
 		std_ED_total[i][:,:,s] = state_std(data_ED_total[i],s+1)[:,:,1]./sqrt(s)
 		std_Krylov_total[i][:,:,s] = state_std(data_ED_total[i],s+1)[:,:,1]./sqrt(s)
 
-		errors2_ED_total[i,s] = sum(abs.(data_EDtr_total[i][:,:,1]-mean_ED_total[i][:,:,s]))/sum(abs.(data_EDtr_total[i][:,:,1]))
-		errors2_Krylov_total[i,s] = sum(abs.(data_EDtr_total[i][:,:,1]-mean_Krylov_total[i][:,:,s]))/sum(abs.(data_EDtr_total[i][:,:,1]))
+		errors2_ED_total[i,s] = mean(abs.(data_EDtr_total[i][:,:,1]-mean_ED_total[i][:,:,s]))
+		errors2_Krylov_total[i,s] = mean(abs.(data_EDtr_total[i][:,:,1]-mean_Krylov_total[i][:,:,s]))
 		end
 	end
 end
-
-# ╔═╡ 82a151e4-3d36-4da3-b1e6-ee39f4b7c16f
-plot(trange,data_ED_total[9][:,:,1,1])
-
-# ╔═╡ 12494e1b-c8d8-420a-bee8-78b3851b6331
-minimum(errors2_Krylov_total)
 
 # ╔═╡ a0da8248-9838-4207-b047-fd4ce49f5a59
 begin
@@ -269,7 +278,7 @@ begin
 	plot!(2:1000,errors2_ED_sector[8,:],yaxis=:log,xaxis=:log,label="N = 12")
 	plot!(2:1000,errors2_ED_sector[9,:],yaxis=:log,xaxis=:log,label="N = 13")
 	plot!(2:1000,errors2_ED_sector[10,:],yaxis=:log,xaxis=:log,label="N = 14")
-	plot!(2:1000,errors2_ED_sector[10,:],yaxis=:log,xaxis=:log,label="N = 15")
+	plot!(2:1000,errors2_ED_sector[11,:],yaxis=:log,xaxis=:log,label="N = 15")
 end
 
 # ╔═╡ eab78ce6-fdba-4e4e-ac21-646ce1ba434b
@@ -285,28 +294,14 @@ begin
 	plot!(2:1000,errors2_ED_total[9,:],yaxis=:log,xaxis=:log,label="N = 13")
 end
 
-# ╔═╡ 7421e96e-1e70-4356-a4bc-544114afcbb3
-begin
-	nt = 10
-	test = rand(ComplexF64,2^nt,2^nt)
-	test2 = rand(ComplexF64,2^nt,2^nt)
-	λ = rand(Float64,2^nt)
-end
+# ╔═╡ cfeaf277-185c-45bd-b91f-4a77613c777e
+
+
+# ╔═╡ 405d95ff-bf45-44f2-ba12-301078f22a84
+
 
 # ╔═╡ c385d15e-1e2f-4732-9173-6d217d2aaf37
 plot([2^9,2^10,2^11,2^12,2^13],[71,535,4455,31297,221948],yaxis=:log,xaxis=:log)
-
-# ╔═╡ ecb3a48b-dd34-4fd7-b10d-efe4fbcb0a81
-
-
-# ╔═╡ d8a755b7-b69d-4bca-82b0-b1a915d40a50
-function Ftr2(A::Matrix{ComplexF64},B::Matrix{ComplexF64},λs::Vector{Float64},t::Float64) #A,B already in eigenbasis
-	eigmt = exp(-im*Diagonal(λs)*t)
-	return real(tr(eigmt'*A*eigmt*B*eigmt'*A*eigmt*B))
-end
-
-# ╔═╡ c443896d-9f9b-41a0-9a3e-bb259f1e494d
-@benchmark Ftr2(test,test2,λ,1.0)
 
 # ╔═╡ Cell order:
 # ╠═1fa345ce-4a5e-11ed-2fe2-75fc302d3420
@@ -336,23 +331,17 @@ end
 # ╠═51158cf8-e121-499a-b36e-29fb8e663155
 # ╠═e7e64dab-4141-4f0c-b2a4-0fd73d1073e6
 # ╠═031cb4f0-8628-49ca-bbf2-73f9f53dbf3b
+# ╠═cdcc9475-6305-48eb-9376-ebd0b4f1c8e8
 # ╠═03abf2d2-3461-4e19-822f-1428304b008c
 # ╠═f7e68416-5ccb-49af-a80f-646e2af64ac2
-# ╠═2ee2efea-b569-4576-a507-25aca79dd1fc
 # ╠═31b41f61-95bf-4ba4-abdd-927dcd2e8045
 # ╠═73c95dc6-85ec-4c1d-b720-d242c987af4b
-# ╠═780a8317-81cd-4ce0-ac31-ce83f8b048e5
-# ╠═362bbed1-f4d4-49f4-a489-08ee68d0e27f
-# ╠═11d13a7f-99e5-4b83-b80c-db9729c1a974
+# ╠═ef1518f2-ab35-4c98-bdfd-01397f475594
 # ╠═fedfb82f-805d-4992-83fc-df4c4c937fba
 # ╠═b373574b-6d45-4d07-8563-6231a597beea
 # ╠═c6cf9fc9-f06e-466b-890b-fe3291a1610b
-# ╠═82a151e4-3d36-4da3-b1e6-ee39f4b7c16f
-# ╠═12494e1b-c8d8-420a-bee8-78b3851b6331
 # ╠═a0da8248-9838-4207-b047-fd4ce49f5a59
 # ╠═eab78ce6-fdba-4e4e-ac21-646ce1ba434b
-# ╠═7421e96e-1e70-4356-a4bc-544114afcbb3
+# ╠═cfeaf277-185c-45bd-b91f-4a77613c777e
+# ╠═405d95ff-bf45-44f2-ba12-301078f22a84
 # ╠═c385d15e-1e2f-4732-9173-6d217d2aaf37
-# ╠═ecb3a48b-dd34-4fd7-b10d-efe4fbcb0a81
-# ╠═c443896d-9f9b-41a0-9a3e-bb259f1e494d
-# ╠═d8a755b7-b69d-4bca-82b0-b1a915d40a50
