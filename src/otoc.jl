@@ -208,7 +208,7 @@ end
 function otoc_edtr(A::Matrix{ComplexF64},B::AbstractArray{ComplexF64},λs::Vector{Float64},trange::ExtRange)
 	res = zeros(length(trange))
 	for (ti,t) in enumerate(trange)
-		res[ti] = otoc_edtr(A,QdBQ,λs,t)
+		res[ti] = otoc_edtr(A,B,λs,t)
 	end
 	return res
 end
