@@ -80,8 +80,8 @@ trange = 10. .^LinRange(-3,1,100)
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
-A = single_spin_op(σx,i,N)
-logmsg("A = σx")
+A = single_spin_op(σz,i,N)
+logmsg("A = σz")
 
 if OBSERVABLE == "x"
     B = σx

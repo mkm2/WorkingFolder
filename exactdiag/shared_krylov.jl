@@ -60,9 +60,7 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 #Set up simulation parameters
 
-δt = 0.1
-T = 5
-s = 1
+s = 10
 logmsg("*"^10 * "s=$s" * "*"^10)
 trange = 10.0 .^ LinRange(-3,6,100)
 #trange = 0:δt:T

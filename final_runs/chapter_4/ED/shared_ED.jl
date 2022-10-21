@@ -78,7 +78,7 @@ elseif OBSERVABLE == "z"
 end
 B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 
-H =xxz(N,6)
+H = xxz(N,6)
 logmsg("alpha = 6")
 
 #Start simulation
