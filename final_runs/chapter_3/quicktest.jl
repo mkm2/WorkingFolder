@@ -18,20 +18,20 @@ using LinearAlgebra,JLD2,Statistics,PlutoUI, SpinSymmetry, BenchmarkTools
 using Plots
 
 # ╔═╡ 4a65685a-0aa2-4ff2-88c3-fddc3ed8cdbf
-path = pwd()*"/ED/data/xx/"
+path = pwd()*"/ED/data/"
 
 # ╔═╡ 4651a8c1-c9b1-4d53-b339-eb8245c1e0c6
-test = load(path*"7365215_N13_ED.jld2","data")
+test = load(path*"7365525_N13_ED.jld2","data")
 
 # ╔═╡ 99bbf6c2-3b8b-4af0-9432-a0f355292bf1
-trange = 10. .^LinRange(-3,1,100)
+trange = 10. .^LinRange(-3,6,100)
 
 # ╔═╡ 32ea7a55-a3ff-4d00-bd2a-c5aa0026dcd2
 (2 * ones(100,13,1) - 2* test)
 
 # ╔═╡ 0241ce19-3df6-43b8-9b89-33893df9d1cb
 begin
-	plot(trange[5:100],sqrt.((2 * ones(100,13,1) - 2* test)[5:100,:,1]).^2,legend=nothing,markershape=:cross,xaxis=:log,xlim=[1e-3,1e-1])
+	plot(4*trange,sqrt.(2 * ones(100,13,1) - 2* test)[:,:,1],xaxis=:log,legend=nothing,xlim=[1e-1,1e1],markershape=:cross,yaxis=:log,ylim=[1e-6,2e0])
 end
 
 # ╔═╡ cdc8547f-c5d3-4809-ac56-7096a0436c3f

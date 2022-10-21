@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.13
+# v0.19.14
 
 using Markdown
 using InteractiveUtils
@@ -169,23 +169,24 @@ begin
 	stdKt = Vector{Float64}(undef,9)
 
 	states = 10
+	Tmax = 21
 	for i in 1:11
-		errors_ED_sector[i] = mean(abs.(data_EDtr_sector[i][:,:,1]-state_mean(data_ED_sector[i],states)[:,:,1]))
+		errors_ED_sector[i] = mean(abs.(data_EDtr_sector[i][1:Tmax,:,1]-state_mean(data_ED_sector[i],states)[1:Tmax,:,1]))
 		
-		errors_Krylov_sector[i] = mean(abs.(data_EDtr_sector[i][:,:,1]-state_mean(data_Krylov_sector[i],states)[:,:,1]))
+		errors_Krylov_sector[i] = mean(abs.(data_EDtr_sector[i][1:Tmax,:,1]-state_mean(data_Krylov_sector[i],states)[1:Tmax,:,1]))
 
-		stdEs[i] = std(mean(abs.(data_EDtr_sector[i][:,:,1]-data_ED_sector[i][:,:,1,j])) for j in 1:states)/sqrt(states)
+		stdEs[i] = std(mean(abs.(data_EDtr_sector[i][1:Tmax,:,1]-data_ED_sector[i][1:Tmax,:,1,j])) for j in 1:states)/sqrt(states)
 
-		stdKs[i] = std(mean(abs.(data_EDtr_sector[i][:,:,1]-data_Krylov_sector[i][:,:,1,j])) for j in 1:states)/sqrt(states)
+		stdKs[i] = std(mean(abs.(data_EDtr_sector[i][1:Tmax,:,1]-data_Krylov_sector[i][1:Tmax,:,1,j])) for j in 1:states)/sqrt(states)
 	end
 	for i in 1:9
-		errors_ED_total[i] = mean(abs.(data_EDtr_total[i][:,:,1]-state_mean(data_ED_total[i],states)[:,:,1]))
+		errors_ED_total[i] = mean(abs.(data_EDtr_total[i][1:Tmax,:,1]-state_mean(data_ED_total[i],states)[1:Tmax,:,1]))
 		
-		errors_Krylov_total[i] = mean(abs.(data_EDtr_total[i][:,:,1]-state_mean(data_Krylov_total[i],states)[:,:,1]))
+		errors_Krylov_total[i] = mean(abs.(data_EDtr_total[i][1:Tmax,:,1]-state_mean(data_Krylov_total[i],states)[1:Tmax,:,1]))
 
-		stdEt[i] = std(mean(abs.(data_EDtr_total[i][:,:,1]-data_ED_total[i][:,:,1,j])) for j in 1:states)/sqrt(states)
+		stdEt[i] = std(mean(abs.(data_EDtr_total[i][1:Tmax,:,1]-data_ED_total[i][1:Tmax,:,1,j])) for j in 1:states)/sqrt(states)
 
-		stdKt[i] = std(mean(abs.(data_EDtr_total[i][:,:,1]-data_Krylov_total[i][:,:,1,j])) for j in 1:states)/sqrt(states)
+		stdKt[i] = std(mean(abs.(data_EDtr_total[i][1:Tmax,:,1]-data_Krylov_total[i][1:Tmax,:,1,j])) for j in 1:states)/sqrt(states)
 	end
 end
 

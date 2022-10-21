@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.13
+# v0.19.14
 
 using Markdown
 using InteractiveUtils
@@ -283,6 +283,31 @@ begin
 	params_BS_21 = curve_fit(m, log.(10:1000), log.(mean_std_BS_21[9:999]), p0).param
 end
 
+# ╔═╡ a447eec0-640e-4727-9058-08a40ade744d
+stderror(curve_fit(m, log.(10:1000), log.(mean_std_RPS_21[9:999]), p0))
+
+# ╔═╡ 306c42cb-fe3f-4867-a607-f945dc802c7c
+params_BS_21
+
+# ╔═╡ 7a52f444-4681-4c59-823a-c89944a4c073
+jldopen("fit_params.jld2", "w") do file
+    file["params_RPS_13"] = params_RPS_13
+	file["params_BS_13"] = params_BS_13
+
+	file["params_RPS_15"] = params_RPS_15
+	file["params_BS_15"] = params_BS_15
+
+	file["params_RPS_17"] = params_RPS_17
+	file["params_BS_17"] = params_BS_17
+
+	file["params_RPS_19"] = params_RPS_19
+	file["params_BS_19"] = params_BS_19
+
+	file["params_RPS_21"] = params_RPS_21
+	file["params_BS_21"] = params_BS_21
+
+    end
+
 # ╔═╡ 420f33f0-9121-4e11-b31c-04687c11127d
 begin
 	#Umrechnungsfunktion
@@ -321,6 +346,21 @@ exp((params_RPS_19[2]-params_BS_19[2])/params_BS_19[1])
 
 # ╔═╡ 178e2186-b7a7-479d-9692-a414559d91ac
 params_RPS_19[1]/params_BS_19[1]
+
+# ╔═╡ 06a8ab0b-b94d-4fed-adb5-f3984bd2b789
+md"# RS"
+
+# ╔═╡ 7e7c4d58-2c1c-4da1-8d19-246b3e7fe7c3
+s = 99
+
+# ╔═╡ cbe18298-c26b-4f5e-b8b0-74d797d7a569
+plot([13,15,17,19,21],[mean_std_RS_13[s],mean_std_RS_15[s],mean_std_RS_17[s],mean_std_RS_19[s],mean_std_RS_21[s]],yscale=:log)
+
+# ╔═╡ 6580708c-0a5b-4221-a0bc-03c89479ef6b
+
+
+# ╔═╡ ebc5cd5a-52a5-4c6c-b6aa-4c7f94ef2080
+md"# Single plots"
 
 # ╔═╡ a9008048-d042-48bb-b7c0-66589cce260a
 begin
@@ -1570,6 +1610,9 @@ version = "1.4.1+0"
 # ╠═1b8df7a7-c771-492c-a10c-ccaafbe2b17b
 # ╠═19391d9c-a88b-48f9-a98e-25f3a5944b2e
 # ╠═b57f6b13-3792-4c4d-bc20-1a3a1e60f18f
+# ╠═a447eec0-640e-4727-9058-08a40ade744d
+# ╠═306c42cb-fe3f-4867-a607-f945dc802c7c
+# ╠═7a52f444-4681-4c59-823a-c89944a4c073
 # ╠═420f33f0-9121-4e11-b31c-04687c11127d
 # ╠═27b0e6c5-3d68-403b-ae7d-4a6eeaba7957
 # ╠═031d4884-883e-4b4b-bba8-f45a1e11c4bb
@@ -1577,6 +1620,11 @@ version = "1.4.1+0"
 # ╠═24b3a146-28cc-4069-bc5c-e51e304123b2
 # ╠═c2af3e0b-d916-4ce1-ad3e-89f7d148cc9c
 # ╠═178e2186-b7a7-479d-9692-a414559d91ac
+# ╠═06a8ab0b-b94d-4fed-adb5-f3984bd2b789
+# ╠═7e7c4d58-2c1c-4da1-8d19-246b3e7fe7c3
+# ╠═cbe18298-c26b-4f5e-b8b0-74d797d7a569
+# ╠═6580708c-0a5b-4221-a0bc-03c89479ef6b
+# ╠═ebc5cd5a-52a5-4c6c-b6aa-4c7f94ef2080
 # ╠═a9008048-d042-48bb-b7c0-66589cce260a
 # ╠═8d4e99a7-ba65-45f5-bcfe-55b559a27277
 # ╠═f09d67dd-ff88-43e9-98f7-66087afdaa42

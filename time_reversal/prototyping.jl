@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.12
+# v0.19.14
 
 using Markdown
 using InteractiveUtils
@@ -392,7 +392,7 @@ end
 
 # ╔═╡ 7e0de451-bb15-49da-84a0-38d575da658b
 begin
-	N = 9
+	N = 4
 	i = div(N,2)+1
 	H = convert(SparseMatrixCSC{ComplexF64},xxz(N,6))
 	A = convert(SparseMatrixCSC{ComplexF64},single_spin_op(σx,i,N))
@@ -407,7 +407,7 @@ md"# Fidelity Test WAHUHA"
 
 # ╔═╡ df835e06-c963-4d57-b524-33aa8291aec0
 begin
-	state = kron(leftx,rightx)#,up,rightx,rightx,rightx)
+	state = random_state(N)#kron(rightx,rightx)#,up,rightx,rightx,rightx)
 end
 
 # ╔═╡ aec39b24-c065-4152-a2d1-b281fd4359c7
@@ -422,6 +422,25 @@ function apply(state,τ)
 	state_tmpr = rotation(FastPulse("-x",π/2),N)*state_tmpr
 	state_tmpr = evolve_forward(H,τ,state_tmpr,"ED")
 	return state_tmpr
+end
+
+# ╔═╡ efe0885b-41d5-4252-857e-1191785d5e51
+begin
+	ts = 0:0.1:2*π/1.
+	res = zeros(length(ts))
+	res2 = zeros(length(ts))
+	n = 1000
+	for (i,t) in enumerate(ts)
+		res[i] = abs(state'evolve_forward(H,-t,state,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
+		state_tmpr = echo(H+field_term(7.0,N),t,state,"WAHUHA_FR",n,N,"ED")
+		res2[i] = abs(state'state_tmpr)^2# real(magnetisation(σx,state_tmpr,N))
+	end
+end
+
+# ╔═╡ bdb7ac4a-136e-40a6-90ca-a8da36f5bdb6
+begin
+	plot(ts,res)
+	plot!(ts,res2,label="Floquet")
 end
 
 # ╔═╡ aa97d91e-9300-4d53-94ca-b2451d6c436d
@@ -442,6 +461,25 @@ end
 # ╔═╡ 4f027f64-e663-4a7a-a7ff-c4f497dc8dbc
 H
 
+# ╔═╡ b2213312-64c6-4d66-bf27-0fbf75e6867c
+begin
+	tsRhim = 0.1:0.1:8*π/1.
+	resRhim2 = zeros(length(tsRhim))
+	resRhim = zeros(length(tsRhim))
+	nRhim = 1000
+	for (i,t) in enumerate(tsRhim)
+		resRhim[i] = abs(state'evolve_forward(H,-t,state,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
+		state_tmpr = echo(H+field_term(6.0,N),t,state,"Rhim71_FR",nRhim,N,"ED")
+		resRhim2[i] = abs(state'state_tmpr)^2# real(magnetisation(σx,state_tmpr,N))
+	end
+end
+
+# ╔═╡ 55f1c138-9d73-407e-922a-58cc8e7191f1
+begin
+	plot(tsRhim,resRhim)
+	plot!(tsRhim,resRhim2,label="Floquet")
+end
+
 # ╔═╡ 99b66eac-dbda-492f-b863-59748d1fd1f2
 md" # Test OTOC"
 
@@ -459,51 +497,6 @@ end
 
 # ╔═╡ 093ea9de-4163-4712-8f16-ec83fb1146b3
 state_o = random_state(N)#kron(leftx,leftx,leftx,leftx,leftx,leftx,leftx,leftx,leftx)
-
-# ╔═╡ efe0885b-41d5-4252-857e-1191785d5e51
-begin
-	ts = 0:1:8*π/1.
-	res = zeros(length(ts))
-	res2 = zeros(length(ts))
-	n = 2000
-	for (i,t) in enumerate(ts)
-		res[i] = abs(state_o'evolve_forward(H,-t,state_o,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
-	
-		τ = t/(2*n)
-		seq = WAHUHA(τ)
-		@debug t
-		state_tmpr = echo(H+field_term(6.0,N),t,state_o,"WAHUHA_FR",n,N,"ED")
-		res2[i] = abs(state_o'state_tmpr)^2# real(magnetisation(σx,state_tmpr,N))
-	end
-end
-
-# ╔═╡ bdb7ac4a-136e-40a6-90ca-a8da36f5bdb6
-begin
-	plot(ts,res)
-	plot!(ts,res2,label="Floquet")
-end
-
-# ╔═╡ b2213312-64c6-4d66-bf27-0fbf75e6867c
-begin
-	tsRhim = 0.1:1:8*π/1.
-	resRhim2 = zeros(length(tsRhim))
-	resRhim = zeros(length(tsRhim))
-	nRhim = 2000
-	for (i,t) in enumerate(tsRhim)
-		resRhim[i] = abs(state_o'evolve_forward(H,-t,state_o,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
-
-		@debug t
-		seq = Rhim71(π*nRhim/t)
-		state_tmpr = echo(H+field_term(6.0,N),t,state_o,"Rhim71_FR",nRhim,N,"ED")
-		resRhim2[i] = abs(state_o'state_tmpr)^2# real(magnetisation(σx,state_tmpr,N))
-	end
-end
-
-# ╔═╡ 55f1c138-9d73-407e-922a-58cc8e7191f1
-begin
-	plot(tsRhim,resRhim)
-	plot!(tsRhim,resRhim2,label="Floquet")
-end
 
 # ╔═╡ 24f376db-77a3-46ae-a738-f58dac76b57b
 A2 = convert(SparseMatrixCSC{ComplexF64},single_spin_op(σz,i,N))
