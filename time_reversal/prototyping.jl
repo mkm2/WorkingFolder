@@ -392,7 +392,7 @@ end
 
 # ╔═╡ 7e0de451-bb15-49da-84a0-38d575da658b
 begin
-	N = 4
+	N = 7
 	i = div(N,2)+1
 	H = convert(SparseMatrixCSC{ComplexF64},xxz(N,6))
 	A = convert(SparseMatrixCSC{ComplexF64},single_spin_op(σx,i,N))
@@ -424,6 +424,13 @@ function apply(state,τ)
 	return state_tmpr
 end
 
+# ╔═╡ 7f36facb-4734-4d90-bf0b-160122d628cf
+begin
+	C6 = 400/(2*π) * 1e9 #Hz(μm)^6
+	r = 7 #μm
+	J = C6/r^6 *0.25 #0.25 from spins
+end
+
 # ╔═╡ efe0885b-41d5-4252-857e-1191785d5e51
 begin
 	ts = 0:0.1:2*π/1.
@@ -439,8 +446,8 @@ end
 
 # ╔═╡ bdb7ac4a-136e-40a6-90ca-a8da36f5bdb6
 begin
-	plot(ts,res)
-	plot!(ts,res2,label="Floquet")
+	plot(ts/J * 1e6,res)
+	plot!(ts/J * 1e6,res2,label="Floquet")
 end
 
 # ╔═╡ aa97d91e-9300-4d53-94ca-b2451d6c436d
@@ -466,7 +473,7 @@ begin
 	tsRhim = 0.1:0.1:8*π/1.
 	resRhim2 = zeros(length(tsRhim))
 	resRhim = zeros(length(tsRhim))
-	nRhim = 1000
+	nRhim = 100
 	for (i,t) in enumerate(tsRhim)
 		resRhim[i] = abs(state'evolve_forward(H,-t,state,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
 		state_tmpr = echo(H+field_term(6.0,N),t,state,"Rhim71_FR",nRhim,N,"ED")
@@ -476,8 +483,8 @@ end
 
 # ╔═╡ 55f1c138-9d73-407e-922a-58cc8e7191f1
 begin
-	plot(tsRhim,resRhim)
-	plot!(tsRhim,resRhim2,label="Floquet")
+	#plot(tsRhim/J * 1e6,resRhim)
+	plot(tsRhim/J * 1e6,resRhim2,label="Floquet")
 end
 
 # ╔═╡ 99b66eac-dbda-492f-b863-59748d1fd1f2
@@ -496,21 +503,21 @@ function measure_all(B::SparseMatrixCSC{ComplexF64},ψ::Vector,N::Int)
 end
 
 # ╔═╡ 093ea9de-4163-4712-8f16-ec83fb1146b3
-state_o = random_state(N)#kron(leftx,leftx,leftx,leftx,leftx,leftx,leftx,leftx,leftx)
+state_o = kron(leftx,leftx,leftx,leftx,leftx,leftx,leftx)#leftx,leftx)
 
 # ╔═╡ 24f376db-77a3-46ae-a738-f58dac76b57b
 A2 = convert(SparseMatrixCSC{ComplexF64},single_spin_op(σz,i,N))
 
 # ╔═╡ d3ec883e-cca0-4cdf-b644-0916d67d0ae8
 begin
-	tso = 0.1:0.5:5*π/1.
+	tso = 0.1:0.1:8*π/1.
 	reso = zeros(length(tso))
 	reso2 = zeros(length(tso))
 	resoto = zeros(ComplexF64,length(tso),N)
-	no = 2000
+	no = 1000
 	for (i,t) in enumerate(tso)
 		reso[i] = abs(state_o'evolve_forward(H,-t,state_o,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
-		@debug t
+		
 		state_tmpr = echo(H,f,A2,π/1.,t,state_o,"Rhim71_FR",no,N,"ED")
 		reso2[i] = abs(state_o'state_tmpr)^2# real(magnetisation(σx,state_tmpr,N))
 		resoto[i,:] = 2*(ones(N)+real(measure_all(B,state_tmpr,N)))
@@ -537,8 +544,8 @@ end
 # ╔═╡ 6dd2eb77-9e38-48cb-a145-caa64839898b
 begin
 	k = 5
-	plot(tso,real.(resoto[:,k]),label="Floquet",xlim=[0,25])
-	plot!(tso,oto_corr[:,k],label="Exact")
+	plot(tso/J*1e6,real.(resoto[:,k]),label="Floquet",xlim=[0,25])
+	plot!(tso/J*1e6,oto_corr[:,k],label="Exact")
 end
 
 # ╔═╡ 71c7c94c-50ef-4347-bec0-cbc18088f9c2
@@ -572,6 +579,7 @@ plot(tso,oto_corr[:,4],xlim=(0,5))
 # ╠═4aa08654-873f-4443-9930-e86c373579a2
 # ╠═df835e06-c963-4d57-b524-33aa8291aec0
 # ╠═aec39b24-c065-4152-a2d1-b281fd4359c7
+# ╠═7f36facb-4734-4d90-bf0b-160122d628cf
 # ╠═efe0885b-41d5-4252-857e-1191785d5e51
 # ╠═bdb7ac4a-136e-40a6-90ca-a8da36f5bdb6
 # ╠═aa97d91e-9300-4d53-94ca-b2451d6c436d

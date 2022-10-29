@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.13
+# v0.19.14
 
 using Markdown
 using InteractiveUtils
@@ -16,6 +16,9 @@ using LinearAlgebra,Plots,JLD2,Statistics,PlutoUI
 
 # ╔═╡ 7e135432-4ad6-47c0-a2d6-52da562f66e8
 TableOfContents()
+
+# ╔═╡ 10f00a40-056f-40d5-a23f-5781c77f19e8
+(0:0.01:2)[2]
 
 # ╔═╡ 166576ac-961d-4a22-9406-327e7e76899d
 length(logrange(-2,10,1e10))
@@ -777,6 +780,7 @@ heatmap(1:N,trange[2:T],data_12_nn_pbczz_mean[2:T,:],yaxis=:log)
 # ╠═b630a7e4-3e73-11ed-1baf-c976bb434b06
 # ╠═db8bcfe9-3519-43c4-abb8-df5a3a757c73
 # ╠═7e135432-4ad6-47c0-a2d6-52da562f66e8
+# ╠═10f00a40-056f-40d5-a23f-5781c77f19e8
 # ╠═166576ac-961d-4a22-9406-327e7e76899d
 # ╠═edb5ce15-8d34-4ff3-ab4a-873dbf1a61a3
 # ╠═c6561277-446a-49f4-ad4a-a9a60ffe57df
