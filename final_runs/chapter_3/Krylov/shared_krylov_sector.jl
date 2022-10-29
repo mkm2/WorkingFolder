@@ -76,7 +76,7 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 #Set up simulation parameters
 
 tmax = 0.5
-trange = 10. .^LinRange(-6,1,100)
+trange = 10. .^LinRange(-3,1,100)
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
@@ -95,7 +95,7 @@ elseif OBSERVABLE == "z"
 end
 
 print("before H\n")
-H = symmetrize_operator(xxz(N,6),N,k)
+H = symmetrize_operator(xxz_pbc(N,6),N,k)
 print("after H\n")
 print(string("memory allocated: ",Base.summarysize(H)))
 print(string("memory of full H: ",Base.summarysize(xxz(N,6))))

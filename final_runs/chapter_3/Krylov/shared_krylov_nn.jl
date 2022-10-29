@@ -76,7 +76,8 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 #Set up simulation parameters
 
 tmax = 0.5
-trange = 10. .^LinRange(-3,1,100)
+trange = 0:0.01:2.5
+#trange = 10. .^LinRange(-3,1,100)
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
@@ -91,8 +92,8 @@ elseif OBSERVABLE == "z"
     B = σz
 end
 
-H = xxz(nearest_neighbourJ(N))
-
+H = xxz(nearest_neighbourJ_pbc(N))
+logmsg("PBC")
 
 if MULT_RANDOM_STATES == false
     ψ0 = random_state(N)#normalize!(ones(2^N))
