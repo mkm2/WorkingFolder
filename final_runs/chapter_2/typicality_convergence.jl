@@ -148,6 +148,9 @@ data_EDtr_sector
 # ╔═╡ cdcc9475-6305-48eb-9376-ebd0b4f1c8e8
 plot(data_EDtr_total[9][:,:,1])
 
+# ╔═╡ 523a0091-acfa-41f1-be50-6d8d753fda3a
+2*0.01
+
 # ╔═╡ 03abf2d2-3461-4e19-822f-1428304b008c
 plot(abs.(data_EDtr_total[9][2:ts,:,1]-state_mean(data_Krylov_total[9],10)[2:ts,:])./data_EDtr_total[9][2:ts,:,1]*100)
 
@@ -333,6 +336,7 @@ plot([2^9,2^10,2^11,2^12,2^13],[71,535,4455,31297,221948],yaxis=:log,xaxis=:log)
 # ╠═e7e64dab-4141-4f0c-b2a4-0fd73d1073e6
 # ╠═031cb4f0-8628-49ca-bbf2-73f9f53dbf3b
 # ╠═cdcc9475-6305-48eb-9376-ebd0b4f1c8e8
+# ╠═523a0091-acfa-41f1-be50-6d8d753fda3a
 # ╠═03abf2d2-3461-4e19-822f-1428304b008c
 # ╠═f7e68416-5ccb-49af-a80f-646e2af64ac2
 # ╠═31b41f61-95bf-4ba4-abdd-927dcd2e8045

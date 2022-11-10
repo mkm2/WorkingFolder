@@ -1,0 +1,64 @@
+  Activating new project at `/lustre/work/ws/ws1/hd_ku269-light_cones`
+Added MKL.jl
+Status `/lustre/work/ws/ws1/hd_ku269-light_cones/Project.toml` (empty project)
+[2022-10-29T16:05:04.096]**********RANDOM FIELDS**********
+shared_krylov_nn.jl
+Working Directory:          /lustre/work/ws/ws1/hd_ku269-light_cones
+SLURM Directory:            /lustre/work/ws/ws1/hd_ku269-light_cones 
+Running on host:            n0310
+Job id:                     7466536
+Job name:                   otoc_simulation_N19_Krylov_nn
+Number of nodes allocated:  
+Number of cores allocated:  1
+#threads of Julia:          96
+#threads of BLAS:           1
+ARGS = ["19", "1", "0", "RS", "z", "0"]
+LOCATION = "/lustre/work/ws/ws1/hd_ku269-logs/LightCones/2022-10-29"
+N = 19
+SHOTS = 1
+MULT_RANDOM_STATES = false
+N_RANDOM_STATES = 0
+TYPE_OF_RS = "RS"
+OBSERVABLE = "z"
+DISORDER_PARAM = 0.0
+[2022-10-29T16:05:04.312]**********Running simulation**********
+[2022-10-29T16:05:04.370]trange = 0.0:0.01:2.5
+[2022-10-29T16:05:04.670]A = σz
+[2022-10-29T16:05:14.763]PBC
+[2022-10-29T16:05:15.186]Sampled 1 random initial state
+[2022-10-29T16:05:16.229]Created Hamiltonian for Shot 1
+16078.832582 seconds (85.31 M allocations: 21.136 TiB, 18.64% gc time, 0.06% compilation time)
+[2022-10-29T20:33:15.087]Completed Shot 1
+[2022-10-29T20:33:15.092]**********Simulation completed!**********
+[2022-10-29T20:33:15.092]**********Saving**********
+[2022-10-29T20:33:19.725]Saving file: /lustre/work/ws/ws1/hd_ku269-logs/LightCones/2022-10-29/7466536_N19_RS.jld2
+[2022-10-29T20:33:21.858]**********Run completed!**********
+
+signal (11): Segmentation fault
+in expression starting at none:0
+setindex! at ./array.jl:966 [inlined]
+unsafe_write at ./iobuffer.jl:430
+unsafe_write at ./io.jl:419 [inlined]
+write at ./strings/io.jl:244 [inlined]
+print at ./strings/io.jl:246 [inlined]
+showerror at ./errorshow.jl:142 [inlined]
+#showerror#861 at ./errorshow.jl:88
+showerror##kw at ./errorshow.jl:86 [inlined]
+showvalue at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/Logging/src/ConsoleLogger.jl:56
+unknown function (ip: 0x15182ff27fd8)
+_jl_invoke at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/src/gf.c:2367 [inlined]
+ijl_apply_generic at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/src/gf.c:2549
+#handle_message#3 at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/Logging/src/ConsoleLogger.jl:134
+handle_message##kw at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/Logging/src/ConsoleLogger.jl:106
+unknown function (ip: 0x15182ff1c984)
+_jl_invoke at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/src/gf.c:2367 [inlined]
+ijl_apply_generic at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/src/gf.c:2549
+macro expansion at ./logging.jl:365 [inlined]
+profile_printing_listener at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/usr/share/julia/stdlib/v1.8/Profile/src/Profile.jl:44
+#3 at ./threadingconstructs.jl:258
+jfptr_YY.3_66369.clone_1 at /lustre/home/hd/hd_hd/hd_ku269/julia-1.8.1/lib/julia/sys.so (unknown line)
+_jl_invoke at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/src/gf.c:2367 [inlined]
+ijl_apply_generic at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/src/gf.c:2549
+jl_apply at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/src/julia.h:1838 [inlined]
+start_task at /cache/build/default-amdci5-0/julialang/julia-release-1-dot-8/src/task.c:931
+Allocations: 102174912 (Pool: 101538622; Big: 636290); GC: 24316

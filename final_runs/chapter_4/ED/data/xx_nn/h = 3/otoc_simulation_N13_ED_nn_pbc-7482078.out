@@ -1,0 +1,30 @@
+  Activating project at `/lustre/work/ws/ws1/hd_ku269-light_cones`
+ERROR: LoadError: SystemError: close: Input/output error
+Stacktrace:
+  [1] systemerror(p::String, errno::Int32; extrainfo::Nothing)
+    @ Base ./error.jl:176
+  [2] #systemerror#80
+    @ ./error.jl:175 [inlined]
+  [3] systemerror
+    @ ./error.jl:175 [inlined]
+  [4] close(s::IOStream)
+    @ Base ./iostream.jl:63
+  [5] open(f::Pkg.Types.var"#44#46"{String}, args::String; kwargs::Base.Pairs{Symbol, Bool, Tuple{Symbol}, NamedTuple{(:append,), Tuple{Bool}}})
+    @ Base ./io.jl:386
+  [6] write_env_usage(source_file::String, usage_filepath::String)
+    @ Pkg.Types /lustre/home/hd/hd_hd/hd_ku269/julia-1.8.1/share/julia/stdlib/v1.8/Pkg/src/Types.jl:487
+  [7] Pkg.Types.EnvCache(env::Nothing)
+    @ Pkg.Types /lustre/home/hd/hd_hd/hd_ku269/julia-1.8.1/share/julia/stdlib/v1.8/Pkg/src/Types.jl:345
+  [8] EnvCache
+    @ /lustre/home/hd/hd_hd/hd_ku269/julia-1.8.1/share/julia/stdlib/v1.8/Pkg/src/Types.jl:325 [inlined]
+  [9] add_snapshot_to_undo(env::Nothing)
+    @ Pkg.API /lustre/home/hd/hd_hd/hd_ku269/julia-1.8.1/share/julia/stdlib/v1.8/Pkg/src/API.jl:1855
+ [10] add_snapshot_to_undo
+    @ /lustre/home/hd/hd_hd/hd_ku269/julia-1.8.1/share/julia/stdlib/v1.8/Pkg/src/API.jl:1851 [inlined]
+ [11] activate(path::String; shared::Bool, temp::Bool, io::IOContext{IOStream})
+    @ Pkg.API /lustre/home/hd/hd_hd/hd_ku269/julia-1.8.1/share/julia/stdlib/v1.8/Pkg/src/API.jl:1693
+ [12] activate(path::String)
+    @ Pkg.API /lustre/home/hd/hd_hd/hd_ku269/julia-1.8.1/share/julia/stdlib/v1.8/Pkg/src/API.jl:1652
+ [13] top-level scope
+    @ /lustre/work/ws/ws1/hd_ku269-light_cones/WorkingFolder/final_runs/chapter_4/ED/shared_ED_nn_pbc.jl:3
+in expression starting at /lustre/work/ws/ws1/hd_ku269-light_cones/WorkingFolder/final_runs/chapter_4/ED/shared_ED_nn_pbc.jl:3
