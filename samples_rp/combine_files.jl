@@ -38,13 +38,13 @@ function combine_files(files,path,new_file)
 end
 
 # ╔═╡ 9257d7cb-a5e6-4e9a-8105-23ccf9d9177c
-ρs = 1.0:0.05:1.95
+ρs = [0.5,0.6,0.7,0.8,0.9,1.0,1.05,1.1,1.15,1.2,1.25,1.3,1.35,1.4,1.45,1.5,1.55,1.6,1.65,1.7,1.75,1.8,1.85,1.9,1.95]
 
 # ╔═╡ 0cdfc9e9-dd57-4802-ad92-37ccbbb7dcb4
 path = pwd() * "/data/"
 
 # ╔═╡ 4e961eea-dacf-431d-aa58-5f9d74c0dfcf
-folders = ["noisy_chain_pbc_1.00/","noisy_chain_pbc_1.05/","noisy_chain_pbc_1.10/","noisy_chain_pbc_1.15/","noisy_chain_pbc_1.20/","noisy_chain_pbc_1.25/","noisy_chain_pbc_1.30/","noisy_chain_pbc_1.35/","noisy_chain_pbc_1.40/","noisy_chain_pbc_1.45/","noisy_chain_pbc_1.50/","noisy_chain_pbc_1.55/","noisy_chain_pbc_1.60/","noisy_chain_pbc_1.65/","noisy_chain_pbc_1.70/","noisy_chain_pbc_1.75/","noisy_chain_pbc_1.80/","noisy_chain_pbc_1.85/","noisy_chain_pbc_1.90/","noisy_chain_pbc_1.95/"]
+folders = ["noisy_chain_pbc_0.5/","noisy_chain_pbc_0.6/","noisy_chain_pbc_0.7/","noisy_chain_pbc_0.8/","noisy_chain_pbc_0.9/","noisy_chain_pbc_1.00/","noisy_chain_pbc_1.05/","noisy_chain_pbc_1.10/","noisy_chain_pbc_1.15/","noisy_chain_pbc_1.20/","noisy_chain_pbc_1.25/","noisy_chain_pbc_1.30/","noisy_chain_pbc_1.35/","noisy_chain_pbc_1.40/","noisy_chain_pbc_1.45/","noisy_chain_pbc_1.50/","noisy_chain_pbc_1.55/","noisy_chain_pbc_1.60/","noisy_chain_pbc_1.65/","noisy_chain_pbc_1.70/","noisy_chain_pbc_1.75/","noisy_chain_pbc_1.80/","noisy_chain_pbc_1.85/","noisy_chain_pbc_1.90/","noisy_chain_pbc_1.95/"]
 
 # ╔═╡ e0c8f820-25af-472f-9ed0-cf2a78c88af4
 begin
