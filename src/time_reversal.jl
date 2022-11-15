@@ -1,5 +1,5 @@
 
-module PulseSequences
+module TimeReversal
 using SparseArrays, LinearAlgebra, Plots
 using SpinSymmetry, Statistics
 using KrylovKit
