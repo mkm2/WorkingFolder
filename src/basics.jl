@@ -16,7 +16,7 @@ export chainJ, chainJ_pbc, correlator, single_spin_op
 export xxz, xxz_pbc, xyz, xyz_pbc, field_term, hamiltonian_from_positions, const_field
 export nearest_neighbourJ, nearest_neighbourJ_pbc
 export random_state, random_product_state, random_bit_state, random_bitstring_state
-export magnetisation, fideltiy, measure_at_j, measure_all, sign_of_eigenstate, otoc_by_eigenstate_measurement
+export magnetisation, fidelity, measure_at_j, measure_all, sign_of_eigenstate, signs_of_eigenstate, otoc_by_eigenstate_measurement
 
 
 const σplus = sparse([1],[2],[1.0],2,2)
@@ -171,8 +171,16 @@ function magnetisation(σ,ψ,N)
 	return S
 end
 
-function fideltiy(ψ1,ψ2)
+function fidelity(ψ1::Vector,ψ2::Vector)
     return abs(ψ1'ψ2)^2
+end
+
+function fidelity(ψ1::Vector,ψ2s::Matrix)
+    res = zeros(size(ψ2s)[2])
+    for i in 1:size(ψ2s)[2]
+        res[i] = abs(ψ1'ψ2s[:,i])^2
+    end
+    return res
 end
 
 function measure_at_j(B,ψ,j)
@@ -187,6 +195,14 @@ function measure_all(B,ψ,N)
 	return res
 end
 
+function signs_of_eigenstate(B,ψ,N)
+    signs = zeros(N)
+    for i in 1:N
+        signs[i] = sign_of_eigenstate(single_spin_op(B,i,N),ψ)
+    end
+    return signs
+end
+
 function sign_of_eigenstate(B,ψ)
     if isapprox(ψ'B*ψ,1.0)
         return +1.0
@@ -197,9 +213,16 @@ function sign_of_eigenstate(B,ψ)
     end
 end
 
-function otoc_by_eigenstate_measurement(B,ψ,sign,N)
-    return 2*(ones(N)-sign*real(measure_all(B,ψ,N)))
+function otoc_by_eigenstate_measurement(B,ψ::Vector,signs,N)
+    return 2*(ones(N)-signs*real(measure_all(B,ψ,N)))
 end
 
+function otoc_by_eigenstate_measurement(B,ψs::Matrix,signs,N)
+    res = zeros(size(ψs)[2],N)
+    for i in 1:size(ψs)[2]
+        res[i,:] = otoc_by_eigenstate_measurement(B,ψs[:,i],signs,N)
+    end
+    return res
+end
 
 end #module
