@@ -223,7 +223,7 @@ function Rhim71_FR(Ω::Float64) #Magic echo reversing fields
 end
 
 
-function get_sequence(sequence_name::String,t::Float6,n::Int)
+function get_sequence(sequence_name::String,t::Float64,n::Int)
     if sequence_name == "WAHUHA"
         seq = WAHUHA(t/(2*n)) #5t = n*tc; tc = 10*τ1 => τ1 = t/(2*n)
     elseif sequence_name == "WAHUHA_ZF"
@@ -241,3 +241,5 @@ function get_sequence(sequence_name::String,t::Float6,n::Int)
     end
     return seq
 end
+
+end #module

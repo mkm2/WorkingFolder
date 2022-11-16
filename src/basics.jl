@@ -16,7 +16,8 @@ export chainJ, chainJ_pbc, correlator, single_spin_op
 export xxz, xxz_pbc, xyz, xyz_pbc, field_term, hamiltonian_from_positions, const_field
 export nearest_neighbourJ, nearest_neighbourJ_pbc
 export random_state, random_product_state, random_bit_state, random_bitstring_state
-export magnetisation
+export magnetisation, fideltiy, measure_at_j, measure_all, sign_of_eigenstate, otoc_by_eigenstate_measurement
+
 
 const σplus = sparse([1],[2],[1.0],2,2)
 const σminus = sparse([2],[1],[1.0],2,2)
@@ -169,5 +170,36 @@ function magnetisation(σ,ψ,N)
 	end
 	return S
 end
+
+function fideltiy(ψ1,ψ2)
+    return abs(ψ1'ψ2)^2
+end
+
+function measure_at_j(B,ψ,j)
+    return ψ'single_spin_op(B,j,N)*ʋ
+end
+
+function measure_all(B,ψ,N)
+	res = zeros(ComplexF64,N)
+	for j in 1:N
+		res[j] = ψ'single_spin_op(B,j,N)*ψ
+	end
+	return res
+end
+
+function sign_of_eigenstate(B,ψ)
+    if isapprox(ψ'B*ψ,1.0)
+        return +1.0
+    elseif isapprox(ψ'B*ψ,-1.0) 
+        return -1.0
+    else
+        throw("ψ is not an eigenstate of B to an eigenvalue of magnitude 1.")
+    end
+end
+
+function otoc_by_eigenstate_measurement(B,ψ,sign,N)
+    return 2*(ones(N)-sign*real(measure_all(B,ψ,N)))
+end
+
 
 end #module
