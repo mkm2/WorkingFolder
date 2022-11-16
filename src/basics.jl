@@ -15,7 +15,7 @@ export up, down, rightx, leftx, neel_state, neel_x_state
 export chainJ, chainJ_pbc, correlator, single_spin_op
 export xxz, xxz_pbc, xyz, xyz_pbc, field_term, hamiltonian_from_positions, const_field
 export nearest_neighbourJ, nearest_neighbourJ_pbc
-export random_state, random_product_state, random_bit_state, random_bitstring_state
+export random_state, random_product_state, random_bit_state, random_bitstring_state, random_basis_state
 export magnetisation, fidelity, measure_at_j, measure_all, sign_of_eigenstate, signs_of_eigenstate, otoc_by_eigenstate_measurement
 
 
@@ -139,6 +139,20 @@ function random_bitstring_state(N::Int, d::Int) #simply choose random basis stat
 end
 random_bitstring_state(N::Int) = random_bitstring_state(N, 2^N)
 
+function random_basis_state(axis::String)
+    if axis == "z"
+        return rand() < 0.5 ? up : down
+    elseif axis == "x"
+        return rand() < 0.5 ? leftx : rightx
+    else
+        throw("Axis not implemented.")
+    end
+end
+
+function random_bitstring_state(N::Int, axis::String) #simply choose random basis state
+    gen = (random_basis_state(axis) for i in 1:N)
+    return kron(gen...)
+end
 
 function neel_state(N::Int)
     N%2 == 0 || throw("N has to be even to create a Néel state.")

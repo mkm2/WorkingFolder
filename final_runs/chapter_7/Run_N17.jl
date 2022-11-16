@@ -14,5 +14,5 @@
 
 # export JULIA_DEPOT_PATH=$SCRATCH
 export ON_CLUSTER=1
-exec julia --color=no --threads=96 --startup-file=no "$LCDIR/WorkingFolder/final_runs/chapter_3/Krylov/shared_krylov.jl" 17 1 1 RS x $1
+exec julia --color=no --threads=96 --startup-file=no "$LCDIR/WorkingFolder/final_runs/chapter_7/shared_tr_both.jl" 17 1 100 BS x $1 $2 $3
 =#

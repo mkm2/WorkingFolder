@@ -74,8 +74,7 @@ logmsg("*"^10 * "Running simulation" * "*"^10)
 
 tmax = 0.5
 #trange = 10. .^LinRange(-3,1,100)
-T = 
-trange = 0:0.1:10
+trange = 0:0.1:20
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
@@ -118,13 +117,12 @@ else
         end
     elseif TYPE_OF_RS == "BS"
         for s in 1:N_RANDOM_STATES
-            ψs[:,s] = random_bitstring_state(N)
+            ψs[:,s] = random_bitstring_state(N,OBSERVABLE)
         end
     else
         throw("No states sampled. Wrong input.")
     end
 end
-
 
 #Start simulation
 if MULT_RANDOM_STATES == false
@@ -132,6 +130,7 @@ if MULT_RANDOM_STATES == false
     fidelities = zeros(length(trange),SHOTS)
     otocs = zeros(length(trange),N,SHOTS)
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
+    ψ_echo_free = Vector{Matrix{ComplexF64}}([zeros(2^N,length(trange)) for l in 1:SHOTS])
     ψ_echo = Vector{Matrix{ComplexF64}}([zeros(2^N,length(trange)) for l in 1:SHOTS])
     #H_tot = Vector{Adjoint{Float64, ThreadedSparseMatrixCSC{Float64, Int64, SparseMatrixCSC{Float64, Int64}}}}([ThreadedSparseMatrixCSC(spzeros(2^N,2^N))' for l in 1:4])
     Threads.@threads for shot in 1:SHOTS
@@ -139,7 +138,8 @@ if MULT_RANDOM_STATES == false
         logmsg("Created Hamiltonian for Shot $(shot)")
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
         @time ψ_echo[shot] = echo(H_tot[shot],A,trange,ψ0,SEQ_NAME,SEQ_REPS,N,"Krylov",tmax)
-        fidelities[:,shot] = fidelity(ψ0,ψ_echo[shot])
+        @time ψ_echo_free[shot] = echo(H_tot[shot],trange,ψ0,SEQ_NAME,SEQ_REPS,N,"Krylov",tmax)
+        fidelities[:,shot] = fidelity(ψ0,ψ_echo_free[shot])
         otocs[:,:,shot] = otoc_by_eigenstate_measurement(B,ψ_echo[shot],signs,N)
         logmsg("Completed Shot $(shot)")
     end
@@ -148,13 +148,15 @@ else
     otocs = zeros(length(trange),N,SHOTS,N_RANDOM_STATES)
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
     ψ_echo = Vector{Matrix{ComplexF64}}([zeros(2^N,length(trange)) for l in 1:N_RANDOM_STATES])
+    ψ_echo_free = Vector{Matrix{ComplexF64}}([zeros(2^N,length(trange)) for l in 1:N_RANDOM_STATES])
     print("test\n")
     for shot in 1:SHOTS
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
         H_tot[shot] = H + field_term(DISORDER_PARAM,N)
         Threads.@threads for s in 1:N_RANDOM_STATES
             @time ψ_echo[s] = echo(H_tot[shot],A,trange,ψs[:,s],SEQ_NAME,SEQ_REPS,N,"Krylov",tmax)
-            fidelities[:,shot,s] = fidelity(ψs[:,s],ψ_echo[s])
+            @time ψ_echo_free[s] = echo(H_tot[shot],trange,ψs[:,s],SEQ_NAME,SEQ_REPS,N,"Krylov",tmax)
+            fidelities[:,shot,s] = fidelity(ψs[:,s],ψ_echo_free[s])
             signs = signs_of_eigenstate(B,ψs[:,s],N)
             otocs[:,:,shot,s] = otoc_by_eigenstate_measurement(B,ψ_echo[s],signs,N)
             logmsg("Completed Shot $(shot), state $(s)")
