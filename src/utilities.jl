@@ -68,6 +68,21 @@ function save_with_pos(data,params,positiondata,jobid,datapath)
     end
 end
 
+function save_TR(fids, otocs, params, jobid, datapath)
+    dname = dirname(datapath)
+    if !isdir(dname)
+        logmsg("Save directory: $dname does not exist. Creating!")
+        mkpath(dname)
+    end
+    logmsg("Saving file: $datapath")
+    jldopen(datapath, "w") do file
+        file["fidelities"] = fids
+        file["otocs"] = otocs
+        file["params"] = params
+        file["jobid"] = jobid
+    end    
+end
+
 function logrange(min_exp,max_exp,max)
     res = vcat([0],[i*10.0^j for j in min_exp:max_exp for i in 1:9])
     filter!(e->e<=max,res)
