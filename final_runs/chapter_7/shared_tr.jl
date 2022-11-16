@@ -95,7 +95,15 @@ logmsg("alpha=6")
 logmsg("PBC")
 
 if MULT_RANDOM_STATES == false
-    ψ0 = random_state(N)#normalize!(ones(2^N))
+    if TYPE_OF_RS == "RS"
+        ψ0 = random_state(N)#normalize!(ones(2^N))
+    elseif TYPE_OF_RS == "RPS"
+        ψ0 = random_product_state(N)
+    elseif TYPE_OF_RS == "BS"
+        ψ0 = random_bitstring_state(N)
+    else
+        throw("No states sampled. Wrong input.")
+    end
     logmsg("Sampled 1 random initial state")
 else
     ψs = zeros(ComplexF64,2^N,N_RANDOM_STATES)
@@ -112,7 +120,7 @@ else
             ψs[:,s] = random_bitstring_state(N)
         end
     else
-        logmsg("No states sampled. Wrong input.")
+        throw("No states sampled. Wrong input.")
     end
 end
 
