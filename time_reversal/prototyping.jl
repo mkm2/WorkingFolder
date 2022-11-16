@@ -247,7 +247,7 @@ begin
 end
 
 # ╔═╡ 85886233-a2ee-49e8-8549-4cb7ad464f10
-WAHUHAFR(1.0)
+WAHUHA_FR(1.0)
 
 # ╔═╡ bd42a527-e3b0-42b0-a941-dccfe67123c2
 begin
@@ -309,7 +309,36 @@ begin
 
 		### KRYLOV ###
 		elseif method == "Krylov"
-			throw("Not yet.")
+			#Set up operations
+			rotations = Vector{SparseMatrixCSC{ComplexF64}}([spzeros(2^N,2^N) for k in 1:seq.n_fast])
+			k_fast = 0
+			for pulse in seq.pulses
+				if pulse isa FastPulse
+					k_fast += 1
+					rotations[k_fast] = rotation(pulse,N)
+				end
+			end
+
+
+			#Apply pulses
+			for iter in 1:n
+				k_fast = 0
+				for (k,pulse) in enumerate(seq.pulses)
+					if seq.τs[k] > 0
+						ψ = exponentiate(Hint,-im*seq.τs[k],ψ;ishermitian=true)[1]
+					end
+					if pulse isa FastPulse
+						k_fast += 1
+						ψ = rotations[k_fast] * ψ
+					elseif pulse isa SlowPulse
+						ψ = exponentiate(Hint+hamiltonian(pulse,N),-im*seq.pulse_times[k],ψ;ishermitian=true)[1]
+					end
+				end
+				if seq.τs[seq.n_τs] > 0
+					ψ = exponentiate(Hint,-im*seq.τs[seq.n_τs],ψ;ishermitian=true)[1]
+				end
+			end
+			return ψ
 		else
 			throw("Method $(method) not supported.")
 		end
@@ -402,12 +431,18 @@ begin
 	trange = 0:δt:5
 end
 
+# ╔═╡ 5af4ea7b-f62f-4c53-8085-c6e484153058
+size(A)[1]
+
+# ╔═╡ 07a0d294-c1a7-44b4-8b8c-d4293ae06467
+
+
 # ╔═╡ 4aa08654-873f-4443-9930-e86c373579a2
 md"# Fidelity Test WAHUHA"
 
 # ╔═╡ df835e06-c963-4d57-b524-33aa8291aec0
 begin
-	state = random_state(N)#kron(rightx,rightx)#,up,rightx,rightx,rightx)
+	state = random_bitstring_state(N)#kron(rightx,rightx)#,up,rightx,rightx,rightx) 2
 end
 
 # ╔═╡ aec39b24-c065-4152-a2d1-b281fd4359c7
@@ -431,30 +466,58 @@ begin
 	J = C6/r^6 *0.25 #0.25 from spins
 end
 
+# ╔═╡ 06cd963a-c274-4ba2-85a7-3c80bb7fe662
+J /1e6
+
+# ╔═╡ 52d30df9-9f8c-43fa-a2c0-2c6c64f80b4d
+round.(10. .^ LinRange(0,3,10))
+
+# ╔═╡ 6daaec02-de63-441c-b614-256bdc2ae95b
+ns = [1,5,10,25,50,75,100,250,500,750,1000]
+Ts = [50,60]
+
 # ╔═╡ efe0885b-41d5-4252-857e-1191785d5e51
 begin
-	ts = 0:0.1:2*π/1.
+	ts = 0.1:0.1:25*π/1.
 	res = zeros(length(ts))
 	res2 = zeros(length(ts))
-	n = 1000
+	n = 500
 	for (i,t) in enumerate(ts)
 		res[i] = abs(state'evolve_forward(H,-t,state,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
-		state_tmpr = echo(H+field_term(7.0,N),t,state,"WAHUHA_FR",n,N,"ED")
+		state_tmpr = echo(H,t,state,"Rhim71",n,N,"ED")
 		res2[i] = abs(state'state_tmpr)^2# real(magnetisation(σx,state_tmpr,N))
 	end
 end
 
+# ╔═╡ e0a1470c-33df-4440-b764-a226c056c1ca
+begin
+	t = 10.5
+	nt = 1000
+	seq = WAHUHA(t/(2*n))
+	ψ1 = random_state(N)
+	sum(abs.(floquet_drive(H,t,ψ1,N,seq,nt,"ED")-floquet_drive(H,t,ψ1,N,seq,nt,"Krylov")))
+end
+
+# ╔═╡ 9a6e31d6-b36a-41d0-93d5-a799cfdc782f
+print((1/J * 1e9)/(2*n), " ns")
+
+# ╔═╡ 87c41465-6e07-4f6d-935f-7a5bfe0a845f
+print(π*n/(1/J) /1e6, " MHz")
+
 # ╔═╡ bdb7ac4a-136e-40a6-90ca-a8da36f5bdb6
 begin
-	plot(ts/J * 1e6,res)
-	plot!(ts/J * 1e6,res2,label="Floquet")
+	plot(ts,res)
+	plot!(ts,res2,label="Floquet")
 end
 
 # ╔═╡ aa97d91e-9300-4d53-94ca-b2451d6c436d
 md"# Fidelity Test Rhim71"
 
 # ╔═╡ 4cd80398-edcd-404e-9065-c3088e84ce99
+Base.summarysize(1.0+im)
 
+# ╔═╡ 8929311c-5c77-4994-939a-4e93a77b1667
+size(state)
 
 # ╔═╡ 2f0a8c3e-fafa-4420-b69c-6c00066891c1
 function applyRhim(state,Ω,t,N)
@@ -467,25 +530,6 @@ end
 
 # ╔═╡ 4f027f64-e663-4a7a-a7ff-c4f497dc8dbc
 H
-
-# ╔═╡ b2213312-64c6-4d66-bf27-0fbf75e6867c
-begin
-	tsRhim = 0.1:0.1:8*π/1.
-	resRhim2 = zeros(length(tsRhim))
-	resRhim = zeros(length(tsRhim))
-	nRhim = 100
-	for (i,t) in enumerate(tsRhim)
-		resRhim[i] = abs(state'evolve_forward(H,-t,state,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
-		state_tmpr = echo(H+field_term(6.0,N),t,state,"Rhim71_FR",nRhim,N,"ED")
-		resRhim2[i] = abs(state'state_tmpr)^2# real(magnetisation(σx,state_tmpr,N))
-	end
-end
-
-# ╔═╡ 55f1c138-9d73-407e-922a-58cc8e7191f1
-begin
-	#plot(tsRhim/J * 1e6,resRhim)
-	plot(tsRhim/J * 1e6,resRhim2,label="Floquet")
-end
 
 # ╔═╡ 99b66eac-dbda-492f-b863-59748d1fd1f2
 md" # Test OTOC"
@@ -505,8 +549,27 @@ end
 # ╔═╡ 093ea9de-4163-4712-8f16-ec83fb1146b3
 state_o = kron(leftx,leftx,leftx,leftx,leftx,leftx,leftx)#leftx,leftx)
 
+# ╔═╡ b2213312-64c6-4d66-bf27-0fbf75e6867c
+begin
+	tsRhim = 0.1:0.1:8*π/1.
+	resRhim2 = zeros(length(tsRhim))
+	resRhim = zeros(length(tsRhim))
+	nRhim = 100
+	for (i,t) in enumerate(tsRhim)
+		resRhim[i] = abs(state'evolve_forward(H,-t,state,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
+		state_tmpr = echo(H,t,state_o,"Rhim71_FR",nRhim,N,"ED")
+		resRhim2[i] = abs(state_o'state_tmpr)^2# real(magnetisation(σx,state_tmpr,N))
+	end
+end
+
+# ╔═╡ 55f1c138-9d73-407e-922a-58cc8e7191f1
+begin
+	#plot(tsRhim/J * 1e6,resRhim)
+	plot(tsRhim,resRhim2,label="Floquet")
+end
+
 # ╔═╡ 24f376db-77a3-46ae-a738-f58dac76b57b
-A2 = convert(SparseMatrixCSC{ComplexF64},single_spin_op(σz,i,N))
+A2 = convert(SparseMatrixCSC{ComplexF64},single_spin_op(σx,i,N))
 
 # ╔═╡ d3ec883e-cca0-4cdf-b644-0916d67d0ae8
 begin
@@ -514,7 +577,7 @@ begin
 	reso = zeros(length(tso))
 	reso2 = zeros(length(tso))
 	resoto = zeros(ComplexF64,length(tso),N)
-	no = 1000
+	no = 100
 	for (i,t) in enumerate(tso)
 		reso[i] = abs(state_o'evolve_forward(H,-t,state_o,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
 		
@@ -543,9 +606,9 @@ end
 
 # ╔═╡ 6dd2eb77-9e38-48cb-a145-caa64839898b
 begin
-	k = 5
-	plot(tso/J*1e6,real.(resoto[:,k]),label="Floquet",xlim=[0,25])
-	plot!(tso/J*1e6,oto_corr[:,k],label="Exact")
+	k = 7
+	plot(tso,real.(resoto[:,k]),label="Floquet")
+	plot!(tso,oto_corr[:,k],label="Exact")
 end
 
 # ╔═╡ 71c7c94c-50ef-4347-bec0-cbc18088f9c2
@@ -575,15 +638,24 @@ plot(tso,oto_corr[:,4],xlim=(0,5))
 # ╠═ae6b7339-01f4-4eb4-852a-6f836d240a52
 # ╠═ec1c5839-e606-4365-b60c-befd5149914c
 # ╠═0b1ea4bf-5a83-4523-8438-da7e08f65e1e
+# ╠═5af4ea7b-f62f-4c53-8085-c6e484153058
 # ╠═7e0de451-bb15-49da-84a0-38d575da658b
+# ╠═e0a1470c-33df-4440-b764-a226c056c1ca
+# ╠═07a0d294-c1a7-44b4-8b8c-d4293ae06467
 # ╠═4aa08654-873f-4443-9930-e86c373579a2
 # ╠═df835e06-c963-4d57-b524-33aa8291aec0
 # ╠═aec39b24-c065-4152-a2d1-b281fd4359c7
+# ╠═9a6e31d6-b36a-41d0-93d5-a799cfdc782f
+# ╠═87c41465-6e07-4f6d-935f-7a5bfe0a845f
 # ╠═7f36facb-4734-4d90-bf0b-160122d628cf
+# ╠═06cd963a-c274-4ba2-85a7-3c80bb7fe662
+# ╠═52d30df9-9f8c-43fa-a2c0-2c6c64f80b4d
+# ╠═6daaec02-de63-441c-b614-256bdc2ae95b
 # ╠═efe0885b-41d5-4252-857e-1191785d5e51
 # ╠═bdb7ac4a-136e-40a6-90ca-a8da36f5bdb6
 # ╠═aa97d91e-9300-4d53-94ca-b2451d6c436d
 # ╠═4cd80398-edcd-404e-9065-c3088e84ce99
+# ╠═8929311c-5c77-4994-939a-4e93a77b1667
 # ╠═2f0a8c3e-fafa-4420-b69c-6c00066891c1
 # ╠═4f027f64-e663-4a7a-a7ff-c4f497dc8dbc
 # ╠═b2213312-64c6-4d66-bf27-0fbf75e6867c
