@@ -214,7 +214,7 @@ function sign_of_eigenstate(B,ψ)
 end
 
 function otoc_by_eigenstate_measurement(B,ψ::Vector,signs,N)
-    return 2*(ones(N)-signs*real(measure_all(B,ψ,N)))
+    return 2*(ones(N)-signs .* real.(measure_all(B,ψ,N)))
 end
 
 function otoc_by_eigenstate_measurement(B,ψs::Matrix,signs,N)

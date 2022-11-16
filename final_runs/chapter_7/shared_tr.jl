@@ -79,7 +79,7 @@ trange = 0:0.1:10
 logmsg("trange = ",trange)
 
 i = div(N,2)+1
-A = single_spin_op(σz,i,N)
+A = convert(SparseMatrixCSC{ComplexF64,Int64},single_spin_op(σz,i,N))
 logmsg("A = σz")
 
 if OBSERVABLE == "x"
@@ -89,6 +89,7 @@ elseif OBSERVABLE == "y"
 elseif OBSERVABLE == "z"
     B = σz
 end
+B = convert(SparseMatrixCSC{ComplexF64,Int64},B)
 
 H = xxz_pbc(N,6)
 logmsg("alpha=6")
@@ -131,22 +132,22 @@ if MULT_RANDOM_STATES == false
     fidelities = zeros(length(trange),SHOTS)
     otocs = zeros(length(trange),N,SHOTS)
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
-    ψ_echo = Vector{Matrix{Float64}}([zeros(2^N,length(trange)) for l in 1:SHOTS])
+    ψ_echo = Vector{Matrix{ComplexF64}}([zeros(2^N,length(trange)) for l in 1:SHOTS])
     #H_tot = Vector{Adjoint{Float64, ThreadedSparseMatrixCSC{Float64, Int64, SparseMatrixCSC{Float64, Int64}}}}([ThreadedSparseMatrixCSC(spzeros(2^N,2^N))' for l in 1:4])
     Threads.@threads for shot in 1:SHOTS
         H_tot[shot] = H + field_term(DISORDER_PARAM,N)
         logmsg("Created Hamiltonian for Shot $(shot)")
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
         @time ψ_echo[shot] = echo(H_tot[shot],A,trange,ψ0,SEQ_NAME,SEQ_REPS,N,"Krylov",tmax)
-        fidelities[:,shot] = fidelity(ψ0,ψ_echo)
-        otocs[:,:,shot] = otoc_by_eigenstate_measurement(B,ψ_echo,signs,N)
+        fidelities[:,shot] = fidelity(ψ0,ψ_echo[shot])
+        otocs[:,:,shot] = otoc_by_eigenstate_measurement(B,ψ_echo[shot],signs,N)
         logmsg("Completed Shot $(shot)")
     end
 else
     fidelities = zeros(length(trange),SHOTS,N_RANDOM_STATES)
     otocs = zeros(length(trange),N,SHOTS,N_RANDOM_STATES)
     H_tot = Vector{SparseMatrixCSC{Float64,Int64}}([spzeros(2^N,2^N) for l in 1:SHOTS])
-    ψ_echo = Vector{Matrix{Float64}}([zeros(2^N,length(trange)) for l in 1:N_RANDOM_STATES])
+    ψ_echo = Vector{Matrix{ComplexF64}}([zeros(2^N,length(trange)) for l in 1:N_RANDOM_STATES])
     print("test\n")
     for shot in 1:SHOTS
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
