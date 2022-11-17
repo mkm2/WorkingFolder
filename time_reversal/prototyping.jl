@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.14
+# v0.19.15
 
 using Markdown
 using InteractiveUtils
@@ -421,11 +421,11 @@ end
 
 # ╔═╡ 7e0de451-bb15-49da-84a0-38d575da658b
 begin
-	N = 7
+	N = 5
 	i = div(N,2)+1
 	H = convert(SparseMatrixCSC{ComplexF64},xxz(N,6))
 	A = convert(SparseMatrixCSC{ComplexF64},single_spin_op(σx,i,N))
-	B = convert(SparseMatrixCSC{ComplexF64},σx)
+	B = convert(SparseMatrixCSC{ComplexF64},σz)
 	ψ0 = [0,1.0+0.0*im,0,0]
 	δt = 0.1
 	trange = 0:δt:5
@@ -478,10 +478,10 @@ Ts = [50,60]
 
 # ╔═╡ efe0885b-41d5-4252-857e-1191785d5e51
 begin
-	ts = 0.1:0.1:25*π/1.
+	ts = 0.1:0.1:3*π/1.
 	res = zeros(length(ts))
 	res2 = zeros(length(ts))
-	n = 500
+	n = 100
 	for (i,t) in enumerate(ts)
 		res[i] = abs(state'evolve_forward(H,-t,state,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
 		state_tmpr = echo(H,t,state,"Rhim71",n,N,"ED")
@@ -538,7 +538,7 @@ md" # Test OTOC"
 f=field_term(12.,N)
 
 # ╔═╡ 37ab30ee-0206-4060-89c3-2fefc8fe1dd9
-function measure_all(B::SparseMatrixCSC{ComplexF64},ψ::Vector,N::Int)
+function measure_all2(B::SparseMatrixCSC{ComplexF64},ψ::Vector,N::Int)
 	res = zeros(ComplexF64,N)
 	for i in 1:N
 		res[i] = ψ'single_spin_op(B,i,N)*ψ
@@ -547,18 +547,22 @@ function measure_all(B::SparseMatrixCSC{ComplexF64},ψ::Vector,N::Int)
 end
 
 # ╔═╡ 093ea9de-4163-4712-8f16-ec83fb1146b3
-state_o = kron(leftx,leftx,leftx,leftx,leftx,leftx,leftx)#leftx,leftx)
+state_o = random_bitstring_state(N)#kron(leftx,leftx,leftx,leftx,leftx)#,leftx,leftx)#leftx,leftx)
 
 # ╔═╡ b2213312-64c6-4d66-bf27-0fbf75e6867c
 begin
-	tsRhim = 0.1:0.1:8*π/1.
+	tsRhim = 0.1:0.1:10*π/1.
 	resRhim2 = zeros(length(tsRhim))
 	resRhim = zeros(length(tsRhim))
+	testRhim = zeros(length(tsRhim))
+	states = zeros(ComplexF64,2^N,length(tsRhim))
 	nRhim = 100
 	for (i,t) in enumerate(tsRhim)
 		resRhim[i] = abs(state'evolve_forward(H,-t,state,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
-		state_tmpr = echo(H,t,state_o,"Rhim71_FR",nRhim,N,"ED")
+		state_tmpr = echo(H,t,state_o,"Rhim71",nRhim,N,"ED")
+		states[:,i] = state_tmpr
 		resRhim2[i] = abs(state_o'state_tmpr)^2# real(magnetisation(σx,state_tmpr,N))
+		testRhim[i] = fidelity(state_o,state_tmpr)
 	end
 end
 
@@ -566,29 +570,30 @@ end
 begin
 	#plot(tsRhim/J * 1e6,resRhim)
 	plot(tsRhim,resRhim2,label="Floquet")
+	plot!(tsRhim,testRhim,label="Floquet")
 end
 
 # ╔═╡ 24f376db-77a3-46ae-a738-f58dac76b57b
-A2 = convert(SparseMatrixCSC{ComplexF64},single_spin_op(σx,i,N))
+A2 = convert(SparseMatrixCSC{ComplexF64},single_spin_op(σz,i,N))
 
 # ╔═╡ d3ec883e-cca0-4cdf-b644-0916d67d0ae8
 begin
-	tso = 0.1:0.1:8*π/1.
+	tso = 0.1:0.1:10*π/1.
 	reso = zeros(length(tso))
 	reso2 = zeros(length(tso))
 	resoto = zeros(ComplexF64,length(tso),N)
+	resoto2 = zeros(ComplexF64,length(tso),N)
 	no = 100
+	signs = signs_of_eigenstate(B,state_o,N)
 	for (i,t) in enumerate(tso)
 		reso[i] = abs(state_o'evolve_forward(H,-t,state_o,"ED"))^2#real(magnetisation(σx,evolve_forward(H,-t,state,"ED"),N))#norm(ψ1'echo(H,A,t,ψ1,"WAHUHA",1,N,"ED"))^2
 		
-		state_tmpr = echo(H,f,A2,π/1.,t,state_o,"Rhim71_FR",no,N,"ED")
+		state_tmpr = echo(H,A2,π/1.,t,state_o,"Rhim71",no,N,"ED")
 		reso2[i] = abs(state_o'state_tmpr)^2# real(magnetisation(σx,state_tmpr,N))
-		resoto[i,:] = 2*(ones(N)+real(measure_all(B,state_tmpr,N)))
+		resoto[i,:] = 2*(ones(N)-signs .* real(measure_all2(B,state_tmpr,N)))
+		resoto2[i,:] = otoc_by_eigenstate_measurement(B,state_tmpr,signs,N)
 	end
 end
-
-# ╔═╡ 12f52048-18fb-4852-887b-cab28af71f6b
-resoto[6,:]
 
 # ╔═╡ 59bf7abb-12a1-4649-a3e2-e77ea5b260c8
 begin
@@ -598,7 +603,7 @@ end
 
 # ╔═╡ 368f34e9-0e42-43b3-a27e-bb56857d88ec
 begin
-	λs, Q = eigen!(Matrix(H+f))
+	λs, Q = eigen!(Matrix(H))
 	Q = convert(Matrix{Float64},Q)
 	QdAQ =  Q'*A2*Q
 	oto_corr = 2*(ones(length(tso),N)-otoc_spat_edψ(QdAQ,B,λs,Q,tso,Q'state_o,N))
@@ -606,7 +611,7 @@ end
 
 # ╔═╡ 6dd2eb77-9e38-48cb-a145-caa64839898b
 begin
-	k = 7
+	k = 1
 	plot(tso,real.(resoto[:,k]),label="Floquet")
 	plot!(tso,oto_corr[:,k],label="Exact")
 end
@@ -666,7 +671,6 @@ plot(tso,oto_corr[:,4],xlim=(0,5))
 # ╠═093ea9de-4163-4712-8f16-ec83fb1146b3
 # ╠═24f376db-77a3-46ae-a738-f58dac76b57b
 # ╠═d3ec883e-cca0-4cdf-b644-0916d67d0ae8
-# ╠═12f52048-18fb-4852-887b-cab28af71f6b
 # ╠═59bf7abb-12a1-4649-a3e2-e77ea5b260c8
 # ╠═6dd2eb77-9e38-48cb-a145-caa64839898b
 # ╠═368f34e9-0e42-43b3-a27e-bb56857d88ec
