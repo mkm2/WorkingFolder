@@ -310,7 +310,10 @@ function fidelity_timereversal(H::SparseMatrixCSC{Float64},trange::ExtRange,ψ0:
         ψ_forward = krylov_from0_alternative(H,-trange[1],ψ0,tmax)
         ψ = floquet_drive(H,ψ_forward,N,seq,n,method,tmax)
         fidelities[1] = fidelity(ψ0,ψ)
-        for (i,t) in enumerate(trange[2:length(trange)])
+        for (i,t) in enumerate(trange)
+            if i == 1
+                continue
+            end
             seq = get_sequence(sequence_name,t,n)
             δt = trange[i] - trange[i-1]
             ψ_forward = krylov_step(H,-δt,ψ_forward)
@@ -359,7 +362,10 @@ function oto_commutator_timereversal(H::SparseMatrixCSC{Float64},A::SparseMatrix
         ψ_perturbed = perturb(A,ϕ,ψ_forward)
         ψ = floquet_drive(H,ψ_perturbed,N,seq,n,method,tmax)
         oto_commutators[1,:] = otoc_by_eigenstate_measurement(ψ0,ψ)
-        for (i,t) in enumerate(trange[2:length(trange)])
+        for (i,t) in enumerate(trange)
+            if i == 1
+                continue
+            end
             seq = get_sequence(sequence_name,t,n)
             δt = trange[i] - trange[i-1]
             ψ_forward = krylov_step(H,-δt,ψ_forward)

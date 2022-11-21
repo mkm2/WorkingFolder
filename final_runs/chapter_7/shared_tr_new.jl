@@ -145,10 +145,10 @@ else
     print("Using multiple states.\n")
     for shot in 1:SHOTS
         #H_tot[shot] = ThreadedSparseMatrixCSC(H + field_term(DISORDER_PARAM,N))'
-        H_tot = H + field_term(DISORDER_PARAM,N)
+        H_total = H + field_term(DISORDER_PARAM,N)
         Threads.@threads for s in 1:N_RANDOM_STATES
-            @time fidelities[:,shot,s] = fidelity_timereversal(H_tot,trange,ψs[:,s],SEQ_NAME,SEQ_REPS,N,"Krylov",tmax)
-            @time oto_commutators[:,:,shot,s] = oto_commutator_timereversal(H_tot,A,B,trange,ψs[:,s],SEQ_NAME,SEQ_REPS,N,"Krylov",tmax)
+            @time fidelities[:,shot,s] = fidelity_timereversal(H_total,trange,ψs[:,s],SEQ_NAME,SEQ_REPS,N,"Krylov",tmax)
+            @time oto_commutators[:,:,shot,s] = oto_commutator_timereversal(H_total,A,B,trange,ψs[:,s],SEQ_NAME,SEQ_REPS,N,"Krylov",tmax)
             logmsg("Completed Shot $(shot), state $(s)")
         end
     end
