@@ -361,7 +361,7 @@ function oto_commutator_timereversal(H::SparseMatrixCSC{Float64},A::SparseMatrix
         ψ_forward = krylov_from0_alternative(H,-trange[1],ψ0,tmax)
         ψ_perturbed = perturb(A,ϕ,ψ_forward)
         ψ = floquet_drive(H,ψ_perturbed,N,seq,n,method,tmax)
-        oto_commutators[1,:] = otoc_by_eigenstate_measurement(ψ0,ψ)
+        oto_commutators[1,:] = otoc_by_eigenstate_measurement(B,ψ,signs,N)
         for (i,t) in enumerate(trange)
             if i == 1
                 continue
