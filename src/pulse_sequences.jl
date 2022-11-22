@@ -6,7 +6,7 @@ using ..LightCones
 
 export Pulse, SlowPulse, FastPulse, Sequence
 export duration, is_valid, get_sequence
-export hamiltonian, rotation, nσ, global_nσ
+export hamiltonian, proto_hamiltonian, rotation, nσ, global_nσ
 export WAHUHA, WAHUHA_ZF, WAHUHA_FR, Rhim71, Rhim71_ZF, Rhim71_FR
 
 
@@ -135,6 +135,10 @@ end
 
 function hamiltonian(pulse::SlowPulse,N::Int)
     return pulse.Ω/2.0 * global_nσ(pulse.n[1],pulse.n[2],pulse.n[3],N)
+end
+
+function proto_hamiltonian(pulse::SlowPulse,N::Int)
+    return global_nσ(pulse.n[1],pulse.n[2],pulse.n[3],N)
 end
 
 function rotation(op::SparseMatrixCSC{ComplexF64},ϕ::Real,N::Int)
