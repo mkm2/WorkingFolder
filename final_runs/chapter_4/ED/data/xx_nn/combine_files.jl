@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.15
+# v0.19.16
 
 using Markdown
 using InteractiveUtils
@@ -64,12 +64,6 @@ begin
 		end
 end
 
-# ╔═╡ 874038d2-9430-4afb-a2f7-1386229001ac
-load(path*"/h = 3/7482085_N13_ED.jld2","data")
-
-# ╔═╡ 5a2cb00c-6c37-4e9a-90e2-31068171316f
-load(path*"/h = 3/combined_file_h3.jld2","data")
-
 # ╔═╡ Cell order:
 # ╠═6c275e97-eb15-4eae-8683-5c81d88120e9
 # ╠═3a5ecf44-8289-4488-b6e9-85a37cfab5de
@@ -79,5 +73,3 @@ load(path*"/h = 3/combined_file_h3.jld2","data")
 # ╠═59d6b2eb-edb0-4238-b1d6-0358feca23ee
 # ╠═027f13d1-368d-4233-b84d-f8cc1c487910
 # ╠═d4ce4c4d-d791-4c5a-b30c-3382e0c780c2
-# ╠═874038d2-9430-4afb-a2f7-1386229001ac
-# ╠═5a2cb00c-6c37-4e9a-90e2-31068171316f

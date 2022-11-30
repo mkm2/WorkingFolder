@@ -13,7 +13,7 @@ using ..LightCones
 export σplus, σminus, σz, σx, σy, ⊗, Δ, 𝟙
 export up, down, rightx, leftx, neel_state, neel_x_state
 export chainJ, chainJ_pbc, correlator, single_spin_op
-export xxz, xxz_pbc, xyz, xyz_pbc, field_term, hamiltonian_from_positions, const_field
+export xxz, xxz_pbc, xyz, xyz_pbc, field_term, hamiltonian_from_positions, const_field, field_term_from_dist, sample_hs
 export nearest_neighbourJ, nearest_neighbourJ_pbc
 export random_state, random_product_state, random_bit_state, random_bitstring_state, random_basis_state
 export magnetisation, fidelity, measure_at_j, measure_all, sign_of_eigenstate, signs_of_eigenstate, otoc_by_eigenstate_measurement
@@ -87,6 +87,18 @@ end
 function field_term(h::Float64, N::Int)
     res = spzeros(Float64, 2^N, 2^N)
     hs = -h*ones(N) + 2*h*rand(Float64,N) #uniform distribution in [-h,+h]
+    for i in 1:N
+        res += hs[i]*single_spin_op(σz,i,N)
+    end
+    return res
+end
+
+function sample_hs(h::Float64, N::Int)
+    return -h*ones(N) + 2*h*rand(Float64,N) #uniform distribution in [-h,+h]
+end
+
+function field_term_from_dist(hs::Vector{Float64}, N::Int)
+    res = spzeros(Float64, 2^N, 2^N)
     for i in 1:N
         res += hs[i]*single_spin_op(σz,i,N)
     end

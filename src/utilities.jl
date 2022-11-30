@@ -6,7 +6,7 @@ using KrylovKit
 import Dates
 using ..LightCones
 
-export logmsg, path_prefix, save, save_with_pos, save_TR
+export logmsg, path_prefix, save, save_with_pos, save_TR, save_with_hs
 export SimulationParams, SimulationParamsED
 export logrange
 
@@ -81,6 +81,21 @@ function save_TR(fids, otocs, params, jobid, datapath)
         file["params"] = params
         file["jobid"] = jobid
     end    
+end
+
+function save_with_hs(data,params,hs,jobid,datapath)
+    dname = dirname(datapath)
+    if !isdir(dname)
+        logmsg("Save directory: $dname does not exist. Creating!")
+        mkpath(dname)
+    end
+    logmsg("Saving file: $datapath")
+    jldopen(datapath, "w") do file
+        file["data"] = data
+        file["params"] = params
+        file["hs"] = hs
+        file["jobid"] = jobid
+    end
 end
 
 function logrange(min_exp,max_exp,max)
