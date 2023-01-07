@@ -68,6 +68,30 @@ end
 
 
 # ╔═╡ ff6875b2-d2e8-43a5-8244-8d272ef53278
+## Indices:
+0 h = 12 PBC \
+1 alpha = 3 \
+2 h = 24 OBC \
+3 h = 24 PBC \
+4 N = 11 OBC \
+5 N = 11 PBC \
+6 N = 15 OBC \
+7 N = 15 PBC \
+8 OBC center N = 13 \
+9 OBC non-center N = 13
+
+## Indices NN:
+0 h = 12 PBC \
+1 h = 24 OBC \
+2 h = 24 PBC \
+3 N = 11 OBC \
+4 N = 11 PBC \
+5 N = 15 OBC \
+6 N = 15 PBC \
+7 OBC center N = 13 \
+8 OBC non-center N = 13 
+
+
 
 
 # ╔═╡ bd91c812-dd49-4a28-9af0-c23100193ff6

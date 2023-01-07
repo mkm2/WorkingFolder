@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.15
+# v0.19.16
 
 using Markdown
 using InteractiveUtils
@@ -22,16 +22,16 @@ function combine_files(files,path,new_file)
 	jobids = Vector{String}(undef,length(files))
 	params = Vector{Any}(undef,length(files))
 	data = Vector{Array{Float64,3}}(undef,length(files))
-	#positiondata = Vector{PositionData}(undef, length(files))
+	positiondata = Vector{PositionData}(undef, length(files))
 	for (i,f) in enumerate(files)
 		jobids[i] = load(path*f,"jobid")
 		params[i] = load(path*f,"params")
-		#positiondata[i] = load(path*f,"positiondata")
+		positiondata[i] = load(path*f,"positiondata")
 		data[i] = load(path*f,"data")[:,:,:]
 	end
 	jldopen(path*new_file, "w") do file
         file["data"] = data
-		#file["positiondata"] = positiondata
+		file["positiondata"] = positiondata
         file["params"] = params
         file["jobid"] = jobids
     end

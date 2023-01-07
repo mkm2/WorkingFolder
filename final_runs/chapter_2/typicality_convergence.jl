@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.14
+# v0.19.17
 
 using Markdown
 using InteractiveUtils
@@ -35,14 +35,14 @@ end
 begin
 	δt = 0.1
 	T = 10.0
-	Ns = [5,6,7,8,9,10,11,12,13,14,15]
+	Ns = [5,6,7,8,9,10,11,12,13,14,15,16,17]
 	trange = 0.0:δt:T
 	ts = length(trange)
 end
 
 # ╔═╡ 60f87fc0-f3a0-4a43-96b1-0532fc00b672
 begin
-	dims = Vector{Int64}(undef,11)
+	dims = Vector{Int64}(undef,13)
 	for (i,n) in enumerate(Ns)
 		k = div(n-1,2)+1
 		dims[i] = basissize(symmetrized_basis(n,k))
@@ -52,38 +52,17 @@ end
 # ╔═╡ 29501d68-aa87-4a2e-82a5-4287d87459d3
 dims
 
-# ╔═╡ 86e3eca5-35e0-4d9f-859e-ca52df29f57e
-16: 12870
-
-# ╔═╡ 074faf57-afcd-400c-a151-093e99e2392e
-17: 24310
-
-# ╔═╡ f9f81652-3013-49a6-b1bf-159d5266110a
-div(18-1,2)+1
-
-# ╔═╡ 9e59a5a3-8187-4316-941b-4cc1b84ad1e7
-2^13
-
-# ╔═╡ 3477d403-2ed2-4fe5-859a-802732e17862
-2^15
-
-# ╔═╡ dc4ce9cd-18c5-448b-9f17-0ef723f14b05
-basissize(symmetrized_basis(17,9))
-
-# ╔═╡ 7908b2f0-5116-45df-847a-61e054567c15
-Ns[8]
-
 # ╔═╡ 42bf99ad-a834-47a8-9400-9eb1a17d2fbe
 md"# Load data"
 
 # ╔═╡ cd98b70a-9061-4502-98c8-e70fcd44baa9
 begin
-	params1 = Vector{SimulationParamsED}(undef,11)
-	params2 = Vector{SimulationParamsED}(undef,11)
-	params3 = Vector{SimulationParams}(undef,11)
-	params4 = Vector{SimulationParamsED}(undef,9)
-	params5 = Vector{SimulationParamsED}(undef,9)
-	params6 = Vector{SimulationParams}(undef,9)
+	params1 = Vector{SimulationParamsED}(undef,13)
+	params2 = Vector{SimulationParamsED}(undef,13)
+	params3 = Vector{SimulationParams}(undef,13)
+	params4 = Vector{SimulationParamsED}(undef,13)
+	params5 = Vector{SimulationParamsED}(undef,11)
+	params6 = Vector{SimulationParams}(undef,11)
 	
 	
 	params = [params1,params2,params3,params4,params5,params6]
@@ -91,12 +70,12 @@ end
 
 # ╔═╡ a69b0740-8fd7-4cfb-bad5-c90d5ef163a5
 begin
-	data_EDtr_sector = Vector{Array{Float64,3}}(undef,11)
-	data_ED_sector = Vector{Array{Float64,4}}(undef,11)
-	data_Krylov_sector = Vector{Array{Float64,4}}(undef,11)
-	data_EDtr_total = Vector{Array{Float64,3}}(undef,9)
-	data_ED_total = Vector{Array{Float64,4}}(undef,9)
-	data_Krylov_total = Vector{Array{Float64,4}}(undef,9)
+	data_EDtr_sector = Vector{Array{Float64,3}}(undef,13)
+	data_ED_sector = Vector{Array{Float64,4}}(undef,13)
+	data_Krylov_sector = Vector{Array{Float64,4}}(undef,13)
+	data_EDtr_total = Vector{Array{Float64,3}}(undef,11)
+	data_ED_total = Vector{Array{Float64,4}}(undef,11)
+	data_Krylov_total = Vector{Array{Float64,4}}(undef,11)
 	data = [data_EDtr_sector,data_ED_sector,data_Krylov_sector,data_EDtr_total,data_ED_total,data_Krylov_total]
 end
 
@@ -110,43 +89,121 @@ folders = ["ED_tr/sector/","ED/sector/","Krylov/sector/","ED_tr/total/","ED/tota
 load(path*folders[1]*"7333905_N6_ED.jld2","params")
 
 # ╔═╡ 1670e4ea-4488-455f-840d-5d95038c3cb2
-for (i,folder) in enumerate(folders)
-		print(folder,"\n")
-		for (j,filename) in enumerate(readdir(path*folders[i]))
-			if !occursin("otoc",filename)
-				#print(j,":",filename,"\n")
-				if occursin("_tr",folder)
-					if occursin("sector",folder)
-						factor = dims[j]
+begin
+	tmp = 1
+	tmpdata = Vector{Array{Float64,3}}(undef,3)
+	for (i,folder) in enumerate(folders)
+			print(folder,"\n")
+			for (j,filename) in enumerate(readdir(path*folders[i]))
+				if !occursin("otoc",filename)
+					print(j,":",filename,"\n")
+					if occursin("_tr",folder)
+						if occursin("sector",folder)
+							factor = dims[j]
+						else
+							factor = 2^Ns[j]
+						end
+						if occursin("sector",folder)
+							if occursin("N16",filename) || occursin("N17",filename)
+								tlen = 11
+							else
+								tlen = 101
+							end
+							data[i][j] = 2*ones(tlen,Ns[j],1)-2*load(path*folder*filename,"data")./factor
+						else
+							if occursin("N15",filename)
+								if tmp < 3
+									tlen = 4
+								else
+									tlen = 3
+								end
+								
+								tmpdata[tmp] = 2*ones(tlen,15,1)-2*load(path*folder*filename,"data")./factor
+								if tmp == 3
+									print(tmp)
+									data[i][11] = vcat(tmpdata[1],tmpdata[2],tmpdata[3])
+								end
+								tmp += 1
+							elseif occursin("N14",filename)
+								tlen = 11
+								data[i][j] = 2*ones(tlen,Ns[j],1)-2*load(path*folder*filename,"data")./factor
+							else
+								tlen = 101
+								data[i][j] = 2*ones(tlen,Ns[j],1)-2*load(path*folder*filename,"data")./factor
+							end
+						end		
 					else
-						factor = 2^Ns[j]
-					end 
-					data[i][j] = 2*ones(ts,Ns[j],1)-2*load(path*folder*filename,"data")./factor
-				else
-					data[i][j] = 2*ones(ts,Ns[j],1,1000)-2*load(path*folder*filename,"data")
+						if occursin("sector",folder) && occursin("ED",folder)
+							if occursin("N16",filename)
+								tlen = 31
+								nstates = 10
+							elseif occursin("N17",filename)
+								tlen = 11
+								nstates = 10
+							else
+								tlen = 101
+								nstates = 1000
+							end
+						elseif occursin("sector",folder) && occursin("Krylov",folder)
+							tlen = 101
+							if occursin("N16",filename) || occursin("N17",filename)
+								nstates = 10
+							else
+								nstates = 1000
+							end
+						elseif occursin("total",folder) && occursin("ED",folder)
+							if occursin("N14",filename)
+								tlen = 31
+								nstates = 10
+							elseif occursin("N15",filename)
+								tlen = 11
+								nstates = 10
+							else
+								tlen = 101
+								nstates = 1000
+							end
+						elseif occursin("total",folder) && occursin("Krylov",folder)
+							if occursin("N14",filename) || occursin("N15",filename)
+								tlen = 51
+								nstates = 10
+							else
+								tlen = 101
+								nstates = 1000
+							end
+						end
+						data[i][j] = 2*ones(tlen,Ns[j],1,nstates)-2*load(path*folder*filename,"data")
+					end
+					params[i][j] = load(path*folder*filename,"params")
 				end
-				params[i][j] = load(path*folder*filename,"params")
 			end
 		end
-	end
-
-# ╔═╡ 80d03e26-1294-4472-b9f0-5b2270eb8155
-params
-
-# ╔═╡ f1c4ceea-12be-4788-964c-4a058ffbf449
-load(path*folders[1]*"7333905_N6_ED.jld2","data")/20
+end
 
 # ╔═╡ 51158cf8-e121-499a-b36e-29fb8e663155
 md"# System Size vs. Error"
 
-# ╔═╡ e7e64dab-4141-4f0c-b2a4-0fd73d1073e6
-data_EDtr_sector
+# ╔═╡ 79a71641-0fe2-4777-8673-e1cc8b539be1
+Ns[5]
+
+# ╔═╡ 04d4af1f-f2ef-47ba-b5e1-33cb93c3faf8
+begin
+	k = 6
+	plot(0:0.1:1,state_mean(data_ED_total[k],10)[1:11,:,1])
+	plot!(0:0.1:1,data_EDtr_total[k][1:11,:,1],legend=nothing,color="black")
+end
+
+# ╔═╡ 3e3a86aa-1600-4337-b448-480c59bbcfc9
+begin
+	k2 = 11
+	plot(0:0.1:1,state_mean(data_ED_total[k2],10)[1:11,:,1,1])
+	plot!(0:0.1:1,data_EDtr_total[k2][1:11,:,1],legend=nothing,color="black")
+end
 
 # ╔═╡ 031cb4f0-8628-49ca-bbf2-73f9f53dbf3b
 (2*ones(ts,5,1)-data_EDtr_sector[1])*10
 
 # ╔═╡ cdcc9475-6305-48eb-9376-ebd0b4f1c8e8
-plot(data_EDtr_total[9][:,:,1])
+plot(trange,data_EDtr_total[9][:,:,1])
 
 # ╔═╡ 523a0091-acfa-41f1-be50-6d8d753fda3a
 2*0.01
@@ -154,22 +211,25 @@ plot(data_EDtr_total[9][:,:,1])
 # ╔═╡ 03abf2d2-3461-4e19-822f-1428304b008c
 plot(abs.(data_EDtr_total[9][2:ts,:,1]-state_mean(data_Krylov_total[9],10)[2:ts,:])./data_EDtr_total[9][2:ts,:,1]*100)
 
+# ╔═╡ 6222f35e-b931-41d1-a847-89d9f0ce1cc8
+data_EDtr_total[9][2:21,:,1]
+
 # ╔═╡ f7e68416-5ccb-49af-a80f-646e2af64ac2
 maximum(abs.(data_EDtr_total[8][2:ts,:,1]-state_mean(data_ED_total[8],10)[2:ts,:])./data_EDtr_total[8][2:ts,:,1]*100)
 
 # ╔═╡ 31b41f61-95bf-4ba4-abdd-927dcd2e8045
 begin
-	errors_ED_sector = Vector{Float64}(undef,11)
-	errors_Krylov_sector = Vector{Float64}(undef,11)
+	errors_ED_sector = Vector{Float64}(undef,13)
+	errors_Krylov_sector = Vector{Float64}(undef,13)
 	
-	errors_ED_total = Vector{Float64}(undef,9)
-	errors_Krylov_total = Vector{Float64}(undef,9)
+	errors_ED_total = Vector{Float64}(undef,11)
+	errors_Krylov_total = Vector{Float64}(undef,11)
 
-	stdEs = Vector{Float64}(undef,11)
-	stdKs = Vector{Float64}(undef,11)
+	stdEs = Vector{Float64}(undef,13)
+	stdKs = Vector{Float64}(undef,13)
 
-	stdEt = Vector{Float64}(undef,9)
-	stdKt = Vector{Float64}(undef,9)
+	stdEt = Vector{Float64}(undef,11)
+	stdKt = Vector{Float64}(undef,11)
 
 	states = 10
 	Tmax = 21
@@ -195,11 +255,11 @@ end
 
 # ╔═╡ 73c95dc6-85ec-4c1d-b720-d242c987af4b
 begin
-	plot(Ns[1:11],errors_ED_sector,yerror=stdEs,label="ED sector",xlabel="N",ylabel="ϵ",xticks=Ns,yminorticks=true)#,ylim=[1e-3,2e-1])
-	plot!(Ns[1:11],errors_Krylov_sector,yerror=stdKs,label="Krylov sector")
+	plot(Ns[1:11],errors_ED_sector[1:11],yerror=stdEs[1:11],label="ED sector",xlabel="N",ylabel="ϵ",xticks=Ns,yminorticks=true)#,ylim=[1e-3,2e-1])
+	plot!(Ns[1:11],errors_Krylov_sector[1:11],yerror=stdKs[1:11],label="Krylov sector")
 
-	plot!(Ns[1:9],errors_ED_total,yerror=stdEt,label="ED total")
-	plot!(Ns[1:9],errors_Krylov_total,yerror=stdKt,label="Krylov total",yaxis=:log)
+	plot!(Ns[1:9],errors_ED_total[1:9],yerror=stdEt[1:9],label="ED total")
+	plot!(Ns[1:9],errors_Krylov_total[1:9],yerror=stdKt[1:9],label="Krylov total",yaxis=:log)
 end
 
 # ╔═╡ ef1518f2-ab35-4c98-bdfd-01397f475594
@@ -214,10 +274,22 @@ jldopen("errors.jld2", "w") do file
 	file["stdKr_tot"] = stdKt
     end
 
+# ╔═╡ b91a2315-75d8-4086-b85e-aba105e9e305
+jldopen("data.jld2", "w") do file
+    file["tr"] = data_EDtr_total[9]
+	file["ED"] = data_ED_total[9]
+	file["Kr"] = data_Krylov_total[9]
+    end
+
+# ╔═╡ 82b08be4-f57d-4cf1-87d9-c1b6b6516466
+size(data_ED_total[9])
+
 # ╔═╡ fedfb82f-805d-4992-83fc-df4c4c937fba
 md"# System Size vs. Error - Multiple states"
 
 # ╔═╡ b373574b-6d45-4d07-8563-6231a597beea
+# ╠═╡ disabled = true
+#=╠═╡
 begin
 	mean_ED_sector = Vector{Array{Float64,3}}(undef,11)
 	mean_Krylov_sector = Vector{Array{Float64,3}}(undef,11)
@@ -234,8 +306,11 @@ begin
 	errors2_ED_total = Matrix{Float64}(undef,9,999)
 	errors2_Krylov_total = Matrix{Float64}(undef,9,999)
 end
+  ╠═╡ =#
 
 # ╔═╡ c6cf9fc9-f06e-466b-890b-fe3291a1610b
+# ╠═╡ disabled = true
+#=╠═╡
 begin
 	for i in 1:11
 		mean_ED_sector[i] = zeros(ts,Ns[i],999)
@@ -269,8 +344,11 @@ begin
 		end
 	end
 end
+  ╠═╡ =#
 
 # ╔═╡ a0da8248-9838-4207-b047-fd4ce49f5a59
+# ╠═╡ disabled = true
+#=╠═╡
 begin
 	plot(2:1000,errors2_ED_sector[1,:],yaxis=:log,xaxis=:log,label="N = 5",xlabel="number of sample states")
 	plot!(2:1000,errors2_ED_sector[2,:],yaxis=:log,xaxis=:log,label="N = 6")
@@ -284,8 +362,11 @@ begin
 	plot!(2:1000,errors2_ED_sector[10,:],yaxis=:log,xaxis=:log,label="N = 14")
 	plot!(2:1000,errors2_ED_sector[11,:],yaxis=:log,xaxis=:log,label="N = 15")
 end
+  ╠═╡ =#
 
 # ╔═╡ eab78ce6-fdba-4e4e-ac21-646ce1ba434b
+# ╠═╡ disabled = true
+#=╠═╡
 begin
 	plot(2:1000,errors2_ED_total[1,:],yaxis=:log,xaxis=:log,label="N = 5",xlabel="number of sample states")
 	plot!(2:1000,errors2_ED_total[2,:],yaxis=:log,xaxis=:log,label="N = 6")
@@ -297,6 +378,7 @@ begin
 	plot!(2:1000,errors2_ED_total[8,:],yaxis=:log,xaxis=:log,label="N = 12")
 	plot!(2:1000,errors2_ED_total[9,:],yaxis=:log,xaxis=:log,label="N = 13")
 end
+  ╠═╡ =#
 
 # ╔═╡ cfeaf277-185c-45bd-b91f-4a77613c777e
 
@@ -305,7 +387,10 @@ end
 
 
 # ╔═╡ c385d15e-1e2f-4732-9173-6d217d2aaf37
+# ╠═╡ disabled = true
+#=╠═╡
 plot([2^9,2^10,2^11,2^12,2^13],[71,535,4455,31297,221948],yaxis=:log,xaxis=:log)
+  ╠═╡ =#
 
 # ╔═╡ Cell order:
 # ╠═1fa345ce-4a5e-11ed-2fe2-75fc302d3420
@@ -316,13 +401,6 @@ plot([2^9,2^10,2^11,2^12,2^13],[71,535,4455,31297,221948],yaxis=:log,xaxis=:log)
 # ╠═2fb825be-cb30-477e-b11c-d13c895c1af4
 # ╠═60f87fc0-f3a0-4a43-96b1-0532fc00b672
 # ╠═29501d68-aa87-4a2e-82a5-4287d87459d3
-# ╠═86e3eca5-35e0-4d9f-859e-ca52df29f57e
-# ╠═074faf57-afcd-400c-a151-093e99e2392e
-# ╠═f9f81652-3013-49a6-b1bf-159d5266110a
-# ╠═9e59a5a3-8187-4316-941b-4cc1b84ad1e7
-# ╠═3477d403-2ed2-4fe5-859a-802732e17862
-# ╠═dc4ce9cd-18c5-448b-9f17-0ef723f14b05
-# ╠═7908b2f0-5116-45df-847a-61e054567c15
 # ╠═42bf99ad-a834-47a8-9400-9eb1a17d2fbe
 # ╠═8d4a6591-7425-4dcb-80e4-55fa60f6cb42
 # ╠═cd98b70a-9061-4502-98c8-e70fcd44baa9
@@ -330,18 +408,21 @@ plot([2^9,2^10,2^11,2^12,2^13],[71,535,4455,31297,221948],yaxis=:log,xaxis=:log)
 # ╠═c8459c23-67c0-4abe-81c3-5033b8374450
 # ╠═aa28d126-83b4-4af9-8a30-1763eabaf3d3
 # ╠═1670e4ea-4488-455f-840d-5d95038c3cb2
-# ╠═80d03e26-1294-4472-b9f0-5b2270eb8155
-# ╠═f1c4ceea-12be-4788-964c-4a058ffbf449
 # ╠═51158cf8-e121-499a-b36e-29fb8e663155
-# ╠═e7e64dab-4141-4f0c-b2a4-0fd73d1073e6
+# ╠═79a71641-0fe2-4777-8673-e1cc8b539be1
+# ╠═04d4af1f-f2ef-47ba-b5e1-33cb93c3faf8
+# ╠═3e3a86aa-1600-4337-b448-480c59bbcfc9
 # ╠═031cb4f0-8628-49ca-bbf2-73f9f53dbf3b
 # ╠═cdcc9475-6305-48eb-9376-ebd0b4f1c8e8
 # ╠═523a0091-acfa-41f1-be50-6d8d753fda3a
 # ╠═03abf2d2-3461-4e19-822f-1428304b008c
+# ╠═6222f35e-b931-41d1-a847-89d9f0ce1cc8
 # ╠═f7e68416-5ccb-49af-a80f-646e2af64ac2
 # ╠═31b41f61-95bf-4ba4-abdd-927dcd2e8045
 # ╠═73c95dc6-85ec-4c1d-b720-d242c987af4b
 # ╠═ef1518f2-ab35-4c98-bdfd-01397f475594
+# ╠═b91a2315-75d8-4086-b85e-aba105e9e305
+# ╠═82b08be4-f57d-4cf1-87d9-c1b6b6516466
 # ╠═fedfb82f-805d-4992-83fc-df4c4c937fba
 # ╠═b373574b-6d45-4d07-8563-6231a597beea
 # ╠═c6cf9fc9-f06e-466b-890b-fe3291a1610b

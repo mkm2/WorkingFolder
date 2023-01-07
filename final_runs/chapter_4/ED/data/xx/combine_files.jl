@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.15
+# v0.19.17
 
 using Markdown
 using InteractiveUtils
@@ -38,13 +38,13 @@ function combine_files(files,path,new_file)
 end
 
 # ╔═╡ daed97e0-d489-4412-933d-3dabb07713fc
-hs = [0,3,6,9,12,24]
+hs = [0,3,6,9,12,24,24,50,75,50,75,100]
 
 # ╔═╡ 3319d577-02c1-44e6-82f1-a7e43c690148
 path = pwd()
 
 # ╔═╡ a5baa852-1864-4ab4-9f11-ce89ad767ca6
-folders = ["/h = 0/","/h = 3/","/h = 6/","/h = 9/","/h = 12/","/h = 24/"]
+folders = ["/h = 0/","/h = 3/","/h = 6/","/h = 9/","/h = 12/","/h = 24/","/h = 24 ext/","/h = 50/","/h = 75/","/h = 50 long/","/h = 75 long/","/h = 100 long/"]
 
 # ╔═╡ 692d4636-59d1-4ad9-b18f-bbbee35fdab3
 begin
