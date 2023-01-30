@@ -1,0 +1,1319 @@
+Added MKL.jl
+Project LightCones v0.1.0
+Status `/gpfs/bwfor/work/ws/hd_ku269-light_cones/WorkingFolder/Project.toml`
+  [7d9fca2a] Arpack v0.5.4
+  [7073ff75] IJulia v1.24.0
+  [033835bb] JLD2 v0.4.29
+  [0b1a1467] KrylovKit v0.6.0
+  [d3d80556] LineSearches v7.2.0
+  [33e6dc65] MKL v0.6.0
+  [429524aa] Optim v1.7.4
+  [91a5bcdd] Plots v1.38.2
+  [c3e4b0f8] Pluto v0.19.19
+  [3c0b384b] QuantumInformation v0.4.9
+  [189a3867] Reexport v1.2.2
+  [295af30f] Revise v3.5.0
+  [ebcc8a00] SpinSymmetry v0.3.3
+  [59d54670] ThreadedSparseArrays v0.2.2
+  [ade2ca70] Dates
+  [8ba89e20] Distributed
+  [37e2e46d] LinearAlgebra
+  [de0858da] Printf
+  [9a3f8284] Random
+  [1a1011a3] SharedArrays
+  [2f01184e] SparseArrays
+  [10745b16] Statistics
+[2023-01-15T20:16:06.242]**********RANDOM FIELDS**********
+shared_krylov.jl
+Working Directory:          /gpfs/bwfor/work/ws/hd_ku269-light_cones/WorkingFolder
+SLURM Directory:            /gpfs/bwfor/work/ws/hd_ku269-light_cones/WorkingFolder 
+Running on host:            o05n03
+Job id:                     512537
+Job name:                   otoc_simulation_N11_TRNEW
+Number of nodes allocated:  
+Number of cores allocated:  1
+#threads of Julia:          64
+#threads of BLAS:           1
+ARGS = ["11", "5", "50", "BS", "x", "3", "100", "WAHUHA_FR"]
+LOCATION = "/gpfs/bwfor/work/ws/hd_ku269-logs/LightCones/2023-01-15"
+N = 11
+SHOTS = 5
+MULT_RANDOM_STATES = true
+N_RANDOM_STATES = 50
+TYPE_OF_RS = "BS"
+OBSERVABLE = "x"
+DISORDER_PARAM = 3.0
+[2023-01-15T20:16:06.604]**********Running simulation**********
+[2023-01-15T20:16:06.697]trange = 0.1:0.1:20.0
+[2023-01-15T20:16:06.974]A = σx
+[2023-01-15T20:16:07.356]alpha=6
+[2023-01-15T20:16:07.356]PBC
+10[2023-01-15T20:16:10.152]Operations set up.
+Using multiple states.
+9775.663065 seconds (5.41 G allocations: 13.625 TiB, 11.15% gc time, 0.04% compilation time)
+9809.102574 seconds (5.43 G allocations: 13.663 TiB, 11.14% gc time, 0.10% compilation time)
+9833.569903 seconds (5.44 G allocations: 13.702 TiB, 11.13% gc time, 0.06% compilation time)
+9840.470626 seconds (5.45 G allocations: 13.709 TiB, 11.14% gc time, 0.06% compilation time)
+9843.564075 seconds (5.45 G allocations: 13.714 TiB, 11.14% gc time, 0.06% compilation time)
+9855.852301 seconds (5.45 G allocations: 13.729 TiB, 11.14% gc time, 0.06% compilation time)
+9856.642397 seconds (5.45 G allocations: 13.730 TiB, 11.14% gc time, 0.06% compilation time)
+9857.152660 seconds (5.46 G allocations: 13.731 TiB, 11.14% gc time, 0.06% compilation time)
+9862.516466 seconds (5.46 G allocations: 13.732 TiB, 11.14% gc time, 0.10% compilation time)
+9858.475806 seconds (5.46 G allocations: 13.732 TiB, 11.14% gc time, 0.06% compilation time)
+9873.072244 seconds (5.46 G allocations: 13.750 TiB, 11.14% gc time, 0.06% compilation time)
+9878.349431 seconds (5.47 G allocations: 13.757 TiB, 11.13% gc time, 0.06% compilation time)
+9879.931492 seconds (5.47 G allocations: 13.760 TiB, 11.13% gc time, 0.06% compilation time)
+9884.117140 seconds (5.47 G allocations: 13.766 TiB, 11.13% gc time, 0.06% compilation time)
+9893.734216 seconds (5.47 G allocations: 13.777 TiB, 11.13% gc time, 0.06% compilation time)
+9907.202968 seconds (5.48 G allocations: 13.796 TiB, 11.12% gc time, 0.06% compilation time)
+9910.891763 seconds (5.48 G allocations: 13.801 TiB, 11.12% gc time, 0.06% compilation time)
+9914.294063 seconds (5.49 G allocations: 13.806 TiB, 11.12% gc time, 0.06% compilation time)
+9914.602367 seconds (5.49 G allocations: 13.807 TiB, 11.12% gc time, 0.06% compilation time)
+9920.643161 seconds (5.49 G allocations: 13.812 TiB, 11.12% gc time, 0.06% compilation time)
+9925.832846 seconds (5.49 G allocations: 13.821 TiB, 11.12% gc time, 0.06% compilation time)
+9927.732545 seconds (5.49 G allocations: 13.823 TiB, 11.11% gc time, 0.06% compilation time)
+9940.282997 seconds (5.50 G allocations: 13.832 TiB, 11.11% gc time, 0.10% compilation time)
+9940.829275 seconds (5.50 G allocations: 13.833 TiB, 11.11% gc time, 0.10% compilation time)
+9944.314607 seconds (5.50 G allocations: 13.844 TiB, 11.11% gc time, 0.06% compilation time)
+9944.756889 seconds (5.50 G allocations: 13.845 TiB, 11.11% gc time, 0.06% compilation time)
+9948.193678 seconds (5.50 G allocations: 13.849 TiB, 11.11% gc time, 0.06% compilation time)
+9949.384882 seconds (5.50 G allocations: 13.851 TiB, 11.10% gc time, 0.06% compilation time)
+9955.887628 seconds (5.51 G allocations: 13.856 TiB, 11.11% gc time, 0.06% compilation time)
+9956.878497 seconds (5.51 G allocations: 13.857 TiB, 11.11% gc time, 0.06% compilation time)
+9956.824366 seconds (5.51 G allocations: 13.857 TiB, 11.11% gc time, 0.06% compilation time)
+9958.321151 seconds (5.51 G allocations: 13.860 TiB, 11.11% gc time, 0.06% compilation time)
+9959.062097 seconds (5.51 G allocations: 13.861 TiB, 11.11% gc time, 0.06% compilation time)
+9969.707885 seconds (5.51 G allocations: 13.874 TiB, 11.10% gc time, 0.06% compilation time)
+9973.663651 seconds (5.51 G allocations: 13.875 TiB, 11.10% gc time, 0.10% compilation time)
+9973.380821 seconds (5.51 G allocations: 13.877 TiB, 11.11% gc time, 0.06% compilation time)
+9987.505190 seconds (5.52 G allocations: 13.891 TiB, 11.10% gc time, 0.10% compilation time)
+9985.028096 seconds (5.52 G allocations: 13.893 TiB, 11.10% gc time, 0.06% compilation time)
+9987.496832 seconds (5.52 G allocations: 13.897 TiB, 11.10% gc time, 0.06% compilation time)
+9992.492591 seconds (5.52 G allocations: 13.901 TiB, 11.11% gc time, 0.05% compilation time)
+9998.856928 seconds (5.53 G allocations: 13.910 TiB, 11.10% gc time, 0.06% compilation time)
+9999.944806 seconds (5.53 G allocations: 13.911 TiB, 11.10% gc time, 0.06% compilation time)
+10014.380254 seconds (5.53 G allocations: 13.924 TiB, 11.09% gc time, 0.10% compilation time)
+10013.100471 seconds (5.53 G allocations: 13.928 TiB, 11.10% gc time, 0.06% compilation time)
+10019.314591 seconds (5.54 G allocations: 13.936 TiB, 11.10% gc time, 0.06% compilation time)
+10019.576368 seconds (5.54 G allocations: 13.936 TiB, 11.10% gc time, 0.05% compilation time)
+10019.831626 seconds (5.54 G allocations: 13.937 TiB, 11.10% gc time, 0.06% compilation time)
+10021.834012 seconds (5.54 G allocations: 13.939 TiB, 11.10% gc time, 0.06% compilation time)
+10031.582696 seconds (5.54 G allocations: 13.953 TiB, 11.09% gc time, 0.06% compilation time)
+10050.052832 seconds (5.55 G allocations: 13.976 TiB, 11.09% gc time, 0.06% compilation time)
+10444.010392 seconds (5.45 G allocations: 13.726 TiB, 9.51% gc time, 0.00% compilation time)
+10398.098316 seconds (5.43 G allocations: 13.666 TiB, 9.52% gc time, 0.01% compilation time)
+10529.273280 seconds (5.49 G allocations: 13.837 TiB, 9.52% gc time, 0.03% compilation time)
+[2023-01-16T01:55:07.948]Diagonalized H.
+[2023-01-16T01:55:07.953]Diagonalized H.
+[2023-01-16T01:55:07.994]Diagonalized H.
+10481.912946 seconds (5.47 G allocations: 13.771 TiB, 9.52% gc time, 0.04% compilation time)
+10471.601296 seconds (5.47 G allocations: 13.761 TiB, 9.51% gc time, 0.05% compilation time)
+10524.296412 seconds (5.50 G allocations: 13.831 TiB, 9.51% gc time, 0.06% compilation time)
+[2023-01-16T01:55:31.908]Diagonalized H.
+[2023-01-16T01:55:31.985]Diagonalized H.
+[2023-01-16T01:55:31.993]Diagonalized H.
+10420.471572 seconds (5.44 G allocations: 13.687 TiB, 9.51% gc time, 0.06% compilation time)
+ 53.304295 seconds (25.82 M allocations: 60.136 GiB, 7.70% gc time, 10.50% compilation time)
+[2023-01-16T01:55:44.822]Completed Shot 1, state 20
+ 56.319992 seconds (26.82 M allocations: 63.074 GiB, 7.29% gc time, 9.94% compilation time)
+[2023-01-16T01:55:47.826]Completed Shot 1, state 28
+ 59.550047 seconds (28.62 M allocations: 67.710 GiB, 6.89% gc time, 10.27% compilation time)
+[2023-01-16T01:55:48.485]Completed Shot 1, state 33
+[2023-01-16T01:56:03.245]Diagonalized H.
+ 56.505525 seconds (19.90 M allocations: 53.403 GiB, 3.51% gc time, 4.93% compilation time)
+[2023-01-16T01:56:08.679]Completed Shot 1, state 8
+ 55.163736 seconds (13.49 M allocations: 45.306 GiB, 3.60% gc time, 0.21% compilation time)
+[2023-01-16T01:56:10.970]Completed Shot 1, state 38
+ 58.050766 seconds (16.38 M allocations: 49.762 GiB, 3.42% gc time, 1.84% compilation time)
+[2023-01-16T01:56:12.963]Completed Shot 1, state 3
+10522.239447 seconds (5.46 G allocations: 13.737 TiB, 9.86% gc time, 0.06% compilation time)
+10503.441617 seconds (5.45 G allocations: 13.714 TiB, 9.85% gc time, 0.06% compilation time)
+10597.088598 seconds (5.50 G allocations: 13.837 TiB, 9.83% gc time, 0.06% compilation time)
+10577.218626 seconds (5.49 G allocations: 13.812 TiB, 9.83% gc time, 0.06% compilation time)
+10530.065129 seconds (5.46 G allocations: 13.750 TiB, 9.84% gc time, 0.06% compilation time)
+[2023-01-16T01:57:32.718]Diagonalized H.
+[2023-01-16T01:57:32.732]Diagonalized H.
+[2023-01-16T01:57:32.739]Diagonalized H.
+[2023-01-16T01:57:32.747]Diagonalized H.
+10534.232339 seconds (5.46 G allocations: 13.751 TiB, 9.85% gc time, 0.06% compilation time)
+120.690847 seconds (23.07 M allocations: 71.346 GiB, 38.48% gc time)
+[2023-01-16T01:57:43.837]Completed Shot 1, state 31
+[2023-01-16T01:57:54.109]Diagonalized H.
+10610.407545 seconds (5.49 G allocations: 13.839 TiB, 9.83% gc time, 0.06% compilation time)
+ 37.386266 seconds (8.69 M allocations: 33.598 GiB, 6.95% gc time)
+[2023-01-16T01:57:56.988]Completed Shot 1, state 40
+10650.302602 seconds (5.51 G allocations: 13.890 TiB, 9.82% gc time, 0.06% compilation time)
+ 44.315838 seconds (12.64 M allocations: 44.030 GiB, 5.86% gc time)
+[2023-01-16T01:57:58.738]Completed Shot 1, state 45
+10634.896225 seconds (5.50 G allocations: 13.870 TiB, 9.82% gc time, 0.06% compilation time)
+10602.077171 seconds (5.49 G allocations: 13.827 TiB, 9.82% gc time, 0.06% compilation time)
+ 59.673356 seconds (19.85 M allocations: 63.123 GiB, 4.35% gc time)
+[2023-01-16T01:58:02.233]Completed Shot 1, state 13
+[2023-01-16T01:58:02.480]Diagonalized H.
+10508.041473 seconds (5.44 G allocations: 13.708 TiB, 9.83% gc time, 0.06% compilation time)
+10668.054594 seconds (5.52 G allocations: 13.908 TiB, 9.83% gc time, 0.06% compilation time)
+ 47.268856 seconds (10.38 M allocations: 40.575 GiB, 5.50% gc time)
+[2023-01-16T01:58:11.006]Completed Shot 1, state 25
+[2023-01-16T01:58:11.963]Diagonalized H.
+[2023-01-16T01:58:20.333]Diagonalized H.
+[2023-01-16T01:58:20.361]Diagonalized H.
+[2023-01-16T01:58:20.365]Diagonalized H.
+[2023-01-16T01:58:20.370]Diagonalized H.
+[2023-01-16T01:58:20.372]Diagonalized H.
+10660.561298 seconds (5.51 G allocations: 13.888 TiB, 9.82% gc time, 0.06% compilation time)
+ 65.031414 seconds (10.44 M allocations: 47.119 GiB, 3.90% gc time)
+[2023-01-16T01:58:42.500]Completed Shot 1, state 16
+ 79.186304 seconds (12.48 M allocations: 59.216 GiB, 6.48% gc time)
+[2023-01-16T01:58:43.668]Completed Shot 1, state 29
+ 41.140098 seconds (5.17 M allocations: 27.630 GiB, 6.16% gc time)
+[2023-01-16T01:58:49.420]Completed Shot 1, state 11
+10627.158002 seconds (5.48 G allocations: 13.830 TiB, 9.80% gc time, 0.06% compilation time)
+ 57.177475 seconds (11.05 M allocations: 45.765 GiB, 4.43% gc time)
+[2023-01-16T01:58:54.620]Completed Shot 1, state 10
+10592.057672 seconds (5.46 G allocations: 13.788 TiB, 9.80% gc time, 0.06% compilation time)
+ 59.858818 seconds (11.95 M allocations: 49.784 GiB, 4.23% gc time)
+[2023-01-16T01:58:54.641]Completed Shot 1, state 50
+[2023-01-16T01:59:03.552]Diagonalized H.
+[2023-01-16T01:59:03.558]Diagonalized H.
+[2023-01-16T01:59:03.580]Diagonalized H.
+ 63.800689 seconds (11.09 M allocations: 48.266 GiB, 6.98% gc time)
+[2023-01-16T01:59:05.637]Completed Shot 1, state 2
+ 64.841657 seconds (11.85 M allocations: 51.049 GiB, 6.87% gc time)
+[2023-01-16T01:59:12.077]Completed Shot 1, state 17
+10618.920251 seconds (5.47 G allocations: 13.810 TiB, 9.81% gc time, 0.06% compilation time)
+ 75.175450 seconds (14.66 M allocations: 60.721 GiB, 5.92% gc time)
+[2023-01-16T01:59:15.203]Completed Shot 1, state 37
+10646.965321 seconds (5.48 G allocations: 13.844 TiB, 9.80% gc time, 0.06% compilation time)
+[2023-01-16T01:59:32.726]Diagonalized H.
+ 40.467104 seconds (10.22 M allocations: 35.171 GiB, 4.74% gc time)
+[2023-01-16T01:59:35.101]Completed Shot 1, state 44
+10630.733401 seconds (5.47 G allocations: 13.819 TiB, 9.79% gc time, 0.06% compilation time)
+10717.060991 seconds (5.52 G allocations: 13.930 TiB, 9.77% gc time, 0.06% compilation time)
+[2023-01-16T01:59:37.552]Diagonalized H.
+10621.908365 seconds (5.47 G allocations: 13.806 TiB, 9.79% gc time, 0.06% compilation time)
+10649.105558 seconds (5.48 G allocations: 13.836 TiB, 9.79% gc time, 0.06% compilation time)
+ 82.537612 seconds (18.26 M allocations: 70.230 GiB, 2.33% gc time)
+[2023-01-16T01:59:46.922]Completed Shot 1, state 6
+ 53.599039 seconds (13.20 M allocations: 45.733 GiB, 3.58% gc time)
+[2023-01-16T01:59:47.426]Completed Shot 1, state 4
+10693.426602 seconds (5.50 G allocations: 13.888 TiB, 9.77% gc time, 0.06% compilation time)
+[2023-01-16T01:59:50.933]Diagonalized H.
+[2023-01-16T01:59:59.904]Diagonalized H.
+[2023-01-16T02:00:01.959]Diagonalized H.
+[2023-01-16T02:00:09.395]Diagonalized H.
+[2023-01-16T02:00:10.504]Diagonalized H.
+ 77.801343 seconds (13.71 M allocations: 52.092 GiB, 4.49% gc time)
+[2023-01-16T02:00:37.182]Completed Shot 1, state 9
+10630.840582 seconds (5.45 G allocations: 13.779 TiB, 9.77% gc time, 0.06% compilation time)
+10630.710101 seconds (5.45 G allocations: 13.778 TiB, 9.77% gc time, 0.06% compilation time)
+10654.646688 seconds (5.46 G allocations: 13.809 TiB, 9.77% gc time, 0.06% compilation time)
+10713.539627 seconds (5.49 G allocations: 13.879 TiB, 9.76% gc time, 0.06% compilation time)
+ 91.818272 seconds (18.51 M allocations: 65.856 GiB, 3.81% gc time)
+[2023-01-16T02:00:46.706]Completed Shot 1, state 15
+10701.093740 seconds (5.49 G allocations: 13.865 TiB, 9.75% gc time, 0.06% compilation time)
+[2023-01-16T02:00:48.285]Diagonalized H.
+[2023-01-16T02:00:48.307]Diagonalized H.
+10649.027128 seconds (5.46 G allocations: 13.800 TiB, 9.76% gc time, 0.06% compilation time)
+[2023-01-16T02:00:58.302]Diagonalized H.
+[2023-01-16T02:00:58.318]Diagonalized H.
+[2023-01-16T02:00:58.325]Diagonalized H.
+[2023-01-16T02:00:58.440]Diagonalized H.
+10654.185177 seconds (5.46 G allocations: 13.798 TiB, 9.77% gc time, 0.06% compilation time)
+ 82.667325 seconds (13.77 M allocations: 54.652 GiB, 7.73% gc time)
+[2023-01-16T02:01:00.646]Completed Shot 1, state 36
+ 96.285234 seconds (14.25 M allocations: 62.901 GiB, 6.64% gc time)
+[2023-01-16T02:01:12.978]Completed Shot 1, state 48
+ 97.236821 seconds (14.47 M allocations: 63.654 GiB, 6.58% gc time)
+[2023-01-16T02:01:12.978]Completed Shot 1, state 23
+ 92.785335 seconds (12.91 M allocations: 58.303 GiB, 6.89% gc time)
+[2023-01-16T02:01:16.644]Completed Shot 1, state 35
+ 90.679480 seconds (12.01 M allocations: 56.152 GiB, 7.05% gc time)
+[2023-01-16T02:01:21.557]Completed Shot 1, state 43
+10715.406902 seconds (5.48 G allocations: 13.856 TiB, 9.75% gc time, 0.06% compilation time)
+ 47.501352 seconds (6.22 M allocations: 30.475 GiB, 6.10% gc time)
+[2023-01-16T02:01:27.590]Completed Shot 1, state 47
+10670.146203 seconds (5.45 G allocations: 13.796 TiB, 9.76% gc time, 0.06% compilation time)
+10745.871553 seconds (5.49 G allocations: 13.892 TiB, 9.74% gc time, 0.06% compilation time)
+10787.665770 seconds (5.51 G allocations: 13.942 TiB, 9.75% gc time, 0.06% compilation time)
+ 52.161140 seconds (7.46 M allocations: 34.616 GiB, 5.55% gc time)
+[2023-01-16T02:01:31.268]Completed Shot 1, state 24
+[2023-01-16T02:01:33.016]Diagonalized H.
+ 48.707077 seconds (5.74 M allocations: 30.135 GiB, 5.95% gc time)
+[2023-01-16T02:01:33.584]Completed Shot 1, state 49
+ 47.018316 seconds (5.09 M allocations: 28.286 GiB, 6.16% gc time)
+[2023-01-16T02:01:33.756]Completed Shot 1, state 12
+ 45.063096 seconds (4.22 M allocations: 25.455 GiB, 6.43% gc time)
+[2023-01-16T02:01:33.850]Completed Shot 1, state 27
+ 59.025227 seconds (9.53 M allocations: 42.048 GiB, 4.91% gc time)
+[2023-01-16T02:01:36.260]Completed Shot 1, state 34
+10826.520597 seconds (5.53 G allocations: 13.991 TiB, 9.73% gc time, 0.06% compilation time)
+10660.591789 seconds (5.45 G allocations: 13.781 TiB, 9.75% gc time, 0.06% compilation time)
+[2023-01-16T02:01:37.349]Diagonalized H.
+10754.689204 seconds (5.49 G allocations: 13.900 TiB, 9.73% gc time, 0.06% compilation time)
+[2023-01-16T02:01:38.548]Diagonalized H.
+[2023-01-16T02:01:39.473]Diagonalized H.
+10720.645674 seconds (5.47 G allocations: 13.854 TiB, 9.73% gc time, 0.06% compilation time)
+[2023-01-16T02:01:48.781]Diagonalized H.
+[2023-01-16T02:01:58.552]Diagonalized H.
+ 58.401028 seconds (5.99 M allocations: 36.999 GiB)
+[2023-01-16T02:01:58.556]Completed Shot 1, state 21
+10723.164677 seconds (5.47 G allocations: 13.847 TiB, 9.72% gc time, 0.06% compilation time)
+[2023-01-16T02:02:00.033]Diagonalized H.
+[2023-01-16T02:02:02.267]Diagonalized H.
+ 36.219833 seconds (4.06 M allocations: 26.194 GiB)
+[2023-01-16T02:02:05.143]Completed Shot 1, state 26
+10765.650768 seconds (5.49 G allocations: 13.898 TiB, 9.71% gc time, 0.06% compilation time)
+[2023-01-16T02:02:09.707]Diagonalized H.
+ 45.282703 seconds (4.92 M allocations: 31.530 GiB)
+[2023-01-16T02:02:10.603]Completed Shot 1, state 32
+10761.948473 seconds (5.48 G allocations: 13.885 TiB, 9.71% gc time, 0.06% compilation time)
+[2023-01-16T02:02:18.046]Diagonalized H.
+10783.734432 seconds (5.49 G allocations: 13.907 TiB, 9.71% gc time, 0.06% compilation time)
+ 53.675113 seconds (4.69 M allocations: 35.003 GiB)
+[2023-01-16T02:02:21.991]Completed Shot 1, state 41
+ 61.050637 seconds (4.84 M allocations: 36.128 GiB)
+[2023-01-16T02:02:29.826]Completed Shot 1, state 30
+ 53.105235 seconds (2.58 M allocations: 27.515 GiB)
+[2023-01-16T02:02:31.278]Completed Shot 1, state 42
+10745.374399 seconds (5.46 G allocations: 13.848 TiB, 9.69% gc time, 0.06% compilation time)
+[2023-01-16T02:02:34.317]Diagonalized H.
+ 59.575630 seconds (2.84 M allocations: 30.889 GiB)
+[2023-01-16T02:02:36.806]Completed Shot 1, state 14
+[2023-01-16T02:02:37.742]Diagonalized H.
+ 62.228502 seconds (2.90 M allocations: 31.653 GiB)
+[2023-01-16T02:02:39.449]Completed Shot 1, state 5
+[2023-01-16T02:02:40.633]Diagonalized H.
+[2023-01-16T02:02:45.419]Diagonalized H.
+ 61.171290 seconds (2.16 M allocations: 29.354 GiB)
+[2023-01-16T02:02:48.344]Completed Shot 1, state 7
+ 55.627267 seconds (1.58 M allocations: 25.056 GiB)
+[2023-01-16T02:02:55.565]Completed Shot 1, state 1
+ 54.544532 seconds (1.34 M allocations: 21.169 GiB)
+[2023-01-16T02:03:00.246]Completed Shot 1, state 39
+ 55.740858 seconds (1.33 M allocations: 19.153 GiB)
+[2023-01-16T02:03:08.742]Completed Shot 1, state 19
+ 50.022002 seconds (1.12 M allocations: 16.144 GiB)
+[2023-01-16T02:03:09.489]Completed Shot 1, state 18
+ 40.370052 seconds (873.01 k allocations: 12.652 GiB)
+[2023-01-16T02:03:12.003]Completed Shot 1, state 46
+10830.556901 seconds (5.48 G allocations: 13.901 TiB, 9.66% gc time, 0.06% compilation time)
+[2023-01-16T02:03:30.422]Diagonalized H.
+ 25.529788 seconds (57.87 k allocations: 2.596 GiB)
+[2023-01-16T02:03:50.149]Completed Shot 1, state 22
+10218.655121 seconds (5.36 G allocations: 13.491 TiB, 9.72% gc time)
+10259.028305 seconds (5.38 G allocations: 13.541 TiB, 9.71% gc time)
+10279.606456 seconds (5.39 G allocations: 13.564 TiB, 9.71% gc time)
+10284.220174 seconds (5.39 G allocations: 13.570 TiB, 9.71% gc time)
+10300.201480 seconds (5.40 G allocations: 13.589 TiB, 9.70% gc time)
+10350.814834 seconds (5.42 G allocations: 13.646 TiB, 9.70% gc time)
+10358.129051 seconds (5.43 G allocations: 13.655 TiB, 9.69% gc time)
+10363.625134 seconds (5.43 G allocations: 13.662 TiB, 9.69% gc time)
+10383.884654 seconds (5.44 G allocations: 13.685 TiB, 9.69% gc time)
+10388.070156 seconds (5.44 G allocations: 13.690 TiB, 9.68% gc time)
+10392.106508 seconds (5.44 G allocations: 13.695 TiB, 9.68% gc time)
+10395.073796 seconds (5.44 G allocations: 13.697 TiB, 9.69% gc time)
+10397.023542 seconds (5.44 G allocations: 13.700 TiB, 9.69% gc time)
+10397.573310 seconds (5.44 G allocations: 13.700 TiB, 9.69% gc time)
+10402.837976 seconds (5.45 G allocations: 13.707 TiB, 9.69% gc time)
+10404.793406 seconds (5.45 G allocations: 13.710 TiB, 9.68% gc time)
+10406.467045 seconds (5.45 G allocations: 13.711 TiB, 9.69% gc time)
+10432.170328 seconds (5.46 G allocations: 13.741 TiB, 9.68% gc time)
+10433.080628 seconds (5.46 G allocations: 13.742 TiB, 9.68% gc time)
+10463.651041 seconds (5.47 G allocations: 13.778 TiB, 9.67% gc time)
+10469.812856 seconds (5.48 G allocations: 13.784 TiB, 9.68% gc time)
+10470.791731 seconds (5.48 G allocations: 13.785 TiB, 9.68% gc time)
+10485.056954 seconds (5.48 G allocations: 13.801 TiB, 9.67% gc time)
+10489.640312 seconds (5.49 G allocations: 13.808 TiB, 9.67% gc time)
+10500.533102 seconds (5.49 G allocations: 13.819 TiB, 9.68% gc time)
+10505.424998 seconds (5.49 G allocations: 13.825 TiB, 9.67% gc time)
+10507.740969 seconds (5.49 G allocations: 13.828 TiB, 9.67% gc time)
+10509.648856 seconds (5.50 G allocations: 13.831 TiB, 9.67% gc time)
+10509.798181 seconds (5.50 G allocations: 13.831 TiB, 9.67% gc time)
+10510.941207 seconds (5.50 G allocations: 13.833 TiB, 9.67% gc time)
+10515.331224 seconds (5.50 G allocations: 13.835 TiB, 9.68% gc time)
+10516.499676 seconds (5.50 G allocations: 13.836 TiB, 9.68% gc time)
+10523.768421 seconds (5.50 G allocations: 13.846 TiB, 9.67% gc time)
+10529.107236 seconds (5.50 G allocations: 13.851 TiB, 9.68% gc time)
+10531.629320 seconds (5.50 G allocations: 13.854 TiB, 9.68% gc time)
+10537.952137 seconds (5.51 G allocations: 13.862 TiB, 9.67% gc time)
+10544.832958 seconds (5.51 G allocations: 13.869 TiB, 9.67% gc time)
+10545.382158 seconds (5.51 G allocations: 13.870 TiB, 9.67% gc time)
+10550.929503 seconds (5.51 G allocations: 13.878 TiB, 9.67% gc time)
+10551.522991 seconds (5.51 G allocations: 13.879 TiB, 9.67% gc time)
+10557.677757 seconds (5.52 G allocations: 13.884 TiB, 9.67% gc time)
+10569.400959 seconds (5.52 G allocations: 13.900 TiB, 9.66% gc time)
+10575.499641 seconds (5.53 G allocations: 13.905 TiB, 9.67% gc time)
+10578.572427 seconds (5.53 G allocations: 13.910 TiB, 9.67% gc time)
+10591.232282 seconds (5.53 G allocations: 13.926 TiB, 9.66% gc time)
+10593.735248 seconds (5.53 G allocations: 13.929 TiB, 9.66% gc time)
+10598.854204 seconds (5.54 G allocations: 13.935 TiB, 9.67% gc time)
+10638.780033 seconds (5.56 G allocations: 13.983 TiB, 9.65% gc time)
+10659.475005 seconds (5.56 G allocations: 14.007 TiB, 9.65% gc time)
+10702.156716 seconds (5.59 G allocations: 14.059 TiB, 9.64% gc time)
+10411.919481 seconds (5.49 G allocations: 13.818 TiB, 9.27% gc time)
+10352.515749 seconds (5.46 G allocations: 13.749 TiB, 9.27% gc time)
+[2023-01-16T07:47:59.379]Diagonalized H.
+[2023-01-16T07:47:59.538]Diagonalized H.
+10391.590021 seconds (5.48 G allocations: 13.788 TiB, 9.28% gc time)
+10353.122246 seconds (5.46 G allocations: 13.747 TiB, 9.28% gc time)
+[2023-01-16T07:48:24.747]Diagonalized H.
+[2023-01-16T07:48:24.770]Diagonalized H.
+ 55.439771 seconds (21.60 M allocations: 63.583 GiB, 6.26% gc time)
+[2023-01-16T07:48:36.168]Completed Shot 2, state 21
+ 50.208643 seconds (17.99 M allocations: 54.323 GiB, 6.92% gc time)
+[2023-01-16T07:48:37.098]Completed Shot 2, state 12
+10294.011253 seconds (5.43 G allocations: 13.677 TiB, 9.27% gc time)
+10314.759894 seconds (5.44 G allocations: 13.701 TiB, 9.27% gc time)
+[2023-01-16T07:48:57.922]Diagonalized H.
+[2023-01-16T07:48:57.972]Diagonalized H.
+ 64.393391 seconds (23.23 M allocations: 68.895 GiB, 5.88% gc time)
+[2023-01-16T07:49:07.871]Completed Shot 2, state 42
+ 70.494537 seconds (26.16 M allocations: 79.514 GiB, 5.37% gc time)
+[2023-01-16T07:49:11.267]Completed Shot 2, state 18
+10359.773386 seconds (5.46 G allocations: 13.747 TiB, 9.27% gc time)
+10331.659510 seconds (5.44 G allocations: 13.715 TiB, 9.27% gc time)
+10270.498093 seconds (5.41 G allocations: 13.645 TiB, 9.27% gc time)
+ 38.177899 seconds (14.20 M allocations: 41.374 GiB, 5.73% gc time)
+[2023-01-16T07:49:26.977]Completed Shot 2, state 47
+[2023-01-16T07:49:29.483]Diagonalized H.
+[2023-01-16T07:49:31.446]Diagonalized H.
+ 50.379600 seconds (19.55 M allocations: 57.400 GiB, 4.34% gc time)
+[2023-01-16T07:49:32.118]Completed Shot 2, state 14
+[2023-01-16T07:49:35.142]Diagonalized H.
+10343.475065 seconds (5.45 G allocations: 13.730 TiB, 9.24% gc time)
+[2023-01-16T07:49:56.262]Diagonalized H.
+ 55.998134 seconds (12.67 M allocations: 41.972 GiB)
+[2023-01-16T07:50:09.918]Completed Shot 2, state 22
+ 59.898721 seconds (13.21 M allocations: 43.609 GiB)
+[2023-01-16T07:50:13.452]Completed Shot 2, state 29
+ 62.468579 seconds (10.31 M allocations: 35.831 GiB)
+[2023-01-16T07:50:26.771]Completed Shot 2, state 17
+ 52.126783 seconds (6.79 M allocations: 21.419 GiB)
+[2023-01-16T07:50:32.222]Completed Shot 2, state 30
+10528.464519 seconds (5.51 G allocations: 13.899 TiB, 9.21% gc time)
+10375.959195 seconds (5.44 G allocations: 13.723 TiB, 9.24% gc time)
+10226.541924 seconds (5.38 G allocations: 13.555 TiB, 9.24% gc time)
+[2023-01-16T07:50:54.673]Diagonalized H.
+[2023-01-16T07:50:56.355]Diagonalized H.
+10297.959291 seconds (5.41 G allocations: 13.646 TiB, 9.22% gc time)
+10483.291540 seconds (5.49 G allocations: 13.858 TiB, 9.20% gc time)
+10364.257448 seconds (5.44 G allocations: 13.719 TiB, 9.21% gc time)
+[2023-01-16T07:51:09.287]Diagonalized H.
+10264.154806 seconds (5.39 G allocations: 13.602 TiB, 9.22% gc time)
+ 43.598034 seconds (18.76 M allocations: 55.035 GiB)
+[2023-01-16T07:51:21.823]Completed Shot 2, state 41
+10253.380270 seconds (5.38 G allocations: 13.582 TiB, 9.20% gc time)
+[2023-01-16T07:51:22.785]Diagonalized H.
+[2023-01-16T07:51:24.500]Diagonalized H.
+[2023-01-16T07:51:35.364]Diagonalized H.
+[2023-01-16T07:51:35.369]Diagonalized H.
+[2023-01-16T07:51:35.370]Diagonalized H.
+ 63.616071 seconds (20.95 M allocations: 69.484 GiB, 7.68% gc time)
+[2023-01-16T07:51:42.810]Completed Shot 2, state 43
+ 59.113254 seconds (13.81 M allocations: 52.320 GiB, 8.27% gc time)
+[2023-01-16T07:51:49.545]Completed Shot 2, state 28
+10532.646519 seconds (5.50 G allocations: 13.887 TiB, 9.20% gc time)
+ 55.947093 seconds (9.34 M allocations: 38.605 GiB, 8.74% gc time)
+[2023-01-16T07:52:01.150]Completed Shot 2, state 38
+ 67.997102 seconds (13.54 M allocations: 50.364 GiB, 7.19% gc time)
+[2023-01-16T07:52:07.739]Completed Shot 2, state 2
+ 58.387868 seconds (11.47 M allocations: 43.893 GiB, 8.37% gc time)
+[2023-01-16T07:52:08.196]Completed Shot 2, state 50
+[2023-01-16T07:52:14.195]Diagonalized H.
+10500.294135 seconds (5.48 G allocations: 13.843 TiB, 9.21% gc time)
+10508.616013 seconds (5.49 G allocations: 13.854 TiB, 9.20% gc time)
+ 53.850797 seconds (9.54 M allocations: 37.091 GiB, 11.98% gc time)
+[2023-01-16T07:52:16.239]Completed Shot 2, state 8
+ 76.877034 seconds (16.49 M allocations: 59.587 GiB, 8.39% gc time)
+[2023-01-16T07:52:21.137]Completed Shot 2, state 20
+10482.730764 seconds (5.48 G allocations: 13.826 TiB, 9.21% gc time)
+[2023-01-16T07:52:31.235]Diagonalized H.
+10377.840382 seconds (5.43 G allocations: 13.709 TiB, 9.20% gc time)
+10413.912943 seconds (5.44 G allocations: 13.749 TiB, 9.21% gc time)
+[2023-01-16T07:52:37.174]Diagonalized H.
+ 42.246429 seconds (17.78 M allocations: 52.703 GiB, 3.70% gc time)
+[2023-01-16T07:52:43.176]Completed Shot 2, state 46
+10464.258346 seconds (5.47 G allocations: 13.811 TiB, 9.19% gc time)
+[2023-01-16T07:52:47.497]Diagonalized H.
+10427.609125 seconds (5.45 G allocations: 13.767 TiB, 9.19% gc time)
+[2023-01-16T07:52:48.083]Diagonalized H.
+ 40.784531 seconds (17.22 M allocations: 54.923 GiB)
+[2023-01-16T07:52:56.028]Completed Shot 2, state 23
+[2023-01-16T07:52:56.297]Diagonalized H.
+[2023-01-16T07:52:57.014]Diagonalized H.
+[2023-01-16T07:53:10.162]Diagonalized H.
+ 59.708580 seconds (18.65 M allocations: 65.036 GiB)
+[2023-01-16T07:53:15.504]Completed Shot 2, state 1
+10333.803473 seconds (5.39 G allocations: 13.637 TiB, 9.18% gc time)
+ 58.147900 seconds (14.82 M allocations: 54.360 GiB)
+[2023-01-16T07:53:23.209]Completed Shot 2, state 39
+10571.264222 seconds (5.50 G allocations: 13.914 TiB, 9.15% gc time)
+ 51.182042 seconds (10.67 M allocations: 42.680 GiB)
+[2023-01-16T07:53:24.559]Completed Shot 2, state 36
+10479.695674 seconds (5.46 G allocations: 13.805 TiB, 9.15% gc time)
+ 56.998662 seconds (11.20 M allocations: 43.825 GiB)
+[2023-01-16T07:53:32.007]Completed Shot 2, state 27
+ 47.807374 seconds (7.11 M allocations: 31.001 GiB)
+[2023-01-16T07:53:32.032]Completed Shot 2, state 35
+[2023-01-16T07:53:34.759]Diagonalized H.
+[2023-01-16T07:53:34.990]Diagonalized H.
+ 49.327960 seconds (7.51 M allocations: 34.762 GiB)
+[2023-01-16T07:53:36.891]Completed Shot 2, state 19
+[2023-01-16T07:53:37.933]Diagonalized H.
+10448.189645 seconds (5.44 G allocations: 13.759 TiB, 9.14% gc time)
+10465.214643 seconds (5.45 G allocations: 13.777 TiB, 9.13% gc time)
+10498.225510 seconds (5.46 G allocations: 13.810 TiB, 9.13% gc time)
+10495.399207 seconds (5.46 G allocations: 13.807 TiB, 9.12% gc time)
+ 38.267861 seconds (6.06 M allocations: 23.772 GiB)
+[2023-01-16T07:54:02.524]Completed Shot 2, state 37
+[2023-01-16T07:54:03.273]Diagonalized H.
+ 40.710477 seconds (6.65 M allocations: 25.762 GiB)
+[2023-01-16T07:54:03.448]Completed Shot 2, state 31
+[2023-01-16T07:54:14.692]Diagonalized H.
+[2023-01-16T07:54:14.693]Diagonalized H.
+[2023-01-16T07:54:14.700]Diagonalized H.
+ 44.673760 seconds (5.86 M allocations: 24.953 GiB, 12.55% gc time)
+[2023-01-16T07:54:15.057]Completed Shot 2, state 44
+10539.955482 seconds (5.47 G allocations: 13.847 TiB, 9.17% gc time)
+10535.822549 seconds (5.47 G allocations: 13.841 TiB, 9.17% gc time)
+10474.961349 seconds (5.44 G allocations: 13.775 TiB, 9.17% gc time)
+10512.119233 seconds (5.46 G allocations: 13.819 TiB, 9.15% gc time)
+10635.000758 seconds (5.52 G allocations: 13.959 TiB, 9.15% gc time)
+[2023-01-16T07:54:35.497]Diagonalized H.
+[2023-01-16T07:54:36.873]Diagonalized H.
+10540.393093 seconds (5.47 G allocations: 13.840 TiB, 9.15% gc time)
+ 48.785369 seconds (7.29 M allocations: 32.904 GiB, 11.49% gc time)
+[2023-01-16T07:54:38.653]Completed Shot 2, state 15
+ 41.707907 seconds (6.53 M allocations: 30.724 GiB, 13.44% gc time)
+[2023-01-16T07:54:39.736]Completed Shot 2, state 48
+[2023-01-16T07:54:39.740]Diagonalized H.
+ 46.844854 seconds (7.18 M allocations: 33.074 GiB, 11.97% gc time)
+[2023-01-16T07:54:40.165]Completed Shot 2, state 33
+[2023-01-16T07:54:42.985]Diagonalized H.
+10351.416711 seconds (5.38 G allocations: 13.615 TiB, 9.16% gc time)
+[2023-01-16T07:54:47.688]Diagonalized H.
+[2023-01-16T07:54:47.738]Diagonalized H.
+ 49.005836 seconds (6.60 M allocations: 34.899 GiB, 14.57% gc time)
+[2023-01-16T07:54:51.058]Completed Shot 2, state 9
+10557.378314 seconds (5.47 G allocations: 13.854 TiB, 9.15% gc time)
+10546.435355 seconds (5.46 G allocations: 13.837 TiB, 9.14% gc time)
+10684.578369 seconds (5.52 G allocations: 13.994 TiB, 9.13% gc time)
+ 47.444945 seconds (6.19 M allocations: 36.320 GiB, 3.23% gc time)
+[2023-01-16T07:55:03.062]Completed Shot 2, state 13
+10484.609490 seconds (5.43 G allocations: 13.760 TiB, 9.14% gc time)
+ 51.528739 seconds (6.50 M allocations: 34.701 GiB, 2.97% gc time)
+[2023-01-16T07:55:07.573]Completed Shot 2, state 10
+10503.123099 seconds (5.44 G allocations: 13.778 TiB, 9.14% gc time)
+ 58.100248 seconds (7.49 M allocations: 41.128 GiB, 2.64% gc time)
+[2023-01-16T07:55:13.267]Completed Shot 2, state 49
+[2023-01-16T07:55:13.444]Diagonalized H.
+[2023-01-16T07:55:14.143]Diagonalized H.
+10516.451320 seconds (5.44 G allocations: 13.791 TiB, 9.14% gc time)
+ 56.919646 seconds (6.51 M allocations: 35.768 GiB, 2.69% gc time)
+[2023-01-16T07:55:17.147]Completed Shot 2, state 7
+[2023-01-16T07:55:17.692]Diagonalized H.
+[2023-01-16T07:55:18.812]Diagonalized H.
+10429.729901 seconds (5.40 G allocations: 13.687 TiB, 9.14% gc time)
+[2023-01-16T07:55:24.939]Diagonalized H.
+[2023-01-16T07:55:24.940]Diagonalized H.
+[2023-01-16T07:55:24.970]Diagonalized H.
+ 61.085958 seconds (3.86 M allocations: 34.759 GiB, 3.41% gc time)
+[2023-01-16T07:55:39.374]Completed Shot 2, state 6
+ 82.142077 seconds (7.47 M allocations: 48.902 GiB, 2.53% gc time)
+[2023-01-16T07:55:39.746]Completed Shot 2, state 16
+ 60.960456 seconds (3.16 M allocations: 31.548 GiB, 3.41% gc time)
+[2023-01-16T07:55:44.687]Completed Shot 2, state 40
+[2023-01-16T07:55:51.179]Diagonalized H.
+ 68.508960 seconds (3.53 M allocations: 32.223 GiB, 0.80% gc time)
+[2023-01-16T07:56:01.466]Completed Shot 2, state 5
+ 63.186732 seconds (3.25 M allocations: 29.015 GiB, 0.87% gc time)
+[2023-01-16T07:56:03.544]Completed Shot 2, state 25
+ 61.157737 seconds (2.83 M allocations: 27.107 GiB, 0.90% gc time)
+[2023-01-16T07:56:07.153]Completed Shot 2, state 32
+ 66.770270 seconds (3.33 M allocations: 29.010 GiB, 0.82% gc time)
+[2023-01-16T07:56:09.572]Completed Shot 2, state 4
+ 54.961008 seconds (2.05 M allocations: 22.252 GiB, 1.00% gc time)
+[2023-01-16T07:56:10.966]Completed Shot 2, state 3
+ 59.214158 seconds (2.46 M allocations: 25.586 GiB, 0.93% gc time)
+[2023-01-16T07:56:11.088]Completed Shot 2, state 24
+10584.171204 seconds (5.45 G allocations: 13.829 TiB, 9.08% gc time)
+ 57.213493 seconds (2.31 M allocations: 20.257 GiB, 0.96% gc time)
+[2023-01-16T07:56:16.572]Completed Shot 2, state 34
+[2023-01-16T07:56:17.869]Diagonalized H.
+10612.520388 seconds (5.46 G allocations: 13.848 TiB, 9.07% gc time)
+10630.243788 seconds (5.46 G allocations: 13.866 TiB, 9.07% gc time)
+[2023-01-16T07:56:34.591]Diagonalized H.
+[2023-01-16T07:56:35.194]Diagonalized H.
+ 24.910678 seconds (932.44 k allocations: 8.433 GiB, 1.25% gc time)
+[2023-01-16T07:56:36.913]Completed Shot 2, state 26
+ 27.342898 seconds (158.41 k allocations: 5.654 GiB)
+[2023-01-16T07:56:54.850]Completed Shot 2, state 45
+ 26.523020 seconds (138.36 k allocations: 5.408 GiB)
+[2023-01-16T07:56:56.027]Completed Shot 2, state 11
+9978.965164 seconds (5.42 G allocations: 13.643 TiB, 11.30% gc time)
+9985.545429 seconds (5.43 G allocations: 13.652 TiB, 11.30% gc time)
+9985.608225 seconds (5.43 G allocations: 13.652 TiB, 11.30% gc time)
+9986.661959 seconds (5.43 G allocations: 13.654 TiB, 11.30% gc time)
+9988.658516 seconds (5.43 G allocations: 13.657 TiB, 11.30% gc time)
+10008.537811 seconds (5.44 G allocations: 13.686 TiB, 11.29% gc time)
+10012.632668 seconds (5.44 G allocations: 13.689 TiB, 11.30% gc time)
+10041.044005 seconds (5.46 G allocations: 13.732 TiB, 11.29% gc time)
+10047.433758 seconds (5.46 G allocations: 13.739 TiB, 11.30% gc time)
+10048.200316 seconds (5.46 G allocations: 13.740 TiB, 11.30% gc time)
+10054.359122 seconds (5.47 G allocations: 13.750 TiB, 11.29% gc time)
+10054.753288 seconds (5.47 G allocations: 13.751 TiB, 11.29% gc time)
+10060.767166 seconds (5.47 G allocations: 13.758 TiB, 11.29% gc time)
+10064.201750 seconds (5.47 G allocations: 13.763 TiB, 11.29% gc time)
+10064.211090 seconds (5.47 G allocations: 13.763 TiB, 11.29% gc time)
+10064.223010 seconds (5.47 G allocations: 13.763 TiB, 11.29% gc time)
+10066.094439 seconds (5.47 G allocations: 13.766 TiB, 11.29% gc time)
+10067.443041 seconds (5.47 G allocations: 13.769 TiB, 11.29% gc time)
+10075.391271 seconds (5.48 G allocations: 13.779 TiB, 11.29% gc time)
+10075.563522 seconds (5.48 G allocations: 13.779 TiB, 11.29% gc time)
+10101.617063 seconds (5.49 G allocations: 13.816 TiB, 11.29% gc time)
+10111.667140 seconds (5.50 G allocations: 13.831 TiB, 11.28% gc time)
+10112.345466 seconds (5.50 G allocations: 13.832 TiB, 11.28% gc time)
+10116.822348 seconds (5.50 G allocations: 13.837 TiB, 11.28% gc time)
+10119.076664 seconds (5.50 G allocations: 13.840 TiB, 11.28% gc time)
+10119.496986 seconds (5.50 G allocations: 13.841 TiB, 11.28% gc time)
+10127.311767 seconds (5.51 G allocations: 13.853 TiB, 11.27% gc time)
+10129.073892 seconds (5.51 G allocations: 13.855 TiB, 11.27% gc time)
+10129.669451 seconds (5.51 G allocations: 13.856 TiB, 11.27% gc time)
+10133.398512 seconds (5.51 G allocations: 13.860 TiB, 11.28% gc time)
+10142.348936 seconds (5.52 G allocations: 13.874 TiB, 11.27% gc time)
+10145.677920 seconds (5.52 G allocations: 13.879 TiB, 11.26% gc time)
+10164.626065 seconds (5.53 G allocations: 13.903 TiB, 11.27% gc time)
+10165.083284 seconds (5.53 G allocations: 13.904 TiB, 11.27% gc time)
+10165.994796 seconds (5.53 G allocations: 13.905 TiB, 11.27% gc time)
+10169.541929 seconds (5.53 G allocations: 13.911 TiB, 11.27% gc time)
+10171.762031 seconds (5.53 G allocations: 13.915 TiB, 11.27% gc time)
+10179.415495 seconds (5.54 G allocations: 13.924 TiB, 11.27% gc time)
+10199.497863 seconds (5.55 G allocations: 13.951 TiB, 11.27% gc time)
+10213.903103 seconds (5.55 G allocations: 13.971 TiB, 11.26% gc time)
+10220.810780 seconds (5.56 G allocations: 13.981 TiB, 11.26% gc time)
+10223.797759 seconds (5.56 G allocations: 13.983 TiB, 11.27% gc time)
+10233.668897 seconds (5.56 G allocations: 13.997 TiB, 11.26% gc time)
+10248.534554 seconds (5.57 G allocations: 14.015 TiB, 11.27% gc time)
+10258.950830 seconds (5.58 G allocations: 14.028 TiB, 11.27% gc time)
+10260.211108 seconds (5.58 G allocations: 14.029 TiB, 11.27% gc time)
+10261.165739 seconds (5.58 G allocations: 14.031 TiB, 11.27% gc time)
+10275.372368 seconds (5.58 G allocations: 14.049 TiB, 11.26% gc time)
+10279.396600 seconds (5.59 G allocations: 14.055 TiB, 11.26% gc time)
+10394.940997 seconds (5.65 G allocations: 14.208 TiB, 11.23% gc time)
+10217.370297 seconds (5.45 G allocations: 13.711 TiB, 9.49% gc time)
+[2023-01-16T13:33:53.447]Diagonalized H.
+10163.154065 seconds (5.42 G allocations: 13.634 TiB, 9.48% gc time)
+[2023-01-16T13:34:19.837]Diagonalized H.
+ 83.524643 seconds (39.64 M allocations: 105.573 GiB, 11.53% gc time)
+[2023-01-16T13:35:02.535]Completed Shot 3, state 11
+10228.241486 seconds (5.45 G allocations: 13.712 TiB, 9.50% gc time)
+ 69.871926 seconds (33.33 M allocations: 87.872 GiB, 10.46% gc time)
+[2023-01-16T13:35:15.154]Completed Shot 3, state 49
+10180.020432 seconds (5.42 G allocations: 13.646 TiB, 9.49% gc time)
+[2023-01-16T13:35:31.524]Diagonalized H.
+[2023-01-16T13:35:31.534]Diagonalized H.
+10342.493846 seconds (5.51 G allocations: 13.868 TiB, 9.51% gc time)
+10273.518497 seconds (5.47 G allocations: 13.771 TiB, 9.50% gc time)
+[2023-01-16T13:35:50.356]Diagonalized H.
+[2023-01-16T13:35:50.393]Diagonalized H.
+10223.922439 seconds (5.44 G allocations: 13.692 TiB, 9.50% gc time)
+[2023-01-16T13:36:04.609]Diagonalized H.
+10374.628062 seconds (5.51 G allocations: 13.888 TiB, 9.49% gc time)
+10316.539407 seconds (5.48 G allocations: 13.807 TiB, 9.48% gc time)
+ 73.364948 seconds (23.99 M allocations: 72.731 GiB, 7.39% gc time)
+[2023-01-16T13:36:25.081]Completed Shot 3, state 23
+ 71.896363 seconds (22.38 M allocations: 68.647 GiB, 7.54% gc time)
+[2023-01-16T13:36:27.446]Completed Shot 3, state 30
+10362.217195 seconds (5.51 G allocations: 13.867 TiB, 9.47% gc time)
+ 57.766952 seconds (16.31 M allocations: 50.301 GiB, 3.52% gc time)
+[2023-01-16T13:36:35.259]Completed Shot 3, state 22
+[2023-01-16T13:36:36.312]Diagonalized H.
+ 58.709677 seconds (16.76 M allocations: 51.597 GiB, 3.46% gc time)
+[2023-01-16T13:36:36.460]Completed Shot 3, state 17
+10316.466429 seconds (5.48 G allocations: 13.799 TiB, 9.47% gc time)
+[2023-01-16T13:36:37.227]Diagonalized H.
+10394.584615 seconds (5.52 G allocations: 13.909 TiB, 9.47% gc time)
+ 46.644420 seconds (13.16 M allocations: 41.837 GiB, 1.53% gc time)
+[2023-01-16T13:36:43.424]Completed Shot 3, state 38
+[2023-01-16T13:36:45.164]Diagonalized H.
+10388.183760 seconds (5.51 G allocations: 13.890 TiB, 9.46% gc time)
+[2023-01-16T13:36:53.397]Diagonalized H.
+[2023-01-16T13:36:58.487]Diagonalized H.
+[2023-01-16T13:37:13.739]Diagonalized H.
+10348.461406 seconds (5.48 G allocations: 13.810 TiB, 9.46% gc time)
+ 62.290394 seconds (13.22 M allocations: 46.802 GiB, 6.06% gc time)
+[2023-01-16T13:37:21.608]Completed Shot 3, state 1
+ 51.415485 seconds (9.52 M allocations: 37.090 GiB, 7.34% gc time)
+[2023-01-16T13:37:22.301]Completed Shot 3, state 35
+ 63.758577 seconds (13.90 M allocations: 49.881 GiB, 5.92% gc time)
+[2023-01-16T13:37:23.763]Completed Shot 3, state 25
+10367.018574 seconds (5.49 G allocations: 13.837 TiB, 9.46% gc time)
+10352.334409 seconds (5.48 G allocations: 13.816 TiB, 9.46% gc time)
+ 50.663761 seconds (9.72 M allocations: 38.078 GiB, 7.45% gc time)
+[2023-01-16T13:37:27.944]Completed Shot 3, state 41
+ 63.203202 seconds (16.17 M allocations: 55.346 GiB, 5.97% gc time)
+[2023-01-16T13:37:39.925]Completed Shot 3, state 20
+[2023-01-16T13:37:44.514]Diagonalized H.
+[2023-01-16T13:37:45.816]Diagonalized H.
+10395.461634 seconds (5.50 G allocations: 13.875 TiB, 9.44% gc time)
+[2023-01-16T13:37:46.004]Diagonalized H.
+ 53.731627 seconds (16.63 M allocations: 53.253 GiB, 7.02% gc time)
+[2023-01-16T13:37:46.497]Completed Shot 3, state 8
+10465.058907 seconds (5.54 G allocations: 13.976 TiB, 9.44% gc time)
+[2023-01-16T13:38:02.768]Diagonalized H.
+[2023-01-16T13:38:11.336]Diagonalized H.
+ 61.252111 seconds (18.61 M allocations: 59.872 GiB, 7.06% gc time)
+[2023-01-16T13:38:25.070]Completed Shot 3, state 7
+10361.933344 seconds (5.47 G allocations: 13.801 TiB, 9.45% gc time)
+ 67.877623 seconds (21.64 M allocations: 69.709 GiB, 6.37% gc time)
+[2023-01-16T13:38:27.762]Completed Shot 3, state 21
+ 65.147751 seconds (20.60 M allocations: 65.347 GiB, 6.64% gc time)
+[2023-01-16T13:38:29.077]Completed Shot 3, state 5
+ 47.076283 seconds (11.68 M allocations: 39.428 GiB, 9.19% gc time)
+[2023-01-16T13:38:33.715]Completed Shot 3, state 44
+10388.183536 seconds (5.48 G allocations: 13.838 TiB, 9.44% gc time)
+ 51.099763 seconds (14.09 M allocations: 47.532 GiB, 8.47% gc time)
+[2023-01-16T13:38:36.952]Completed Shot 3, state 13
+10337.277604 seconds (5.46 G allocations: 13.769 TiB, 9.43% gc time)
+10462.373559 seconds (5.53 G allocations: 13.943 TiB, 9.44% gc time)
+[2023-01-16T13:38:39.818]Diagonalized H.
+10443.649924 seconds (5.51 G allocations: 13.919 TiB, 9.43% gc time)
+[2023-01-16T13:38:56.635]Diagonalized H.
+[2023-01-16T13:38:56.635]Diagonalized H.
+[2023-01-16T13:38:56.659]Diagonalized H.
+[2023-01-16T13:38:56.828]Diagonalized H.
+10363.833562 seconds (5.46 G allocations: 13.790 TiB, 9.45% gc time)
+10421.528282 seconds (5.49 G allocations: 13.866 TiB, 9.44% gc time)
+ 49.277535 seconds (15.31 M allocations: 50.841 GiB, 9.08% gc time)
+[2023-01-16T13:39:16.913]Completed Shot 3, state 36
+10363.034902 seconds (5.46 G allocations: 13.784 TiB, 9.44% gc time)
+10409.715230 seconds (5.48 G allocations: 13.849 TiB, 9.44% gc time)
+10480.297529 seconds (5.52 G allocations: 13.947 TiB, 9.44% gc time)
+10443.399085 seconds (5.50 G allocations: 13.895 TiB, 9.43% gc time)
+ 45.623306 seconds (10.77 M allocations: 39.803 GiB, 9.81% gc time)
+[2023-01-16T13:39:25.075]Completed Shot 3, state 46
+10290.338088 seconds (5.42 G allocations: 13.686 TiB, 9.42% gc time)
+10380.259419 seconds (5.46 G allocations: 13.803 TiB, 9.44% gc time)
+ 52.151685 seconds (14.18 M allocations: 49.149 GiB, 8.58% gc time)
+[2023-01-16T13:39:28.712]Completed Shot 3, state 27
+ 46.047544 seconds (10.85 M allocations: 38.666 GiB, 9.72% gc time)
+[2023-01-16T13:39:29.940]Completed Shot 3, state 28
+[2023-01-16T13:39:30.120]Diagonalized H.
+ 52.222142 seconds (14.24 M allocations: 49.350 GiB, 8.57% gc time)
+[2023-01-16T13:39:30.157]Completed Shot 3, state 32
+[2023-01-16T13:39:30.989]Diagonalized H.
+[2023-01-16T13:39:31.236]Diagonalized H.
+[2023-01-16T13:39:31.255]Diagonalized H.
+10409.877958 seconds (5.48 G allocations: 13.845 TiB, 9.44% gc time)
+[2023-01-16T13:39:32.507]Diagonalized H.
+[2023-01-16T13:39:37.923]Diagonalized H.
+[2023-01-16T13:39:43.443]Diagonalized H.
+[2023-01-16T13:39:49.753]Diagonalized H.
+ 45.761685 seconds (7.58 M allocations: 38.122 GiB)
+[2023-01-16T13:40:02.409]Completed Shot 3, state 40
+ 53.313549 seconds (9.15 M allocations: 43.188 GiB)
+[2023-01-16T13:40:02.720]Completed Shot 3, state 9
+ 43.796467 seconds (6.74 M allocations: 35.281 GiB)
+[2023-01-16T13:40:04.851]Completed Shot 3, state 39
+ 45.953081 seconds (7.20 M allocations: 36.787 GiB)
+[2023-01-16T13:40:06.484]Completed Shot 3, state 19
+10535.906062 seconds (5.53 G allocations: 13.995 TiB, 9.40% gc time)
+10461.589920 seconds (5.49 G allocations: 13.891 TiB, 9.41% gc time)
+[2023-01-16T13:40:10.707]Diagonalized H.
+10483.199716 seconds (5.50 G allocations: 13.918 TiB, 9.40% gc time)
+ 53.868476 seconds (8.96 M allocations: 44.024 GiB)
+[2023-01-16T13:40:13.017]Completed Shot 3, state 42
+ 47.289644 seconds (6.23 M allocations: 36.313 GiB)
+[2023-01-16T13:40:15.342]Completed Shot 3, state 3
+ 55.959358 seconds (8.94 M allocations: 44.051 GiB)
+[2023-01-16T13:40:21.279]Completed Shot 3, state 15
+[2023-01-16T13:40:21.867]Diagonalized H.
+ 65.191036 seconds (11.53 M allocations: 53.523 GiB)
+[2023-01-16T13:40:23.673]Completed Shot 3, state 33
+10374.390404 seconds (5.44 G allocations: 13.763 TiB, 9.38% gc time)
+[2023-01-16T13:40:25.299]Diagonalized H.
+10484.111158 seconds (5.50 G allocations: 13.911 TiB, 9.39% gc time)
+10470.105820 seconds (5.49 G allocations: 13.891 TiB, 9.39% gc time)
+10341.162189 seconds (5.42 G allocations: 13.718 TiB, 9.36% gc time)
+10397.137434 seconds (5.45 G allocations: 13.787 TiB, 9.38% gc time)
+[2023-01-16T13:40:34.324]Diagonalized H.
+[2023-01-16T13:40:44.276]Diagonalized H.
+[2023-01-16T13:40:44.300]Diagonalized H.
+[2023-01-16T13:40:44.308]Diagonalized H.
+[2023-01-16T13:40:44.313]Diagonalized H.
+[2023-01-16T13:40:44.342]Diagonalized H.
+ 73.306744 seconds (8.72 M allocations: 48.797 GiB, 5.10% gc time)
+[2023-01-16T13:40:44.894]Completed Shot 3, state 4
+ 47.429483 seconds (6.69 M allocations: 35.432 GiB, 7.89% gc time)
+[2023-01-16T13:40:54.125]Completed Shot 3, state 26
+ 54.966613 seconds (6.79 M allocations: 38.099 GiB, 6.81% gc time)
+[2023-01-16T13:41:01.657]Completed Shot 3, state 2
+ 39.838449 seconds (2.68 M allocations: 21.061 GiB, 9.39% gc time)
+[2023-01-16T13:41:13.819]Completed Shot 3, state 37
+ 63.145199 seconds (7.47 M allocations: 40.854 GiB, 5.93% gc time)
+[2023-01-16T13:41:14.046]Completed Shot 3, state 43
+ 50.727379 seconds (4.75 M allocations: 29.689 GiB, 7.38% gc time)
+[2023-01-16T13:41:14.818]Completed Shot 3, state 34
+ 42.716920 seconds (3.20 M allocations: 22.847 GiB, 8.76% gc time)
+[2023-01-16T13:41:15.282]Completed Shot 3, state 24
+ 55.589911 seconds (5.78 M allocations: 30.633 GiB, 8.63% gc time)
+[2023-01-16T13:41:23.045]Completed Shot 3, state 31
+ 55.130008 seconds (5.80 M allocations: 30.414 GiB, 8.70% gc time)
+[2023-01-16T13:41:23.618]Completed Shot 3, state 45
+10468.925522 seconds (5.47 G allocations: 13.844 TiB, 9.37% gc time)
+10504.752481 seconds (5.48 G allocations: 13.892 TiB, 9.37% gc time)
+10447.705530 seconds (5.45 G allocations: 13.815 TiB, 9.36% gc time)
+10459.178825 seconds (5.46 G allocations: 13.828 TiB, 9.37% gc time)
+[2023-01-16T13:41:30.368]Diagonalized H.
+[2023-01-16T13:41:32.597]Diagonalized H.
+[2023-01-16T13:41:33.760]Diagonalized H.
+[2023-01-16T13:41:37.577]Diagonalized H.
+ 26.428251 seconds (3.93 M allocations: 19.127 GiB, 3.89% gc time)
+[2023-01-16T13:41:50.883]Completed Shot 3, state 10
+ 28.586355 seconds (3.90 M allocations: 19.245 GiB, 3.60% gc time)
+[2023-01-16T13:41:54.456]Completed Shot 3, state 47
+10421.152156 seconds (5.43 G allocations: 13.761 TiB, 9.35% gc time)
+10441.941276 seconds (5.44 G allocations: 13.787 TiB, 9.34% gc time)
+ 31.796229 seconds (3.83 M allocations: 19.420 GiB, 3.88% gc time)
+[2023-01-16T13:41:59.330]Completed Shot 3, state 18
+[2023-01-16T13:42:02.676]Diagonalized H.
+ 33.984469 seconds (3.81 M allocations: 19.573 GiB, 3.63% gc time)
+[2023-01-16T13:42:03.097]Completed Shot 3, state 16
+[2023-01-16T13:42:05.424]Diagonalized H.
+10332.824783 seconds (5.37 G allocations: 13.618 TiB, 9.33% gc time)
+ 31.209238 seconds (2.54 M allocations: 11.713 GiB, 0.65% gc time)
+[2023-01-16T13:42:27.789]Completed Shot 3, state 29
+ 31.032411 seconds (2.56 M allocations: 11.599 GiB)
+[2023-01-16T13:42:29.218]Completed Shot 3, state 50
+[2023-01-16T13:42:29.755]Diagonalized H.
+10586.409902 seconds (5.49 G allocations: 13.927 TiB, 9.31% gc time)
+10491.475801 seconds (5.44 G allocations: 13.802 TiB, 9.30% gc time)
+ 26.183191 seconds (1.55 M allocations: 6.836 GiB, 1.11% gc time)
+[2023-01-16T13:42:49.982]Completed Shot 3, state 48
+[2023-01-16T13:42:54.406]Diagonalized H.
+[2023-01-16T13:42:54.407]Diagonalized H.
+10519.849623 seconds (5.45 G allocations: 13.823 TiB, 9.29% gc time)
+[2023-01-16T13:43:12.287]Diagonalized H.
+ 26.547766 seconds (406.04 k allocations: 7.592 GiB, 0.28% gc time)
+[2023-01-16T13:43:15.220]Completed Shot 3, state 14
+ 28.217251 seconds (428.65 k allocations: 7.840 GiB, 0.26% gc time)
+[2023-01-16T13:43:16.653]Completed Shot 3, state 6
+ 29.381775 seconds (116.02 k allocations: 3.481 GiB)
+[2023-01-16T13:43:33.797]Completed Shot 3, state 12
+10375.746438 seconds (5.42 G allocations: 13.615 TiB, 9.70% gc time)
+10391.169337 seconds (5.43 G allocations: 13.638 TiB, 9.70% gc time)
+10391.633561 seconds (5.43 G allocations: 13.638 TiB, 9.70% gc time)
+10396.814717 seconds (5.43 G allocations: 13.647 TiB, 9.69% gc time)
+10405.686223 seconds (5.43 G allocations: 13.659 TiB, 9.70% gc time)
+10406.307356 seconds (5.43 G allocations: 13.660 TiB, 9.70% gc time)
+10406.350784 seconds (5.43 G allocations: 13.660 TiB, 9.70% gc time)
+10415.977670 seconds (5.44 G allocations: 13.676 TiB, 9.69% gc time)
+10416.109045 seconds (5.44 G allocations: 13.676 TiB, 9.69% gc time)
+10417.357869 seconds (5.44 G allocations: 13.678 TiB, 9.69% gc time)
+10419.506105 seconds (5.44 G allocations: 13.682 TiB, 9.69% gc time)
+10423.830748 seconds (5.45 G allocations: 13.686 TiB, 9.70% gc time)
+10436.545623 seconds (5.45 G allocations: 13.707 TiB, 9.69% gc time)
+10445.549142 seconds (5.46 G allocations: 13.718 TiB, 9.70% gc time)
+10452.283460 seconds (5.46 G allocations: 13.730 TiB, 9.69% gc time)
+10455.599452 seconds (5.46 G allocations: 13.732 TiB, 9.71% gc time)
+10458.905138 seconds (5.47 G allocations: 13.737 TiB, 9.71% gc time)
+10459.016239 seconds (5.47 G allocations: 13.737 TiB, 9.71% gc time)
+10461.919985 seconds (5.47 G allocations: 13.742 TiB, 9.70% gc time)
+10474.589577 seconds (5.47 G allocations: 13.759 TiB, 9.71% gc time)
+10474.795045 seconds (5.47 G allocations: 13.760 TiB, 9.71% gc time)
+10479.424258 seconds (5.48 G allocations: 13.767 TiB, 9.71% gc time)
+10479.556137 seconds (5.48 G allocations: 13.767 TiB, 9.70% gc time)
+10479.752016 seconds (5.48 G allocations: 13.768 TiB, 9.70% gc time)
+10481.921305 seconds (5.48 G allocations: 13.771 TiB, 9.70% gc time)
+10494.814018 seconds (5.49 G allocations: 13.790 TiB, 9.70% gc time)
+10496.763549 seconds (5.49 G allocations: 13.793 TiB, 9.70% gc time)
+10507.438494 seconds (5.49 G allocations: 13.807 TiB, 9.71% gc time)
+10508.230835 seconds (5.49 G allocations: 13.809 TiB, 9.71% gc time)
+10515.150750 seconds (5.50 G allocations: 13.820 TiB, 9.70% gc time)
+10518.228433 seconds (5.50 G allocations: 13.822 TiB, 9.71% gc time)
+10527.211460 seconds (5.51 G allocations: 13.838 TiB, 9.70% gc time)
+10538.470388 seconds (5.51 G allocations: 13.855 TiB, 9.70% gc time)
+10546.000455 seconds (5.52 G allocations: 13.865 TiB, 9.71% gc time)
+10551.096624 seconds (5.52 G allocations: 13.873 TiB, 9.70% gc time)
+10553.353653 seconds (5.52 G allocations: 13.876 TiB, 9.70% gc time)
+10562.494406 seconds (5.53 G allocations: 13.889 TiB, 9.71% gc time)
+10562.569007 seconds (5.53 G allocations: 13.889 TiB, 9.71% gc time)
+10564.367954 seconds (5.53 G allocations: 13.892 TiB, 9.71% gc time)
+10565.815316 seconds (5.53 G allocations: 13.894 TiB, 9.71% gc time)
+10567.207592 seconds (5.53 G allocations: 13.897 TiB, 9.71% gc time)
+10568.010747 seconds (5.53 G allocations: 13.898 TiB, 9.70% gc time)
+10574.555351 seconds (5.53 G allocations: 13.909 TiB, 9.70% gc time)
+10588.564233 seconds (5.54 G allocations: 13.929 TiB, 9.70% gc time)
+10598.732581 seconds (5.55 G allocations: 13.942 TiB, 9.71% gc time)
+10602.724155 seconds (5.55 G allocations: 13.948 TiB, 9.71% gc time)
+10604.123733 seconds (5.55 G allocations: 13.951 TiB, 9.71% gc time)
+10620.567764 seconds (5.56 G allocations: 13.975 TiB, 9.70% gc time)
+10630.550646 seconds (5.56 G allocations: 13.988 TiB, 9.71% gc time)
+10658.168645 seconds (5.58 G allocations: 14.027 TiB, 9.72% gc time)
+9431.235768 seconds (5.41 G allocations: 13.600 TiB, 10.43% gc time)
+[2023-01-16T19:13:56.729]Diagonalized H.
+9451.019071 seconds (5.42 G allocations: 13.618 TiB, 10.43% gc time)
+[2023-01-16T19:14:38.257]Diagonalized H.
+ 67.369040 seconds (33.46 M allocations: 89.501 GiB, 9.05% gc time)
+[2023-01-16T19:14:48.150]Completed Shot 4, state 23
+9495.388464 seconds (5.44 G allocations: 13.683 TiB, 10.40% gc time)
+[2023-01-16T19:15:14.233]Diagonalized H.
+ 64.624243 seconds (31.21 M allocations: 83.875 GiB, 8.66% gc time)
+[2023-01-16T19:15:26.257]Completed Shot 4, state 18
+9520.772892 seconds (5.45 G allocations: 13.703 TiB, 10.42% gc time)
+ 59.033734 seconds (28.73 M allocations: 75.756 GiB, 10.01% gc time)
+[2023-01-16T19:15:59.392]Completed Shot 4, state 26
+9512.157139 seconds (5.44 G allocations: 13.693 TiB, 10.41% gc time)
+[2023-01-16T19:16:12.559]Diagonalized H.
+[2023-01-16T19:16:12.660]Diagonalized H.
+9506.824707 seconds (5.44 G allocations: 13.677 TiB, 10.41% gc time)
+9578.450717 seconds (5.48 G allocations: 13.777 TiB, 10.39% gc time)
+ 50.570936 seconds (22.72 M allocations: 62.901 GiB, 5.81% gc time)
+[2023-01-16T19:16:41.122]Completed Shot 4, state 35
+[2023-01-16T19:16:49.888]Diagonalized H.
+[2023-01-16T19:16:49.960]Diagonalized H.
+ 47.867247 seconds (15.68 M allocations: 45.263 GiB, 12.09% gc time)
+[2023-01-16T19:16:50.369]Completed Shot 4, state 25
+9595.498974 seconds (5.48 G allocations: 13.791 TiB, 10.40% gc time)
+[2023-01-16T19:17:21.138]Diagonalized H.
+9573.497307 seconds (5.46 G allocations: 13.748 TiB, 10.40% gc time)
+9584.690053 seconds (5.47 G allocations: 13.763 TiB, 10.41% gc time)
+9578.162399 seconds (5.46 G allocations: 13.754 TiB, 10.39% gc time)
+9634.693295 seconds (5.50 G allocations: 13.837 TiB, 10.39% gc time)
+9567.897704 seconds (5.46 G allocations: 13.740 TiB, 10.39% gc time)
+ 77.072414 seconds (31.09 M allocations: 87.760 GiB, 8.23% gc time)
+[2023-01-16T19:17:36.713]Completed Shot 4, state 22
+9565.833862 seconds (5.46 G allocations: 13.735 TiB, 10.39% gc time)
+9591.156934 seconds (5.47 G allocations: 13.772 TiB, 10.38% gc time)
+9571.237354 seconds (5.46 G allocations: 13.743 TiB, 10.38% gc time)
+[2023-01-16T19:17:45.347]Diagonalized H.
+[2023-01-16T19:17:54.388]Diagonalized H.
+[2023-01-16T19:17:54.388]Diagonalized H.
+[2023-01-16T19:17:54.411]Diagonalized H.
+[2023-01-16T19:17:54.414]Diagonalized H.
+[2023-01-16T19:17:54.427]Diagonalized H.
+[2023-01-16T19:17:54.429]Diagonalized H.
+[2023-01-16T19:17:54.455]Diagonalized H.
+ 60.905258 seconds (18.57 M allocations: 62.569 GiB, 9.82% gc time)
+[2023-01-16T19:18:06.313]Completed Shot 4, state 20
+ 97.787438 seconds (28.93 M allocations: 96.556 GiB, 9.03% gc time)
+[2023-01-16T19:18:16.391]Completed Shot 4, state 5
+ 42.992212 seconds (5.37 M allocations: 31.554 GiB, 5.79% gc time)
+[2023-01-16T19:18:24.547]Completed Shot 4, state 34
+ 65.222492 seconds (15.81 M allocations: 61.098 GiB, 3.81% gc time)
+[2023-01-16T19:18:29.261]Completed Shot 4, state 1
+ 52.885893 seconds (9.42 M allocations: 42.661 GiB, 4.70% gc time)
+[2023-01-16T19:18:29.378]Completed Shot 4, state 10
+ 45.649887 seconds (5.74 M allocations: 32.748 GiB, 5.45% gc time)
+[2023-01-16T19:18:29.512]Completed Shot 4, state 13
+ 45.434094 seconds (5.50 M allocations: 32.045 GiB, 5.47% gc time)
+[2023-01-16T19:18:30.027]Completed Shot 4, state 4
+9706.913810 seconds (5.52 G allocations: 13.906 TiB, 10.36% gc time)
+9540.295473 seconds (5.42 G allocations: 13.660 TiB, 10.35% gc time)
+9680.656583 seconds (5.50 G allocations: 13.866 TiB, 10.35% gc time)
+ 77.174664 seconds (21.32 M allocations: 76.311 GiB, 3.22% gc time)
+[2023-01-16T19:18:40.071]Completed Shot 4, state 45
+ 73.158806 seconds (19.13 M allocations: 68.883 GiB, 3.40% gc time)
+[2023-01-16T19:18:47.041]Completed Shot 4, state 38
+ 72.273733 seconds (18.69 M allocations: 67.653 GiB, 3.44% gc time)
+[2023-01-16T19:18:47.073]Completed Shot 4, state 2
+[2023-01-16T19:18:47.081]Diagonalized H.
+[2023-01-16T19:18:54.292]Diagonalized H.
+[2023-01-16T19:18:54.298]Diagonalized H.
+9625.540283 seconds (5.46 G allocations: 13.776 TiB, 10.36% gc time)
+9605.987186 seconds (5.45 G allocations: 13.746 TiB, 10.35% gc time)
+9725.000502 seconds (5.52 G allocations: 13.915 TiB, 10.35% gc time)
+9664.326635 seconds (5.48 G allocations: 13.827 TiB, 10.34% gc time)
+9636.420785 seconds (5.47 G allocations: 13.787 TiB, 10.34% gc time)
+ 45.687569 seconds (17.04 M allocations: 51.559 GiB, 5.79% gc time)
+[2023-01-16T19:19:18.035]Completed Shot 4, state 3
+ 45.695037 seconds (17.08 M allocations: 51.481 GiB, 5.79% gc time)
+[2023-01-16T19:19:22.360]Completed Shot 4, state 11
+9743.300178 seconds (5.53 G allocations: 13.941 TiB, 10.33% gc time)
+[2023-01-16T19:19:22.882]Diagonalized H.
+ 44.616280 seconds (16.52 M allocations: 50.143 GiB, 5.93% gc time)
+[2023-01-16T19:19:22.903]Completed Shot 4, state 27
+[2023-01-16T19:19:27.771]Diagonalized H.
+[2023-01-16T19:19:29.045]Diagonalized H.
+[2023-01-16T19:19:29.813]Diagonalized H.
+[2023-01-16T19:19:31.776]Diagonalized H.
+[2023-01-16T19:19:38.006]Diagonalized H.
+9628.683885 seconds (5.44 G allocations: 13.745 TiB, 10.30% gc time)
+ 60.730671 seconds (13.96 M allocations: 54.040 GiB)
+[2023-01-16T19:19:56.836]Completed Shot 4, state 19
+9713.028616 seconds (5.49 G allocations: 13.864 TiB, 10.28% gc time)
+ 57.803891 seconds (10.53 M allocations: 42.382 GiB)
+[2023-01-16T19:20:04.802]Completed Shot 4, state 28
+ 49.794281 seconds (7.80 M allocations: 34.343 GiB)
+[2023-01-16T19:20:07.453]Completed Shot 4, state 6
+9713.985013 seconds (5.49 G allocations: 13.860 TiB, 10.28% gc time)
+9656.789734 seconds (5.46 G allocations: 13.774 TiB, 10.29% gc time)
+[2023-01-16T19:20:09.872]Diagonalized H.
+ 53.907365 seconds (8.90 M allocations: 38.034 GiB)
+[2023-01-16T19:20:10.066]Completed Shot 4, state 12
+ 52.970689 seconds (8.62 M allocations: 37.106 GiB)
+[2023-01-16T19:20:10.522]Completed Shot 4, state 46
+[2023-01-16T19:20:11.794]Diagonalized H.
+[2023-01-16T19:20:20.195]Diagonalized H.
+[2023-01-16T19:20:22.725]Diagonalized H.
+ 62.884106 seconds (8.82 M allocations: 44.167 GiB)
+[2023-01-16T19:20:25.682]Completed Shot 4, state 44
+9804.475635 seconds (5.53 G allocations: 13.964 TiB, 10.27% gc time)
+9635.424772 seconds (5.43 G allocations: 13.708 TiB, 10.24% gc time)
+ 53.341582 seconds (7.57 M allocations: 29.885 GiB)
+[2023-01-16T19:20:49.180]Completed Shot 4, state 9
+[2023-01-16T19:21:01.055]Diagonalized H.
+[2023-01-16T19:21:01.132]Diagonalized H.
+9687.572505 seconds (5.45 G allocations: 13.767 TiB, 10.28% gc time)
+ 66.710638 seconds (8.77 M allocations: 36.267 GiB, 8.47% gc time)
+[2023-01-16T19:21:08.129]Completed Shot 4, state 31
+9687.916208 seconds (5.45 G allocations: 13.762 TiB, 10.28% gc time)
+9695.616339 seconds (5.45 G allocations: 13.770 TiB, 10.27% gc time)
+9689.818451 seconds (5.44 G allocations: 13.757 TiB, 10.28% gc time)
+ 74.014309 seconds (10.96 M allocations: 42.960 GiB, 7.63% gc time)
+[2023-01-16T19:21:21.551]Completed Shot 4, state 37
+ 44.144448 seconds (7.01 M allocations: 24.315 GiB, 12.79% gc time)
+[2023-01-16T19:21:21.926]Completed Shot 4, state 32
+9750.577803 seconds (5.48 G allocations: 13.849 TiB, 10.26% gc time)
+ 73.728976 seconds (11.14 M allocations: 43.395 GiB, 7.66% gc time)
+[2023-01-16T19:21:22.789]Completed Shot 4, state 41
+[2023-01-16T19:21:23.109]Diagonalized H.
+9755.116036 seconds (5.48 G allocations: 13.854 TiB, 10.27% gc time)
+[2023-01-16T19:21:24.227]Diagonalized H.
+[2023-01-16T19:21:31.335]Diagonalized H.
+[2023-01-16T19:21:31.337]Diagonalized H.
+[2023-01-16T19:21:31.339]Diagonalized H.
+[2023-01-16T19:21:31.346]Diagonalized H.
+9731.938089 seconds (5.46 G allocations: 13.811 TiB, 10.26% gc time)
+ 44.443535 seconds (7.29 M allocations: 28.359 GiB, 15.28% gc time)
+[2023-01-16T19:21:32.401]Completed Shot 4, state 7
+9770.679321 seconds (5.49 G allocations: 13.871 TiB, 10.26% gc time)
+9733.987212 seconds (5.45 G allocations: 13.797 TiB, 10.24% gc time)
+9732.285437 seconds (5.45 G allocations: 13.793 TiB, 10.25% gc time)
+ 44.123534 seconds (5.97 M allocations: 30.719 GiB, 2.59% gc time)
+[2023-01-16T19:21:53.850]Completed Shot 4, state 21
+[2023-01-16T19:21:56.560]Diagonalized H.
+[2023-01-16T19:21:57.140]Diagonalized H.
+9673.171257 seconds (5.42 G allocations: 13.705 TiB, 10.24% gc time)
+ 35.510911 seconds (3.08 M allocations: 24.005 GiB, 3.21% gc time)
+[2023-01-16T19:21:58.117]Completed Shot 4, state 29
+9852.374900 seconds (5.52 G allocations: 13.965 TiB, 10.25% gc time)
+ 55.345958 seconds (8.40 M allocations: 40.927 GiB, 2.06% gc time)
+[2023-01-16T19:21:59.215]Completed Shot 4, state 17
+ 42.312519 seconds (5.14 M allocations: 31.537 GiB, 2.70% gc time)
+[2023-01-16T19:22:00.486]Completed Shot 4, state 24
+9719.562880 seconds (5.44 G allocations: 13.769 TiB, 10.24% gc time)
+ 38.313759 seconds (3.14 M allocations: 25.024 GiB, 2.98% gc time)
+[2023-01-16T19:22:02.379]Completed Shot 4, state 16
+9815.583217 seconds (5.50 G allocations: 13.909 TiB, 10.23% gc time)
+[2023-01-16T19:22:05.906]Diagonalized H.
+[2023-01-16T19:22:09.752]Diagonalized H.
+[2023-01-16T19:22:10.453]Diagonalized H.
+[2023-01-16T19:22:14.164]Diagonalized H.
+ 59.456292 seconds (7.26 M allocations: 44.060 GiB, 1.92% gc time)
+[2023-01-16T19:22:14.687]Completed Shot 4, state 8
+9716.972936 seconds (5.43 G allocations: 13.757 TiB, 10.23% gc time)
+ 47.689963 seconds (4.36 M allocations: 35.042 GiB)
+[2023-01-16T19:22:19.428]Completed Shot 4, state 30
+9774.617118 seconds (5.47 G allocations: 13.838 TiB, 10.22% gc time)
+ 49.227396 seconds (4.18 M allocations: 32.497 GiB)
+[2023-01-16T19:22:21.937]Completed Shot 4, state 42
+[2023-01-16T19:22:23.382]Diagonalized H.
+[2023-01-16T19:22:30.162]Diagonalized H.
+[2023-01-16T19:22:36.637]Diagonalized H.
+9685.381619 seconds (5.41 G allocations: 13.692 TiB, 10.19% gc time)
+9740.846394 seconds (5.44 G allocations: 13.770 TiB, 10.20% gc time)
+[2023-01-16T19:22:47.410]Diagonalized H.
+[2023-01-16T19:22:47.418]Diagonalized H.
+[2023-01-16T19:22:47.531]Diagonalized H.
+ 56.623544 seconds (4.38 M allocations: 33.280 GiB, 3.23% gc time)
+[2023-01-16T19:22:48.778]Completed Shot 4, state 33
+ 57.851637 seconds (3.32 M allocations: 32.352 GiB, 3.16% gc time)
+[2023-01-16T19:22:56.310]Completed Shot 4, state 36
+ 65.989886 seconds (4.33 M allocations: 38.184 GiB, 2.77% gc time)
+[2023-01-16T19:22:59.283]Completed Shot 4, state 40
+ 66.369796 seconds (3.67 M allocations: 36.286 GiB, 2.75% gc time)
+[2023-01-16T19:23:03.891]Completed Shot 4, state 39
+ 64.471556 seconds (2.72 M allocations: 30.769 GiB, 2.83% gc time)
+[2023-01-16T19:23:08.668]Completed Shot 4, state 47
+ 72.454845 seconds (3.09 M allocations: 32.724 GiB, 2.52% gc time)
+[2023-01-16T19:23:14.382]Completed Shot 4, state 43
+ 62.024537 seconds (1.97 M allocations: 23.491 GiB, 2.94% gc time)
+[2023-01-16T19:23:16.921]Completed Shot 4, state 49
+ 43.265546 seconds (622.54 k allocations: 12.162 GiB, 4.22% gc time)
+[2023-01-16T19:23:20.636]Completed Shot 4, state 50
+ 43.736325 seconds (630.54 k allocations: 12.263 GiB, 4.18% gc time)
+[2023-01-16T19:23:21.086]Completed Shot 4, state 15
+ 63.143331 seconds (1.70 M allocations: 20.944 GiB, 2.89% gc time)
+[2023-01-16T19:23:22.656]Completed Shot 4, state 14
+9799.600253 seconds (5.43 G allocations: 13.759 TiB, 10.15% gc time)
+[2023-01-16T19:23:59.830]Diagonalized H.
+ 24.564877 seconds (57.87 k allocations: 2.596 GiB)
+[2023-01-16T19:24:18.532]Completed Shot 4, state 48
+9531.935072 seconds (5.41 G allocations: 13.611 TiB, 10.76% gc time)
+9534.623624 seconds (5.41 G allocations: 13.616 TiB, 10.76% gc time)
+9562.327042 seconds (5.43 G allocations: 13.660 TiB, 10.76% gc time)
+9568.114238 seconds (5.44 G allocations: 13.670 TiB, 10.75% gc time)
+9568.251931 seconds (5.44 G allocations: 13.671 TiB, 10.75% gc time)
+9571.586219 seconds (5.44 G allocations: 13.677 TiB, 10.75% gc time)
+9574.746618 seconds (5.44 G allocations: 13.679 TiB, 10.76% gc time)
+9583.624372 seconds (5.45 G allocations: 13.695 TiB, 10.75% gc time)
+9583.724378 seconds (5.45 G allocations: 13.695 TiB, 10.75% gc time)
+9588.834269 seconds (5.45 G allocations: 13.702 TiB, 10.76% gc time)
+9593.477101 seconds (5.45 G allocations: 13.710 TiB, 10.76% gc time)
+9595.513845 seconds (5.45 G allocations: 13.714 TiB, 10.76% gc time)
+9603.075978 seconds (5.46 G allocations: 13.724 TiB, 10.76% gc time)
+9608.637413 seconds (5.46 G allocations: 13.734 TiB, 10.76% gc time)
+9612.787306 seconds (5.46 G allocations: 13.741 TiB, 10.75% gc time)
+9618.742460 seconds (5.47 G allocations: 13.749 TiB, 10.76% gc time)
+9618.977001 seconds (5.47 G allocations: 13.750 TiB, 10.76% gc time)
+9622.772620 seconds (5.47 G allocations: 13.756 TiB, 10.76% gc time)
+9625.727255 seconds (5.47 G allocations: 13.762 TiB, 10.75% gc time)
+9629.393133 seconds (5.48 G allocations: 13.768 TiB, 10.75% gc time)
+9629.745582 seconds (5.48 G allocations: 13.769 TiB, 10.75% gc time)
+9632.727499 seconds (5.48 G allocations: 13.771 TiB, 10.76% gc time)
+9636.400388 seconds (5.48 G allocations: 13.778 TiB, 10.76% gc time)
+9638.673498 seconds (5.48 G allocations: 13.782 TiB, 10.76% gc time)
+9643.273751 seconds (5.48 G allocations: 13.790 TiB, 10.75% gc time)
+9644.371802 seconds (5.48 G allocations: 13.791 TiB, 10.75% gc time)
+9645.288619 seconds (5.49 G allocations: 13.793 TiB, 10.75% gc time)
+9649.481366 seconds (5.49 G allocations: 13.797 TiB, 10.76% gc time)
+9651.741301 seconds (5.49 G allocations: 13.801 TiB, 10.76% gc time)
+9654.369670 seconds (5.49 G allocations: 13.806 TiB, 10.76% gc time)
+9667.471438 seconds (5.50 G allocations: 13.826 TiB, 10.76% gc time)
+9667.651875 seconds (5.50 G allocations: 13.826 TiB, 10.76% gc time)
+9670.612349 seconds (5.50 G allocations: 13.832 TiB, 10.75% gc time)
+  Activating project at `/gpfs/bwfor/work/ws/hd_ku269-light_cones/WorkingFolder`
+9671.326000 seconds (5.50 G allocations: 13.833 TiB, 10.75% gc time)
+9672.498247 seconds (5.50 G allocations: 13.835 TiB, 10.75% gc time)
+9677.771602 seconds (5.50 G allocations: 13.840 TiB, 10.76% gc time)
+9677.998111 seconds (5.50 G allocations: 13.841 TiB, 10.76% gc time)
+9678.604838 seconds (5.50 G allocations: 13.842 TiB, 10.76% gc time)
+9680.458282 seconds (5.51 G allocations: 13.845 TiB, 10.76% gc time)
+9682.991701 seconds (5.51 G allocations: 13.849 TiB, 10.76% gc time)
+9686.814804 seconds (5.51 G allocations: 13.856 TiB, 10.75% gc time)
+9689.936468 seconds (5.51 G allocations: 13.861 TiB, 10.75% gc time)
+9695.119784 seconds (5.51 G allocations: 13.868 TiB, 10.76% gc time)
+9696.490415 seconds (5.52 G allocations: 13.870 TiB, 10.76% gc time)
+9705.009981 seconds (5.52 G allocations: 13.885 TiB, 10.75% gc time)
+9710.580465 seconds (5.52 G allocations: 13.891 TiB, 10.76% gc time)
+9715.845422 seconds (5.53 G allocations: 13.900 TiB, 10.75% gc time)
+9732.750870 seconds (5.54 G allocations: 13.928 TiB, 10.75% gc time)
+9735.046390 seconds (5.54 G allocations: 13.932 TiB, 10.75% gc time)
+9750.984203 seconds (5.55 G allocations: 13.955 TiB, 10.76% gc time)
+9587.507706 seconds (5.42 G allocations: 13.639 TiB, 10.21% gc time)
+[2023-01-17T00:43:52.556]Diagonalized H.
+9563.460825 seconds (5.40 G allocations: 13.586 TiB, 10.23% gc time)
+[2023-01-17T00:44:18.987]Diagonalized H.
+9578.178025 seconds (5.41 G allocations: 13.600 TiB, 10.22% gc time)
+ 47.333070 seconds (19.16 M allocations: 53.121 GiB, 10.00% gc time)
+[2023-01-17T00:44:28.123]Completed Shot 5, state 5
+[2023-01-17T00:44:48.439]Diagonalized H.
+9663.826086 seconds (5.45 G allocations: 13.721 TiB, 10.22% gc time)
+9632.691990 seconds (5.43 G allocations: 13.672 TiB, 10.21% gc time)
+ 66.169545 seconds (29.96 M allocations: 82.862 GiB, 7.33% gc time)
+[2023-01-17T00:45:00.956]Completed Shot 5, state 24
+[2023-01-17T00:45:16.476]Diagonalized H.
+[2023-01-17T00:45:16.484]Diagonalized H.
+ 69.079326 seconds (29.45 M allocations: 82.146 GiB, 8.56% gc time)
+[2023-01-17T00:45:31.522]Completed Shot 5, state 13
+9738.806350 seconds (5.49 G allocations: 13.826 TiB, 10.21% gc time)
+[2023-01-17T00:45:42.745]Diagonalized H.
+9764.013174 seconds (5.50 G allocations: 13.851 TiB, 10.21% gc time)
+9667.259239 seconds (5.44 G allocations: 13.695 TiB, 10.21% gc time)
+9679.620907 seconds (5.45 G allocations: 13.716 TiB, 10.20% gc time)
+ 66.003374 seconds (25.19 M allocations: 72.020 GiB, 8.47% gc time)
+[2023-01-17T00:45:59.954]Completed Shot 5, state 19
+9591.270677 seconds (5.39 G allocations: 13.578 TiB, 10.19% gc time)
+9739.978944 seconds (5.49 G allocations: 13.810 TiB, 10.20% gc time)
+[2023-01-17T00:46:13.564]Diagonalized H.
+[2023-01-17T00:46:13.567]Diagonalized H.
+[2023-01-17T00:46:13.571]Diagonalized H.
+[2023-01-17T00:46:13.618]Diagonalized H.
+[2023-01-17T00:46:13.651]Diagonalized H.
+ 77.377808 seconds (24.54 M allocations: 78.257 GiB, 11.66% gc time)
+[2023-01-17T00:46:17.243]Completed Shot 5, state 12
+9745.279569 seconds (5.47 G allocations: 13.783 TiB, 10.20% gc time)
+ 72.618112 seconds (18.82 M allocations: 62.552 GiB, 7.91% gc time)
+[2023-01-17T00:46:44.587]Completed Shot 5, state 31
+9778.720677 seconds (5.49 G allocations: 13.834 TiB, 10.20% gc time)
+9765.255316 seconds (5.48 G allocations: 13.811 TiB, 10.19% gc time)
+ 57.108429 seconds (14.47 M allocations: 49.766 GiB, 6.01% gc time)
+[2023-01-17T00:46:51.598]Completed Shot 5, state 41
+[2023-01-17T00:46:53.366]Diagonalized H.
+ 57.849885 seconds (14.99 M allocations: 51.134 GiB, 5.93% gc time)
+[2023-01-17T00:46:53.393]Completed Shot 5, state 35
+[2023-01-17T00:47:00.386]Diagonalized H.
+[2023-01-17T00:47:00.420]Diagonalized H.
+9695.526596 seconds (5.43 G allocations: 13.691 TiB, 10.20% gc time)
+9744.608492 seconds (5.46 G allocations: 13.769 TiB, 10.20% gc time)
+ 63.408057 seconds (14.88 M allocations: 54.038 GiB, 10.02% gc time)
+[2023-01-17T00:47:03.795]Completed Shot 5, state 3
+9777.158954 seconds (5.48 G allocations: 13.822 TiB, 10.20% gc time)
+ 65.750011 seconds (15.29 M allocations: 56.658 GiB, 9.66% gc time)
+[2023-01-17T00:47:06.593]Completed Shot 5, state 11
+ 70.542671 seconds (16.99 M allocations: 61.488 GiB, 9.00% gc time)
+[2023-01-17T00:47:07.680]Completed Shot 5, state 49
+9776.001826 seconds (5.48 G allocations: 13.807 TiB, 10.18% gc time)
+9714.038634 seconds (5.44 G allocations: 13.704 TiB, 10.18% gc time)
+[2023-01-17T00:47:24.372]Diagonalized H.
+9747.573134 seconds (5.46 G allocations: 13.755 TiB, 10.18% gc time)
+ 46.845060 seconds (13.61 M allocations: 44.577 GiB, 6.23% gc time)
+[2023-01-17T00:47:34.261]Completed Shot 5, state 7
+[2023-01-17T00:47:34.504]Diagonalized H.
+[2023-01-17T00:47:43.904]Diagonalized H.
+[2023-01-17T00:47:43.929]Diagonalized H.
+[2023-01-17T00:47:43.990]Diagonalized H.
+[2023-01-17T00:47:44.019]Diagonalized H.
+9813.951872 seconds (5.49 G allocations: 13.845 TiB, 10.19% gc time)
+ 74.040335 seconds (19.05 M allocations: 68.612 GiB, 8.28% gc time)
+[2023-01-17T00:47:53.371]Completed Shot 5, state 18
+ 68.949625 seconds (15.99 M allocations: 60.529 GiB, 8.89% gc time)
+[2023-01-17T00:47:54.461]Completed Shot 5, state 40
+ 62.702441 seconds (12.84 M allocations: 51.328 GiB, 5.12% gc time)
+[2023-01-17T00:48:04.591]Completed Shot 5, state 14
+ 65.272084 seconds (13.34 M allocations: 50.283 GiB, 4.92% gc time)
+[2023-01-17T00:48:09.804]Completed Shot 5, state 38
+ 72.386928 seconds (16.77 M allocations: 62.366 GiB, 4.44% gc time)
+[2023-01-17T00:48:13.924]Completed Shot 5, state 32
+9797.239695 seconds (5.47 G allocations: 13.797 TiB, 10.16% gc time)
+ 44.485666 seconds (8.54 M allocations: 34.559 GiB, 7.22% gc time)
+[2023-01-17T00:48:14.969]Completed Shot 5, state 42
+ 51.138184 seconds (11.60 M allocations: 44.421 GiB, 6.28% gc time)
+[2023-01-17T00:48:15.045]Completed Shot 5, state 9
+[2023-01-17T00:48:15.545]Diagonalized H.
+ 60.330546 seconds (15.19 M allocations: 55.667 GiB, 5.32% gc time)
+[2023-01-17T00:48:17.948]Completed Shot 5, state 50
+9801.786851 seconds (5.47 G allocations: 13.802 TiB, 10.15% gc time)
+[2023-01-17T00:48:32.757]Diagonalized H.
+[2023-01-17T00:48:32.916]Diagonalized H.
+9760.722320 seconds (5.44 G allocations: 13.727 TiB, 10.16% gc time)
+9769.219915 seconds (5.44 G allocations: 13.739 TiB, 10.16% gc time)
+9773.194698 seconds (5.45 G allocations: 13.746 TiB, 10.16% gc time)
+9791.005924 seconds (5.45 G allocations: 13.771 TiB, 10.16% gc time)
+9790.716389 seconds (5.45 G allocations: 13.769 TiB, 10.16% gc time)
+9792.087254 seconds (5.45 G allocations: 13.769 TiB, 10.14% gc time)
+9766.417228 seconds (5.44 G allocations: 13.727 TiB, 10.15% gc time)
+9840.065585 seconds (5.48 G allocations: 13.841 TiB, 10.14% gc time)
+9906.508442 seconds (5.52 G allocations: 13.944 TiB, 10.15% gc time)
+ 69.136541 seconds (17.25 M allocations: 61.706 GiB, 3.80% gc time)
+[2023-01-17T00:48:55.101]Completed Shot 5, state 2
+[2023-01-17T00:48:57.157]Diagonalized H.
+ 44.131606 seconds (12.96 M allocations: 41.591 GiB, 5.96% gc time)
+[2023-01-17T00:48:58.583]Completed Shot 5, state 28
+[2023-01-17T00:49:00.240]Diagonalized H.
+ 36.984977 seconds (9.44 M allocations: 32.240 GiB, 7.11% gc time)
+[2023-01-17T00:49:00.584]Completed Shot 5, state 37
+9830.825993 seconds (5.47 G allocations: 13.823 TiB, 10.13% gc time)
+[2023-01-17T00:49:01.397]Diagonalized H.
+[2023-01-17T00:49:02.146]Diagonalized H.
+[2023-01-17T00:49:05.430]Diagonalized H.
+[2023-01-17T00:49:05.578]Diagonalized H.
+[2023-01-17T00:49:06.611]Diagonalized H.
+[2023-01-17T00:49:06.866]Diagonalized H.
+[2023-01-17T00:49:07.467]Diagonalized H.
+ 52.669847 seconds (10.22 M allocations: 48.877 GiB)
+[2023-01-17T00:49:27.054]Completed Shot 5, state 25
+[2023-01-17T00:49:28.657]Diagonalized H.
+ 54.158334 seconds (10.13 M allocations: 49.601 GiB)
+[2023-01-17T00:49:28.883]Completed Shot 5, state 30
+ 44.388044 seconds (6.01 M allocations: 35.725 GiB)
+[2023-01-17T00:49:33.022]Completed Shot 5, state 8
+ 63.255027 seconds (10.40 M allocations: 52.844 GiB, 4.23% gc time)
+[2023-01-17T00:49:37.826]Completed Shot 5, state 16
+9885.687338 seconds (5.48 G allocations: 13.869 TiB, 10.12% gc time)
+9944.541469 seconds (5.52 G allocations: 13.954 TiB, 10.12% gc time)
+9879.770811 seconds (5.48 G allocations: 13.853 TiB, 10.11% gc time)
+9796.868775 seconds (5.43 G allocations: 13.723 TiB, 10.12% gc time)
+ 59.421380 seconds (6.72 M allocations: 40.781 GiB, 4.50% gc time)
+[2023-01-17T00:49:49.387]Completed Shot 5, state 26
+9853.832455 seconds (5.46 G allocations: 13.811 TiB, 10.10% gc time)
+9848.549669 seconds (5.45 G allocations: 13.793 TiB, 10.11% gc time)
+ 65.148322 seconds (7.11 M allocations: 42.397 GiB, 4.10% gc time)
+[2023-01-17T00:49:58.309]Completed Shot 5, state 27
+9862.125035 seconds (5.46 G allocations: 13.813 TiB, 10.10% gc time)
+ 69.945784 seconds (8.53 M allocations: 46.567 GiB, 3.82% gc time)
+[2023-01-17T00:50:01.278]Completed Shot 5, state 39
+9920.440481 seconds (5.50 G allocations: 13.902 TiB, 10.10% gc time)
+[2023-01-17T00:50:02.130]Diagonalized H.
+[2023-01-17T00:50:03.024]Diagonalized H.
+[2023-01-17T00:50:03.158]Diagonalized H.
+[2023-01-17T00:50:09.720]Diagonalized H.
+[2023-01-17T00:50:09.760]Diagonalized H.
+[2023-01-17T00:50:09.760]Diagonalized H.
+[2023-01-17T00:50:09.808]Diagonalized H.
+[2023-01-17T00:50:09.822]Diagonalized H.
+ 90.587249 seconds (12.74 M allocations: 64.955 GiB, 4.21% gc time)
+[2023-01-17T00:50:10.743]Completed Shot 5, state 22
+ 89.720901 seconds (12.30 M allocations: 64.273 GiB, 4.25% gc time)
+[2023-01-17T00:50:11.473]Completed Shot 5, state 17
+ 78.080630 seconds (5.86 M allocations: 48.442 GiB, 4.89% gc time)
+[2023-01-17T00:50:19.185]Completed Shot 5, state 15
+9844.874284 seconds (5.43 G allocations: 13.747 TiB, 10.08% gc time)
+9917.285283 seconds (5.47 G allocations: 13.854 TiB, 10.07% gc time)
+ 63.892487 seconds (5.41 M allocations: 34.864 GiB, 1.79% gc time)
+[2023-01-17T00:50:44.516]Completed Shot 5, state 10
+ 64.282261 seconds (5.56 M allocations: 34.836 GiB, 1.78% gc time)
+[2023-01-17T00:50:52.072]Completed Shot 5, state 21
+9939.806441 seconds (5.48 G allocations: 13.878 TiB, 10.06% gc time)
+ 66.198847 seconds (5.93 M allocations: 36.202 GiB, 1.73% gc time)
+[2023-01-17T00:50:52.999]Completed Shot 5, state 1
+9898.293167 seconds (5.45 G allocations: 13.815 TiB, 10.06% gc time)
+ 51.630495 seconds (3.20 M allocations: 27.320 GiB, 2.21% gc time)
+[2023-01-17T00:50:53.379]Completed Shot 5, state 6
+9965.771446 seconds (5.49 G allocations: 13.917 TiB, 10.07% gc time)
+ 56.864191 seconds (4.56 M allocations: 31.459 GiB, 2.01% gc time)
+[2023-01-17T00:50:53.890]Completed Shot 5, state 48
+ 53.085224 seconds (3.52 M allocations: 28.464 GiB, 2.15% gc time)
+[2023-01-17T00:50:54.208]Completed Shot 5, state 44
+[2023-01-17T00:50:54.385]Diagonalized H.
+ 66.350384 seconds (5.91 M allocations: 36.305 GiB, 1.72% gc time)
+[2023-01-17T00:50:54.508]Completed Shot 5, state 29
+ 65.897775 seconds (5.86 M allocations: 37.263 GiB, 1.73% gc time)
+[2023-01-17T00:50:56.041]Completed Shot 5, state 43
+[2023-01-17T00:50:57.863]Diagonalized H.
+[2023-01-17T00:51:00.050]Diagonalized H.
+[2023-01-17T00:51:00.319]Diagonalized H.
+[2023-01-17T00:51:01.927]Diagonalized H.
+9972.889313 seconds (5.49 G allocations: 13.907 TiB, 10.05% gc time)
+ 38.704271 seconds (3.59 M allocations: 22.095 GiB)
+[2023-01-17T00:51:17.164]Completed Shot 5, state 34
+ 32.806531 seconds (2.03 M allocations: 16.700 GiB)
+[2023-01-17T00:51:26.509]Completed Shot 5, state 20
+[2023-01-17T00:51:29.703]Diagonalized H.
+ 46.553816 seconds (3.47 M allocations: 22.070 GiB)
+[2023-01-17T00:51:30.026]Completed Shot 5, state 4
+ 44.103012 seconds (2.68 M allocations: 20.818 GiB)
+[2023-01-17T00:51:37.425]Completed Shot 5, state 45
+ 45.984668 seconds (2.88 M allocations: 21.554 GiB)
+[2023-01-17T00:51:38.699]Completed Shot 5, state 33
+9963.851713 seconds (5.47 G allocations: 13.864 TiB, 10.00% gc time)
+[2023-01-17T00:51:46.765]Diagonalized H.
+9897.585309 seconds (5.42 G allocations: 13.752 TiB, 10.00% gc time)
+ 30.643471 seconds (1.64 M allocations: 8.212 GiB)
+[2023-01-17T00:51:47.359]Completed Shot 5, state 23
+[2023-01-17T00:51:53.723]Diagonalized H.
+ 28.229506 seconds (973.39 k allocations: 7.457 GiB, 2.96% gc time)
+[2023-01-17T00:52:09.225]Completed Shot 5, state 36
+9956.146993 seconds (5.45 G allocations: 13.813 TiB, 9.99% gc time)
+ 26.651311 seconds (642.34 k allocations: 6.317 GiB, 3.14% gc time)
+[2023-01-17T00:52:13.760]Completed Shot 5, state 46
+[2023-01-17T00:52:16.193]Diagonalized H.
+ 24.964163 seconds (64.83 k allocations: 2.700 GiB)
+[2023-01-17T00:52:35.496]Completed Shot 5, state 47
+[2023-01-17T00:52:35.496]**********Simulation completed!**********
+[2023-01-17T00:52:35.497]**********Saving**********
+[2023-01-17T00:52:39.824]Saving file: /gpfs/bwfor/work/ws/hd_ku269-logs/LightCones/2023-01-15/512537_N11_BS.jld2
+[2023-01-17T00:52:41.426]**********Run completed!**********
+============================= JOB FEEDBACK =============================
+Job ID: 512537
+Cluster: helix
+User/Group: hd_ku269/hd_hd
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 64
+CPU Utilized: 66-04:37:31
+CPU Efficiency: 86.74% of 76-07:33:20 core-walltime
+Job Wall-clock time: 1-04:37:05
+Memory Utilized: 164.51 GB
+Memory Efficiency: 69.71% of 236.00 GB
