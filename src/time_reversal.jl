@@ -70,6 +70,21 @@ function perturb(A::SparseMatrixCSC{ComplexF64},ϕ::Float64,ψs::Matrix{ComplexF
     return res
 end
 
+function perturb(A::SparseMatrixCSC{ComplexF64},ψ::Vector{ComplexF64}) # with ϕ=π
+    return -im * A * ψ
+end
+
+#Time Range
+
+function perturb(A::SparseMatrixCSC{ComplexF64},ψs::Matrix{ComplexF64})# with ϕ=π
+    res = zeros(ComplexF64,size(ψs))
+    for i in 1:size(ψs)[2]
+        res[:,i] = -im * A * ψs[:,i]
+    end
+    return res
+end
+
+
 #####################
 ### Floquet Drive ###
 #####################
@@ -276,7 +291,11 @@ end
 function echo(H::SparseMatrixCSC{Float64},A::SparseMatrixCSC{ComplexF64},ϕ::Float64,t::Float64,ψ0::Vector{ComplexF64},sequence_name::String,n::Int,N::Int,method::String)
     seq = get_sequence(sequence_name,t,n)
     ψ = evolve_forward(H,t,ψ0,method)
-    ψ = perturb(A,ϕ,ψ)
+    if ϕ == π/1.
+        ψ = perturb(A,ψ)
+    else
+        ψ = perturb(A,ϕ,ψ)
+    end
     ψ = floquet_drive(H,ψ,N,seq,n,method)
     return ψ
 end
@@ -292,14 +311,24 @@ function echo(H::SparseMatrixCSC{Float64},A::SparseMatrixCSC{ComplexF64},ϕ::Flo
         Q = convert(Matrix{Float64},Q)
         logmsg("Diagonalized H.")
         ψs = evolve_forward(λs,Q,trange,ψ0,N)
-        ψs = perturb(A,ϕ,ψs)
+        if ϕ == π/1.
+            ψs = perturb(A,ψs)
+
+        else
+            ψs = perturb(A,ϕ,ψs)
+        end
         for (i,t) in enumerate(trange)
             seq = get_sequence(sequence_name,t,n)
             ψs[:,i] = floquet_drive(H,λs,Q,ψs[:,i],N,seq,n)
         end
     elseif method == "Krylov"
         ψs = evolve_forward(H,trange,ψ0,N)
-        ψs = perturb(A,ϕ,ψs)
+        if ϕ == π/1.
+            ψs = perturb(A,ψs)
+
+        else
+            ψs = perturb(A,ϕ,ψs)
+        end        
         for (i,t) in enumerate(trange)
             seq = get_sequence(sequence_name,t,n)
             ψs[:,i] = floquet_drive(H,ψs[:,i],N,seq,n,method,tmax)
@@ -389,7 +418,12 @@ function oto_commutator_timereversal(H::SparseMatrixCSC{Float64},A::SparseMatrix
     signs = signs_of_eigenstate(B,ψ0,N)
     seq = get_sequence(sequence_name,t,n)
     ψ = evolve_forward(H,t,ψ0,method)
-    ψ = perturb(A,ϕ,ψ)
+    if ϕ == π/1.
+        ψs = perturb(A,ψ)
+
+    else
+        ψs = perturb(A,ϕ,ψ)
+    end
     ψ = floquet_drive(H,ψ,N,seq,n,method)
     return otoc_by_eigenstate_measurement(B,ψ,signs,N)
 
@@ -406,14 +440,23 @@ function oto_commutator_timereversal(H::SparseMatrixCSC{Float64},A::SparseMatrix
         for (i,t) in enumerate(trange)
             seq = get_sequence(sequence_name,t,n)
             ψ = evolve_forward(λs,Q,t,ψ0,N)
-            ψ = perturb(A,ϕ,ψ)
+            if ϕ == π/1.
+                ψs = perturb(A,ψ)
+    
+            else
+                ψs = perturb(A,ϕ,ψ)
+            end
             ψ = floquet_drive(H,λs,Q,ψ,N,seq,n)
             oto_commutators[i,:] = otoc_by_eigenstate_measurement(B,ψ,signs,N)
         end
     elseif method == "Krylov"
         seq = get_sequence(sequence_name,trange[1],n)
         ψ_forward = krylov_from0_alternative(H,-trange[1],ψ0,tmax)
-        ψ_perturbed = perturb(A,ϕ,ψ_forward)
+        if ϕ == π/1.
+            ψ_perturbed = perturb(A,ψ_forward)
+        else
+            ψ_perturbed = perturb(A,ϕ,ψ_forward)
+        end
         ψ = floquet_drive(H,ψ_perturbed,N,seq,n,method,tmax)
         oto_commutators[1,:] = otoc_by_eigenstate_measurement(B,ψ,signs,N)
         for (i,t) in enumerate(trange)
@@ -423,7 +466,11 @@ function oto_commutator_timereversal(H::SparseMatrixCSC{Float64},A::SparseMatrix
             seq = get_sequence(sequence_name,t,n)
             δt = trange[i] - trange[i-1]
             ψ_forward = krylov_step(H,-δt,ψ_forward)
-            ψ_perturbed = perturb(A,ϕ,ψ_forward)
+            if ϕ == π/1.
+                ψ_perturbed = perturb(A,ψ_forward)
+            else
+                ψ_perturbed = perturb(A,ϕ,ψ_forward)
+            end
             ψ = floquet_drive(H,ψ_perturbed,N,seq,n,method,tmax)
             oto_commutators[i,:] = otoc_by_eigenstate_measurement(B,ψ,signs,N)
         end
@@ -441,7 +488,11 @@ function oto_commutator_timereversal(H::SparseMatrixCSC{Float64},A::SparseMatrix
     signs = signs_of_eigenstate(B,ψ0,N)
     seq = get_sequence(sequence_name,trange[1],n)
     ψ_forward = krylov_from0_alternative(H,-trange[1],ψ0,tmax)
-    ψ_perturbed = perturb(A,ϕ,ψ_forward)
+    if ϕ == π/1.
+        ψ_perturbed = perturb(A,ψ_forward)
+    else
+        ψ_perturbed = perturb(A,ϕ,ψ_forward)
+    end
     ψ = floquet_drive(H,ψ_perturbed,N,seq,n,rotations,proto_hamiltonians,tmax)
     oto_commutators[1,:] = otoc_by_eigenstate_measurement(B,ψ,signs,N)
     for (i,t) in enumerate(trange)
@@ -451,7 +502,11 @@ function oto_commutator_timereversal(H::SparseMatrixCSC{Float64},A::SparseMatrix
         seq = get_sequence(sequence_name,t,n)
         δt = trange[i] - trange[i-1]
         ψ_forward = krylov_step(H,-δt,ψ_forward)
-        ψ_perturbed = perturb(A,ϕ,ψ_forward)
+        if ϕ == π/1.
+            ψ_perturbed = perturb(A,ψ_forward)
+        else
+            ψ_perturbed = perturb(A,ϕ,ψ_forward)
+        end
         ψ = floquet_drive(H,ψ_perturbed,N,seq,n,rotations,proto_hamiltonians,tmax)
         oto_commutators[i,:] = otoc_by_eigenstate_measurement(B,ψ,signs,N)
     end

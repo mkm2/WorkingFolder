@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.15
+# v0.19.19
 
 using Markdown
 using InteractiveUtils
@@ -78,6 +78,22 @@ begin
 	data_RPS_21 = 2*ones(31,21,1,1000)-2*cat(load(path_RPS*f_RPS_21,"data")...,dims=4)
 	data_BS_21 = 2*ones(31,21,1,1000)-2*cat(load(path_BS*f_BS_21,"data")...,dims=4)
 end
+
+# ╔═╡ df50f479-d54d-4c6c-8535-a1d47b70d1ae
+begin
+	jldopen("dataRS21.jld2", "w") do file
+	    file["data"] = data_RS_21
+	    end
+	jldopen("dataRPS21.jld2", "w") do file
+	    file["data"] = data_RPS_21
+	    end
+	jldopen("dataBS21.jld2", "w") do file
+	    file["data"] = data_BS_21
+	    end
+end
+
+# ╔═╡ 61c35505-6792-4f66-b3a1-307b12b501f8
+div(21,2)+1
 
 # ╔═╡ 63d716f0-d660-4a0e-8b4e-8bcfef78054a
 begin
@@ -347,6 +363,36 @@ exp((params_RPS_19[2]-params_BS_19[2])/params_BS_19[1])
 # ╔═╡ 178e2186-b7a7-479d-9692-a414559d91ac
 params_RPS_19[1]/params_BS_19[1]
 
+# ╔═╡ da4cb0e4-da7a-4a97-939c-af9fa210148c
+
+
+# ╔═╡ 39fdbf88-eb0a-4a1d-a098-5c026211ba88
+begin
+	plot(0:0.1:3,data_RPS_13[:,7,1,10])
+	plot!(0:0.1:3,data_RPS_13[:,7,1,100])
+	plot!(0:0.1:3,data_RPS_13[:,7,1,1000])
+	plot!(0:0.1:3,data_RPS_13[:,7,1,14])
+end
+
+# ╔═╡ 783fb375-bfae-4654-b9b1-fa960d7438fd
+begin
+	plot(0:0.1:3,data_BS_13[:,6,1,10])
+	plot!(0:0.1:3,data_BS_13[:,6,1,100])
+	plot!(0:0.1:3,data_BS_13[:,6,1,999])
+	plot!(0:0.1:3,data_BS_13[:,6,1,14])
+end
+
+# ╔═╡ b20c9ee8-faf5-4607-8999-cad67599781a
+begin
+	plot(0:0.1:3,data_RS_13[:,7,1,1])
+	plot!(0:0.1:3,data_RS_13[:,7,1,2])
+	plot!(0:0.1:3,data_RS_13[:,7,1,10])
+	plot!(0:0.1:3,data_RS_13[:,7,1,14])
+end
+
+# ╔═╡ 12076d6f-8dc6-43f5-ace7-7274ca2f79ac
+
+
 # ╔═╡ 06a8ab0b-b94d-4fed-adb5-f3984bd2b789
 md"# RS"
 
@@ -476,7 +522,7 @@ uuid = "6e34b625-4abd-537c-b88f-471c36dfa7a0"
 version = "1.0.8+0"
 
 [[deps.Cairo_jll]]
-deps = ["Artifacts", "Bzip2_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Pkg", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
+deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Pkg", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
 git-tree-sha1 = "4b859a208b2397a7a623a03449e4636bdb17bcf2"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.16.1+1"
@@ -936,9 +982,9 @@ version = "1.42.0+0"
 
 [[deps.Libiconv_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "42b62845d70a619f063a7da093d995ec8e15e778"
+git-tree-sha1 = "c7cb1f5d892775ba13767a87c7ada0b980ea0a71"
 uuid = "94ce4f54-9a6c-5748-9c1c-f9c7231a4531"
-version = "1.16.1+1"
+version = "1.16.1+2"
 
 [[deps.Libmount_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1600,6 +1646,8 @@ version = "1.4.1+0"
 # ╠═b267a4e7-840a-47cf-82c1-2a265ad05252
 # ╠═6e40e406-ce73-4e5e-8ac8-799f09369707
 # ╠═ea553d3f-7600-4b8c-b63d-9c97ea42f827
+# ╠═df50f479-d54d-4c6c-8535-a1d47b70d1ae
+# ╠═61c35505-6792-4f66-b3a1-307b12b501f8
 # ╠═bf7281e8-5efd-478f-912b-5fccaaf3cd14
 # ╠═63d716f0-d660-4a0e-8b4e-8bcfef78054a
 # ╠═d8c42b82-5828-4b14-9288-44a11938afcb
@@ -1620,6 +1668,11 @@ version = "1.4.1+0"
 # ╠═24b3a146-28cc-4069-bc5c-e51e304123b2
 # ╠═c2af3e0b-d916-4ce1-ad3e-89f7d148cc9c
 # ╠═178e2186-b7a7-479d-9692-a414559d91ac
+# ╠═da4cb0e4-da7a-4a97-939c-af9fa210148c
+# ╠═39fdbf88-eb0a-4a1d-a098-5c026211ba88
+# ╠═783fb375-bfae-4654-b9b1-fa960d7438fd
+# ╠═b20c9ee8-faf5-4607-8999-cad67599781a
+# ╠═12076d6f-8dc6-43f5-ace7-7274ca2f79ac
 # ╠═06a8ab0b-b94d-4fed-adb5-f3984bd2b789
 # ╠═7e7c4d58-2c1c-4da1-8d19-246b3e7fe7c3
 # ╠═cbe18298-c26b-4f5e-b8b0-74d797d7a569
