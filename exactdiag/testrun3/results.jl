@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.14
+# v0.19.19
 
 using Markdown
 using InteractiveUtils
@@ -160,7 +160,7 @@ data_12_mean
 
 # ╔═╡ c4f385eb-6e67-402d-9f98-c8ac8621c9a2
 begin
-	plot(trange[2:T],data_12_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h= 12",ylims=[0.001,3.2],xlim=[1e-3,1e6])#,xlim=[1e-2,1e8],yaxis=:log)
+	plot(trange[2:T],data_12_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h= 12",ylims=[0.001,3.2],xlim=[1e-2,1e6])#,xlim=[1e-2,1e8],yaxis=:log)
 	#plot!(10. .^ LinRange(-3,8,100),ones(100),xaxis=:log,markershape=:cross)
 end
 
@@ -246,9 +246,9 @@ end
 
 # ╔═╡ 44181015-34a4-47ef-aefb-6f8509fdfca1
 begin
-	plot(trange[2:T],abs.(data_12_nn_mean[2:110,:]),xaxis=:log,legend=nothing,ribbon=data_12_nn_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Nearest Neighbour OBC, h = 12",xlim=[1e-2,1e1])#,yaxis=:log)
-	plot!(10. .^ LinRange(-3,1,100),ones(100),xaxis=:log,markershape=:cross)
-	plot!(trange[2:T],data_12_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h= 12",ylims=[0.001,3.2],xlim=[1e-3,1e6])
+	plot(trange[2:T],abs.(data_12_nn_mean[2:110,:]),xaxis=:log,legend=nothing,ribbon=data_12_nn_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Nearest Neighbour OBC, h = 12",xlim=[1e-2,1e6])#,yaxis=:log)
+	#plot!(10. .^ LinRange(-3,1,100),ones(100),xaxis=:log,markershape=:cross)
+	#plot!(trange[2:T],data_12_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law OBC, h= 12",ylims=[0.001,3.2],xlim=[1e-3,1e6])
 end
 
 # ╔═╡ 50f76e36-ec8b-4989-bfe2-d109f811ae26
@@ -346,7 +346,7 @@ begin
 end
 
 # ╔═╡ 9378d2bd-2e31-4a7d-a81c-574e70c9a171
-plot(trange[2:T],data_12_pbc_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_pbc_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law PBC, h= 12",ylims=[0.,3.2],xlim=[1e-3,1e6])
+plot(trange[2:T],data_12_pbc_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_pbc_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law PBC, h= 12",ylims=[0.,3.2],xlim=[1e-2,1e6])
 
 # ╔═╡ b0ce161e-54ce-4153-abc9-6cf43b49774e
 heatmap(1:N,trange[2:T],data_12_pbc_mean[2:T,:],yaxis=:log)
@@ -430,8 +430,8 @@ end
 
 # ╔═╡ d96dce80-c4cc-4ea1-a8b3-916f9609f57d
 begin
-	plot(trange[2:T],data_12_nn_pbc_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_nn_pbc_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Nearest Neighbour PBC, h = 12")
-	plot!(trange[2:T],data_12_pbc_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_pbc_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law PBC, h= 12",ylims=[0.,3.2],xlim=[1e-3,1e6])
+	plot(trange[2:T],data_12_nn_pbc_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_nn_pbc_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Nearest Neighbour PBC, h = 12",xlim=[1e-2,1e6])
+	#plot!(trange[2:T],data_12_pbc_mean[2:110,:],xaxis=:log,legend=:bottomright,ribbon=data_12_pbc_std[2:T,:]/sqrt(shots),ylabel="OTOC xx",xlabel="Jt",title="Power Law PBC, h= 12",ylims=[0.,3.2],xlim=[1e-3,1e6])
 end
 
 # ╔═╡ c237e2de-78b8-434a-86d5-c1df1b289e87
